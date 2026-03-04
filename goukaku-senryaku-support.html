@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合格戦略サポート（併塾向け）| プラトン 文系大学受験専門塾</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+:root{
+  --red:    #6f2d43;
+  --dark:   #3d101c;
+  --pale:   #f1eaec;
+  --mid:    #a05070;
+  --light:  #f8f0f2;
+  --cream:  #fdfaf8;
+  --white:  #ffffff;
+  --txt:    #2a0e18;
+  --txt2:   #6a4050;
+  --bdr:    #e0cdd2;
+  --sh:     0 3px 16px rgba(111,45,67,.10);
+  --sh2:    0 8px 32px rgba(111,45,67,.18);
+  /* コース固有カラー：緑系 */
+  --course: #3a6858;
+  --course2:#60a888;
+  --pale-c: #eaf5f1;
+  --bdr-c:  #c0dcd4;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
+  background:var(--cream);color:var(--txt);
+  overflow-x:hidden;font-size:15px;line-height:1.7;
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:#1a3028;color:rgba(255,255,255,.75);
+  text-align:center;padding:8px 16px;font-size:.75rem;
+  letter-spacing:.08em;font-weight:500;
+}
+
+/* ===== HEADER ===== */
+header{
+  background:#fff;position:sticky;top:0;z-index:200;
+  border-bottom:4px solid var(--course);
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+.hd-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 4vw;gap:12px;flex-wrap:wrap;
+}
+.hd-logo{display:flex;align-items:center;gap:10px;}
+.hd-logo-img{
+  width:52px;height:52px;border-radius:50%;
+  border:2.5px solid var(--course);overflow:hidden;background:transparent;flex-shrink:0;
+}
+.hd-logo-img img{width:100%;height:100%;object-fit:contain;}
+.hd-logo-name{font-family:"Kaisei Opti",serif;font-size:1.5rem;font-weight:700;color:var(--course);display:block;letter-spacing:.04em;}
+.hd-logo-sub{font-size:.68rem;color:var(--course2);letter-spacing:.1em;margin-top:1px;}
+nav{background:var(--course);}
+.nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
+.nav-ul li a{display:block;padding:11px 16px;color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.06em;transition:background .2s;}
+.nav-ul li a:hover{background:rgba(255,255,255,.15);}
+.nav-ul li a.active{background:rgba(255,255,255,.2);}
+.nav-ul li a.hl{background:#fff;color:var(--course);margin:5px 6px;border-radius:5px;padding:6px 16px;}
+.nav-ul li a.hl:hover{background:var(--pale-c);}
+
+/* ===== PAGE HERO ===== */
+.page-hero{
+  background:linear-gradient(160deg,var(--pale-c) 0%,#f5fff9 40%,#f0faf5 100%);
+  padding:60px 4vw 56px;position:relative;overflow:hidden;
+}
+.page-hero::after{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(58,104,88,.07) 1.5px,transparent 1.5px);
+  background-size:28px 28px;pointer-events:none;
+}
+.page-hero-inner{max-width:840px;margin:0 auto;position:relative;z-index:2;}
+.page-hero .eyebrow{
+  display:inline-block;background:#fff;color:var(--course);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;margin-bottom:.8rem;border:2px solid var(--course);
+}
+.page-hero h1{
+  font-family:"Kaisei Opti",serif;font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:700;color:var(--txt);line-height:1.4;margin-bottom:1rem;
+}
+.page-hero h1 em{font-style:normal;color:var(--course);}
+.page-hero-sub{font-size:.95rem;color:var(--txt2);line-height:1.9;max-width:640px;margin-bottom:1.8rem;}
+.target-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,var(--course),var(--course2));
+  color:#fff;padding:8px 20px;border-radius:50px;
+  font-size:.82rem;font-weight:700;margin-bottom:1.2rem;
+}
+
+/* ===== BUTTONS ===== */
+.btn-r{
+  background:var(--course);color:#fff;font-weight:700;font-size:.9rem;
+  padding:14px 28px;border-radius:50px;
+  box-shadow:0 5px 18px rgba(58,104,88,.32);
+  transition:all .3s;display:inline-flex;align-items:center;gap:7px;
+  border:none;cursor:pointer;font-family:inherit;
+}
+.btn-r:hover{background:#1a3028;transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,104,88,.4);}
+.btn-w{
+  background:#fff;color:var(--course);font-weight:700;font-size:.9rem;
+  padding:13px 24px;border-radius:50px;border:2px solid var(--course);
+  transition:all .3s;display:inline-flex;align-items:center;gap:7px;
+}
+.btn-w:hover{background:var(--pale-c);transform:translateY(-2px);}
+
+/* ===== SECTION COMMON ===== */
+section{padding:64px 4vw;}
+.eyebrow{
+  display:inline-block;background:var(--pale-c);color:var(--course);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;margin-bottom:.7rem;border:1px solid var(--bdr-c);
+}
+.sec-ttl{font-family:"Kaisei Opti",serif;font-size:clamp(1.4rem,2.8vw,2.1rem);font-weight:700;color:var(--txt);line-height:1.4;}
+.sec-ttl .ac{color:var(--course);}
+.sec-sub{font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:.6rem;}
+.sec-head{margin-bottom:2.5rem;}
+
+/* ===== FOR WHO ===== */
+#for-who{background:#fff;}
+.for-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:860px;margin:0 auto;align-items:start;}
+.for-card{background:var(--pale-c);border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);}
+.for-card h3{font-family:"Kaisei Opti",serif;font-size:1.05rem;color:var(--txt);margin-bottom:1rem;line-height:1.5;}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.check-list li{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:.85rem;color:var(--txt2);line-height:1.6;
+  padding:8px 10px;background:#fff;border-radius:8px;
+}
+.check-list li::before{content:"✓";color:var(--course);font-weight:900;flex-shrink:0;line-height:1.6;}
+.solution-card{background:linear-gradient(135deg,#1a3028,var(--course));border-radius:16px;padding:1.8rem;color:#fff;}
+.solution-card h3{font-family:"Kaisei Opti",serif;font-size:1.05rem;color:#fff;margin-bottom:1rem;line-height:1.5;}
+.solution-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.solution-list li{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:rgba(255,255,255,.9);line-height:1.6;}
+.solution-list li::before{content:"✓";color:#a0e8c8;font-weight:900;flex-shrink:0;line-height:1.6;}
+
+/* ===== WHAT ===== */
+#what{background:var(--cream);}
+.what-box{
+  max-width:780px;margin:0 auto;
+  background:#fff;border-radius:20px;padding:2.5rem;border:2px solid var(--bdr-c);
+}
+.what-box h3{font-family:"Kaisei Opti",serif;font-size:1.2rem;color:var(--txt);margin-bottom:1.2rem;}
+.what-box p{font-size:.9rem;color:var(--txt2);line-height:1.95;margin-bottom:.8rem;}
+.what-hl{
+  background:var(--pale-c);border-radius:12px;padding:1.2rem 1.5rem;
+  border-left:4px solid var(--course);font-size:.9rem;color:var(--txt);
+  line-height:1.9;margin:1.2rem 0;
+}
+
+/* ===== FEATURES ===== */
+#features{background:#fff;}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;max-width:960px;margin:0 auto;}
+.feat-card{background:var(--cream);border-radius:16px;padding:1.8rem 1.6rem;border:2px solid var(--bdr-c);transition:all .3s;}
+.feat-card:hover{border-color:var(--course);transform:translateY(-4px);box-shadow:0 8px 32px rgba(58,104,88,.18);}
+.feat-icon{font-size:1.8rem;margin-bottom:.7rem;}
+.feat-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
+.feat-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
+
+/* ===== ANALYSIS ===== */
+#analysis{background:var(--cream);}
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:860px;margin:0 auto;}
+.analysis-card{background:#fff;border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);transition:all .3s;}
+.analysis-card:hover{border-color:var(--course);box-shadow:0 8px 32px rgba(58,104,88,.18);}
+.analysis-card .a-icon{font-size:2rem;margin-bottom:.8rem;}
+.analysis-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
+.analysis-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
+
+/* ===== CTA ===== */
+#cta{background:var(--cream);position:relative;}
+#cta::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--course),var(--course2),var(--course));
+}
+.cta-box{max-width:700px;margin:0 auto;text-align:center;}
+.cta-box h2{font-family:"Kaisei Opti",serif;font-size:clamp(1.3rem,2.5vw,2rem);color:var(--txt);margin-bottom:1rem;line-height:1.5;}
+.cta-box p{font-size:.9rem;color:var(--txt2);line-height:1.9;margin-bottom:1rem;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:2rem;}
+
+/* ===== FOOTER ===== */
+footer{background:#1a3028;color:rgba(255,255,255,.65);text-align:center;padding:2rem 4vw;font-size:.78rem;line-height:1.9;}
+footer a{color:#90d8b8;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .for-grid{grid-template-columns:1fr;}
+  .analysis-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">全国対応・オンライン指導 | 文系大学受験専門塾 プラトン</div>
+
+<header>
+  <div class="hd-top">
+    <a href="index.html" class="hd-logo">
+      <div class="hd-logo-img">
+        <img src="logo.png" alt="プラトンロゴ" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <span class="hd-logo-name">プラトン</span>
+        <span class="hd-logo-sub">文系大学受験専門塾</span>
+      </div>
+    </a>
+    <div>
+      <a href="index.html#contact" class="btn-r" style="font-size:.8rem;padding:10px 20px;">▶ 無料相談はこちら</a>
+    </div>
+  </div>
+  <nav>
+    <ul class="nav-ul">
+      <li><a href="index.html">トップ</a></li>
+      <li><a href="index.html#features">指導システム</a></li>
+      <li><a href="index.html#courses" class="active">コース紹介</a></li>
+      <li><a href="mainichi-kadai.html">毎日課題システム</a></li>
+      <li><a href="index.html#staff">講師紹介</a></li>
+      <li><a href="index.html#voices">合格者の声</a></li>
+      <li><a href="index.html#contact" class="hl">▶ 無料相談</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="target-badge">🏫 併塾向け・戦略サポート特化</div>
+    <span class="eyebrow">Strategic Support Course</span>
+    <h1>合格戦略<em>サポート</em></h1>
+    <p class="page-hero-sub">予備校や個別指導塾に通いながら、受験戦略に不安を感じている方のためのコースです。現在の塾の授業を活かしながら、志望校合格に向けた最適な学習戦略をサポートします。</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
+      <a href="index.html#courses" class="btn-w">他のコースを見る</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOR WHO ===== -->
+<section id="for-who">
+  <div class="sec-head" style="text-align:center;">
+    <span class="eyebrow">This Course is for You</span>
+    <h2 class="sec-ttl">こんな方に<span class="ac">おすすめ</span>です</h2>
+    <p class="sec-sub">他の塾に通っていても、受験戦略の不安は解消されないことがあります。</p>
+  </div>
+  <div class="for-grid">
+    <div class="for-card">
+      <h3>このような状況の方に最適です</h3>
+      <ul class="check-list">
+        <li>予備校や個別指導塾に通っているが、受験戦略に不安がある</li>
+        <li>今の塾で授業は受けているが、何をいつまでに仕上げればいいか分からない</li>
+        <li>自分の学力が志望校に届いているか客観的に把握したい</li>
+        <li>模試の偏差値を見ても、次に何をすればいいか分からない</li>
+        <li>並行して受験戦略をアドバイスしてくれる存在が欲しい</li>
+        <li>今の塾を変えずに受験戦略だけサポートしてほしい</li>
+      </ul>
+    </div>
+    <div>
+      <div style="background:#fff;border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);margin-bottom:1rem;">
+        <h3 style="font-family:'Kaisei Opti',serif;font-size:1.05rem;color:var(--txt);margin-bottom:1rem;">授業と戦略は別物</h3>
+        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:.8rem;">多くの塾では<strong style="color:var(--course);">「授業を受けること」と「受験戦略を立てること」は別</strong>です。授業で知識を学んでも、それをいつ・どの順番で受験勉強に組み込むかの戦略がなければ、合格には結びつきません。</p>
+        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;">今の塾の授業を活かしながら、受験戦略を加えることで、合格への確度が高まります。</p>
+      </div>
+      <div class="solution-card">
+        <h3>プラトンが提供するもの</h3>
+        <ul class="solution-list">
+          <li>志望校から逆算した学習計画の設計</li>
+          <li>実力診断テストによる現状把握</li>
+          <li>偏差値分析と合格可能性の評価</li>
+          <li>受験戦略の策定・調整サポート</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT ===== -->
+<section id="what">
+  <div class="sec-head" style="text-align:center;">
+    <span class="eyebrow">What We Provide</span>
+    <h2 class="sec-ttl">サポートの<span class="ac">内容</span></h2>
+  </div>
+  <div class="what-box">
+    <h3>今通っている塾の授業を最大限に活かすための受験戦略サポート</h3>
+    <p>合格戦略サポートは、現在の塾の授業はそのままに、<strong>「受験戦略」の部分だけをプラトンがサポートする</strong>コースです。</p>
+    <div class="what-hl">
+      現在通っている塾の授業 ＋ プラトンの受験戦略サポート。この組み合わせで、授業で学んだ知識を受験本番に活かす最適な戦略を構築します。
+    </div>
+    <p>実力診断テストや模試の結果をもとに現在の学力を正確に把握し、志望校合格までの距離を測定します。そのうえで、今の塾の授業内容とプラトンのサポートを組み合わせた、最適な学習計画を設計します。</p>
+    <p style="margin-top:1rem;">受験戦略は定期的に見直しを行い、学力の推移や模試の結果に応じて調整します。常に現状に合った最適な戦略で受験に臨めるよう、継続的にサポートします。</p>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section id="features">
+  <div class="sec-head" style="text-align:center;">
+    <span class="eyebrow">Course Features</span>
+    <h2 class="sec-ttl">コースの<span class="ac">特徴</span></h2>
+    <p class="sec-sub">受験戦略に特化した、併塾生のためのサポートコースです。</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🗺️</div>
+      <h4>志望校から逆算した学習計画</h4>
+      <p>志望校・現在の学力・使用中の参考書・今の塾の授業スケジュールをすべて考慮したうえで、最適な学習計画を設計します。今の塾の授業と無理なく組み合わせられる計画を作成します。</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📊</div>
+      <h4>偏差値分析・合格可能性の把握</h4>
+      <p>模試の結果や実力診断テストをもとに、現在の偏差値と志望校合格に必要な偏差値を比較分析します。何をどのくらい伸ばせばいいかを数値で示します。</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔍</div>
+      <h4>実力診断テストによる現状把握</h4>
+      <p>定期的に実力診断テストを実施し、科目ごとの強み・弱みを明確にします。弱点が明確になることで、限られた時間の中で何を優先して学習すべきかが分かります。</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🤝</div>
+      <h4>受験戦略の継続的な調整</h4>
+      <p>模試の結果や学力の推移に応じて、受験戦略を定期的に見直します。状況が変わっても、常に最適な戦略で受験に臨めるよう継続的にサポートします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ANALYSIS ===== -->
+<section id="analysis">
+  <div class="sec-head" style="text-align:center;">
+    <span class="eyebrow">Analysis & Strategy</span>
+    <h2 class="sec-ttl">分析から<span class="ac">戦略へ</span></h2>
+    <p class="sec-sub">データに基づいた受験戦略で、志望校合格の確度を高めます。</p>
+  </div>
+  <div class="analysis-grid">
+    <div class="analysis-card">
+      <div class="a-icon">📈</div>
+      <h4>現状の学力を正確に把握する</h4>
+      <p>実力診断テストと模試の結果を組み合わせて、科目ごとの現在地を明確にします。感覚ではなく、データに基づいて現状を把握することが戦略立案の第一歩です。</p>
+    </div>
+    <div class="analysis-card">
+      <div class="a-icon">🎯</div>
+      <h4>志望校との差を数値で示す</h4>
+      <p>志望校の合格ラインと現在の偏差値・得点を比較し、「何が・どのくらい足りないか」を明確にします。ゴールが明確になることで、学習の優先順位が見えてきます。</p>
+    </div>
+    <div class="analysis-card">
+      <div class="a-icon">🗓️</div>
+      <h4>逆算した学習スケジュールを作成</h4>
+      <p>受験本番から逆算して、「各科目を何月までにどのレベルまで仕上げるか」をスケジュール化します。今の塾の授業と組み合わせた、実現可能な計画を作ります。</p>
+    </div>
+    <div class="analysis-card">
+      <div class="a-icon">🔄</div>
+      <h4>定期的な戦略の見直し</h4>
+      <p>模試の結果や学習状況に応じて、戦略を定期的に見直します。受験までの状況変化に柔軟に対応し、常に最適な戦略を維持します。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta">
+  <div class="cta-box">
+    <h2>今の塾に加えて、<span style="color:var(--course);">受験戦略</span>を手に入れる</h2>
+    <p>授業は今の塾で受けながら、受験戦略はプラトンがサポートします。実力診断テストや偏差値分析を通して現在地を把握し、志望校合格への最短ルートを一緒に設計します。</p>
+    <p>無料相談では、現在の学習状況と志望校をお伺いしたうえで、このコースがお役に立てるかをご説明します。まずはお気軽にご相談ください。</p>
+    <div class="cta-btns">
+      <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
+      <a href="index.html#courses" class="btn-w">他のコースを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p style="margin-bottom:.5rem;font-family:'Kaisei Opti',serif;font-size:1rem;color:#fff;">プラトン</p>
+  <p>文系大学受験専門塾｜全国対応オンライン指導</p>
+  <p style="margin-top:.5rem;">
+    <a href="index.html">トップページ</a> |
+    <a href="index.html#courses">コース紹介</a> |
+    <a href="mainichi-kadai.html">毎日課題システム</a> |
+    <a href="index.html#contact">無料相談</a>
+  </p>
+  <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2024 Plato. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
