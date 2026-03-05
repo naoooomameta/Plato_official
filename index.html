@@ -782,6 +782,30 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   color:var(--red);line-height:1;margin:0 2px;
 }
 .price-unit{font-size:.78rem;color:var(--txt2);}
+.price-tiers{display:flex;gap:.7rem;margin-bottom:1.2rem;}
+.price-tier{
+  flex:1;border-radius:12px;padding:.8rem .6rem;text-align:center;
+  border:1.5px solid var(--bdr);background:var(--cream);
+}
+.price-tier-label{
+  font-size:.65rem;font-weight:700;color:var(--txt3);
+  letter-spacing:.06em;margin-bottom:.4rem;
+}
+.price-tier-num{
+  font-family:"Kaisei Opti",serif;font-size:1.6rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.price-tier-yen{font-size:.75rem;color:var(--txt2);}
+.price-tier-tax{
+  font-size:.6rem;color:var(--txt3);margin-top:2px;
+}
+.price-single{text-align:center;margin-bottom:1.2rem;}
+.price-single-num{
+  font-family:"Kaisei Opti",serif;font-size:2.4rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.price-single-label{font-size:.82rem;color:var(--txt2);}
+.price-single-tax{font-size:.72rem;color:var(--txt3);margin-top:.2rem;}
 .price-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
 .price-list li{
   display:flex;align-items:flex-start;gap:8px;
@@ -1628,9 +1652,17 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="pcard-target">中学生〜高校2年生</div>
       </div>
       <div class="pbd">
-        <div class="price-main">
-          <span class="price-yen">月額</span>
-          <span class="price-num">お問い合わせ</span>
+        <div class="price-tiers">
+          <div class="price-tier">
+            <div class="price-tier-label">プランA</div>
+            <div class="price-tier-num">45,000<span class="price-tier-yen">円</span></div>
+            <div class="price-tier-tax">税込／月</div>
+          </div>
+          <div class="price-tier">
+            <div class="price-tier-label">プランB</div>
+            <div class="price-tier-num">60,000<span class="price-tier-yen">円</span></div>
+            <div class="price-tier-tax">税込／月</div>
+          </div>
         </div>
         <ul class="price-list">
           <li>毎日課題による学習管理</li>
@@ -1646,9 +1678,17 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="pcard-target">高校2年生〜高校3年生</div>
       </div>
       <div class="pbd">
-        <div class="price-main">
-          <span class="price-yen">月額</span>
-          <span class="price-num">お問い合わせ</span>
+        <div class="price-tiers">
+          <div class="price-tier">
+            <div class="price-tier-label">プランA</div>
+            <div class="price-tier-num">45,000<span class="price-tier-yen">円</span></div>
+            <div class="price-tier-tax">税込／月</div>
+          </div>
+          <div class="price-tier">
+            <div class="price-tier-label">プランB</div>
+            <div class="price-tier-num">60,000<span class="price-tier-yen">円</span></div>
+            <div class="price-tier-tax">税込／月</div>
+          </div>
         </div>
         <ul class="price-list">
           <li>合格ロードマップ作成</li>
@@ -1665,9 +1705,10 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="pcard-target">高校3年生・既卒生</div>
       </div>
       <div class="pbd">
-        <div class="price-main">
-          <span class="price-yen">月額</span>
-          <span class="price-num">お問い合わせ</span>
+        <div class="price-single">
+          <div class="price-single-label">月額</div>
+          <div class="price-single-num">33,000<span style="font-size:1rem;">円</span></div>
+          <div class="price-single-tax">税込</div>
         </div>
         <ul class="price-list">
           <li>志望校別の徹底対策</li>
