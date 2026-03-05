@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合格者の声 | プラトン 文系大学受験専門塾</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+:root{
+  --red:    #6f2d43;
+  --dark:   #3d101c;
+  --pale:   #f1eaec;
+  --mid:    #a05070;
+  --light:  #f8f0f2;
+  --gold:   #c9a060;
+  --cream:  #fdfaf8;
+  --white:  #ffffff;
+  --txt:    #2a0e18;
+  --txt2:   #6a4050;
+  --txt3:   #b08090;
+  --bdr:    #e0cdd2;
+  --sh:     0 3px 16px rgba(111,45,67,.10);
+  --sh2:    0 8px 32px rgba(111,45,67,.18);
+  --course: #6f2d43;
+  --course2:#a05070;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
+  background:var(--cream);color:var(--txt);
+  overflow-x:hidden;font-size:15px;line-height:1.7;
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:var(--dark);color:rgba(255,255,255,.75);
+  text-align:center;padding:8px 16px;font-size:.75rem;
+  letter-spacing:.08em;font-weight:500;
+}
+
+/* ===== HEADER ===== */
+header{
+  background:#fff;position:sticky;top:0;z-index:200;
+  border-bottom:4px solid var(--course);
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+.hd-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 4vw;gap:12px;flex-wrap:wrap;
+}
+.hd-logo{display:flex;align-items:center;gap:10px;}
+.hd-logo-img{
+  width:52px;height:52px;border-radius:50%;
+  border:2.5px solid var(--course);overflow:hidden;background:transparent;
+  flex-shrink:0;
+}
+.hd-logo-img img{width:100%;height:100%;object-fit:contain;}
+.hd-logo-name{
+  font-family:"Kaisei Opti",serif;font-size:1.5rem;
+  font-weight:700;color:var(--course);display:block;letter-spacing:.04em;
+}
+.hd-logo-sub{font-size:.68rem;color:var(--mid);letter-spacing:.1em;margin-top:1px;}
+nav{background:var(--course);}
+.nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
+.nav-ul li a{
+  display:block;padding:11px 16px;color:#fff;
+  font-size:.8rem;font-weight:700;letter-spacing:.06em;
+  transition:background .2s;
+}
+.nav-ul li a:hover{background:rgba(255,255,255,.15);}
+.nav-ul li a.active{background:rgba(255,255,255,.2);}
+.nav-ul li a.hl{
+  background:#fff;color:var(--course);
+  margin:5px 6px;border-radius:5px;padding:6px 16px;
+}
+.nav-ul li a.hl:hover{background:var(--pale);}
+
+/* ===== BUTTONS ===== */
+.btn-r{
+  background:var(--course);color:#fff;
+  font-weight:700;font-size:.9rem;
+  padding:14px 28px;border-radius:50px;
+  box-shadow:0 5px 18px rgba(111,45,67,.32);
+  transition:all .3s;display:inline-flex;align-items:center;gap:7px;
+  border:none;cursor:pointer;font-family:inherit;
+}
+.btn-r:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
+.btn-w{
+  background:#fff;color:var(--course);
+  font-weight:700;font-size:.9rem;
+  padding:13px 24px;border-radius:50px;
+  border:2px solid var(--course);
+  transition:all .3s;display:inline-flex;align-items:center;gap:7px;
+}
+.btn-w:hover{background:var(--pale);transform:translateY(-2px);}
+
+/* ===== PAGE HERO ===== */
+.page-hero{
+  background:linear-gradient(160deg,var(--pale) 0%,#fff5f7 40%,#f8f0f5 100%);
+  padding:60px 4vw 56px;position:relative;overflow:hidden;
+}
+.page-hero::after{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(111,45,67,.07) 1.5px,transparent 1.5px);
+  background-size:28px 28px;pointer-events:none;
+}
+.page-hero-inner{max-width:840px;margin:0 auto;position:relative;z-index:2;}
+.page-hero .eyebrow{
+  display:inline-block;
+  background:#fff;color:var(--course);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.8rem;border:2px solid var(--course);
+}
+.page-hero h1{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:700;color:var(--txt);
+  line-height:1.4;margin-bottom:1rem;
+}
+.page-hero h1 em{font-style:normal;color:var(--course);}
+.page-hero-sub{
+  font-size:.95rem;color:var(--txt2);line-height:1.9;
+  max-width:640px;margin-bottom:1.8rem;
+}
+
+/* ===== SECTION COMMON ===== */
+section{padding:64px 4vw;}
+.eyebrow{
+  display:inline-block;
+  background:var(--pale);color:var(--red);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.7rem;border:1px solid var(--red);
+}
+.sec-ttl{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.4rem,2.8vw,2.1rem);
+  font-weight:700;color:var(--txt);line-height:1.4;
+}
+.sec-ttl .ac{color:var(--red);}
+.sec-sub{font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:.6rem;}
+.sec-head{margin-bottom:2.5rem;}
+
+/* ===== STATS HIGHLIGHT ===== */
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1rem;max-width:700px;margin:0 auto 3rem;
+}
+.stat-box{
+  text-align:center;background:#fff;border-radius:16px;
+  padding:1.5rem 1rem;border:2px solid var(--bdr);
+  transition:all .3s;
+}
+.stat-box:hover{border-color:var(--red);box-shadow:var(--sh);}
+.stat-box-num{
+  font-family:"Kaisei Opti",serif;font-size:2rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.stat-box-unit{font-size:.8rem;color:var(--red);font-weight:700;}
+.stat-box-label{font-size:.75rem;color:var(--txt2);margin-top:.3rem;}
+
+/* ===== BEFORE/AFTER SHOWCASE ===== */
+.ba-card{
+  max-width:900px;margin:0 auto 2.5rem;
+  border-radius:20px;overflow:hidden;
+  border:2px solid var(--red);box-shadow:var(--sh2);
+}
+.ba-header{
+  background:linear-gradient(135deg,var(--dark),var(--red));
+  padding:1rem 1.5rem;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:.5rem;
+}
+.ba-name{font-family:"Kaisei Opti",serif;font-size:1.05rem;font-weight:700;}
+.ba-result{
+  background:rgba(255,255,255,.18);padding:4px 14px;border-radius:50px;
+  font-size:.78rem;font-weight:700;
+}
+.ba-scores{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:0;align-items:center;
+}
+.ba-col{padding:1.8rem 1.5rem;text-align:center;}
+.ba-col-before{background:linear-gradient(135deg,#f8f4f5,#fff);}
+.ba-col-after{background:linear-gradient(135deg,#fff0f2,#fff8f8);}
+.ba-col-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  padding:3px 12px;border-radius:50px;display:inline-block;margin-bottom:.6rem;
+}
+.ba-col-before .ba-col-label{background:var(--pale);color:var(--txt2);}
+.ba-col-after .ba-col-label{background:var(--red);color:#fff;}
+.ba-score{
+  font-family:"Kaisei Opti",serif;font-size:2.8rem;font-weight:700;line-height:1;
+  margin-bottom:.2rem;
+}
+.ba-col-before .ba-score{color:#aaa;}
+.ba-col-after .ba-score{color:var(--red);}
+.ba-exam{font-size:.73rem;color:var(--txt2);}
+.ba-detail{font-size:.78rem;color:var(--txt2);margin-top:.4rem;}
+.ba-col-after .ba-detail{color:var(--red);}
+.ba-arrow-col{
+  display:flex;align-items:center;justify-content:center;
+  padding:0 .5rem;
+}
+.ba-arrow{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:700;
+  box-shadow:0 4px 16px rgba(111,45,67,.35);
+}
+.ba-story{
+  padding:1.2rem 1.8rem;background:var(--cream);
+  border-top:1px solid var(--bdr);
+}
+.ba-story-q{
+  font-size:.85rem;color:var(--txt);line-height:1.9;
+  position:relative;padding-left:1.5rem;
+}
+.ba-story-q::before{
+  content:"\201C";position:absolute;left:0;top:-.2rem;
+  font-family:Georgia,serif;font-size:2rem;color:var(--mid);line-height:1;
+}
+
+/* ===== VOICE CARDS ===== */
+.voice-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:1.6rem;max-width:1000px;margin:0 auto;
+}
+.voice-card{
+  background:#fff;border-radius:20px;overflow:hidden;
+  border:2px solid var(--bdr);transition:all .35s;
+}
+.voice-card:hover{border-color:var(--red);transform:translateY(-5px);box-shadow:var(--sh2);}
+.vc-top{
+  padding:1.2rem 1.4rem;position:relative;
+}
+.vc-top-national{background:linear-gradient(135deg,var(--dark),var(--red));}
+.vc-top-waseda{background:linear-gradient(135deg,#5a3068,#8a60a0);}
+.vc-top-march{background:linear-gradient(135deg,#3a6858,#60a888);}
+.vc-result{font-size:.82rem;font-weight:700;color:#fff;}
+.vc-univ{
+  font-family:"Kaisei Opti",serif;font-size:1.15rem;font-weight:700;
+  color:#fff;display:block;margin-top:.2rem;
+}
+.vc-body{padding:1.5rem 1.4rem;}
+.vc-quote{
+  font-size:.86rem;color:var(--txt);line-height:1.95;
+  margin-bottom:1.2rem;position:relative;padding-left:1.2rem;
+  border-left:3px solid var(--pale);
+}
+.vc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;}
+.vc-tag{
+  background:var(--cream);border:1px solid var(--bdr);
+  color:var(--txt2);font-size:.7rem;font-weight:600;
+  padding:3px 10px;border-radius:50px;
+}
+.vc-author{
+  display:flex;align-items:center;gap:10px;
+  padding-top:1rem;border-top:1px solid var(--bdr);
+}
+.vc-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--pale);border:2.5px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+.vc-name{font-size:.82rem;font-weight:700;color:var(--txt);}
+.vc-name span{display:block;font-weight:400;color:var(--txt3);font-size:.72rem;margin-top:2px;}
+
+/* ===== PARENT VOICES ===== */
+.parent-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.4rem;max-width:1000px;margin:0 auto;
+}
+.parent-card{
+  background:#fff;border-radius:18px;padding:1.6rem;
+  border:2px solid var(--bdr);transition:all .3s;
+}
+.parent-card:hover{border-color:var(--mid);box-shadow:var(--sh);}
+.parent-card-label{
+  display:inline-block;background:#e8f0fe;color:#1a56b0;
+  font-size:.68rem;font-weight:700;padding:3px 10px;
+  border-radius:50px;margin-bottom:.8rem;border:1px solid #c7d7f9;
+}
+.parent-card-txt{
+  font-size:.85rem;color:var(--txt);line-height:1.9;margin-bottom:1rem;
+  position:relative;padding-left:1.2rem;border-left:3px solid #c7d7f9;
+}
+.parent-card-auth{font-size:.78rem;color:var(--txt2);text-align:right;}
+
+/* ===== CTA ===== */
+.cta-section{
+  background:linear-gradient(135deg,var(--dark),var(--red));
+  text-align:center;color:#fff;padding:56px 4vw;
+}
+.cta-ttl{
+  font-family:"Kaisei Opti",serif;font-size:clamp(1.3rem,2.5vw,1.8rem);
+  font-weight:700;margin-bottom:.8rem;
+}
+.cta-sub{font-size:.88rem;opacity:.8;margin-bottom:1.5rem;line-height:1.8;}
+.cta-btn{
+  background:#fff;color:var(--red);font-weight:700;font-size:.95rem;
+  padding:16px 36px;border-radius:50px;display:inline-flex;
+  align-items:center;gap:8px;transition:all .3s;
+  box-shadow:0 5px 20px rgba(0,0,0,.2);
+}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.3);}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--dark);padding:2rem 4vw;
+  text-align:center;color:rgba(255,255,255,.5);
+  font-size:.78rem;line-height:1.8;
+}
+footer a{color:rgba(255,255,255,.6);transition:color .3s;}
+footer a:hover{color:#e8b0a0;}
+
+/* ===== ANIMATIONS ===== */
+@keyframes floatUp{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.on{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+.d4{transition-delay:.4s;}.d5{transition-delay:.5s;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:860px){
+  .stats-row{grid-template-columns:1fr 1fr 1fr;}
+  .ba-scores{grid-template-columns:1fr;}
+  .ba-arrow-col{padding:.5rem 0;}
+  .ba-arrow{margin:0 auto;}
+  .voice-grid{grid-template-columns:1fr;}
+  .parent-grid{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  section{padding:48px 4vw;}
+  .stats-row{grid-template-columns:1fr;}
+  .ba-col{padding:1.2rem 1rem;}
+  .ba-score{font-size:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">全国対応・オンライン指導 | 文系大学受験専門塾 プラトン</div>
+
+<header>
+  <div class="hd-top">
+    <a href="index.html" class="hd-logo">
+      <div class="hd-logo-img">
+        <img src="logo.png" alt="プラトンロゴ" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <span class="hd-logo-name">プラトン</span>
+        <span class="hd-logo-sub">文系大学受験専門塾</span>
+      </div>
+    </a>
+    <div>
+      <a href="index.html#contact" class="btn-r" style="font-size:.8rem;padding:10px 20px;">無料相談はこちら</a>
+    </div>
+  </div>
+  <nav>
+    <ul class="nav-ul">
+      <li><a href="index.html">トップ</a></li>
+      <li><a href="index.html#features">指導システム</a></li>
+      <li><a href="index.html#courses">コース紹介</a></li>
+      <li><a href="index.html#staff">講師紹介</a></li>
+      <li><a href="voices.html" class="active">合格者の声</a></li>
+      <li><a href="index.html#pricing">料金</a></li>
+      <li><a href="index.html#contact" class="hl">無料相談</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Voice & Results</span>
+    <h1>合格者の<em>声</em></h1>
+    <p class="page-hero-sub">プラトンで学び、志望校合格を勝ち取った生徒たちのリアルな声をお届けします。入塾前の悩み、学習の変化、そして合格の喜びまで。</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
+      <a href="index.html#results" class="btn-w">合格実績を見る</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NUMBERS ===== -->
+<section style="background:#fff;">
+  <div class="stats-row reveal">
+    <div class="stat-box">
+      <div class="stat-box-num">+21.5</div>
+      <div class="stat-box-label">偏差値UP（最大実績）</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-num">800<span class="stat-box-unit">人+</span></div>
+      <div class="stat-box-label">累計指導生徒数</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-num">10<span class="stat-box-unit">年</span></div>
+      <div class="stat-box-label">指導実績</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BEFORE/AFTER ===== -->
+<section id="before-after" style="background:var(--cream);">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Before → After</span>
+    <h2 class="sec-ttl">劇的な<span class="ac">変化</span>の実例</h2>
+    <p class="sec-sub">プラトンに通い始めてからの偏差値・学習時間の変化をご紹介します。</p>
+  </div>
+
+  <!-- Case 1 -->
+  <div class="ba-card reveal">
+    <div class="ba-header">
+      <div class="ba-name">K.Mさん（現役）</div>
+      <span class="ba-result">一橋大学 合格</span>
+    </div>
+    <div class="ba-scores">
+      <div class="ba-col ba-col-before">
+        <span class="ba-col-label">入塾時（高2・12月）</span>
+        <div class="ba-score">45.7</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：5時間</div>
+      </div>
+      <div class="ba-arrow-col">
+        <div class="ba-arrow">→</div>
+      </div>
+      <div class="ba-col ba-col-after">
+        <span class="ba-col-label">高3・10月</span>
+        <div class="ba-score">67.2</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：45〜50時間</div>
+      </div>
+    </div>
+    <div class="ba-story">
+      <p class="ba-story-q">ネガティブな発言（「時間がない」「できない」等）が消え、質問が能動的に変化。自ら考えてギャップを埋めていく力が身につきました。ロードマップがあったことで、常に「今自分はどこにいて、次に何をすべきか」が明確でした。</p>
+    </div>
+  </div>
+
+  <!-- Case 2 -->
+  <div class="ba-card reveal">
+    <div class="ba-header" style="background:linear-gradient(135deg,#5a3068,#8a60a0);">
+      <div class="ba-name">A.Sさん（現役）</div>
+      <span class="ba-result">早稲田大学 政治経済学部 合格</span>
+    </div>
+    <div class="ba-scores">
+      <div class="ba-col ba-col-before">
+        <span class="ba-col-label">入塾時（高2・4月）</span>
+        <div class="ba-score">52.3</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：10時間</div>
+      </div>
+      <div class="ba-arrow-col">
+        <div class="ba-arrow">→</div>
+      </div>
+      <div class="ba-col ba-col-after">
+        <span class="ba-col-label">高3・11月</span>
+        <div class="ba-score">68.5</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：40時間</div>
+      </div>
+    </div>
+    <div class="ba-story">
+      <p class="ba-story-q">通塾の移動時間がなく、その分勉強に集中できました。わからない問題もLINEで送ればすぐ返答が来るので、ストレスなく学習を続けられました。毎日課題のおかげで「何を勉強すべきか」で迷う時間がなくなりました。</p>
+    </div>
+  </div>
+
+  <!-- Case 3 -->
+  <div class="ba-card reveal">
+    <div class="ba-header" style="background:linear-gradient(135deg,#3a6858,#60a888);">
+      <div class="ba-name">T.Kさん（現役）</div>
+      <span class="ba-result">上智大学 合格</span>
+    </div>
+    <div class="ba-scores">
+      <div class="ba-col ba-col-before">
+        <span class="ba-col-label">入塾時（高2・9月）</span>
+        <div class="ba-score">48.1</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：8時間</div>
+      </div>
+      <div class="ba-arrow-col">
+        <div class="ba-arrow">→</div>
+      </div>
+      <div class="ba-col ba-col-after">
+        <span class="ba-col-label">高3・10月</span>
+        <div class="ba-score">63.8</div>
+        <div class="ba-exam">河合模試 偏差値</div>
+        <div class="ba-detail">週の勉強時間：35時間</div>
+      </div>
+    </div>
+    <div class="ba-story">
+      <p class="ba-story-q">マンツーマンなので自分のペースで進められ、学力向上の実感がありました。毎日課題があることで家でもしっかり勉強する習慣がつき、本当に感謝しています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STUDENT VOICES ===== -->
+<section id="student-voices" style="background:#fff;">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Student Voice</span>
+    <h2 class="sec-ttl">生徒たちの<span class="ac">リアルな声</span></h2>
+    <p class="sec-sub">実際にプラトンで学んだ生徒たちから寄せられた声をご紹介します。</p>
+  </div>
+
+  <div class="voice-grid">
+    <div class="voice-card reveal d1">
+      <div class="vc-top vc-top-national">
+        <div class="vc-result">合格<span class="vc-univ">一橋大学</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">ロードマップがあったことで、常に「今自分はどこにいて、次に何をすべきか」が明確でした。そのおかげでゴールまで迷わず辿り着けた気がします。先生との距離が近く、些細な疑問もすぐに解決できる環境が最高でした。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">ロードマップ</span>
+          <span class="vc-tag">毎日課題</span>
+          <span class="vc-tag">偏差値+21UP</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">🧑</div>
+          <div class="vc-name">R.Nさん（現役）<span>高校3年生 → 一橋大学</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-card reveal d2">
+      <div class="vc-top vc-top-waseda">
+        <div class="vc-result">合格<span class="vc-univ">早稲田大学 政治経済学部</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">通塾の移動時間がなく、その分勉強に集中できました。わからない問題もLINEで送ればすぐ返答が来るので、ストレスなく学習を続けられました。オンラインでも十分手厚いサポートを受けられます。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">オンライン</span>
+          <span class="vc-tag">LINE質問対応</span>
+          <span class="vc-tag">偏差値+16UP</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">👩</div>
+          <div class="vc-name">A.Sさん（現役）<span>高校3年生 → 早稲田大学政経学部</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-card reveal d3">
+      <div class="vc-top vc-top-waseda">
+        <div class="vc-result">合格<span class="vc-univ">上智大学</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">マンツーマンなので自分のペースで進められ、学力向上の実感がありました。毎日課題があることで家でもしっかり勉強する習慣がつき、本当に感謝しています。自分一人では絶対にここまで来れませんでした。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">マンツーマン</span>
+          <span class="vc-tag">学習習慣</span>
+          <span class="vc-tag">毎日課題</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">👦</div>
+          <div class="vc-name">T.Kさん（現役）<span>高校3年生 → 上智大学</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-card reveal d1">
+      <div class="vc-top vc-top-national">
+        <div class="vc-result">合格<span class="vc-univ">北海道大学</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">地方に住んでいたのでオンラインで質の高い指導を受けられたのは大きかったです。毎日の課題チェックで気が緩む暇がなく、結果的にそれが一番の力になりました。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">地方在住</span>
+          <span class="vc-tag">オンライン</span>
+          <span class="vc-tag">毎日課題</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">👦</div>
+          <div class="vc-name">H.Yさん（現役）<span>高校3年生 → 北海道大学</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-card reveal d2">
+      <div class="vc-top vc-top-waseda">
+        <div class="vc-result">合格<span class="vc-univ">早稲田大学 商学部</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">確認テストで弱点が明確になり、効率よく復習できました。先生が作ってくれたロードマップ通りに進めるだけで、確実に力がついていくのを実感。最後まで信じてよかったです。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">確認テスト</span>
+          <span class="vc-tag">ロードマップ</span>
+          <span class="vc-tag">弱点克服</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">👩</div>
+          <div class="vc-name">M.Tさん（現役）<span>高校3年生 → 早稲田大学商学部</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-card reveal d3">
+      <div class="vc-top vc-top-march">
+        <div class="vc-result">合格<span class="vc-univ">明治大学</span></div>
+      </div>
+      <div class="vc-body">
+        <p class="vc-quote">高3の夏まで部活に打ち込んでいたので、引退後からの追い上げが不安でした。でも毎日課題で学習のペースを作ってもらい、短期間でも着実に成績が伸びました。</p>
+        <div class="vc-tags">
+          <span class="vc-tag">部活両立</span>
+          <span class="vc-tag">短期集中</span>
+          <span class="vc-tag">毎日課題</span>
+        </div>
+        <div class="vc-author">
+          <div class="vc-avatar">🧑</div>
+          <div class="vc-name">S.Kさん（現役）<span>高校3年生 → 明治大学</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARENT VOICES ===== -->
+<section id="parent-voices" style="background:var(--cream);">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Parents Voice</span>
+    <h2 class="sec-ttl">保護者の<span class="ac">声</span></h2>
+    <p class="sec-sub">お子様の変化を見守ってきた保護者の方からいただいた声です。</p>
+  </div>
+
+  <div class="parent-grid">
+    <div class="parent-card reveal d1">
+      <span class="parent-card-label">保護者</span>
+      <p class="parent-card-txt">毎日の学習報告があるので、親としても安心して見守ることができました。子どもの表情が入塾前と全く変わり、自信を持って受験に臨めたことに感謝しています。</p>
+      <div class="parent-card-auth">— 一橋大学合格 R.Nさんの保護者</div>
+    </div>
+    <div class="parent-card reveal d2">
+      <span class="parent-card-label">保護者</span>
+      <p class="parent-card-txt">オンラインで本当に大丈夫なのか最初は不安でしたが、対面以上にきめ細かい指導をしていただきました。定期面談で学習の進捗を共有してもらえるので、家庭でのサポートもしやすかったです。</p>
+      <div class="parent-card-auth">— 早稲田大学合格 A.Sさんの保護者</div>
+    </div>
+    <div class="parent-card reveal d3">
+      <span class="parent-card-label">保護者</span>
+      <p class="parent-card-txt">勉強嫌いだった息子が、自分から机に向かうようになったのは本当に驚きました。毎日課題の仕組みがうまく機能していたのだと思います。先生方の根気強いご指導に頭が下がります。</p>
+      <div class="parent-card-auth">— 上智大学合格 T.Kさんの保護者</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <div class="reveal">
+    <div class="cta-ttl">あなたも合格者の声に続きませんか？</div>
+    <p class="cta-sub">まずは無料相談で、現在の学習状況や志望校についてお聞かせください。<br>入塾の強制は一切ありません。</p>
+    <a href="index.html#contact" class="cta-btn">無料相談を申し込む →</a>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:.5rem;font-family:'Kaisei Opti',serif;font-size:1rem;color:#fff;">プラトン</p>
+  <p>文系大学受験専門塾｜全国対応オンライン指導</p>
+  <p style="margin-top:.5rem;">
+    <a href="index.html">トップページ</a> |
+    <a href="index.html#courses">コース紹介</a> |
+    <a href="index.html#results">合格実績</a> |
+    <a href="index.html#pricing">料金案内</a> |
+    <a href="index.html#contact">無料相談</a>
+  </p>
+  <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2025 Plato. All rights reserved.</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+}, {threshold: .1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
