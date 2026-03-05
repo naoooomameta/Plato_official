@@ -279,6 +279,7 @@ footer a{color:#e8b0a0;}
 @media(max-width:640px){
   .problem-grid{grid-template-columns:1fr;}
   .flow-item{grid-template-columns:56px 1fr;}
+  #pricing [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
 }
 </style>
 </head>
@@ -499,6 +500,68 @@ footer a{color:#e8b0a0;}
     <p>毎日課題の詳しい仕組みや特徴については、専用ページをご覧ください。</p>
     <div style="margin-top:1.5rem;">
       <a href="mainichi-kadai.html" class="btn-r">毎日課題システムの詳細を見る →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" style="background:#fff;">
+  <div style="max-width:860px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:2rem;">
+      <span style="display:inline-block;background:var(--pale);color:var(--course);font-size:.72rem;font-weight:700;letter-spacing:.15em;padding:5px 16px;border-radius:50px;border:1px solid var(--course);margin-bottom:.7rem;">Pricing</span>
+      <h2 class="sec-ttl">料金<span class="ac">プラン</span></h2>
+      <p class="sec-sub">すべてのプランに毎日課題・確認テスト・三者面談が含まれています。</p>
+    </div>
+
+    <!-- Plan cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:2rem;">
+      <!-- Plan A -->
+      <div style="border-radius:18px;overflow:hidden;border:2px solid var(--bdr);background:var(--cream);transition:all .3s;" class="reveal d1">
+        <div style="background:linear-gradient(135deg,var(--course),var(--mid));padding:1.2rem;text-align:center;color:#fff;">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.85;margin-bottom:.3rem;">プランA</div>
+          <div style="font-family:'Kaisei Opti',serif;font-size:2.2rem;font-weight:700;line-height:1;">45,000<span style="font-size:.9rem;">円</span></div>
+          <div style="font-size:.72rem;opacity:.8;margin-top:.2rem;">税込／月</div>
+        </div>
+        <div style="padding:1.4rem;">
+          <div style="text-align:center;background:#fff;border-radius:10px;padding:.8rem;margin-bottom:1.2rem;border:1.5px solid var(--bdr);">
+            <div style="font-family:'Kaisei Opti',serif;font-size:1.6rem;font-weight:700;color:var(--course);">月4回</div>
+            <div style="font-size:.75rem;color:var(--txt2);">オンライン個別指導 × 60分</div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>毎日課題 20日分／月</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>確認テスト 毎週1回＋月末1回</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>LINE質問対応（随時）</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>三者面談（保護者様・生徒・講師）</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Plan B -->
+      <div style="border-radius:18px;overflow:hidden;border:2px solid var(--course);background:var(--cream);position:relative;transition:all .3s;" class="reveal d2">
+        <div style="position:absolute;top:12px;right:12px;background:#fff;color:var(--course);font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.12);">おすすめ</div>
+        <div style="background:linear-gradient(135deg,var(--dark),var(--course));padding:1.2rem;text-align:center;color:#fff;">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.85;margin-bottom:.3rem;">プランB</div>
+          <div style="font-family:'Kaisei Opti',serif;font-size:2.2rem;font-weight:700;line-height:1;">59,980<span style="font-size:.9rem;">円</span></div>
+          <div style="font-size:.72rem;opacity:.8;margin-top:.2rem;">税込／月</div>
+        </div>
+        <div style="padding:1.4rem;">
+          <div style="text-align:center;background:#fff;border-radius:10px;padding:.8rem;margin-bottom:1.2rem;border:1.5px solid var(--course);">
+            <div style="font-family:'Kaisei Opti',serif;font-size:1.6rem;font-weight:700;color:var(--course);">月8回</div>
+            <div style="font-size:.75rem;color:var(--txt2);">オンライン個別指導 × 60分</div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>毎日課題 20日分／月</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>確認テスト 毎週1回＋月末1回</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>LINE質問対応（随時）</li>
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>三者面談（保護者様・生徒・講師）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="reveal" style="text-align:center;font-size:.78rem;color:var(--txt2);line-height:1.8;">
+      ※ 入塾金・教材費の詳細は無料相談時にご説明いたします。<br>
+      ※ 兄弟割引制度あり。まずはお気軽にお問い合わせください。
     </div>
   </div>
 </section>
