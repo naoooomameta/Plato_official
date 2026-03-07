@@ -78,6 +78,38 @@ header{
 }
 .hd-sns:hover{opacity:.85;}
 
+/* === HAMBURGER MENU === */
+.hd-ham{
+  display:none;flex-direction:column;justify-content:center;align-items:center;gap:5.5px;
+  width:42px;height:42px;border:2px solid var(--red);border-radius:8px;
+  background:none;cursor:pointer;padding:0;flex-shrink:0;
+}
+.hd-ham span{
+  display:block;width:20px;height:2.5px;background:var(--red);
+  border-radius:2px;transition:transform .3s ease,opacity .25s ease;
+}
+.hd-ham.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.hd-ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hd-ham.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+@media(max-width:768px){
+  .hd-top{flex-wrap:nowrap;padding:10px 4vw;}
+  .hd-right{display:none;}
+  .hd-ham{display:flex;}
+  nav{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1);}
+  nav.open{max-height:75vh;overflow-y:auto;}
+  .nav-ul{flex-direction:column;overflow-x:visible;white-space:normal;padding:6px 0 12px;}
+  .nav-ul li a{
+    display:block;padding:14px 22px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:.9rem;letter-spacing:.05em;
+  }
+  .nav-ul li:last-child a{border-bottom:none;}
+  .nav-ul li a.hl{
+    margin:10px 16px;border-radius:8px;
+    text-align:center;padding:10px 16px;border-bottom:none;
+  }
+}
+
 /* NAV */
 nav{background:var(--red);}
 .nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
@@ -961,8 +993,11 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         Instagram
       </a>
     </div>
+    <button class="hd-ham" id="hamBtn" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <nav><ul class="nav-ul">
+  <nav id="spNav"><ul class="nav-ul">
     <li><a href="#worries">こんな悩みは？</a></li>
     <li><a href="#features">指導システム</a></li>
     <li><a href="#courses">コース・料金</a></li>
@@ -1934,6 +1969,36 @@ function switchTab(tabId, btn) {
     obs.observe(el);
   });
 }
+
+// Hamburger menu
+(function(){
+  const btn  = document.getElementById('hamBtn');
+  const nav  = document.getElementById('spNav');
+  if (!btn || !nav) return;
+
+  function setMenu(open) {
+    btn.classList.toggle('open', open);
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  btn.addEventListener('click', function() {
+    setMenu(!nav.classList.contains('open'));
+  });
+
+  // Close on any nav link click
+  nav.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { setMenu(false); });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+      setMenu(false);
+    }
+  });
+})();
 </script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>lucide.createIcons();</script>
