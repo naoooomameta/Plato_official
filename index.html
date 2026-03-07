@@ -272,11 +272,14 @@ section{padding:64px 4vw;}
 .wi{font-size:1.6rem;flex-shrink:0;line-height:1;margin-top:2px;}
 .wt{font-size:.87rem;font-weight:700;line-height:1.55;}
 .resolve{
-  text-align:center;margin:2rem auto 0;
+  display:flex;align-items:flex-start;gap:12px;
+  text-align:left;margin:2rem auto 0;
   font-size:.97rem;font-weight:700;color:var(--red);
   background:var(--pale);padding:16px 24px;border-radius:10px;
   max-width:580px;border:2px solid var(--bdr);
 }
+.resolve-icon{flex-shrink:0;margin-top:2px;}
+.resolve-icon svg{width:26px;height:26px;stroke-width:2;color:var(--red);}
 
 /* ===== FEATURES ===== */
 #features{background:var(--cream);}
@@ -1023,7 +1026,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="wcard reveal d1"><div class="wi"><i data-lucide="pencil"></i></div><div class="wt">現代文・古文・英語の点数がなかなか上がらない</div></div>
     <div class="wcard reveal d2"><div class="wi"><i data-lucide="target"></i></div><div class="wt">志望校との差が大きく、何から手をつければいいかわからない</div></div>
   </div>
-  <div class="resolve reveal">👆 「家で勉強できない受験生の志望校合格は100%叶わない」— プラトンは毎日の家庭学習を徹底管理し、この問題を根本から解決します！</div>
+  <div class="resolve reveal"><span class="resolve-icon"><i data-lucide="quote"></i></span><span>「家で勉強できない受験生の志望校合格は100%叶わない」— プラトンは毎日の家庭学習を徹底管理し、この問題を根本から解決します！</span></div>
 </section>
 
 <!-- ===== FEATURES ===== -->
