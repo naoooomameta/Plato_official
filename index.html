@@ -110,6 +110,12 @@ header{
   }
 }
 
+/* 2つの力 カード グリッド */
+.power-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;max-width:780px;margin:0 auto 2rem;}
+@media(max-width:600px){
+  .power-grid{grid-template-columns:1fr;}
+}
+
 /* NAV */
 nav{background:var(--red);}
 .nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
@@ -1208,16 +1214,20 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
 
   <!-- 2つの力 -->
-  <div class="reveal" style="max-width:780px;margin:0 auto 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
-    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.6rem 1.4rem;color:#fff;text-align:center;">
-      <div style="font-size:2rem;margin-bottom:.5rem;">🧠</div>
-      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;">自ら考える力</h4>
-      <p style="font-size:.82rem;line-height:1.8;opacity:.9;">与えられた知識をただ暗記するのではなく、「なぜそうなるのか」を自分の頭で考え抜く力。この力がなければ、応用問題や初見の問題に太刀打ちできません。</p>
+  <div class="power-grid reveal">
+    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.8rem 1.6rem;color:#fff;">
+      <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.6rem;">自ら考える力</h4>
+      <p style="font-size:.84rem;line-height:1.85;opacity:.92;">与えられた知識をただ暗記するのではなく、「なぜそうなるのか」を自分の頭で考え抜く力。この力がなければ、応用問題や初見の問題に太刀打ちできません。</p>
     </div>
-    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.6rem 1.4rem;color:#fff;text-align:center;">
-      <div style="font-size:2rem;margin-bottom:.5rem;">💡</div>
-      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;">自ら答えを導き出す力</h4>
-      <p style="font-size:.82rem;line-height:1.8;opacity:.9;">正解が用意されていない問いに対しても、自分なりの根拠を持って答えを出す力。小論文や記述問題はもちろん、あらゆる科目で問われる力です。</p>
+    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.8rem 1.6rem;color:#fff;">
+      <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      </div>
+      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.6rem;">自ら答えを導き出す力</h4>
+      <p style="font-size:.84rem;line-height:1.85;opacity:.92;">正解が用意されていない問いに対しても、自分なりの根拠を持って答えを出す力。小論文や記述問題はもちろん、あらゆる科目で問われる力です。</p>
     </div>
   </div>
 
