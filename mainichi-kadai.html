@@ -335,6 +335,10 @@ footer a{color:#e8b0a0;}
   .problem-grid{grid-template-columns:1fr;}
   .online-inner{grid-template-columns:1fr;}
   .cycle-step{grid-template-columns:64px 1fr;}
+  .ttg-2col{grid-template-columns:1fr!important;}
+  .ttg-3col{grid-template-columns:1fr!important;}
+  .sys-3col{grid-template-columns:1fr!important;}
+  .sys-info-panel{grid-template-columns:1fr 1fr!important;}
 }
 </style>
 </head>
@@ -407,7 +411,7 @@ footer a{color:#e8b0a0;}
   <!-- 2つの力 -->
   <div style="max-width:780px;margin:0 auto 2.5rem;">
     <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1.2rem;text-align:center;">合格に不可欠な<span style="color:var(--red);">2つの力</span></h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+    <div class="ttg-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
       <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:2rem 1.5rem;color:#fff;text-align:center;">
         <div style="margin-bottom:.6rem;display:flex;justify-content:center;">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.16z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.16z"/></svg>
@@ -435,7 +439,7 @@ footer a{color:#e8b0a0;}
 
   <!-- 定量×定性の対比 -->
   <div style="max-width:780px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div class="ttg-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
       <div style="background:#fff;border-radius:14px;padding:1.5rem;border:2px solid var(--bdr);">
         <h4 style="font-size:.9rem;font-weight:700;color:var(--txt2);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg> 定量（多くの受験生が重視）</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
@@ -460,7 +464,7 @@ footer a{color:#e8b0a0;}
   <!-- 合格思考の3つの柱 -->
   <div style="max-width:780px;margin:2.5rem auto 0;">
     <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1.4rem;text-align:center;">合格思考トレーニングが鍛える<span style="color:var(--red);">3つの思考習慣</span></h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+    <div class="ttg-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
       <div style="background:#fff;border-radius:14px;padding:1.5rem 1.2rem;text-align:center;border:2px solid var(--bdr);border-top:4px solid var(--red);">
         <div style="display:flex;justify-content:center;margin-bottom:.8rem;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
         <h4 style="font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;">ゴール逆算思考</h4>
@@ -538,7 +542,7 @@ footer a{color:#e8b0a0;}
           </div>
         </div>
         <!-- 生徒情報 -->
-        <div style="background:#1a1a2e;border-radius:10px;padding:1.1rem 1.4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1rem;">
+        <div class="sys-info-panel" style="background:#1a1a2e;border-radius:10px;padding:1.1rem 1.4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1rem;">
           <div><div style="font-size:.6rem;color:rgba(255,255,255,.45);margin-bottom:.25rem;">生徒名</div><div style="font-size:.9rem;font-weight:700;color:#fff;">プラトン太郎</div><div style="font-size:.6rem;color:rgba(255,255,255,.4);">高校3年 / 文系</div></div>
           <div><div style="font-size:.6rem;color:rgba(255,255,255,.45);margin-bottom:.25rem;">第一志望</div><div style="font-size:.9rem;font-weight:700;color:#fff;">東京大学</div><div style="font-size:.6rem;color:rgba(255,255,255,.4);">国公立 | 文科一類</div></div>
           <div><div style="font-size:.6rem;color:rgba(255,255,255,.45);margin-bottom:.25rem;">目標偏差値</div><div style="font-size:1.2rem;font-weight:700;color:#fff;">72 <span style="font-size:.65rem;font-weight:400;opacity:.55;">（現状 55）</span></div></div>
@@ -585,7 +589,7 @@ footer a{color:#e8b0a0;}
 
   <!-- 3機能カード -->
   <div style="max-width:780px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+    <div class="sys-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
       <div style="background:#fff;border-radius:14px;padding:1.4rem;text-align:center;border:2px solid var(--bdr);">
         <div style="display:flex;justify-content:center;margin-bottom:.7rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
         <h4 style="font-size:.88rem;font-weight:700;color:var(--txt);margin-bottom:.4rem;line-height:1.4;">合格から逆算した<br>戦略マップ設計</h4>
