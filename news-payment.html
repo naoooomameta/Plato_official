@@ -174,6 +174,34 @@ section{padding:64px 4vw;}
   margin-bottom:.5rem;
 }
 .pay-desc{font-size:.82rem;color:var(--txt2);line-height:1.8;}
+.robot-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#eef5fb;border:1.5px solid #4a90c4;
+  border-radius:6px;padding:4px 10px;
+  font-size:.68rem;font-weight:700;color:#2a6098;
+  margin-top:.8rem;letter-spacing:.03em;
+}
+.robot-badge svg{width:13px;height:13px;stroke:#2a6098;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.trust-note{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  background:#eef5fb;border:1.5px solid #4a90c4;
+  border-radius:16px;padding:1.6rem 1.8rem;
+  margin:2rem 0;
+}
+.trust-note-icon{
+  flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;
+  background:#fff;border:2px solid #4a90c4;
+  display:flex;align-items:center;justify-content:center;
+}
+.trust-note-icon svg{width:22px;height:22px;stroke:#2a6098;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.trust-note-body{font-size:.88rem;line-height:2;color:#1e3a55;}
+.trust-note-body strong{color:#1a4f8a;font-weight:700;}
+.trust-note-body .trust-label{
+  display:inline-block;font-size:.7rem;font-weight:700;
+  color:#fff;background:#2a6098;border-radius:4px;
+  padding:2px 8px;letter-spacing:.06em;margin-right:.4rem;vertical-align:middle;
+}
 
 /* ===== POINT BOXES ===== */
 .point-grid{
@@ -321,7 +349,7 @@ footer a:hover{color:#e8b0a0;}
     <p class="article-date">2025年 お知らせ</p>
 
     <div class="article-lead reveal">
-      昨今、学習塾業界において授業料の支払い方法に関する報道が話題となっています。塾を選ぶ際、月謝や支払い方法についてご不安を感じているご家庭も多いのではないでしょうか。プラトンでは、ご家庭のご事情やご要望に合わせて<strong>4つの支払い方法</strong>をご用意しており、クレジットカードによる毎月払いにも対応しています。また、特定商取引法に基づくクーリングオフをはじめ、退塾時の返金制度も明確に定めています。
+      昨今、学習塾業界において授業料の支払い方法に関する報道が話題となっています。塾を選ぶ際、月謝や支払い方法についてご不安を感じているご家庭も多いのではないでしょうか。プラトンでは、ご家庭のご事情やご要望に合わせて<strong>4つの支払い方法</strong>をご用意しており、クレジットカードによる毎月払いにも対応しています。クレジットカード毎月払いには、月謝払いに実績のある<strong>ロボットペイメント株式会社の「サブスクペイ」</strong>を採用し、安心・安全な決済環境を整えています。また、特定商取引法に基づくクーリングオフをはじめ、退塾時の返金制度も明確に定めています。
     </div>
 
     <!-- ===== 支払い方法 ===== -->
@@ -361,12 +389,27 @@ footer a:hover{color:#e8b0a0;}
         </div>
         <p class="pay-num">PLAN 4</p>
         <p class="pay-title">クレジットカード払い<br>（毎月払い）</p>
-        <p class="pay-desc">クレジットカードで毎月お支払いいただく方法です。</p>
+        <p class="pay-desc">クレジットカードで毎月お支払いいただく方法です。月謝感覚でご利用いただけます。</p>
+        <span class="robot-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          ロボットペイメント「サブスクペイ」利用
+        </span>
       </div>
     </div>
 
     <div class="article-body reveal">
       <p>いずれの方法でも、無料相談時に各プランの詳細を丁寧にご説明いたします。ご家庭のご事情に合った方法をお選びいただけます。</p>
+    </div>
+
+    <!-- ===== ロボットペイメント 信頼性ノート ===== -->
+    <div class="trust-note reveal">
+      <div class="trust-note-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      </div>
+      <div class="trust-note-body">
+        <strong><span class="trust-label">決済セキュリティ</span>クレジットカード毎月払い（PLAN 4）は、ロボットペイメント株式会社の「サブスクペイ」を利用しています。</strong><br>
+        サブスクペイは月謝・月額課金に特化したサブスクリプション決済サービスで、多くの教育機関・学習塾に導入されている実績ある決済システムです。カード情報はプラトンには一切届かず、<strong>PCI DSS</strong>（クレジットカード業界のセキュリティ国際基準）に準拠したロボットペイメント社のシステムで安全に管理されます。安心してご利用いただけます。
+      </div>
     </div>
 
     <!-- ===== 安心の3つの制度 ===== -->
@@ -450,12 +493,12 @@ footer a:hover{color:#e8b0a0;}
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         料金体系の透明性へのこだわり
       </p>
-      <p>塾選びは学習効果だけでなく、ご家庭の安心感も大切な要素です。プラトンでは4つの支払い方法と明確な手続き規定を通じて、料金体系の透明性を大切にしています。無料相談の際には、入塾金・授業料・支払いプランについて丁寧にご説明いたしますので、お気軽にお問い合わせください。</p>
+      <p>塾選びは学習効果だけでなく、ご家庭の安心感も大切な要素です。プラトンでは4つの支払い方法と明確な手続き規定を通じて、料金体系の透明性を大切にしています。クレジットカード毎月払いにはロボットペイメント株式会社の「サブスクペイ」を採用し、月謝感覚で安全にご利用いただける仕組みを整えています。無料相談の際には、入塾金・授業料・支払いプランについて丁寧にご説明いたしますので、お気軽にお問い合わせください。</p>
     </div>
 
     <div class="article-body reveal">
       <h2 class="article-h2">まとめ</h2>
-      <p>プラトンでは「4つの柔軟な支払い方法」「クーリングオフ対応」「明確な退塾・返金制度」により、ご家庭が安心して学習に集中できる環境を整えています。料金や支払い方法についてご不安をお感じの方は、ぜひ一度プラトンの無料相談をご利用ください。具体的な料金や各支払いプランの詳細について、担当者がわかりやすくご説明いたします。</p>
+      <p>プラトンでは「4つの柔軟な支払い方法」「ロボットペイメント社サブスクペイによる安全な月謝払い」「クーリングオフ対応」「明確な退塾・返金制度」により、ご家庭が安心して学習に集中できる環境を整えています。料金や支払い方法についてご不安をお感じの方は、ぜひ一度プラトンの無料相談をご利用ください。具体的な料金や各支払いプランの詳細について、担当者がわかりやすくご説明いたします。</p>
     </div>
   </div>
 </section>
