@@ -200,7 +200,8 @@ section{padding:64px 4vw;}
   display:flex;align-items:center;justify-content:center;
   margin-bottom:1rem;flex-shrink:0;
 }
-.feat-icon{font-size:1.8rem;margin-bottom:.7rem;}
+.feat-icon{margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
+.feat-icon svg{width:30px;height:30px;stroke-width:1.8;color:var(--course);}
 .feat-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
 .feat-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
 
@@ -218,7 +219,8 @@ section{padding:64px 4vw;}
   align-items:center;justify-content:center;gap:4px;padding:1.2rem .8rem;
 }
 .flow-num .num{font-family:"Kaisei Opti",serif;font-size:1.4rem;font-weight:700;line-height:1;}
-.flow-num .icon{font-size:1.1rem;line-height:1;}
+.flow-num .icon{line-height:1;display:flex;align-items:center;justify-content:center;}
+.flow-num .icon svg{width:18px;height:18px;stroke-width:2;color:rgba(255,255,255,.9);}
 .flow-body{padding:1.3rem 1.5rem;}
 .flow-body h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.4rem;}
 .flow-body p{font-size:.84rem;color:var(--txt2);line-height:1.85;}
@@ -234,7 +236,8 @@ section{padding:64px 4vw;}
   border:2px solid var(--bdr);transition:all .3s;
 }
 .merit-card:hover{border-color:var(--course);transform:translateY(-4px);box-shadow:var(--sh2);}
-.merit-icon{font-size:2rem;margin-bottom:.7rem;}
+.merit-icon{margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
+.merit-icon svg{width:32px;height:32px;stroke-width:1.8;color:var(--course);}
 .merit-card h4{font-size:.95rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;line-height:1.4;}
 .merit-card p{font-size:.82rem;color:var(--txt2);line-height:1.85;}
 
@@ -319,7 +322,7 @@ footer a{color:#e8b0a0;}
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="target-badge">🎓 中学生〜高校2年生 対象</div>
+    <div class="target-badge"><i data-lucide="graduation-cap"></i> 中学生〜高校2年生 対象</div>
     <span class="eyebrow">Preparation Course</span>
     <h1>大学受験<em>準備コース</em></h1>
     <p class="page-hero-sub">大学受験に向けた基礎学力と学習習慣を身につけるコースです。毎日課題による学習管理を通して、日々の学習を積み重ねながら大学受験に必要な基礎学力を養います。</p>
@@ -377,22 +380,22 @@ footer a{color:#e8b0a0;}
   </div>
   <div class="feat-grid">
     <div class="feat-card">
-      <div class="feat-icon">📅</div>
+      <div class="feat-icon"><i data-lucide="calendar-check"></i></div>
       <h4>毎日課題による学習管理</h4>
       <p>毎日の学習内容を講師が具体的に提示し、ノート提出を通じて学習を確認します。「今日は何をすればいいか」で迷う時間をなくし、毎日確実に学習を積み重ねます。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">📚</div>
+      <div class="feat-icon"><i data-lucide="book-marked"></i></div>
       <h4>基礎学力の徹底養成</h4>
       <p>大学受験に必要な基礎を着実に固めます。英語・国語・社会を中心に、現在の学力に合わせた参考書・問題集で基礎から積み上げます。高3になったときに応用力を発揮できる土台を作ります。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">💻</div>
+      <div class="feat-icon"><i data-lucide="monitor"></i></div>
       <h4>オンライン個別指導</h4>
       <p>理解が不十分な部分はオンライン個別指導でサポートします。疑問点はその場で解決できるため、苦手を放置することなく学習を進められます。全国どこからでも受講可能です。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">🌱</div>
+      <div class="feat-icon"><i data-lucide="sprout"></i></div>
       <h4>学習習慣づくりのサポート</h4>
       <p>「継続する力」こそ大学受験の最大の武器です。毎日の学習サイクルを通して、自然と学習習慣が身につく仕組みを提供します。部活との両立もサポートします。</p>
     </div>
@@ -410,7 +413,7 @@ footer a{color:#e8b0a0;}
     <div class="flow-item">
       <div class="flow-num">
         <span class="num">①</span>
-        <span class="icon">💬</span>
+        <span class="icon"><i data-lucide="message-circle"></i></span>
       </div>
       <div class="flow-body">
         <h4>無料相談・現状ヒアリング</h4>
@@ -420,7 +423,7 @@ footer a{color:#e8b0a0;}
     <div class="flow-item">
       <div class="flow-num">
         <span class="num">②</span>
-        <span class="icon">📋</span>
+        <span class="icon"><i data-lucide="clipboard-list"></i></span>
       </div>
       <div class="flow-body">
         <h4>学習プランの設計</h4>
@@ -430,7 +433,7 @@ footer a{color:#e8b0a0;}
     <div class="flow-item">
       <div class="flow-num">
         <span class="num">③</span>
-        <span class="icon">📩</span>
+        <span class="icon"><i data-lucide="mail"></i></span>
       </div>
       <div class="flow-body">
         <h4>毎日課題のスタート</h4>
@@ -440,7 +443,7 @@ footer a{color:#e8b0a0;}
     <div class="flow-item">
       <div class="flow-num">
         <span class="num">④</span>
-        <span class="icon">💻</span>
+        <span class="icon"><i data-lucide="video"></i></span>
       </div>
       <div class="flow-body">
         <h4>オンライン個別指導</h4>
@@ -450,7 +453,7 @@ footer a{color:#e8b0a0;}
     <div class="flow-item">
       <div class="flow-num">
         <span class="num">⑤</span>
-        <span class="icon">📈</span>
+        <span class="icon"><i data-lucide="trending-up"></i></span>
       </div>
       <div class="flow-body">
         <h4>定期的な学習状況の見直し</h4>
@@ -468,22 +471,22 @@ footer a{color:#e8b0a0;}
   </div>
   <div class="merit-grid">
     <div class="merit-card">
-      <div class="merit-icon">⏰</div>
+      <div class="merit-icon"><i data-lucide="clock"></i></div>
       <h4>受験本番まで時間を有効活用できる</h4>
       <p>中学生〜高校2年生のうちから準備を始めることで、余裕をもって受験に臨めます。焦りのない学習が、本番での力を最大限に引き出します。</p>
     </div>
     <div class="merit-card">
-      <div class="merit-icon">🏗️</div>
+      <div class="merit-icon"><i data-lucide="layers"></i></div>
       <h4>盤石な基礎が応用力を生む</h4>
       <p>高校3年生になったとき、基礎が固まっていると応用・発展の問題にすぐ取り組めます。土台がしっかりしているほど、成績の伸びが速くなります。</p>
     </div>
     <div class="merit-card">
-      <div class="merit-icon">📅</div>
+      <div class="merit-icon"><i data-lucide="calendar"></i></div>
       <h4>学習習慣が受験まで続く</h4>
       <p>早いうちに学習習慣を身につけることで、受験学年になっても自然と勉強を続けられます。習慣化された学習は最大の武器です。</p>
     </div>
     <div class="merit-card">
-      <div class="merit-icon">🌐</div>
+      <div class="merit-icon"><i data-lucide="globe"></i></div>
       <h4>全国どこからでも受講できる</h4>
       <p>オンライン完結の指導なので、通塾の手間がありません。自宅から質の高い個別指導を受けられます。部活や習い事との両立も可能です。</p>
     </div>
@@ -493,7 +496,7 @@ footer a{color:#e8b0a0;}
 <!-- ===== KADAI LINK ===== -->
 <section style="background:#fff;padding:48px 4vw;">
   <div class="hl-box">
-    <h3>📝 毎日課題システムについて詳しく知る</h3>
+    <h3><i data-lucide="external-link" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;stroke-width:2;"></i>毎日課題システムについて詳しく知る</h3>
     <p>大学受験準備コースの核となる「毎日課題」は、生徒一人ひとりの学習状況に合わせて<strong>毎日の学習内容を具体的に提示する学習管理システム</strong>です。</p>
     <div class="hl-inner">
       講師が毎日の課題を提示 → 生徒が学習してノート提出 → 講師が確認・フィードバック → 翌日の課題へ。このサイクルで日々の学習を積み重ねます。
@@ -616,5 +619,7 @@ footer a{color:#e8b0a0;}
   <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2024 Plato. All rights reserved.</p>
 </footer>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>

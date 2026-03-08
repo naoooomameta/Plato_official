@@ -162,7 +162,8 @@ section{padding:64px 4vw;}
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;max-width:960px;margin:0 auto;}
 .feat-card{background:var(--cream);border-radius:16px;padding:1.8rem 1.6rem;border:2px solid var(--bdr-c);transition:all .3s;}
 .feat-card:hover{border-color:var(--course);transform:translateY(-4px);box-shadow:0 8px 32px rgba(90,48,104,.18);}
-.feat-icon{font-size:1.8rem;margin-bottom:.7rem;}
+.feat-icon{margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
+.feat-icon svg{width:30px;height:30px;stroke-width:1.8;color:var(--course);}
 .feat-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
 .feat-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
 
@@ -180,7 +181,8 @@ section{padding:64px 4vw;}
   align-items:center;justify-content:center;gap:4px;padding:1.2rem .8rem;
 }
 .cycle-num .num{font-family:"Kaisei Opti",serif;font-size:1.6rem;font-weight:700;line-height:1;}
-.cycle-num .icon{font-size:1.2rem;line-height:1;}
+.cycle-num .icon{line-height:1;display:flex;align-items:center;justify-content:center;}
+.cycle-num .icon svg{width:18px;height:18px;stroke-width:2;color:rgba(255,255,255,.9);}
 .cycle-body{padding:1.3rem 1.5rem;}
 .cycle-body h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;}
 .cycle-body p{font-size:.84rem;color:var(--txt2);line-height:1.85;}
@@ -245,7 +247,7 @@ footer a{color:#c8a0e8;}
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="target-badge">🏆 高校2年生〜高校3年生 対象</div>
+    <div class="target-badge"><i data-lucide="trophy"></i> 高校2年生〜高校3年生 対象</div>
     <span class="eyebrow">Winning Strategy Program</span>
     <h1>合格戦略<em>プログラム</em></h1>
     <p class="page-hero-sub">志望校合格を目指す受験生のためのプログラムです。志望校から逆算した合格ロードマップを作成し、受験本番まで講師が伴走しながら指導を行います。</p>
@@ -320,22 +322,22 @@ footer a{color:#c8a0e8;}
   </div>
   <div class="feat-grid">
     <div class="feat-card">
-      <div class="feat-icon">🗺️</div>
+      <div class="feat-icon"><i data-lucide="map"></i></div>
       <h4>合格ロードマップの作成</h4>
       <p>志望校・現在の学力・受験までの期間をもとに、合格ロードマップを作成します。「今日何をすればいいか」だけでなく、「1ヶ月後・3ヶ月後に何を仕上げているべきか」まで設計します。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">📅</div>
+      <div class="feat-icon"><i data-lucide="calendar-check"></i></div>
       <h4>毎日課題による学習管理</h4>
       <p>ロードマップに沿って、毎日の学習内容を講師が提示します。ノート提出による学習確認と、講師のフィードバックを通して、日々確実に学習を積み重ねます。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">📊</div>
+      <div class="feat-icon"><i data-lucide="bar-chart-2"></i></div>
       <h4>確認テスト・実力診断</h4>
       <p>定期的に確認テストや実力診断テストを実施します。学力の推移を客観的に把握し、志望校との距離感を確認しながら、必要に応じて学習戦略を調整します。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">🤝</div>
+      <div class="feat-icon"><i data-lucide="handshake"></i></div>
       <h4>受験本番まで講師が伴走</h4>
       <p>入試当日まで講師がサポートを続けます。模試の結果分析、直前期の学習内容の絞り込み、メンタルサポートまで、受験生の伴走者として徹底的に関わります。</p>
     </div>
@@ -351,7 +353,7 @@ footer a{color:#c8a0e8;}
   </div>
   <div class="cycle-container">
     <div class="cycle-step">
-      <div class="cycle-num"><span class="num">①</span><span class="icon">📩</span></div>
+      <div class="cycle-num"><span class="num">①</span><span class="icon"><i data-lucide="inbox"></i></span></div>
       <div class="cycle-body">
         <h4>講師が毎日の課題を提示</h4>
         <p>合格ロードマップに沿って、その日の学習内容を具体的に提示します。どの参考書を・どの範囲まで・どのように進めるかまで明確に指示します。</p>
@@ -359,7 +361,7 @@ footer a{color:#c8a0e8;}
     </div>
     <div class="cycle-arrow">↓</div>
     <div class="cycle-step">
-      <div class="cycle-num"><span class="num">②</span><span class="icon">✏️</span></div>
+      <div class="cycle-num"><span class="num">②</span><span class="icon"><i data-lucide="pencil"></i></span></div>
       <div class="cycle-body">
         <h4>自宅で学習・ノートを提出</h4>
         <p>課題に取り組み、学習内容をノートにまとめて提出します。単なる報告ではなく、実際の学習内容を提出することで、理解度まで確認できます。</p>
@@ -367,7 +369,7 @@ footer a{color:#c8a0e8;}
     </div>
     <div class="cycle-arrow">↓</div>
     <div class="cycle-step">
-      <div class="cycle-num"><span class="num">③</span><span class="icon">📝</span></div>
+      <div class="cycle-num"><span class="num">③</span><span class="icon"><i data-lucide="file-check"></i></span></div>
       <div class="cycle-body">
         <h4>講師が確認・フィードバック</h4>
         <p>提出ノートを講師が確認し、丸付けとフィードバックを行います。理解不足の部分には具体的なアドバイスを送り、翌日の学習に活かします。</p>
@@ -375,7 +377,7 @@ footer a{color:#c8a0e8;}
     </div>
     <div class="cycle-arrow">↓</div>
     <div class="cycle-step">
-      <div class="cycle-num"><span class="num">④</span><span class="icon">🔁</span></div>
+      <div class="cycle-num"><span class="num">④</span><span class="icon"><i data-lucide="refresh-cw"></i></span></div>
       <div class="cycle-body">
         <h4>翌日の課題を提示・繰り返す</h4>
         <p>その日の学習状況を踏まえながら、翌日の課題を提示します。このサイクルを毎日繰り返すことで、日々の学習を着実に積み重ねていきます。</p>
@@ -496,5 +498,7 @@ footer a{color:#c8a0e8;}
   <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2024 Plato. All rights reserved.</p>
 </footer>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
