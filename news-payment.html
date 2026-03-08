@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>お知らせ | プラトン 文系の大学受験専門塾</title>
-<meta name="description" content="プラトンからの最新情報・お知らせ一覧です。授業料・支払い方法・退塾手続きなど、塾に関する重要なお知らせをご確認いただけます。">
-<meta property="og:title" content="お知らせ | プラトン 文系の大学受験専門塾">
-<meta property="og:description" content="プラトンからの最新情報・お知らせ一覧ページです。">
-<meta property="og:type" content="website">
+<title>授業料のお支払い・退塾について | プラトン 文系の大学受験専門塾</title>
+<meta name="description" content="プラトンでは4つの支払い方法をご用意。クレジットカード毎月払いにも対応し、クーリングオフ・退塾時の返金制度も明確に定めています。">
+<meta property="og:title" content="授業料のお支払い・退塾について | プラトン 文系の大学受験専門塾">
+<meta property="og:description" content="プラトンは4つの柔軟な支払い方法と明確な返金・退塾制度で安心の料金体系を実現しています。">
+<meta property="og:type" content="article">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -87,7 +87,6 @@ nav{background:var(--course);}
 }
 .btn-r:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
 
-/* PAGE HERO */
 .page-hero{
   background:linear-gradient(160deg,var(--pale) 0%,#fff5f7 40%,#f8f0f5 100%);
   padding:60px 4vw 56px;position:relative;overflow:hidden;
@@ -117,56 +116,158 @@ nav{background:var(--course);}
   max-width:640px;
 }
 
-/* NEWS INDEX */
-.news-index{max-width:800px;margin:0 auto;padding:56px 0;}
-.news-count{
-  font-size:.8rem;color:var(--txt3);margin-bottom:2rem;
-  letter-spacing:.04em;
-}
-.news-list{display:flex;flex-direction:column;gap:1.2rem;}
-.news-card{
-  background:#fff;border-radius:16px;
-  border:2px solid var(--bdr);
-  padding:1.6rem 1.8rem;
-  display:flex;flex-direction:column;gap:.7rem;
-  transition:all .3s;cursor:pointer;
-  text-decoration:none;color:inherit;
-}
-.news-card:hover{
-  border-color:var(--red);
-  box-shadow:var(--sh2);
-  transform:translateY(-2px);
-}
-.news-card-meta{
-  display:flex;align-items:center;gap:.7rem;
-  flex-wrap:wrap;
-}
-.news-card-date{
-  font-size:.78rem;color:var(--txt3);
-  letter-spacing:.04em;
-}
-.news-card-tag{
+section{padding:64px 4vw;}
+.eyebrow{
   display:inline-block;
-  font-size:.68rem;font-weight:700;letter-spacing:.08em;
-  padding:3px 12px;border-radius:50px;
   background:var(--pale);color:var(--red);
-  border:1px solid var(--red);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.7rem;border:1px solid var(--red);
 }
-.news-card-title{
+
+/* ===== ARTICLE ===== */
+.article-wrap{max-width:800px;margin:0 auto;}
+.article-date{
+  font-size:.78rem;color:var(--txt3);letter-spacing:.06em;margin-bottom:2rem;
+}
+.article-lead{
+  font-size:1rem;line-height:2;color:var(--txt2);
+  background:var(--pale);border-radius:14px;
+  padding:1.4rem 1.8rem;margin-bottom:2.5rem;
+  border-left:4px solid var(--red);
+}
+.article-body{font-size:.95rem;line-height:2;color:var(--txt);}
+.article-body p{margin-bottom:1.4rem;}
+.article-h2{
   font-family:"Kaisei Opti",serif;
-  font-size:1.1rem;font-weight:700;color:var(--txt);
-  line-height:1.5;
+  font-size:1.3rem;font-weight:700;color:var(--txt);
+  border-bottom:2px solid var(--pale);
+  padding-bottom:.6rem;margin:2.5rem 0 1.2rem;
 }
-.news-card-desc{
-  font-size:.88rem;color:var(--txt2);line-height:1.85;
+
+/* ===== PAYMENT GRID ===== */
+.pay-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1rem;margin:1.8rem 0 2.5rem;
 }
-.news-card-link{
-  font-size:.82rem;font-weight:700;color:var(--red);
-  display:inline-flex;align-items:center;gap:4px;
-  margin-top:.3rem;
+.pay-box{
+  background:#fff;border-radius:16px;
+  padding:1.4rem 1.2rem;text-align:center;
+  border:2px solid var(--bdr);transition:all .3s;
 }
-.news-card-link svg{transition:transform .2s;}
-.news-card:hover .news-card-link svg{transform:translateX(4px);}
+.pay-box:hover{border-color:var(--red);box-shadow:var(--sh);}
+.pay-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--pale);border:2px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;
+}
+.pay-icon svg{width:24px;height:24px;stroke:var(--red);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.pay-num{
+  font-size:.68rem;font-weight:700;color:var(--red);
+  letter-spacing:.1em;margin-bottom:.3rem;
+}
+.pay-title{
+  font-family:"Kaisei Opti",serif;
+  font-size:.95rem;font-weight:700;color:var(--txt);
+  margin-bottom:.5rem;
+}
+.pay-desc{font-size:.82rem;color:var(--txt2);line-height:1.8;}
+.robot-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#eef5fb;border:1.5px solid #4a90c4;
+  border-radius:6px;padding:4px 10px;
+  font-size:.68rem;font-weight:700;color:#2a6098;
+  margin-top:.8rem;letter-spacing:.03em;
+}
+.robot-badge svg{width:13px;height:13px;stroke:#2a6098;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.trust-note{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  background:#eef5fb;border:1.5px solid #4a90c4;
+  border-radius:16px;padding:1.6rem 1.8rem;
+  margin:2rem 0;
+}
+.trust-note-icon{
+  flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;
+  background:#fff;border:2px solid #4a90c4;
+  display:flex;align-items:center;justify-content:center;
+}
+.trust-note-icon svg{width:22px;height:22px;stroke:#2a6098;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.trust-note-body{font-size:.88rem;line-height:2;color:#1e3a55;}
+.trust-note-body strong{color:#1a4f8a;font-weight:700;}
+.trust-note-body .trust-label{
+  display:inline-block;font-size:.7rem;font-weight:700;
+  color:#fff;background:#2a6098;border-radius:4px;
+  padding:2px 8px;letter-spacing:.06em;margin-right:.4rem;vertical-align:middle;
+}
+
+/* ===== POINT BOXES ===== */
+.point-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.2rem;margin:1.8rem 0 2.5rem;
+}
+.point-box{
+  background:#fff;border-radius:16px;
+  padding:1.6rem 1.4rem;
+  border:2px solid var(--bdr);
+  transition:all .3s;
+}
+.point-box:hover{border-color:var(--red);box-shadow:var(--sh);}
+.point-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--pale);border:2px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;
+}
+.point-icon svg{width:24px;height:24px;stroke:var(--red);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.point-num{
+  font-size:.7rem;font-weight:700;color:var(--red);
+  letter-spacing:.1em;margin-bottom:.3rem;
+}
+.point-title{
+  font-family:"Kaisei Opti",serif;
+  font-size:1.05rem;font-weight:700;color:var(--txt);
+  margin-bottom:.6rem;
+}
+.point-desc{font-size:.85rem;color:var(--txt2);line-height:1.85;}
+
+/* ===== RULE TABLE ===== */
+.rule-table{
+  width:100%;border-collapse:collapse;margin:1.2rem 0 2rem;
+  font-size:.88rem;
+}
+.rule-table th,.rule-table td{
+  border:1px solid var(--bdr);padding:.8rem 1rem;
+  text-align:left;vertical-align:top;
+}
+.rule-table th{
+  background:var(--pale);color:var(--red);
+  font-weight:700;white-space:nowrap;width:30%;
+}
+.rule-table td{background:#fff;color:var(--txt);line-height:1.8;}
+@media(max-width:600px){
+  .rule-table,.rule-table thead,.rule-table tbody,.rule-table tr,.rule-table th,.rule-table td{
+    display:block;width:100%;
+  }
+  .rule-table th{width:100%;}
+}
+
+/* ===== SUMMARY BOX ===== */
+.summary-box{
+  background:linear-gradient(135deg,var(--pale) 0%,#fff 100%);
+  border-radius:18px;padding:2rem 2.2rem;
+  border:2px solid var(--bdr);margin:2rem 0;
+}
+.summary-box-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;
+  font-weight:700;color:var(--red);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.summary-box-ttl svg{width:20px;height:20px;stroke:var(--red);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.summary-box p{font-size:.9rem;color:var(--txt);line-height:1.95;}
 
 .cta-section{
   background:linear-gradient(135deg,var(--dark),var(--red));
@@ -186,10 +287,14 @@ footer a{color:rgba(255,255,255,.6);transition:color .3s;}
 footer a:hover{color:#e8b0a0;}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
 .reveal.on{opacity:1;transform:none;}
-.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}
 @media(max-width:768px){
-  .news-index{padding:40px 0;}
-  .news-card{padding:1.2rem 1.2rem;}
+  .pay-grid{grid-template-columns:1fr 1fr;}
+  .point-grid{grid-template-columns:1fr;}
+  section{padding:48px 4vw;}
+}
+@media(max-width:480px){
+  .pay-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -219,7 +324,7 @@ footer a:hover{color:#e8b0a0;}
       <li><a href="index.html#courses">コース・料金</a></li>
       <li><a href="index.html#staff">講師紹介</a></li>
       <li><a href="voices.html">合格者の声</a></li>
-      <li><a href="news.html" class="active">お知らせ</a></li>
+      <li><a href="news.html">お知らせ</a></li>
       <li><a href="index.html#contact" class="hl">無料相談</a></li>
     </ul>
   </nav>
@@ -228,39 +333,180 @@ footer a:hover{color:#e8b0a0;}
 <!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-inner">
+    <a href="news.html" style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--red);margin-bottom:1rem;opacity:.8;letter-spacing:.04em;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      お知らせ一覧へ戻る
+    </a>
     <span class="eyebrow">News &amp; Info</span>
-    <h1><em>お知らせ</em></h1>
-    <p class="page-hero-sub">プラトンからの最新情報・重要なお知らせをご確認いただけます。</p>
+    <h1>授業料の<em>お支払い・退塾</em>について</h1>
+    <p class="page-hero-sub">プラトンでは、ご家庭のご事情に合わせた柔軟な支払い方法をご用意しています。また、クーリングオフ・コース変更・退塾時の手続きについても明確に定めています。</p>
   </div>
 </div>
 
-<!-- NEWS INDEX -->
+<!-- ARTICLE -->
 <section style="background:#fff;">
-  <div class="news-index">
-    <p class="news-count reveal">1件のお知らせ</p>
-    <div class="news-list">
+  <div class="article-wrap">
+    <p class="article-date">2025年 お知らせ</p>
 
-      <a href="news-payment.html" class="news-card reveal d1">
-        <div class="news-card-meta">
-          <span class="news-card-date">2025年</span>
-          <span class="news-card-tag">重要なお知らせ</span>
+    <div class="article-lead reveal">
+      昨今、学習塾業界において授業料の支払い方法に関する報道が話題となっています。塾を選ぶ際、月謝や支払い方法についてご不安を感じているご家庭も多いのではないでしょうか。プラトンでは、ご家庭のご事情やご要望に合わせて<strong>4つの支払い方法</strong>をご用意しており、クレジットカードによる毎月払いにも対応しています。クレジットカード毎月払いには、月謝払いに実績のある<strong>ロボットペイメント株式会社の「サブスクペイ」</strong>を採用し、安心・安全な決済環境を整えています。また、特定商取引法に基づくクーリングオフをはじめ、退塾時の返金制度も明確に定めています。
+    </div>
+
+    <!-- ===== 支払い方法 ===== -->
+    <div class="article-body reveal d1">
+      <h2 class="article-h2">4つの柔軟な支払い方法</h2>
+      <p>プラトンではご家庭の状況に応じてお選びいただける、以下の4つの支払い方法をご用意しています。</p>
+    </div>
+
+    <div class="pay-grid">
+      <div class="pay-box reveal d1">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         </div>
-        <p class="news-card-title">授業料の<em style="font-style:normal;color:var(--red);">お支払い・退塾</em>について</p>
-        <p class="news-card-desc">プラトンでは、ご家庭のご事情に合わせた4つの支払い方法をご用意しています。クーリングオフ・コース変更・退塾時の手続きについても明確に定めています。</p>
-        <span class="news-card-link">
-          詳しく読む
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <p class="pay-num">PLAN 1</p>
+        <p class="pay-title">銀行口座へのご入金<br>（一括）</p>
+        <p class="pay-desc">一括でまとめてお支払いいただく方法です。</p>
+      </div>
+      <div class="pay-box reveal d2">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <p class="pay-num">PLAN 2</p>
+        <p class="pay-title">銀行口座へのご入金<br>（2回分割）</p>
+        <p class="pay-desc">2回に分けてお支払いいただく方法です。</p>
+      </div>
+      <div class="pay-box reveal d3">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <p class="pay-num">PLAN 3</p>
+        <p class="pay-title">銀行口座へのご入金<br>（3回分割）</p>
+        <p class="pay-desc">3回に分けてお支払いいただく方法です。</p>
+      </div>
+      <div class="pay-box reveal d4">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <p class="pay-num">PLAN 4</p>
+        <p class="pay-title">クレジットカード払い<br>（毎月払い）</p>
+        <p class="pay-desc">クレジットカードで毎月お支払いいただく方法です。月謝感覚でご利用いただけます。</p>
+        <span class="robot-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          ロボットペイメント「サブスクペイ」利用
         </span>
-      </a>
+      </div>
+    </div>
 
+    <div class="article-body reveal">
+      <p>いずれの方法でも、無料相談時に各プランの詳細を丁寧にご説明いたします。ご家庭のご事情に合った方法をお選びいただけます。</p>
+    </div>
+
+    <!-- ===== ロボットペイメント 信頼性ノート ===== -->
+    <div class="trust-note reveal">
+      <div class="trust-note-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      </div>
+      <div class="trust-note-body">
+        <strong><span class="trust-label">決済セキュリティ</span>クレジットカード毎月払い（PLAN 4）は、ロボットペイメント株式会社の「サブスクペイ」を利用しています。</strong><br>
+        サブスクペイは月謝・月額課金に特化したサブスクリプション決済サービスで、多くの教育機関・学習塾に導入されている実績ある決済システムです。カード情報はプラトンには一切届かず、<strong>PCI DSS</strong>（クレジットカード業界のセキュリティ国際基準）に準拠したロボットペイメント社のシステムで安全に管理されます。安心してご利用いただけます。
+      </div>
+    </div>
+
+    <!-- ===== 安心の3つの制度 ===== -->
+    <div class="article-body reveal">
+      <h2 class="article-h2">安心の3つの制度</h2>
+      <p>プラトンでは、ご家庭に安心してお通いいただくために、以下の制度を明確に定めています。</p>
+    </div>
+
+    <div class="point-grid">
+      <div class="point-box reveal d1">
+        <div class="point-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <p class="point-num">制度 01</p>
+        <p class="point-title">クーリングオフ<br>（8日以内・全額返金）</p>
+        <p class="point-desc">特定商取引法に基づき、契約日から8日以内であればクーリングオフが適用されます。無条件で契約を解除でき、お支払い済みの授業料および諸費用は全額返金いたします。</p>
+      </div>
+      <div class="point-box reveal d2">
+        <div class="point-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <p class="point-num">制度 02</p>
+        <p class="point-title">コース変更<br>（当月20日までの申告）</p>
+        <p class="point-desc">当月20日までにお申し出いただければ、翌月よりコースを変更できます。21日以降のお申し出の場合は、翌々月からの適用となります。変更後のコースにより授業料が下がる場合は、契約満了時に一括精算いたします。</p>
+      </div>
+      <div class="point-box reveal d3">
+        <div class="point-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <p class="point-num">制度 03</p>
+        <p class="point-title">退塾<br>（明確な手続き・返金対応）</p>
+        <p class="point-desc">当月20日までに所定の手続きを完了すれば、当月末日をもって退塾が可能です。21日以降のお申し出の場合は、翌月末日が退塾日となります。すでにご納入いただいた翌月以降の指導料金は、退塾月翌月の10日までに保護者様ご指定の口座へ返金いたします。</p>
+      </div>
+    </div>
+
+    <!-- ===== 手続き早見表 ===== -->
+    <div class="article-body reveal">
+      <h2 class="article-h2">手続き早見表</h2>
+    </div>
+
+    <table class="rule-table reveal">
+      <tr>
+        <th>手続き</th>
+        <th>申告期限</th>
+        <th>適用タイミング</th>
+      </tr>
+      <tr>
+        <td><strong>クーリングオフ</strong></td>
+        <td>契約日から8日以内</td>
+        <td>無条件で解除・全額返金</td>
+      </tr>
+      <tr>
+        <td><strong>コース変更</strong></td>
+        <td>当月20日まで</td>
+        <td>翌月より適用</td>
+      </tr>
+      <tr>
+        <td><strong>コース変更</strong></td>
+        <td>当月21日以降</td>
+        <td>翌々月より適用</td>
+      </tr>
+      <tr>
+        <td><strong>退塾</strong></td>
+        <td>当月20日まで</td>
+        <td>当月末日をもって退塾</td>
+      </tr>
+      <tr>
+        <td><strong>退塾</strong></td>
+        <td>当月21日以降</td>
+        <td>翌月末日をもって退塾</td>
+      </tr>
+      <tr>
+        <td><strong>退塾時の返金</strong></td>
+        <td>-</td>
+        <td>退塾月翌月10日までに指定口座へ返金</td>
+      </tr>
+    </table>
+
+    <div class="summary-box reveal">
+      <p class="summary-box-ttl">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        料金体系の透明性へのこだわり
+      </p>
+      <p>塾選びは学習効果だけでなく、ご家庭の安心感も大切な要素です。プラトンでは4つの支払い方法と明確な手続き規定を通じて、料金体系の透明性を大切にしています。クレジットカード毎月払いにはロボットペイメント株式会社の「サブスクペイ」を採用し、月謝感覚で安全にご利用いただける仕組みを整えています。無料相談の際には、入塾金・授業料・支払いプランについて丁寧にご説明いたしますので、お気軽にお問い合わせください。</p>
+    </div>
+
+    <div class="article-body reveal">
+      <h2 class="article-h2">まとめ</h2>
+      <p>プラトンでは「4つの柔軟な支払い方法」「ロボットペイメント社サブスクペイによる安全な月謝払い」「クーリングオフ対応」「明確な退塾・返金制度」により、ご家庭が安心して学習に集中できる環境を整えています。料金や支払い方法についてご不安をお感じの方は、ぜひ一度プラトンの無料相談をご利用ください。具体的な料金や各支払いプランの詳細について、担当者がわかりやすくご説明いたします。</p>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <p class="cta-ttl">お問い合わせ・無料相談はこちら</p>
-  <p class="cta-sub">ご不明な点がございましたら、お気軽に無料相談よりお問い合わせください。<br>オンライン対応・全国どこからでも参加可能です。</p>
+  <p class="cta-ttl">料金・お支払い方法について、まずは無料相談でご確認ください</p>
+  <p class="cta-sub">4つの支払いプランの詳細・入塾金・コース内容など、担当者が丁寧にご説明します。<br>オンライン対応・全国どこからでも参加可能です。</p>
   <a href="index.html#contact" class="btn-r" style="font-size:1rem;padding:16px 36px;">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     無料学習相談を予約する →
@@ -288,3 +534,4 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
+</html>
