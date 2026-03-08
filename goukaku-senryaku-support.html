@@ -163,7 +163,8 @@ section{padding:64px 4vw;}
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;max-width:960px;margin:0 auto;}
 .feat-card{background:var(--cream);border-radius:16px;padding:1.8rem 1.6rem;border:2px solid var(--bdr-c);transition:all .3s;}
 .feat-card:hover{border-color:var(--course);transform:translateY(-4px);box-shadow:0 8px 32px rgba(58,104,88,.18);}
-.feat-icon{font-size:1.8rem;margin-bottom:.7rem;}
+.feat-icon{margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
+.feat-icon svg{width:30px;height:30px;stroke-width:1.8;color:var(--course);}
 .feat-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
 .feat-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
 
@@ -172,7 +173,8 @@ section{padding:64px 4vw;}
 .analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:860px;margin:0 auto;}
 .analysis-card{background:#fff;border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);transition:all .3s;}
 .analysis-card:hover{border-color:var(--course);box-shadow:0 8px 32px rgba(58,104,88,.18);}
-.analysis-card .a-icon{font-size:2rem;margin-bottom:.8rem;}
+.analysis-card .a-icon{margin-bottom:.8rem;display:flex;align-items:center;justify-content:center;}
+.analysis-card .a-icon svg{width:32px;height:32px;stroke-width:1.8;color:var(--course);}
 .analysis-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
 .analysis-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
 
@@ -233,7 +235,7 @@ footer a{color:#90d8b8;}
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="target-badge">🏫 併塾向け・戦略サポート特化</div>
+    <div class="target-badge"><i data-lucide="building-2"></i> 併塾向け・戦略サポート特化</div>
     <span class="eyebrow">Strategic Support Course</span>
     <h1>合格戦略<em>サポート</em></h1>
     <p class="page-hero-sub">予備校や個別指導塾に通いながら、受験戦略に不安を感じている方のためのコースです。現在の塾の授業を活かしながら、志望校合格に向けた最適な学習戦略をサポートします。</p>
@@ -308,22 +310,22 @@ footer a{color:#90d8b8;}
   </div>
   <div class="feat-grid">
     <div class="feat-card">
-      <div class="feat-icon">🗺️</div>
+      <div class="feat-icon"><i data-lucide="map"></i></div>
       <h4>志望校から逆算した学習計画</h4>
       <p>志望校・現在の学力・使用中の参考書・今の塾の授業スケジュールをすべて考慮したうえで、最適な学習計画を設計します。今の塾の授業と無理なく組み合わせられる計画を作成します。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">📊</div>
+      <div class="feat-icon"><i data-lucide="bar-chart-2"></i></div>
       <h4>偏差値分析・合格可能性の把握</h4>
       <p>模試の結果や実力診断テストをもとに、現在の偏差値と志望校合格に必要な偏差値を比較分析します。何をどのくらい伸ばせばいいかを数値で示します。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">🔍</div>
+      <div class="feat-icon"><i data-lucide="search"></i></div>
       <h4>実力診断テストによる現状把握</h4>
       <p>定期的に実力診断テストを実施し、科目ごとの強み・弱みを明確にします。弱点が明確になることで、限られた時間の中で何を優先して学習すべきかが分かります。</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">🤝</div>
+      <div class="feat-icon"><i data-lucide="handshake"></i></div>
       <h4>受験戦略の継続的な調整</h4>
       <p>模試の結果や学力の推移に応じて、受験戦略を定期的に見直します。状況が変わっても、常に最適な戦略で受験に臨めるよう継続的にサポートします。</p>
     </div>
@@ -339,22 +341,22 @@ footer a{color:#90d8b8;}
   </div>
   <div class="analysis-grid">
     <div class="analysis-card">
-      <div class="a-icon">📈</div>
+      <div class="a-icon"><i data-lucide="trending-up"></i></div>
       <h4>現状の学力を正確に把握する</h4>
       <p>実力診断テストと模試の結果を組み合わせて、科目ごとの現在地を明確にします。感覚ではなく、データに基づいて現状を把握することが戦略立案の第一歩です。</p>
     </div>
     <div class="analysis-card">
-      <div class="a-icon">🎯</div>
+      <div class="a-icon"><i data-lucide="target"></i></div>
       <h4>志望校との差を数値で示す</h4>
       <p>志望校の合格ラインと現在の偏差値・得点を比較し、「何が・どのくらい足りないか」を明確にします。ゴールが明確になることで、学習の優先順位が見えてきます。</p>
     </div>
     <div class="analysis-card">
-      <div class="a-icon">🗓️</div>
+      <div class="a-icon"><i data-lucide="calendar-days"></i></div>
       <h4>逆算した学習スケジュールを作成</h4>
       <p>受験本番から逆算して、「各科目を何月までにどのレベルまで仕上げるか」をスケジュール化します。今の塾の授業と組み合わせた、実現可能な計画を作ります。</p>
     </div>
     <div class="analysis-card">
-      <div class="a-icon">🔄</div>
+      <div class="a-icon"><i data-lucide="rotate-cw"></i></div>
       <h4>定期的な戦略の見直し</h4>
       <p>模試の結果や学習状況に応じて、戦略を定期的に見直します。受験までの状況変化に柔軟に対応し、常に最適な戦略を維持します。</p>
     </div>
@@ -438,6 +440,8 @@ footer a{color:#90d8b8;}
   </p>
   <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2024 Plato. All rights reserved.</p>
 </footer>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 
 </body>
 </html>
