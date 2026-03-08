@@ -153,34 +153,61 @@ section{padding:64px 4vw;}
 .sec-head{margin-bottom:2.5rem;}
 
 /* ===== PROBLEM SECTION ===== */
-#problem{background:#fff;}
+#problem{background:var(--cream);}
 .problem-grid{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:2rem;max-width:860px;margin:0 auto;align-items:start;
+  gap:2rem;max-width:980px;margin:0 auto;align-items:start;
 }
 .problem-card{
-  background:var(--pale);border-radius:16px;padding:1.8rem;
+  background:#fff;border-radius:16px;padding:2rem;
   border:2px solid var(--bdr);
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
 }
-.problem-card h3{
-  font-family:"Kaisei Opti",serif;font-size:1.05rem;
-  color:var(--txt);margin-bottom:1rem;line-height:1.5;
+.problem-card-heading{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:1.2rem;
+}
+.problem-card-heading svg{width:20px;height:20px;stroke-width:2;color:var(--course);flex-shrink:0;}
+.problem-card-heading h3{
+  font-family:"Kaisei Opti",serif;font-size:1rem;
+  color:var(--txt);margin:0;line-height:1.5;
 }
 .problem-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
 .problem-list li{
-  display:flex;align-items:flex-start;gap:8px;
-  font-size:.85rem;color:var(--txt2);line-height:1.6;
-  padding:8px 10px;background:#fff;border-radius:8px;
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.875rem;color:var(--txt2);line-height:1.65;
+  padding:9px 12px;background:var(--pale);border-radius:8px;
+  border:1px solid var(--bdr);
 }
-.problem-list li::before{content:"×";color:var(--course);font-weight:900;flex-shrink:0;line-height:1.6;}
+.problem-list li svg{width:16px;height:16px;stroke-width:2.5;color:var(--course);flex-shrink:0;margin-top:2px;}
+.problem-right{display:flex;flex-direction:column;gap:1rem;}
+.insight-card{
+  background:#fff;border-radius:16px;padding:1.8rem;
+  border:2px solid var(--bdr);
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+  border-left:4px solid var(--course);
+}
+.insight-card-heading{
+  display:flex;align-items:center;gap:8px;margin-bottom:1rem;
+}
+.insight-card-heading svg{width:20px;height:20px;stroke-width:2;color:var(--course);flex-shrink:0;}
+.insight-card-heading h3{
+  font-family:"Kaisei Opti",serif;font-size:1rem;
+  color:var(--txt);margin:0;line-height:1.5;
+}
 .solution-card{
   background:linear-gradient(135deg,var(--dark),var(--course));
   border-radius:16px;padding:1.8rem;color:#fff;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
 }
-.solution-card h3{font-family:"Kaisei Opti",serif;font-size:1.05rem;color:#fff;margin-bottom:1rem;line-height:1.5;}
+.solution-card-heading{
+  display:flex;align-items:center;gap:8px;margin-bottom:1.1rem;
+}
+.solution-card-heading svg{width:20px;height:20px;stroke-width:2;color:rgba(255,255,255,.8);flex-shrink:0;}
+.solution-card-heading h3{font-family:"Kaisei Opti",serif;font-size:1rem;color:#fff;margin:0;line-height:1.5;}
 .solution-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.solution-list li{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:rgba(255,255,255,.9);line-height:1.6;}
-.solution-list li::before{content:"✓";color:#e8b0a0;font-weight:900;flex-shrink:0;line-height:1.6;}
+.solution-list li{display:flex;align-items:flex-start;gap:10px;font-size:.875rem;color:rgba(255,255,255,.93);line-height:1.65;}
+.solution-list li svg{width:16px;height:16px;stroke-width:2.5;color:rgba(255,255,255,.7);flex-shrink:0;margin-top:2px;}
 
 /* ===== FEATURES ===== */
 #features{background:var(--cream);}
@@ -342,29 +369,38 @@ footer a{color:#e8b0a0;}
   </div>
   <div class="problem-grid">
     <div class="problem-card">
-      <h3>中学生・高校1〜2年生のよくある悩み</h3>
+      <div class="problem-card-heading">
+        <i data-lucide="alert-circle"></i>
+        <h3>中学生・高校1〜2年生のよくある悩み</h3>
+      </div>
       <ul class="problem-list">
-        <li>受験まで時間があるので、何から始めればいいか分からない</li>
-        <li>学校の授業についていけなくなってきた</li>
-        <li>自分で計画を立てても続かない</li>
-        <li>勉強しているつもりだけど成績が上がらない</li>
-        <li>将来どの大学を目指せばいいか分からない</li>
-        <li>部活との両立が難しい</li>
+        <li><i data-lucide="x"></i>受験まで時間があるので、何から始めればいいか分からない</li>
+        <li><i data-lucide="x"></i>学校の授業についていけなくなってきた</li>
+        <li><i data-lucide="x"></i>自分で計画を立てても続かない</li>
+        <li><i data-lucide="x"></i>勉強しているつもりだけど成績が上がらない</li>
+        <li><i data-lucide="x"></i>将来どの大学を目指せばいいか分からない</li>
+        <li><i data-lucide="x"></i>部活との両立が難しい</li>
       </ul>
     </div>
-    <div>
-      <div style="background:#fff;border-radius:16px;padding:1.8rem;border:2px solid var(--bdr);margin-bottom:1rem;">
-        <h3 style="font-family:'Kaisei Opti',serif;font-size:1.05rem;color:var(--txt);margin-bottom:1rem;">早いうちからの準備が合格を左右する</h3>
-        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:.8rem;">大学受験において、<strong style="color:var(--course);">高校3年生からの頑張りには限界があります。</strong>基礎ができていない状態で受験勉強を始めると、追い上げに膨大な時間がかかってしまいます。</p>
-        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;">中学生・高校1〜2年生のうちから<strong style="color:var(--txt);">学習習慣と基礎学力</strong>を身につけることが、志望校合格への最短ルートです。</p>
+    <div class="problem-right">
+      <div class="insight-card">
+        <div class="insight-card-heading">
+          <i data-lucide="trending-up"></i>
+          <h3>早いうちからの準備が合格を左右する</h3>
+        </div>
+        <p style="font-size:.875rem;color:var(--txt2);line-height:1.9;margin-bottom:.8rem;">大学受験において、<strong style="color:var(--course);">高校3年生からの頑張りには限界があります。</strong>基礎ができていない状態で受験勉強を始めると、追い上げに膨大な時間がかかってしまいます。</p>
+        <p style="font-size:.875rem;color:var(--txt2);line-height:1.9;">中学生・高校1〜2年生のうちから<strong style="color:var(--txt);">学習習慣と基礎学力</strong>を身につけることが、志望校合格への最短ルートです。</p>
       </div>
       <div class="solution-card">
-        <h3>プラトンの解決策</h3>
+        <div class="solution-card-heading">
+          <i data-lucide="lightbulb"></i>
+          <h3>プラトンの解決策</h3>
+        </div>
         <ul class="solution-list">
-          <li>毎日課題で学習習慣を早期に形成</li>
-          <li>個人に合わせた基礎学力の積み上げ</li>
-          <li>志望校を見据えた長期的な学習設計</li>
-          <li>オンライン個別指導で弱点を丁寧にサポート</li>
+          <li><i data-lucide="check"></i>毎日課題で学習習慣を早期に形成</li>
+          <li><i data-lucide="check"></i>個人に合わせた基礎学力の積み上げ</li>
+          <li><i data-lucide="check"></i>志望校を見据えた長期的な学習設計</li>
+          <li><i data-lucide="check"></i>オンライン個別指導で弱点を丁寧にサポート</li>
         </ul>
       </div>
     </div>
