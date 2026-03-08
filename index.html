@@ -531,6 +531,7 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   box-shadow:var(--sh2);
 }
 .scard2:hover::after{transform:scaleX(1);}
+.scard2.leader-card{border-color:var(--red);}
 
 /* Avatar */
 .savatar2{
@@ -544,6 +545,7 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   position:relative;
 }
 .scard2:hover .savatar2{border-color:var(--red);}
+.leader-card .savatar2{width:110px;height:110px;border-width:4px;border-color:var(--red);}
 .savatar2 img{width:100%;height:100%;object-fit:cover;}
 .savatar2-initials{
   font-family:"Kaisei Opti",serif;
@@ -1452,7 +1454,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="staff-grid wide">
 
       <!-- 代表・塾長 -->
-      <div class="scard2 reveal d1">
+      <div class="scard2 leader-card reveal d1">
         <div class="savatar2">
           <img src="img/staff-sano.jpg" alt="佐野">
         </div>
@@ -1601,7 +1603,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <!-- LEADER -->
   <div class="staff-panel" id="tab-leader">
     <div class="staff-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));max-width:640px;">
-      <div class="scard2 reveal d1">
+      <div class="scard2 leader-card reveal d1">
         <div class="savatar2"><img src="img/staff-sano.jpg" alt="佐野"></div>
         <span class="srole2 r-leader">代表・塾長</span>
         <div class="sname2">佐野 翼（さの つばさ）</div>
