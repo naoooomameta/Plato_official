@@ -207,15 +207,6 @@ nav{background:var(--red);}
   object-fit:cover;object-position:center top;
   display:block;
 }
-.hero-logo{
-  position:absolute;bottom:0;left:50%;
-  transform:translateX(-50%);
-  width:82%;
-  max-width:360px;
-  filter:drop-shadow(2px 6px 24px rgba(0,0,0,.28));
-  pointer-events:none;
-  z-index:2;
-}
 
 /* STATS BAR */
 .stats{background:var(--dark);}
@@ -966,7 +957,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .hero-inner{grid-template-columns:1fr;text-align:center;}
   .hero-badges{justify-content:center;}
   .hero-chara{width:100%;max-width:420px;min-height:300px;margin:0 auto;order:-1;border-radius:16px 16px 0 0;}
-  .hero-logo{width:75%;max-width:280px;}
   .hero-btns{justify-content:center;}
   .feat-grid{grid-template-columns:1fr 1fr;}
   .about-inner,.contact-inner{grid-template-columns:1fr;}
@@ -1052,7 +1042,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     </div>
     <div class="hero-chara">
       <img class="hero-photo" src="img/img:hero-study.jpg" alt="指導の様子">
-      <img class="hero-logo" src="img/img:platon-chibi.png" alt="プラトン">
     </div>
   </div>
 </section>
@@ -2043,7 +2032,7 @@ function switchTab(tabId, btn) {
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>lucide.createIcons();</script>
 
-<!-- Chibi mascot fixed bottom-right -->
+<!-- Chibi mascot fixed bottom-right (hero only) -->
 <style>
 .chibi-fixed{
   position:fixed;
@@ -2053,9 +2042,22 @@ function switchTab(tabId, btn) {
   z-index:999;
   pointer-events:none;
   filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));
+  opacity:1;
+  transition:opacity .3s;
 }
 </style>
 <img src="img/plato-logochibi.png" alt="プラトンキャラクター" class="chibi-fixed">
+<script>
+(function(){
+  var chibi = document.querySelector('.chibi-fixed');
+  var hero  = document.getElementById('hero');
+  if(!chibi || !hero) return;
+  var io = new IntersectionObserver(function(entries){
+    chibi.style.opacity = entries[0].isIntersecting ? '1' : '0';
+  }, {threshold: 0.01});
+  io.observe(hero);
+})();
+</script>
 
 </body>
 </html>
