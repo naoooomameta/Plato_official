@@ -2042,5 +2042,20 @@ function switchTab(tabId, btn) {
 </script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>lucide.createIcons();</script>
+
+<!-- Chibi mascot fixed bottom-right -->
+<style>
+.chibi-fixed{
+  position:fixed;
+  bottom:16px;
+  right:16px;
+  width:100px;
+  z-index:999;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));
+}
+</style>
+<img src="img/plato-logochibi.png" alt="プラトンキャラクター" class="chibi-fixed">
+
 </body>
 </html>
