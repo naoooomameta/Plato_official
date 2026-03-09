@@ -36,10 +36,24 @@ a{text-decoration:none;color:inherit;}
 /* ===== TOP BAR ===== */
 .topbar{
   background:var(--dark);color:rgba(255,255,255,.75);
-  text-align:center;padding:8px 16px;font-size:.75rem;
+  text-align:center;padding:6px 16px;font-size:.75rem;
   letter-spacing:.08em;font-weight:500;
+  display:flex;flex-wrap:nowrap;justify-content:center;align-items:center;gap:0 10px;
+  overflow:hidden;
 }
+.topbar-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
 .topbar a{color:#e8b0a0;}
+.topbar-sep{opacity:.45;flex-shrink:0;}
+@media(max-width:640px){
+  .topbar{flex-wrap:wrap;gap:4px 8px;padding:6px 12px;}
+  /* Instagramアイテム(5番目)とその前のセパレータ(4番目)を非表示 */
+  .topbar > span:nth-child(4),
+  .topbar > span:nth-child(5){display:none;}
+}
+@media(max-width:400px){
+  .topbar > span:nth-child(2){display:none;}
+  .topbar-item{font-size:.7rem;}
+}
 
 /* ===== HEADER ===== */
 header{
@@ -417,7 +431,7 @@ section{padding:64px 4vw;}
 .c-price-tier-tax{font-size:.58rem;color:var(--txt3);margin-top:2px;}
 /* ===== Lucide SVG icon sizing ===== */
 i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
-.topbar i[data-lucide] svg,.topbar i[data-lucide]~svg{width:13px;height:13px;}
+.topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
 .hbadge svg{width:14px;height:14px;stroke-width:2.5;flex-shrink:0;}
 .btn-r svg{width:15px;height:15px;stroke-width:2.5;flex-shrink:0;}
 .bubble svg{width:16px;height:16px;stroke-width:2;}
@@ -990,7 +1004,13 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 </head>
 <body>
 
-<div class="topbar"><i data-lucide="book-open"></i> 文系受験専門塾 プラトン&emsp;|&emsp;<i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績&emsp;|&emsp;<a href="https://www.instagram.com/plato_humanities/" target="_blank"><i data-lucide="camera"></i> Instagram @plato_humanities</a></div>
+<div class="topbar">
+  <span class="topbar-item"><i data-lucide="book-open"></i> 文系受験専門塾 プラトン</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item"><i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item"><a href="https://www.instagram.com/plato_humanities/" target="_blank"><i data-lucide="camera"></i> Instagram @plato_humanities</a></span>
+</div>
 
 <header>
   <div class="hd-top">
