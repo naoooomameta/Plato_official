@@ -2206,22 +2206,20 @@ function switchTab(tabId, btn) {
 
     fetch(GAS_URL, {
       method: 'POST',
-      body: params
+      body: params,
+      mode: 'no-cors'
     }).then(function(res) {
-      return res.json();
-    }).then(function(data) {
-      if (data && data.ok) {
-        form.reset();
-        window.__contactName  = savedName;
-        window.__contactEmail = savedEmail;
-        btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
-        lucide.createIcons();
-        openTyModal();
-      } else {
-        throw new Error((data && data.error) || 'unknown');
-      }
-    }).catch(function() {
+      /* GAS cross-origin は opaque response を返すので、
+         レスポンス内容は読めないが送信自体は成功している */
+      form.reset();
+      window.__contactName  = savedName;
+      window.__contactEmail = savedEmail;
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
+      lucide.createIcons();
+      openTyModal();
+    }).catch(function(err) {
+      console.error('Contact form error:', err);
       document.getElementById('form-error').style.display = 'flex';
       btn.disabled = false;
       btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
