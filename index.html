@@ -1,350 +1,2701 @@
-/**
- * ============================================================
- *  プラトン 統合API（問い合わせ + 面談予約 + Googleカレンダー連携）
- *  
- *  ■ 機能:
- *    GET  → Googleカレンダーの空き状況から予約可能枠を返す
- *    POST → action パラメータで分岐
- *      action=contact  → 問い合わせ受付（①サンクスメール送信）
- *      action=booking  → 面談予約登録（②予約確定メール送信）
- *      (未指定)        → 従来互換: 面談予約として処理
- * ============================================================
- */
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プラトン | 文系の大学受験専門塾</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+:root{
+  --red:    #6f2d43;
+  --dark:   #3d101c;
+  --pale:   #f1eaec;
+  --mid:    #a05070;
+  --light:  #f8f0f2;
+  --gold:   #c9a060;
+  --cream:  #fdfaf8;
+  --white:  #ffffff;
+  --txt:    #2a0e18;
+  --txt2:   #6a4050;
+  --txt3:   #b08090;
+  --bdr:    #e0cdd2;
+  --sh:     0 3px 16px rgba(111,45,67,.10);
+  --sh2:    0 8px 32px rgba(111,45,67,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
+  background:var(--cream);color:var(--txt);
+  overflow-x:hidden;font-size:15px;line-height:1.7;
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
 
-// ===== 設定 =====
-const CALENDAR_ID = 'plato.humanities@gmail.com';
-const SHEET_ID    = '1P-3gqZ7HZwj9keBlBtmNsF8J6qcPx_XBggnJIIzTk3s';
-const SHEET_BOOKING  = '予約一覧';
-const SHEET_CONTACT  = '問い合わせ一覧';
+/* ===== TOP BAR ===== */
+.topbar{
+  background:var(--dark);color:rgba(255,255,255,.75);
+  text-align:center;padding:6px 16px;font-size:.75rem;
+  letter-spacing:.08em;font-weight:500;
+  display:flex;flex-wrap:nowrap;justify-content:center;align-items:center;gap:0 10px;
+  overflow:hidden;
+}
+.topbar-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
+.topbar a{color:#e8b0a0;}
+.topbar-sep{opacity:.45;flex-shrink:0;}
+@media(max-width:640px){
+  .topbar{flex-wrap:wrap;gap:4px 8px;padding:6px 12px;}
+  /* Instagramアイテム(5番目)とその前のセパレータ(4番目)を非表示 */
+  .topbar > span:nth-child(4),
+  .topbar > span:nth-child(5){display:none;}
+}
+@media(max-width:400px){
+  .topbar > span:nth-child(2){display:none;}
+  .topbar-item{font-size:.7rem;}
+}
 
-const SLOT_DURATION_MIN = 60;
-const START_HOUR = 10;
-const END_HOUR   = 22;
-const BUFFER_MIN = 0;
+/* ===== HEADER ===== */
+header{
+  background:#fff;position:sticky;top:0;z-index:200;
+  border-bottom:4px solid var(--red);
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+.hd-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 4vw;gap:12px;flex-wrap:wrap;
+}
+.hd-logo{display:flex;align-items:center;gap:10px;}
+.hd-logo-img{
+  width:52px;height:52px;border-radius:50%;
+  border:2.5px solid var(--red);overflow:hidden;background:transparent;
+  flex-shrink:0;
+}
+.hd-logo-img img{width:100%;height:100%;object-fit:contain;}
+.hd-logo-name{
+  font-family:"Kaisei Opti",serif;font-size:1.5rem;
+  font-weight:700;color:var(--red);display:block;letter-spacing:.04em;
+}
+.hd-logo-sub{font-size:.68rem;color:var(--mid);letter-spacing:.1em;margin-top:1px;}
+.hd-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.hd-tel{
+  font-size:1.5rem;font-weight:900;color:var(--red);
+  letter-spacing:.04em;line-height:1;
+}
+.hd-hours{font-size:.7rem;color:var(--txt2);text-align:right;}
+.hd-sns{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  color:#fff;padding:5px 12px;border-radius:20px;
+  font-size:.72rem;font-weight:700;
+  transition:opacity .3s;
+}
+.hd-sns:hover{opacity:.85;}
 
-const DAYS_AHEAD_DEFAULT = 14;
-const LIMIT_DEFAULT = 4;
-
-const TIMEZONE = 'Asia/Tokyo';
-
-const SIGNATURE = '\n━━━━━━━━━━━━━━━━━━━━\n'
-    + '文系の大学受験専門塾 プラトン\n'
-    + '代表 佐野 翼\n'
-    + 'メール: plato.humanities@gmail.com\n'
-    + 'Instagram: @plato_humanities\n'
-    + '公式サイト: https://naoooomameta.github.io/Plato_official/\n'
-    + '━━━━━━━━━━━━━━━━━━━━\n\n'
-    + '※ 本メールは自動送信です。\n'
-    + '  ご連絡は上記メールアドレス宛にお願いいたします。';
-
-
-// ===== GET: 空き枠を返す =====
-function doGet(e) {
-  const params = e ? e.parameter : {};
-  const limit     = parseInt(params.limit)     || LIMIT_DEFAULT;
-  const daysAhead = parseInt(params.daysAhead)  || DAYS_AHEAD_DEFAULT;
-
-  try {
-    const slots = getAvailableSlots(daysAhead, limit);
-    return jsonResponse({ ok: true, slots: slots });
-  } catch (err) {
-    return jsonResponse({ ok: false, error: err.message, slots: [] });
+/* === HAMBURGER MENU === */
+.hd-ham{
+  display:none;flex-direction:column;justify-content:center;align-items:center;gap:5.5px;
+  width:42px;height:42px;border:2px solid var(--red);border-radius:8px;
+  background:none;cursor:pointer;padding:0;flex-shrink:0;
+}
+.hd-ham span{
+  display:block;width:20px;height:2.5px;background:var(--red);
+  border-radius:2px;transition:transform .3s ease,opacity .25s ease;
+}
+.hd-ham.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.hd-ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hd-ham.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+@media(max-width:768px){
+  .hd-top{flex-wrap:nowrap;padding:10px 4vw;}
+  .hd-right{display:none;}
+  .hd-ham{display:flex;}
+  nav{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1);}
+  nav.open{max-height:75vh;overflow-y:auto;}
+  .nav-ul{flex-direction:column;overflow-x:visible;white-space:normal;padding:6px 0 12px;}
+  .nav-ul li a{
+    display:block;padding:14px 22px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:.9rem;letter-spacing:.05em;
+  }
+  .nav-ul li:last-child a{border-bottom:none;}
+  .nav-ul li a.hl{
+    margin:10px 16px;border-radius:8px;
+    text-align:center;padding:10px 16px;border-bottom:none;
   }
 }
 
-
-// ===== POST: action で分岐 =====
-function doPost(e) {
-  try {
-    const p = e.parameter;
-    const action = (p.action || '').toLowerCase();
-
-    if (action === 'contact') {
-      return handleContact(e);
-    } else {
-      return handleBooking(e);
-    }
-  } catch (err) {
-    return jsonResponse({ ok: false, error: err.message });
-  }
+/* 2つの力 カード グリッド */
+.power-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;max-width:780px;margin:0 auto 2rem;}
+@media(max-width:600px){
+  .power-grid{grid-template-columns:1fr;}
 }
 
+/* NAV */
+nav{background:var(--red);}
+.nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
+.nav-ul li a{
+  display:block;padding:11px 16px;color:#fff;
+  font-size:.8rem;font-weight:700;letter-spacing:.06em;
+  transition:background .2s;
+}
+.nav-ul li a:hover{background:rgba(255,255,255,.15);}
+.nav-ul li a.hl{
+  background:#fff;color:var(--red);
+  margin:5px 6px;border-radius:5px;padding:6px 16px;
+}
+.nav-ul li a.hl:hover{background:var(--pale);}
 
-// =========================================================
-//  ① 問い合わせ受付
-// =========================================================
-function handleContact(e) {
-  const p = e.parameter;
-  const name       = p.name       || '';
-  const kana       = p.kana       || '';
-  const email      = p.email      || '';
-  const tel        = p.tel        || '';
-  const grade      = p.grade      || '';
-  const university = p.university || '';
-  const message    = p.message    || '';
-
-  // ── スプレッドシートに記録 ──
-  if (SHEET_ID) {
-    try {
-      const ss = SpreadsheetApp.openById(SHEET_ID);
-      let sheet = ss.getSheetByName(SHEET_CONTACT);
-      if (!sheet) {
-        sheet = ss.insertSheet(SHEET_CONTACT);
-        sheet.appendRow(['お名前', 'フリガナ', 'メール', '電話番号', '学年', '志望大学', 'ご相談内容', '登録日時']);
-      }
-      sheet.appendRow([
-        name, kana, email, tel, grade, university, message,
-        Utilities.formatDate(new Date(), TIMEZONE, 'yyyy/MM/dd HH:mm:ss')
-      ]);
-    } catch (sheetErr) {
-      Logger.log('問い合わせシート記録エラー: ' + sheetErr.message);
-    }
-  }
-
-  // ── 管理者へ通知メール ──
-  try {
-    MailApp.sendEmail({
-      to: CALENDAR_ID,
-      subject: '【プラトン】新規お問い合わせ: ' + name,
-      body: '新しいお問い合わせがありました。\n\n'
-          + '━━━━━━━━━━━━━━━━━━━━\n'
-          + 'お名前: ' + name + '（' + kana + '）\n'
-          + 'メール: ' + email + '\n'
-          + '電話番号: ' + tel + '\n'
-          + '学年: ' + grade + '\n'
-          + '志望大学: ' + university + '\n'
-          + 'ご相談内容:\n' + message + '\n'
-          + '━━━━━━━━━━━━━━━━━━━━'
-    });
-  } catch (mailErr) {
-    Logger.log('管理者メール通知エラー: ' + mailErr.message);
-  }
-
-  // ── ユーザーへ①サンクスメール ──
-  if (email) {
-    try {
-      MailApp.sendEmail({
-        to: email,
-        subject: '【プラトン】お問い合わせありがとうございます',
-        body: (name ? name + ' 様\n\n' : '')
-            + 'この度は、文系の大学受験専門塾プラトンへ\n'
-            + 'お問い合わせいただき、誠にありがとうございます。\n\n'
-            + 'お問い合わせ内容を確認のうえ、\n'
-            + '2〜3営業日以内に担当の佐野よりご連絡いたします。\n\n'
-            + 'なお、このあと表示される画面から\n'
-            + '事前に面談のご希望日時をお選びいただくと、\n'
-            + 'よりスムーズにご案内が可能です。\n\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n'
-            + '■ お問い合わせ内容\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n'
-            + 'お名前: ' + name + '\n'
-            + 'メール: ' + email + '\n'
-            + '電話番号: ' + tel + '\n'
-            + '学年: ' + grade + '\n'
-            + '志望大学: ' + university + '\n'
-            + 'ご相談内容: ' + message + '\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n\n'
-            + 'ご不明な点がございましたら、\n'
-            + '下記までお気軽にご連絡ください。\n'
-            + SIGNATURE
-      });
-    } catch (userMailErr) {
-      Logger.log('ユーザーメール送信エラー: ' + userMailErr.message);
-    }
-  }
-
-  return jsonResponse({ ok: true });
+/* ===== HERO ===== */
+#hero{
+  background:linear-gradient(160deg, var(--pale) 0%, #fff5f7 40%, #f8f0f5 100%);
+  padding:56px 4vw 4rem;
+  position:relative;overflow:hidden;
+  min-height:580px;display:flex;align-items:center;
+}
+.hero-dots{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(111,45,67,.07) 1.5px,transparent 1.5px);
+  background-size:28px 28px;pointer-events:none;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 440px;
+  gap:3.5rem;align-items:stretch;
+  max-width:1120px;margin:0 auto;width:100%;
+  padding-bottom:0;position:relative;z-index:2;
+}
+.hero-school-name{
+  font-size:.9rem;font-weight:700;letter-spacing:.12em;
+  color:var(--mid);margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:8px;
+}
+@media(max-width:640px){
+  .hero-school-name{justify-content:center;}
+}
+.hero-school-name::before{
+  content:"";display:inline-block;width:24px;height:2px;background:var(--mid);
+}
+.hero-badges{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:1.5rem;}
+.hbadge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff;border:2px solid var(--red);border-radius:50px;
+  padding:7px 16px;font-size:.84rem;font-weight:700;color:var(--red);
+  box-shadow:0 2px 8px rgba(111,45,67,.12);
+}
+.hbadge.b{border-color:var(--mid);color:var(--mid);}
+.hero-h1{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(2rem,4vw,3.1rem);
+  font-weight:700;color:var(--txt);
+  line-height:1.4;margin-bottom:1.2rem;
+}
+.hero-h1 em{
+  font-style:normal;color:var(--red);
+  background:linear-gradient(transparent 65%, rgba(111,45,67,.15) 65%);
+}
+.hero-p{
+  font-size:1.05rem;color:var(--txt2);
+  line-height:2;margin-bottom:2rem;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-top:2.5rem;margin-bottom:1rem;}
+.btn-r{
+  background:var(--red);color:#fff;
+  font-weight:700;font-size:.95rem;
+  padding:18px 38px;border-radius:50px;
+  box-shadow:0 5px 18px rgba(111,45,67,.32);
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+  border:none;cursor:pointer;font-family:inherit;
+}
+.btn-r:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
+.btn-w{
+  background:#fff;color:var(--red);
+  font-weight:700;font-size:.95rem;
+  padding:16px 34px;border-radius:50px;
+  border:2px solid var(--red);
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-w:hover{background:var(--pale);transform:translateY(-2px);}
+.hero-chara{
+  position:relative;flex-shrink:0;
+  align-self:stretch;overflow:hidden;
+  border-radius:20px 20px 0 0;min-height:480px;
+}
+.hero-chara .hero-photo{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+}
+.hero-chibi{
+  position:absolute;left:48%;top:50%;
+  transform:translate(-50%,-50%);
+  width:140px;height:auto;
+  display:block;pointer-events:none;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.2));
+  opacity:.95;z-index:3;
 }
 
+/* STATS BAR */
+.stats{background:var(--dark);padding:8px 0;}
+.stats-inner{display:flex;max-width:960px;margin:0 auto;}
+.stat{
+  flex:1;padding:28px 20px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.1);color:#fff;
+}
+.stat:last-child{border-right:none;}
+.stat-n{
+  display:block;font-size:1.9rem;font-weight:900;
+  color:#e8b0a0;line-height:1;
+  font-family:"Kaisei Opti",serif;
+}
+.stat-l{display:block;font-size:.68rem;opacity:.7;margin-top:4px;}
 
-// =========================================================
-//  ② 面談予約登録
-// =========================================================
-function handleBooking(e) {
-  const p = e.parameter;
-  const slot    = JSON.parse(p.slot || '{}');
-  const name    = p.name    || '';
-  const email   = p.email   || '';
-  const meeting = p.meeting || '';
-  const topics  = e.parameters.topics || [];
-  const note    = p.note    || '';
+/* ===== SECTION COMMON ===== */
+section{padding:64px 4vw;}
+.eyebrow{
+  display:inline-block;
+  background:var(--pale);color:var(--red);
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.7rem;border:1px solid var(--red);
+}
+.sec-ttl{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.4rem,2.8vw,2.1rem);
+  font-weight:700;color:var(--txt);line-height:1.4;
+}
+.sec-ttl .ac{color:var(--red);}
+.sec-sub{font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:.6rem;}
+.sec-head{margin-bottom:2.5rem;}
 
-  // ── Googleカレンダーにイベント作成 ──
-  const startTime = new Date(slot.startIso || slot.start);
-  const endTime   = new Date(startTime.getTime() + SLOT_DURATION_MIN * 60 * 1000);
+/* ===== IMAGE PLACEHOLDER ===== */
+.img-ph{
+  background:linear-gradient(135deg,var(--pale),var(--light));
+  border:2px dashed var(--bdr);
+  border-radius:12px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:var(--txt3);font-size:.78rem;
+  gap:8px;text-align:center;padding:20px;
+  min-height:180px;
+}
+.img-ph .ph-icon{font-size:2rem;opacity:.5;}
+.img-ph .ph-txt{font-weight:500;letter-spacing:.04em;}
 
-  const cal = CalendarApp.getCalendarById(CALENDAR_ID);
-  if (!cal) throw new Error('カレンダーが見つかりません');
+/* VIDEO PLACEHOLDER */
+.video-ph{
+  background:#000;border-radius:14px;overflow:hidden;
+  position:relative;padding-top:56.25%;/* 16:9 */
+  cursor:pointer;
+}
+.video-ph-inner{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--dark),#6f2d43);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:12px;
+}
+.play-btn{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+  border:3px solid rgba(255,255,255,.5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+  transition:all .3s;
+}
+.video-ph:hover .play-btn{background:rgba(255,255,255,.3);transform:scale(1.1);}
+.video-ph-label{color:rgba(255,255,255,.8);font-size:.82rem;font-weight:700;letter-spacing:.08em;}
 
-  const title = '【面談予約】' + (name || '名前未入力');
-  const description = [
-    'お名前: ' + name,
-    'メール: ' + email,
-    '連絡手段: ' + meeting,
-    '聞きたいこと: ' + topics.join(', '),
-    '伝言: ' + note
-  ].join('\n');
+/* BANNER ROW */
+.banner-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-top:2rem;
+}
+.banner-item{
+  border-radius:10px;overflow:hidden;
+  cursor:pointer;transition:transform .3s;
+  border:2px solid var(--bdr);
+}
+.banner-item:hover{transform:translateY(-3px);box-shadow:var(--sh2);}
+.banner-item .img-ph{min-height:100px;border-radius:0;border:none;}
 
-  cal.createEvent(title, startTime, endTime, {
-    description: description,
-    guests: email || undefined,
-    sendInvites: !!email
+/* ===== WORRIES ===== */
+#worries{background:#fff;}
+.worries-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;max-width:860px;margin:0 auto;
+}
+.wcard{
+  background:var(--cream);border:2px solid var(--bdr);
+  border-radius:14px;padding:1.2rem 1rem;
+  display:flex;gap:10px;align-items:flex-start;
+  transition:all .3s;
+}
+.wcard:hover{border-color:var(--red);background:var(--pale);transform:translateY(-3px);box-shadow:var(--sh2);}
+.wi{font-size:1.6rem;flex-shrink:0;line-height:1;margin-top:2px;}
+.wt{font-size:.87rem;font-weight:700;line-height:1.55;}
+.resolve{
+  display:flex;align-items:flex-start;gap:12px;
+  text-align:left;margin:2rem auto 0;
+  font-size:.97rem;font-weight:700;color:var(--red);
+  background:var(--pale);padding:16px 24px;border-radius:10px;
+  max-width:580px;border:2px solid var(--bdr);
+}
+.resolve-icon{flex-shrink:0;margin-top:2px;}
+.resolve-icon svg{width:26px;height:26px;stroke-width:2;color:var(--red);}
+
+/* ===== FEATURES ===== */
+#features{background:var(--cream);}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1rem;max-width:960px;margin:0 auto;
+}
+.fcard{
+  background:#fff;border-radius:18px;padding:1.8rem 1.4rem;
+  text-align:center;border:2px solid var(--bdr);
+  transition:all .35s;position:relative;overflow:hidden;
+}
+.fcard::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--red),var(--mid));
+  opacity:0;transition:opacity .35s;
+}
+.fcard:hover{border-color:var(--red);transform:translateY(-5px);box-shadow:var(--sh2);}
+.fcard:hover::before{opacity:1;}
+.fnum{
+  position:absolute;top:12px;right:12px;
+  background:var(--red);color:#fff;
+  font-size:.67rem;font-weight:900;
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.fcirc{
+  width:66px;height:66px;border-radius:50%;
+  background:var(--pale);border:3px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin:0 auto 1rem;
+}
+.fttl{
+  font-family:"Kaisei Opti",serif;
+  font-size:1rem;font-weight:700;color:var(--txt);
+  margin-bottom:.6rem;line-height:1.45;
+}
+.fdesc{font-size:.8rem;color:var(--txt2);line-height:1.85;}
+
+/* ===== COURSES & PRICING (unified) ===== */
+#courses{background:#fff;position:relative;}
+.c-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:1.6rem;max-width:1000px;margin:0 auto;
+}
+.ccard{border-radius:20px;overflow:hidden;border:2px solid var(--bdr);transition:all .35s;position:relative;background:#fff;}
+.ccard:hover{border-color:var(--red);transform:translateY(-5px);box-shadow:var(--sh2);}
+.ccard.recommended{border-color:var(--red);}
+.ccard.recommended::before{
+  content:"人気";position:absolute;top:14px;right:14px;
+  background:#fff;color:var(--red);font-size:.65rem;font-weight:700;
+  padding:3px 10px;border-radius:50px;z-index:2;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.chd{background:linear-gradient(135deg,var(--red),var(--mid));padding:1.2rem 1.4rem 1rem;}
+.ccard:nth-child(2) .chd{background:linear-gradient(135deg,#5a3068,#8a60a0);}
+.ccard:nth-child(3) .chd{background:linear-gradient(135deg,#3a6858,#60a888);}
+.cg{
+  background:rgba(255,255,255,.2);color:#fff;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:.6rem;
+}
+.cn{font-family:"Kaisei Opti",serif;font-size:1.2rem;font-weight:700;color:#fff;line-height:1.3;}
+.cbd{padding:1.4rem;}
+.cdesc{font-size:.83rem;color:var(--txt2);line-height:1.85;margin-bottom:.8rem;}
+.ctags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.2rem;}
+.ctag{background:var(--cream);border:1px solid var(--bdr);color:var(--txt2);font-size:.7rem;padding:3px 9px;border-radius:20px;}
+/* pricing inside course cards */
+.c-price-divider{
+  border:none;border-top:1.5px dashed var(--bdr);
+  margin:0 0 1rem;
+}
+.c-price-label{
+  font-size:.7rem;font-weight:700;color:var(--txt3);
+  letter-spacing:.08em;margin-bottom:.6rem;
+}
+.c-price-tiers{display:flex;gap:.6rem;margin-bottom:1rem;}
+.c-price-tier{
+  flex:1;border-radius:10px;padding:.7rem .5rem;text-align:center;
+  border:1.5px solid var(--bdr);background:var(--cream);transition:all .3s;
+}
+.c-price-tier:hover{border-color:var(--mid);background:#fff;}
+.c-price-tier-label{
+  font-size:.62rem;font-weight:700;color:var(--txt3);
+  letter-spacing:.06em;margin-bottom:.3rem;
+}
+.c-price-tier-num{
+  font-family:"Kaisei Opti",serif;font-size:1.3rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.c-price-tier-yen{font-size:.72rem;color:var(--txt2);}
+.c-price-tier-tax{font-size:.58rem;color:var(--txt3);margin-top:2px;}
+/* ===== Lucide SVG icon sizing ===== */
+i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
+.topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
+.hbadge svg{width:14px;height:14px;stroke-width:2.5;flex-shrink:0;}
+.btn-r svg{width:15px;height:15px;stroke-width:2.5;flex-shrink:0;}
+.bubble svg{width:16px;height:16px;stroke-width:2;}
+.wi svg{width:26px;height:26px;stroke-width:1.8;color:var(--red);}
+.fcirc svg{width:28px;height:28px;stroke-width:1.8;}
+.df-icon svg{width:32px;height:32px;stroke-width:1.8;color:var(--red);}
+.ph-icon svg{width:36px;height:36px;stroke-width:1.4;opacity:.5;}
+.stab svg{width:14px;height:14px;stroke-width:2.5;}
+.vavatart svg{width:20px;height:20px;stroke-width:2;color:var(--red);}
+.fsubmit svg{width:15px;height:15px;stroke-width:2.5;flex-shrink:0;}
+.ig-link svg{width:20px;height:20px;stroke-width:2;}
+.c-price-single{text-align:center;margin-bottom:1rem;}
+.c-price-single-num{
+  font-family:"Kaisei Opti",serif;font-size:2rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.c-price-single-label{font-size:.78rem;color:var(--txt2);}
+.c-price-single-tax{font-size:.65rem;color:var(--txt3);margin-top:2px;}
+.c-features{
+  list-style:none;display:flex;flex-direction:column;gap:5px;
+  margin-bottom:1.2rem;
+}
+.c-features li{
+  display:flex;align-items:flex-start;gap:7px;
+  font-size:.78rem;color:var(--txt2);line-height:1.6;
+}
+.c-features li::before{
+  content:"\2713";background:var(--red);color:#fff;
+  width:16px;height:16px;border-radius:50%;font-size:.55rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+}
+.c-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-weight:700;font-size:.82rem;
+  padding:10px 20px;border-radius:50px;
+  transition:all .3s;box-shadow:0 4px 12px rgba(111,45,67,.25);
+  color:#fff;width:100%;justify-content:center;
+}
+.c-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(111,45,67,.35);}
+.c-btn-1{background:linear-gradient(135deg,var(--red),var(--mid));}
+.c-btn-2{background:linear-gradient(135deg,#5a3068,#8a60a0);}
+.c-btn-3{background:linear-gradient(135deg,#3a6858,#60a888);}
+
+/* ===== MEDIA / GALLERY ===== */
+#gallery{background:var(--light);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;max-width:860px;margin:0 auto;
+}
+.gallery-item{
+  border-radius:12px;overflow:hidden;
+  border:2px solid var(--bdr);
+  transition:all .3s;cursor:pointer;
+}
+.gallery-item:hover{transform:scale(1.03);box-shadow:var(--sh2);border-color:var(--red);}
+.gallery-item .img-ph{min-height:140px;border-radius:0;border:none;}
+.gallery-item img{width:100%;height:200px;object-fit:cover;display:block;}
+
+/* ===== VIDEO SECTION ===== */
+#videos{background:#fff;}
+.video-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;max-width:860px;margin:0 auto;
+}
+.video-label{
+  font-size:.8rem;font-weight:700;color:var(--txt2);
+  margin-top:.7rem;text-align:center;letter-spacing:.04em;
+}
+
+/* ===== STAFF (NEW TAB DESIGN) ===== */
+#staff{background:var(--cream);}
+
+/* Tab navigation */
+.staff-tabs{
+  display:flex;gap:8px;justify-content:center;
+  flex-wrap:wrap;margin-bottom:2.2rem;
+}
+.stab{
+  background:#fff;border:2px solid var(--bdr);color:var(--txt2);
+  font-size:.82rem;font-weight:700;letter-spacing:.06em;
+  padding:9px 20px;border-radius:50px;cursor:pointer;
+  transition:all .25s;font-family:inherit;
+}
+.stab:hover{border-color:var(--mid);color:var(--mid);}
+.stab.active{
+  background:var(--red);border-color:var(--red);color:#fff;
+  box-shadow:0 4px 14px rgba(111,45,67,.28);
+}
+
+/* Tab panels */
+.staff-panel{display:none;}
+.staff-panel.active{display:block;}
+
+/* Grid layout */
+.staff-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1.2rem;max-width:960px;margin:0 auto;
+}
+.staff-grid.wide{
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+}
+
+/* Card */
+.scard2{
+  background:#fff;border-radius:20px;
+  border:2px solid var(--bdr);
+  padding:1.6rem 1.2rem 1.4rem;
+  text-align:center;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.scard2::after{
+  content:"";position:absolute;
+  bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--mid));
+  transform:scaleX(0);transition:transform .3s;
+}
+.scard2:hover{
+  border-color:var(--red);
+  transform:translateY(-5px);
+  box-shadow:var(--sh2);
+}
+.scard2:hover::after{transform:scaleX(1);}
+.scard2.leader-card{border-color:var(--red);}
+
+/* Avatar */
+.savatar2{
+  width:88px;height:88px;border-radius:50%;
+  margin:0 auto 1rem;
+  border:3px solid var(--bdr);
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--pale),var(--light));
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s;
+  position:relative;
+}
+.scard2:hover .savatar2{border-color:var(--red);}
+.leader-card .savatar2{width:110px;height:110px;border-width:4px;border-color:var(--red);}
+.savatar2 img{width:100%;height:100%;object-fit:cover;}
+.savatar2-initials{
+  font-family:"Kaisei Opti",serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+
+/* Role badge */
+.srole2{
+  display:inline-block;
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;
+  padding:3px 12px;border-radius:50px;margin-bottom:.6rem;
+}
+.srole2.r-leader{background:var(--dark);color:#fff;}
+.srole2.r-pro{background:linear-gradient(135deg,var(--red),var(--mid));color:#fff;}
+.srole2.r-daily{background:var(--pale);color:var(--red);border:1px solid var(--bdr);}
+.srole2.r-staff{background:#e8f0fe;color:#1a56b0;border:1px solid #c7d7f9;}
+.srole2.r-ops{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;}
+
+.sname2{
+  font-family:"Kaisei Opti",serif;
+  font-size:1.05rem;font-weight:700;
+  color:var(--txt);margin-bottom:.3rem;line-height:1.3;
+}
+.sdomain2{
+  font-size:.72rem;color:var(--txt3);
+  margin-bottom:.8rem;line-height:1.6;
+}
+.sdesc2{
+  font-size:.78rem;color:var(--txt2);
+  line-height:1.85;text-align:left;
+}
+
+/* Photo placeholder swap note */
+.photo-hint{
+  font-size:.63rem;color:var(--txt3);
+  margin-top:.5rem;opacity:.7;
+  font-style:italic;
+}
+
+/* count banner */
+.s-count{
+  max-width:760px;margin:2.5rem auto 0;
+  background:linear-gradient(135deg,var(--dark),var(--red));
+  border-radius:16px;padding:1.8rem 2rem;text-align:center;color:#fff;
+}
+.s-count-n{
+  font-family:"Kaisei Opti",serif;font-size:1.35rem;font-weight:700;
+  background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);
+  padding:5px 18px;border-radius:7px;display:inline-block;margin:0 4px;
+}
+.s-count-desc{font-size:.83rem;opacity:.82;margin-top:.8rem;line-height:1.8;}
+
+/* ===== VOICES ===== */
+#voices{background:#fff;overflow:hidden;}
+.voice-hero{
+  max-width:900px;margin:0 auto 2.5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border-radius:20px;overflow:hidden;
+  border:2px solid var(--red);box-shadow:var(--sh2);
+}
+.voice-hero-before,.voice-hero-after{
+  padding:2rem 1.8rem;text-align:center;
+}
+.voice-hero-before{background:linear-gradient(135deg,#f8f4f5,#fff);}
+.voice-hero-after{background:linear-gradient(135deg,#fff0f2,#fff8f8);}
+.voice-hero-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  padding:4px 14px;border-radius:50px;display:inline-block;margin-bottom:.8rem;
+}
+.voice-hero-before .voice-hero-label{background:var(--pale);color:var(--txt2);}
+.voice-hero-after .voice-hero-label{background:var(--red);color:#fff;}
+.voice-hero-score{
+  font-family:"Kaisei Opti",serif;font-size:3.2rem;font-weight:700;
+  line-height:1;margin-bottom:.3rem;
+}
+.voice-hero-before .voice-hero-score{color:#aaa;}
+.voice-hero-after .voice-hero-score{color:var(--red);}
+.voice-hero-exam{font-size:.75rem;color:var(--txt2);margin-bottom:.5rem;}
+.voice-hero-hours{font-size:.8rem;font-weight:600;}
+.voice-hero-before .voice-hero-hours{color:#999;}
+.voice-hero-after .voice-hero-hours{color:var(--red);}
+.voice-hero-arrow{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:700;
+  box-shadow:0 4px 16px rgba(111,45,67,.35);z-index:2;
+}
+.voice-hero-wrap{position:relative;}
+.voice-hero-caption{
+  text-align:center;padding:1rem 1.5rem;
+  background:linear-gradient(135deg,var(--dark),var(--red));color:#fff;
+  font-size:.82rem;line-height:1.7;
+}
+.voice-hero-caption strong{color:#e8b0a0;}
+
+/* Voice cards - new design */
+.v-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.4rem;max-width:960px;margin:0 auto;
+}
+.vcard{
+  background:#fff;border-radius:20px;padding:0;
+  border:2px solid var(--bdr);transition:all .35s;
+  overflow:hidden;position:relative;
+}
+.vcard:hover{border-color:var(--red);transform:translateY(-5px);box-shadow:var(--sh2);}
+.vcard-top{
+  background:linear-gradient(135deg,var(--dark),var(--red));
+  padding:1.2rem 1.4rem;position:relative;
+}
+.vcard-result{
+  font-size:.92rem;font-weight:700;color:#fff;line-height:1.4;
+}
+.vcard-result-univ{
+  font-family:"Kaisei Opti",serif;font-size:1.1rem;
+  display:block;margin-top:.2rem;
+}
+.vcard-body{padding:1.4rem;}
+.vq{
+  font-size:2.5rem;color:var(--mid);line-height:.7;
+  font-family:Georgia,serif;display:block;margin-bottom:.5rem;
+}
+.vtxt{font-size:.85rem;line-height:1.9;color:var(--txt);margin-bottom:1.2rem;}
+.vauth{
+  display:flex;align-items:center;gap:10px;
+  padding-top:1rem;border-top:1px solid var(--bdr);
+}
+.vavatart{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--pale);border:2.5px solid var(--red);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  flex-shrink:0;
+}
+.vname{font-size:.82rem;font-weight:700;color:var(--txt);}
+.vname span{display:block;font-weight:400;color:var(--txt3);font-size:.72rem;margin-top:2px;}
+.voice-more-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--red);color:#fff;
+  font-weight:700;font-size:.9rem;
+  padding:14px 32px;border-radius:50px;
+  box-shadow:0 5px 18px rgba(111,45,67,.32);
+  transition:all .3s;margin-top:2rem;
+}
+.voice-more-btn:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
+
+/* ===== INSTAGRAM ===== */
+#instagram{background:var(--light);}
+.ig-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;max-width:660px;margin:2rem auto 0;
+}
+.ig-item{
+  border-radius:10px;overflow:hidden;
+  border:2px solid var(--bdr);
+  transition:all .3s;cursor:pointer;
+  position:relative;
+}
+.ig-item:hover{transform:scale(1.04);box-shadow:var(--sh2);border-color:var(--red);}
+.ig-item .img-ph{min-height:120px;border-radius:0;border:none;}
+.ig-overlay{
+  position:absolute;inset:0;
+  background:rgba(111,45,67,.6);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s;
+  font-size:1.5rem;color:#fff;
+}
+.ig-item:hover .ig-overlay{opacity:1;}
+.ig-link{
+  display:block;text-align:center;margin:1.5rem auto 0;
+  max-width:260px;
+  background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  color:#fff;padding:12px 24px;border-radius:50px;
+  font-weight:700;font-size:.88rem;
+  transition:opacity .3s;
+}
+.ig-link:hover{opacity:.85;}
+
+/* ===== ABOUT ===== */
+#about{background:#fff;}
+.about-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3.5rem;align-items:start;max-width:960px;margin:0 auto;
+}
+.about-card{
+  background:linear-gradient(160deg,var(--pale),var(--light));
+  border-radius:20px;padding:2.2rem;
+  border:2px solid var(--bdr);position:relative;overflow:hidden;
+}
+.ghost{
+  position:absolute;bottom:-12px;right:-12px;
+  width:90px;opacity:.12;pointer-events:none;
+}
+.ab-tbl{width:100%;border-collapse:collapse;}
+.ab-tbl tr{border-bottom:1px solid rgba(111,45,67,.1);}
+.ab-tbl tr:last-child{border-bottom:none;}
+.ab-tbl th{
+  font-size:.75rem;font-weight:700;color:var(--red);
+  padding:11px 8px 11px 0;vertical-align:top;width:72px;
+}
+.ab-tbl td{font-size:.84rem;color:var(--txt);padding:11px 0;line-height:1.7;}
+.ab-txt h3{
+  font-family:"Kaisei Opti",serif;font-size:1.25rem;
+  font-weight:700;color:var(--txt);line-height:1.6;margin-bottom:1rem;
+}
+.ab-txt p{font-size:.86rem;line-height:2;color:var(--txt2);margin-bottom:1rem;}
+.ab-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.ab-list li{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:.84rem;color:var(--txt);line-height:1.6;
+}
+.ab-list li::before{
+  content:"✓";background:var(--red);color:#fff;
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+
+/* ===== CONTACT ===== */
+#contact{background:var(--cream);position:relative;}
+#contact::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--red),var(--mid),var(--red));
+}
+.contact-inner{
+  display:grid;grid-template-columns:1fr 1.25fr;
+  gap:2.5rem;max-width:900px;margin:0 auto;
+}
+.ci-box{
+  background:var(--dark);border-radius:20px;padding:2.2rem;
+  color:#fff;position:relative;overflow:hidden;
+}
+.ci-box::before{
+  content:"";position:absolute;bottom:-25px;right:-25px;
+  width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%;
+}
+.ci-ttl{font-family:"Kaisei Opti",serif;font-size:1.1rem;font-weight:700;color:#f0c4b4;margin-bottom:.4rem;}
+.ci-p{font-size:.8rem;color:rgba(255,255,255,.88);margin-bottom:1.6rem;line-height:1.7;}
+.ci-tel{font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:.04em;display:block;margin-bottom:.2rem;}
+.ci-hrs{font-size:.75rem;opacity:.65;margin-bottom:1.5rem;}
+.ci-rows{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.ci-rows li{display:flex;gap:8px;align-items:flex-start;font-size:.81rem;opacity:.82;line-height:1.6;}
+.ci-rows li span:first-child{
+  background:rgba(255,255,255,.12);padding:2px 7px;border-radius:4px;
+  font-size:.68rem;font-weight:700;white-space:nowrap;margin-top:1px;
+}
+.cform{background:#fff;border-radius:20px;padding:2.2rem;border:2px solid var(--bdr);}
+.fg{margin-bottom:1.1rem;}
+.fl{
+  display:block;font-size:.77rem;font-weight:700;
+  color:var(--txt);margin-bottom:5px;
+}
+.fl .req{background:var(--red);color:#fff;font-size:.62rem;padding:2px 5px;border-radius:3px;margin-left:5px;}
+.fi,.fsel,.fta{
+  width:100%;border:2px solid var(--bdr);background:var(--cream);
+  padding:10px 13px;font-size:.86rem;
+  font-family:"Noto Sans JP",sans-serif;color:var(--txt);
+  border-radius:9px;outline:none;transition:all .3s;appearance:none;
+}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(111,45,67,.1);}
+.fta{min-height:100px;resize:vertical;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.fsubmit{
+  width:100%;background:var(--red);color:#fff;
+  border:none;cursor:pointer;font-family:"Noto Sans JP",sans-serif;
+  font-size:.95rem;font-weight:900;padding:16px;
+  border-radius:50px;transition:all .3s;
+  box-shadow:0 5px 18px rgba(111,45,67,.3);
+  margin-top:.4rem;
+}
+.fsubmit:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
+.fsubmit:disabled{background:#999;cursor:not-allowed;transform:none;box-shadow:none;}
+.ferr{display:none;font-size:.72rem;color:#c0392b;margin-top:.25rem;}
+.fi.invalid,.fsel.invalid,.fta.invalid{border-color:#c0392b;}
+.fi.invalid+.ferr,.fsel.invalid+.ferr,.fta.invalid+.ferr{display:block;}
+.form-msg{padding:.8rem 1rem;border-radius:8px;font-size:.83rem;font-weight:600;margin-bottom:.8rem;display:flex;align-items:center;}
+.form-msg--ok{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
+.form-msg--ng{background:#fdecea;color:#c62828;border:1px solid #ef9a9a;}
+/* ── Thank-you modal ── */
+#ty-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;}
+#ty-modal.open{opacity:1;visibility:visible;}
+#ty-modal.open .ty-card{transform:translateY(0) scale(1);}
+.ty-overlay{position:absolute;inset:0;background:rgba(29,6,13,.72);backdrop-filter:blur(4px);}
+.ty-card{position:relative;background:#fff;border-radius:20px;padding:2.8rem 2.4rem 2.6rem;max-width:480px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(111,45,67,.32);transform:translateY(32px) scale(.96);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.ty-icon{width:72px;height:72px;background:var(--pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;animation:ty-pop .5s .2s cubic-bezier(.22,1,.36,1) both;}
+@keyframes ty-pop{from{transform:scale(0) rotate(-20deg);}to{transform:scale(1) rotate(0deg);}}
+.ty-icon svg{width:36px;height:36px;stroke:var(--red);}
+.ty-en{font-size:.72rem;font-weight:700;letter-spacing:.18em;color:var(--mid);text-transform:uppercase;margin-bottom:.5rem;}
+.ty-head{font-size:1.55rem;font-weight:900;color:var(--dark);line-height:1.3;margin-bottom:1rem;}
+.ty-head span{color:var(--red);}
+.ty-body{font-size:.9rem;color:var(--txt2);line-height:1.75;margin-bottom:1.6rem;}
+.ty-body strong{color:var(--txt);font-weight:700;}
+.ty-close{display:inline-block;background:var(--red);color:#fff;font-size:.88rem;font-weight:700;padding:.75rem 2.2rem;border-radius:50px;border:none;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;letter-spacing:.06em;}
+.ty-close:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.35);}
+@media(max-width:520px){.ty-card{padding:2.2rem 1.6rem 2rem;}.ty-head{font-size:1.3rem;}}
+
+/* ===== FOOTER ===== */
+footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
+.ft-inner{
+  display:flex;justify-content:space-between;align-items:start;
+  padding-bottom:1.8rem;border-bottom:1px solid rgba(255,255,255,.08);
+  margin-bottom:1.2rem;gap:1.5rem;flex-wrap:wrap;
+}
+.ft-name{font-family:"Kaisei Opti",serif;font-size:1.3rem;font-weight:700;color:#e8b0a0;margin-bottom:.3rem;}
+.ft-sub{font-size:.68rem;color:rgba(255,255,255,.3);letter-spacing:.1em;}
+.ft-nav{list-style:none;display:flex;flex-wrap:wrap;gap:.7rem 1.5rem;}
+.ft-nav a{color:rgba(255,255,255,.45);font-size:.76rem;transition:color .3s;}
+.ft-nav a:hover{color:#e8b0a0;}
+.ft-copy{text-align:center;font-size:.68rem;color:rgba(255,255,255,.2);}
+
+/* ===== RESULTS (合格実績) ===== */
+#results{background:var(--cream);}
+.res-year{
+  max-width:900px;margin:0 auto 2.5rem;
+}
+.res-year-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.15rem;font-weight:700;
+  color:var(--txt);margin-bottom:1rem;text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.res-year-ttl::before,.res-year-ttl::after{
+  content:"";flex:1;max-width:80px;height:1px;background:var(--bdr);
+}
+.res-tier{margin-bottom:1rem;}
+.res-tier-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  padding:4px 14px;border-radius:50px;display:inline-block;margin-bottom:.6rem;
+}
+.res-tier-label.t-national{background:var(--red);color:#fff;}
+.res-tier-label.t-waseda{background:var(--dark);color:#fff;}
+.res-tier-label.t-march{background:#555;color:#fff;}
+.res-tier-label.t-other{background:var(--pale);color:var(--red);border:1px solid var(--bdr);}
+.res-badges{display:flex;flex-wrap:wrap;gap:6px;}
+.res-badge{
+  background:#fff;border:1.5px solid var(--bdr);border-radius:10px;
+  padding:6px 14px;font-size:.82rem;font-weight:600;color:var(--txt);
+  transition:all .3s;
+}
+.res-badge:hover{border-color:var(--red);background:var(--pale);}
+
+/* ===== PRICING (料金) ===== */
+.price-note{
+  max-width:700px;margin:2rem auto 0;text-align:center;
+  font-size:.8rem;color:var(--txt2);line-height:1.8;
+  background:var(--pale);padding:1rem 1.5rem;border-radius:12px;border:1px solid var(--bdr);
+}
+
+/* ===== FLOW (入塾の流れ) ===== */
+#flow{background:var(--cream);}
+.flow-steps{
+  display:flex;flex-direction:column;gap:0;
+  max-width:700px;margin:0 auto;position:relative;
+}
+.flow-steps::before{
+  content:"";position:absolute;left:28px;top:30px;bottom:30px;
+  width:3px;background:var(--bdr);z-index:0;
+}
+.flow-step{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  position:relative;z-index:1;padding:.8rem 0;
+}
+.flow-num{
+  width:56px;height:56px;border-radius:50%;flex-shrink:0;
+  background:var(--red);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;line-height:1.2;
+  box-shadow:0 3px 12px rgba(111,45,67,.25);
+}
+.flow-num span{font-family:"Kaisei Opti",serif;font-size:1.2rem;font-weight:700;}
+.flow-body{
+  background:#fff;border-radius:14px;padding:1.2rem 1.4rem;flex:1;
+  border:2px solid var(--bdr);transition:all .3s;
+}
+.flow-body:hover{border-color:var(--red);box-shadow:var(--sh);}
+.flow-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1rem;font-weight:700;
+  color:var(--txt);margin-bottom:.3rem;
+}
+.flow-desc{font-size:.83rem;color:var(--txt2);line-height:1.8;}
+
+/* ===== FAQ ===== */
+#faq{background:#fff;}
+.faq-list{max-width:760px;margin:0 auto;}
+.faq-item{
+  border-bottom:1px solid var(--bdr);
+}
+.faq-q{
+  width:100%;background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  padding:1.2rem .5rem;text-align:left;
+  font-family:"Noto Sans JP",sans-serif;
+  font-size:.9rem;font-weight:700;color:var(--txt);
+  transition:color .3s;
+}
+.faq-q:hover{color:var(--red);}
+.faq-q::before{
+  content:"Q";background:var(--red);color:#fff;
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;font-family:"Kaisei Opti",serif;
+}
+.faq-q::after{
+  content:"+";margin-left:auto;font-size:1.3rem;color:var(--txt3);
+  transition:transform .3s;flex-shrink:0;
+}
+.faq-item.open .faq-q::after{content:"−";}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;
+  padding:0 .5rem 0 3rem;
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 .5rem 1.2rem 3rem;}
+.faq-a-inner{
+  font-size:.85rem;color:var(--txt2);line-height:1.9;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes floatUp{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.on{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+.d4{transition-delay:.4s;}.d5{transition-delay:.5s;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:860px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero-badges{justify-content:center;}
+  .hero-chara{width:100%;max-width:420px;min-height:300px;margin:0 auto;order:-1;border-radius:16px 16px 0 0;}
+  .hero-chibi{top:4px;left:4px;transform:none;width:110px;}
+  .hero-btns{justify-content:center;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+  .about-inner,.contact-inner{grid-template-columns:1fr;}
+  .voice-hero{grid-template-columns:1fr 1fr;}
+  .voice-hero-score{font-size:2.6rem;}
+  .video-wrap{grid-template-columns:1fr;}
+  .banner-row{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .ig-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:560px){
+  section{padding:52px 4vw;}
+  .feat-grid{grid-template-columns:1fr;}
+  .stats-inner{flex-wrap:wrap;}
+  .voice-hero{grid-template-columns:1fr;}
+  .voice-hero-arrow{position:static;transform:none;margin:-.5rem auto;}
+  .flow-step{gap:.8rem;}
+  .flow-num{width:44px;height:44px;}
+  .flow-num span{font-size:1rem;}
+  .stat{flex:1 0 45%;}
+  .fr2{grid-template-columns:1fr;}
+  .banner-row{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-item"><i data-lucide="book-open"></i> 文系受験専門塾 プラトン</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item"><i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item"><a href="https://www.instagram.com/plato_humanities/" target="_blank"><i data-lucide="camera"></i> Instagram @plato_humanities</a></span>
+</div>
+
+<header>
+  <div class="hd-top">
+    <a href="#" class="hd-logo">
+      <div class="hd-logo-img"><img src="img/plato-logochibi.png" alt="プラトン"></div>
+      <div>
+        <span class="hd-logo-name">プラトン</span>
+        <span class="hd-logo-sub">文系の大学受験専門塾 — Plato Humanities</span>
+      </div>
+    </a>
+    <div class="hd-right">
+      <a href="https://www.instagram.com/plato_humanities/" target="_blank" class="hd-sns">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+    </div>
+    <button class="hd-ham" id="hamBtn" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="spNav"><ul class="nav-ul">
+    <li><a href="#features">指導システム</a></li>
+    <li><a href="#courses">コース・料金</a></li>
+    <li><a href="mainichi-kadai.html">毎日課題システム</a></li>
+    <li><a href="#gallery">授業の様子</a></li>
+    <li><a href="#staff">講師紹介</a></li>
+    <li><a href="#voices">合格者の声</a></li>
+    <li><a href="#results">合格実績</a></li>
+    <li><a href="#flow">入塾の流れ</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#about">塾概要</a></li>
+    <li><a href="news.html">お知らせ</a></li>
+    <li><a href="#contact" class="hl">▶ 無料相談</a></li>
+  </ul></nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badges">
+        <div class="hbadge"><i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績</div>
+        <div class="hbadge b"><i data-lucide="library"></i> 文系専門・少人数指導</div>
+        <div class="hbadge"><i data-lucide="sparkles"></i> 無料学習相談 受付中</div>
+      </div>
+      <h1 class="hero-h1">毎日課題 ×<br><em>合格思考で<br>志望校合格へ。</em></h1>
+      <p class="hero-school-name">文系の大学受験専門塾 プラトン</p>
+      <p class="hero-p">文系の大学受験専門塾プラトンは<br>毎日課題システムによる学習管理と<br>合格思考トレーニングで思考力を鍛え、<br>志望校合格まで伴走します。</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-r"><i data-lucide="calendar-check"></i> 無料学習相談を予約する →</a>
+        <a href="#courses" class="btn-w">コースを見る</a>
+      </div>
+    </div>
+    <div class="hero-chara">
+      <img class="hero-photo" src="img/img:hero-study.jpg" alt="指導の様子">
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-n">200<small style="font-size:.9rem">名</small></span><span class="stat-l">代表の指導生徒数</span></div>
+    <div class="stat"><span class="stat-n">7<small style="font-size:.9rem">年</small></span><span class="stat-l">文系受験指導の実績</span></div>
+    <div class="stat" style="background:rgba(232,176,160,.08);border-radius:8px;"><span class="stat-n">90<small style="font-size:.9rem">%+</small></span><span class="stat-l" style="opacity:1;color:#e8b0a0;font-weight:700;font-size:.72rem;line-height:1.5;">文系受験生<br>志望校合格率</span></div>
+    <div class="stat"><span class="stat-n">毎日管理</span><span class="stat-l">毎日課題で家庭学習管理</span></div>
+  </div>
+</div>
+
+<!-- ===== WORRIES ===== -->
+<section id="worries">
+  <div class="sec-head reveal">
+    <span class="eyebrow">こんな悩みありませんか？</span>
+    <h2 class="sec-ttl">多くの文系受験生が<br><span class="ac">同じ壁</span>にぶつかっています</h2>
+  </div>
+  <div class="worries-grid">
+    <div class="wcard reveal d1"><div class="wi"><i data-lucide="home"></i></div><div class="wt">塾には行くが、帰宅後は何も勉強しない</div></div>
+    <div class="wcard reveal d2"><div class="wi"><i data-lucide="frown"></i></div><div class="wt">「家で勉強しなさい」と言っても全く動かない</div></div>
+    <div class="wcard reveal d3"><div class="wi"><i data-lucide="trending-down"></i></div><div class="wt">模試の偏差値が上がらず、正しい勉強法がわからない</div></div>
+    <div class="wcard reveal d4"><div class="wi"><i data-lucide="timer"></i></div><div class="wt">部活・習い事と受験勉強の両立ができていない</div></div>
+    <div class="wcard reveal d1"><div class="wi"><i data-lucide="pencil"></i></div><div class="wt">現代文・古文・英語の点数がなかなか上がらない</div></div>
+    <div class="wcard reveal d2"><div class="wi"><i data-lucide="target"></i></div><div class="wt">志望校との差が大きく、何から手をつければいいかわからない</div></div>
+    <div class="wcard reveal d3"><div class="wi"><i data-lucide="calculator"></i></div><div class="wt">「文系だから数学が苦手」「数学の点数がなかなか上がらない」</div></div>
+  </div>
+  <div class="resolve reveal"><span class="resolve-icon"><i data-lucide="quote"></i></span><span>「家で勉強できない受験生の志望校合格は100%叶わない」— プラトンは毎日の家庭学習を徹底管理し、この問題を根本から解決します！</span></div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section id="features">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Guidance System</span>
+    <h2 class="sec-ttl">指導<span class="ac">システム</span></h2>
+    <p class="sec-sub">全国対応のオンライン指導 × 文系の大学受験専門塾</p>
+  </div>
+
+  <!-- リード文 -->
+  <div class="reveal" style="max-width:780px;margin:0 auto 2.8rem;background:#fff;border-radius:18px;padding:2rem 2.2rem;border:2px solid var(--bdr);line-height:1.9;font-size:.92rem;color:var(--txt2);">
+    <p style="margin-bottom:1rem;">当塾は、全国の生徒を対象としたオンラインの<strong style="color:var(--txt);">文系の大学受験専門塾</strong>です。大学受験では、志望校の出題傾向を理解し、それに合わせた学習を進めていくことが重要です。</p>
+    <p style="margin-bottom:1rem;">オンライン指導により、住んでいる地域に関係なく、全国どこからでも当塾の指導を受けることができます。また当塾は、英語・国語・社会・数学を中心とした受験対策を行っています。文系科目の学習法や参考書の使い方、志望校の出題傾向を踏まえた指導により、効率的に学力を伸ばしていきます。</p>
+    <p>大学受験で合格を勝ち取るためには、<strong style="color:var(--red);">毎日の学習の積み重ね</strong>と<strong style="color:var(--red);">志望校から逆算した受験戦略</strong>の両方が不可欠です。当塾では、この2つを組み合わせた指導を行っています。</p>
+  </div>
+
+  <!-- 4つの特長 -->
+  <div class="feat-grid">
+    <div class="fcard reveal d1">
+      <div class="fnum">01</div>
+      <div class="fcirc"><i data-lucide="globe"></i></div>
+      <h3 class="fttl">全国対応のオンライン指導</h3>
+      <p class="fdesc">住んでいる地域に関係なく、全国どこからでも受講できます。オンライン指導でありながら、毎日の学習状況を講師がしっかりと把握しながら指導を行います。</p>
+    </div>
+    <div class="fcard reveal d2">
+      <div class="fnum">02</div>
+      <div class="fcirc"><i data-lucide="book-marked"></i></div>
+      <h3 class="fttl">文系の大学受験専門塾</h3>
+      <p class="fdesc">英語・国語・社会・数学を中心とした文系大学受験に特化した専門塾です。文系科目の学習法や参考書の使い方、志望校の出題傾向を踏まえた指導を行います。</p>
+    </div>
+    <div class="fcard reveal d3">
+      <div class="fnum">03</div>
+      <div class="fcirc"><i data-lucide="clipboard-list"></i></div>
+      <h3 class="fttl">毎日課題による学習管理</h3>
+      <p class="fdesc">生徒一人ひとりの学習状況に合わせて、日々の学習内容を具体的に提示し、学習状況を講師が確認します。「何を勉強すればいいか分からない」「家では続かない」を解決します。</p>
+    </div>
+    <div class="fcard reveal d4">
+      <div class="fnum">04</div>
+      <div class="fcirc"><i data-lucide="map"></i></div>
+      <h3 class="fttl">志望校から逆算した受験戦略</h3>
+      <p class="fdesc">生徒の志望校や現在の学力を分析し、志望校合格までのロードマップを作成します。どの参考書を・どの順番で・どの時期までに進めるべきかを明確にします。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== DAILY FLOW ===== -->
+<section id="daily-flow" style="background:var(--cream);">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Daily Management</span>
+    <h2 class="sec-ttl">毎日課題<span class="ac">システム</span></h2>
+    <p class="sec-sub">日々の学習を管理するサイクルで、勉強習慣を身につけながら学力を伸ばします。</p>
+  </div>
+
+  <!-- なぜ毎日課題が必要か -->
+  <div class="reveal" style="max-width:780px;margin:0 auto 2.5rem;background:#fff;border-radius:18px;padding:1.8rem 2rem;border:2px solid var(--bdr);">
+    <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1rem;">勉強法は知っているのに、成績が伸びない理由</h3>
+    <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:1rem;">多くの受験生が成績を伸ばせない理由は、勉強の方法ではなく<strong style="color:var(--red);">勉強量の不足</strong>です。どれだけ良い勉強法を知っていても、日々の学習量が不足していれば学力は伸びません。</p>
+    <div style="background:var(--pale);border-radius:10px;padding:1rem 1.2rem;font-size:.85rem;color:var(--txt2);line-height:1.9;border-left:3px solid var(--red);">
+      多くの受験生が抱える悩み：<br>
+      ・何を勉強すればいいのか分からない<br>
+      ・家では勉強が続かない<br>
+      ・計画を立てても実行できない
+    </div>
+    <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:1rem;">そこで当塾では、日々の学習を管理する仕組みとして<strong style="color:var(--txt);">「毎日課題システム」</strong>を導入しています。</p>
+  </div>
+
+  <!-- サイクル図 -->
+  <div class="daily-flow-grid reveal" style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;padding:0 1rem;">
+
+    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">①</div>
+      <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="send"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">講師が課題を提示</h4>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">生徒一人ひとりの学習状況や志望校に合わせて、<strong>どの参考書を・どの範囲まで・どのように</strong>進めるかを具体的に指示します。</p>
+    </div>
+
+    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">②</div>
+      <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="pencil-line"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">自宅で学習・ノート提出</h4>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">生徒は課題に取り組み、学習内容をノートにまとめます。ノートを写真で提出することで、単に「やりました」ではなく実際の学習内容を確認できます。</p>
+    </div>
+
+    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">③</div>
+      <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="check-square"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">講師が丸付け・確認</h4>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">提出されたノートを講師が確認・丸付けします。理解が不十分な部分があれば、解き方のアドバイスや学習方法についてフィードバックを行います。</p>
+    </div>
+
+    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">④</div>
+      <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="repeat-2"></i></div>
+      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">翌日の課題を提示</h4>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">その日の学習状況を踏まえながら、講師が翌日の課題を提示します。このサイクルを毎日繰り返すことで、学習を着実に積み重ねていきます。</p>
+    </div>
+
+  </div>
+
+  <!-- メリット -->
+  <div class="reveal" style="max-width:780px;margin:2.5rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.3rem;border:2px solid var(--bdr);">
+      <div style="font-weight:700;color:var(--red);margin-bottom:.4rem;font-size:.9rem;">✓ 毎日勉強する習慣が身につく</div>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;">日々の課題が明確になることで、自然と学習習慣を身につけることができます。</p>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.3rem;border:2px solid var(--bdr);">
+      <div style="font-weight:700;color:var(--red);margin-bottom:.4rem;font-size:.9rem;">✓ 何を勉強すればいいか迷わない</div>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;">講師が学習内容を具体的に提示するため、「今日は何を勉強すればいいか」がなくなります。</p>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.3rem;border:2px solid var(--bdr);">
+      <div style="font-weight:700;color:var(--red);margin-bottom:.4rem;font-size:.9rem;">✓ 学習状況を講師が把握できる</div>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;">学習報告をもとに、講師が生徒の学習状況を確認。課題がある場合は適切なアドバイスを行います。</p>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:1.2rem 1.3rem;border:2px solid var(--bdr);">
+      <div style="font-weight:700;color:var(--red);margin-bottom:.4rem;font-size:.9rem;">✓ 自宅学習の質が上がる</div>
+      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;">大学受験では自宅での学習時間が非常に重要です。毎日課題により、自宅学習の質を高めることができます。</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem;" class="reveal">
+    <a href="mainichi-kadai.html" class="btn-r" style="display:inline-flex;">毎日課題システムの詳細を見る →</a>
+  </div>
+</section>
+
+<!-- ===== 合格思考トレーニング ===== -->
+<section id="thinking-training" style="background:#fff;">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Thinking Training</span>
+    <h2 class="sec-ttl">合格思考<span class="ac">トレーニング</span></h2>
+    <p class="sec-sub">「定量」だけでなく「定性」を鍛える。自ら考え、自ら答えを導く力を育てます。</p>
+  </div>
+
+  <!-- 定量 vs 定性 -->
+  <div class="reveal" style="max-width:780px;margin:0 auto 2.5rem;background:var(--cream);border-radius:18px;padding:1.8rem 2rem;border:2px solid var(--bdr);">
+    <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1rem;">数字だけを追いかけていませんか？</h3>
+    <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:1rem;">多くの受験生は、「いつまでに参考書ルートを終わらせなきゃいけない」「今は偏差値がこれくらいだ」「英単語を何個覚えた」というように、<strong style="color:var(--red);">定量的な数字ばかりを追いかけがち</strong>です。</p>
+    <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;">もちろんそれも大切ですが、大学受験で合格を掴むためには、<strong style="color:var(--txt);">定性的な部分</strong>――つまり受験生自身の<strong style="color:var(--red);">主体性や能動性</strong>が極めて重要です。</p>
+  </div>
+
+  <!-- 2つの力 -->
+  <div class="power-grid reveal">
+    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.8rem 1.6rem;color:#fff;">
+      <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.6rem;">自ら考える力</h4>
+      <p style="font-size:.84rem;line-height:1.85;opacity:.92;">与えられた知識をただ暗記するのではなく、「なぜそうなるのか」を自分の頭で考え抜く力。この力がなければ、応用問題や初見の問題に太刀打ちできません。</p>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:1.8rem 1.6rem;color:#fff;">
+      <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      </div>
+      <h4 style="font-size:1rem;font-weight:700;margin-bottom:.6rem;">自ら答えを導き出す力</h4>
+      <p style="font-size:.84rem;line-height:1.85;opacity:.92;">正解が用意されていない問いに対しても、自分なりの根拠を持って答えを出す力。小論文や記述問題はもちろん、あらゆる科目で問われる力です。</p>
+    </div>
+  </div>
+
+  <!-- 強調メッセージ -->
+  <div class="reveal" style="max-width:780px;margin:0 auto;">
+    <div style="background:var(--pale);border-radius:12px;padding:1.4rem 1.6rem;border-left:4px solid var(--red);font-size:.9rem;color:var(--txt);line-height:1.9;">
+      <strong>この2つの力がないと、MARCH以上の大学に合格することは不可能</strong>だと考えてください。プラトンでは、毎日課題による学習管理と合わせて、受験生の「考える力」そのものを鍛える<strong style="color:var(--red);">合格思考トレーニング</strong>を実施しています。
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem;" class="reveal">
+    <a href="mainichi-kadai.html" class="btn-r" style="display:inline-flex;">合格思考トレーニングの詳細を見る →</a>
+  </div>
+</section>
+
+<!-- ===== COURSES & PRICING ===== -->
+<section id="courses">
+  <div id="pricing" style="position:absolute;margin-top:-80px;"></div>
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Courses & Pricing</span>
+    <h2 class="sec-ttl">コース紹介・<span class="ac">料金</span></h2>
+    <p class="sec-sub">すべてのコースに毎日課題・質問対応・学習管理が含まれています。</p>
+  </div>
+  <!-- 柔軟な支払い方法バナー -->
+  <div class="reveal" style="background:var(--pale);border:2px solid var(--red);border-radius:14px;padding:1.2rem 1.8rem;margin:0 auto 2rem;max-width:900px;display:flex;align-items:center;gap:1rem;font-size:.95rem;color:var(--txt);">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span><strong>4つの支払い方法から選べます。</strong>クレジットカード毎月払いにも対応。クーリングオフ・退塾時の返金制度も完備しています。<a href="news.html" style="color:var(--red);font-weight:700;text-decoration:underline;margin-left:4px;">詳しくはこちら</a></span>
+  </div>
+  <div class="c-grid">
+    <!-- コース1: 大学受験準備コース -->
+    <div class="ccard reveal d1">
+      <div class="chd">
+        <span class="cg">中学生〜高校2年生</span>
+        <div class="cn">大学受験準備コース</div>
+      </div>
+      <div class="cbd">
+        <p class="cdesc">大学受験に向けた基礎学力と学習習慣を身につけるコースです。毎日課題による学習管理を通して、大学受験に必要な基礎学力を養います。</p>
+        <div class="ctags">
+          <span class="ctag">毎日課題</span>
+          <span class="ctag">基礎学力養成</span>
+          <span class="ctag">オンライン個別指導</span>
+          <span class="ctag">学習習慣づくり</span>
+        </div>
+        <hr class="c-price-divider">
+        <div class="c-price-label">月額料金（税込）</div>
+        <div class="c-price-tiers">
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">①</div>
+            <div class="c-price-tier-num">40,000<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">月2回オンライン</div>
+          </div>
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">②</div>
+            <div class="c-price-tier-num">48,980<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">週1回オンライン</div>
+          </div>
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">③</div>
+            <div class="c-price-tier-num">67,380<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">週2回オンライン</div>
+          </div>
+        </div>
+        <ul class="c-features">
+          <li>オンライン個別指導（60分／回）</li>
+          <li>合格思考トレーニング</li>
+          <li>毎日課題 週5回</li>
+          <li>LINE質問対応（随時）</li>
+          <li>三者面談（保護者様・生徒・講師）</li>
+        </ul>
+        <a href="daigaku-juken-junbi.html" class="c-btn c-btn-1">詳しく見る →</a>
+      </div>
+    </div>
+    <!-- コース2: 合格戦略プログラム -->
+    <div class="ccard recommended reveal d2">
+      <div class="chd">
+        <span class="cg">高校1年生〜高校3年生</span>
+        <div class="cn">合格戦略プログラム</div>
+      </div>
+      <div class="cbd">
+        <p class="cdesc">志望校から逆算した合格ロードマップを作成し、日々の学習内容を設計。実力診断テストで学力の推移を把握し、受験本番まで講師が伴走します。</p>
+        <div class="ctags">
+          <span class="ctag">合格ロードマップ</span>
+          <span class="ctag">毎日課題</span>
+          <span class="ctag">実力診断テスト</span>
+          <span class="ctag">受験戦略</span>
+        </div>
+        <hr class="c-price-divider">
+        <div class="c-price-label">月額料金（税込）</div>
+        <div class="c-price-tiers">
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">①</div>
+            <div class="c-price-tier-num">45,000<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">月2回オンライン</div>
+          </div>
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">②</div>
+            <div class="c-price-tier-num">64,480<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">週1回オンライン</div>
+          </div>
+          <div class="c-price-tier">
+            <div class="c-price-tier-label">③</div>
+            <div class="c-price-tier-num">83,380<span class="c-price-tier-yen">円</span></div>
+            <div class="c-price-tier-tax">税込／月</div>
+            <div class="c-price-tier-tax" style="margin-top:4px;color:var(--red);font-weight:700;">週2回オンライン</div>
+          </div>
+        </div>
+        <ul class="c-features">
+          <li>オンライン個別指導（60分／回）</li>
+          <li>合格思考トレーニング</li>
+          <li>合格ロードマップ作成</li>
+          <li>毎日課題 週5回</li>
+          <li>確認テスト 週1回実施</li>
+          <li>実力診断テスト 月末1回実施</li>
+          <li>当月の偏差値推移の提示</li>
+          <li>LINE質問対応（随時）</li>
+          <li>三者面談（保護者様・生徒・講師）</li>
+        </ul>
+        <a href="goukaku-senryaku.html" class="c-btn c-btn-2">詳しく見る →</a>
+      </div>
+    </div>
+    <!-- コース3: 合格戦略サポート -->
+    <div class="ccard reveal d3">
+      <div class="chd">
+        <span class="cg">併塾向け</span>
+        <div class="cn">合格戦略サポート</div>
+      </div>
+      <div class="cbd">
+        <p class="cdesc">予備校や個別指導塾に通っている生徒向けの受験戦略サポートコースです。現在の塾を活かしながら、志望校合格に向けた最適な戦略を提案します。</p>
+        <div class="ctags">
+          <span class="ctag">受験戦略サポート</span>
+          <span class="ctag">偏差値分析</span>
+          <span class="ctag">学習計画設計</span>
+          <span class="ctag">併塾OK</span>
+        </div>
+        <hr class="c-price-divider">
+        <div class="c-price-label">月額料金（税込）</div>
+        <div class="c-price-single">
+          <div class="c-price-single-label">月額</div>
+          <div class="c-price-single-num">33,000<span style="font-size:.9rem;">円</span></div>
+          <div class="c-price-single-tax">税込</div>
+        </div>
+        <ul class="c-features">
+          <li>当月の偏差値推移の提示</li>
+          <li>実力診断テスト 月末1回実施</li>
+          <li>確認テスト 週1回実施</li>
+          <li>毎日課題 週5回</li>
+          <li>LINE質問対応（随時）</li>
+          <li>三者面談（保護者様・生徒・講師）</li>
+        </ul>
+        <a href="goukaku-senryaku-support.html" class="c-btn c-btn-3">詳しく見る →</a>
+      </div>
+    </div>
+  </div>
+  <div class="price-note reveal">
+    ※ 銀行振込（一括・2回・3回分割）・クレジットカード毎月払いの4つの支払い方法からお選びいただけます。<a href="news.html" style="color:var(--red);text-decoration:underline;">お支払い・退塾について詳しくはこちら</a><br>
+    ※ 入塾金の詳細は無料相談時にご説明いたします。教材は当塾でご用意してお渡しします。<br>
+    ※ 兄弟割引制度あり。まずはお気軽にお問い合わせください。
+  </div>
+</section>
+
+<!-- ===== GALLERY / 授業の様子 ===== -->
+<section id="gallery">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Gallery</span>
+    <h2 class="sec-ttl">授業・塾内の<span class="ac">様子</span></h2>
+    <p class="sec-sub">プラトンの日常風景をご覧ください。</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal d1"><img src="img/img:gallery-classroom.jpg" alt="塾内・自習室"></div>
+    <div class="gallery-item reveal d2"><img src="img/img:gallery-lesson.jpg" alt="個別指導の様子"></div>
+    <div class="gallery-item reveal d3"><img src="img/img:gallery-teacher.jpg" alt="講師との対話授業"></div>
+    <div class="gallery-item reveal d4"><img src="img/img:gallery-study.jpg" alt="自習室で勉強中"></div>
+    <div class="gallery-item reveal d5"><img src="img/img:gallery-essay.jpg" alt="小論文添削"></div>
+    <div class="gallery-item reveal d1"><img src="img/img:gallery-pass.jpg" alt="合格発表の瞬間"></div>
+  </div>
+</section>
+
+<!-- ===== VIDEOS ===== -->
+<section id="videos" style="background:var(--cream);">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Movie</span>
+    <h2 class="sec-ttl">プラトンを<span class="ac">動画</span>で見る</h2>
+    <p class="sec-sub">塾内の雰囲気・授業スタイルを動画でご確認ください。</p>
+  </div>
+  <div class="video-wrap">
+    <div class="reveal d1">
+      <div class="video-ph">
+        <div class="video-ph-inner">
+          <div class="play-btn">▶</div>
+          <div class="video-ph-label">塾紹介動画<br><small style="font-weight:400;opacity:.7">現在準備中です</small></div>
+        </div>
+      </div>
+      <div class="video-label">▶ プラトンってどんな塾？</div>
+    </div>
+    <div class="reveal d2">
+      <div class="video-ph">
+        <div class="video-ph-inner">
+          <div class="play-btn">▶</div>
+          <div class="video-ph-label">授業体験動画<br><small style="font-weight:400;opacity:.7">現在準備中です</small></div>
+        </div>
+      </div>
+      <div class="video-label">▶ 実際の授業を体験してみよう</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1.5rem;" class="reveal">
+    <p style="font-size:.8rem;color:var(--txt3);">順次公開予定です。しばらくお待ちください。</p>
+  </div>
+</section>
+
+
+<!-- ===== STAFF ===== -->
+<section id="staff">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Our Teachers</span>
+    <h2 class="sec-ttl">講師<span class="ac">紹介</span></h2>
+    <p class="sec-sub">プラトンには個性豊かな専門スタッフが揃っています。</p>
+  </div>
+
+  <!-- Tab buttons -->
+  <div class="staff-tabs reveal">
+    <button class="stab active" onclick="switchTab('all',this)"><i data-lucide="users"></i> 全員</button>
+    <button class="stab" onclick="switchTab('leader',this)"><i data-lucide="landmark"></i> 代表・塾長</button>
+    <button class="stab" onclick="switchTab('pro',this)"><i data-lucide="graduation-cap"></i> プロ講師</button>
+    <button class="stab" onclick="switchTab('daily',this)"><i data-lucide="clipboard-list"></i> 毎日課題</button>
+  </div>
+
+  <!-- ALL -->
+  <div class="staff-panel active" id="tab-all">
+    <div class="staff-grid wide">
+
+      <!-- 代表・塾長 -->
+      <div class="scard2 leader-card reveal d1">
+        <div class="savatar2">
+          <img src="img/img:staff-sano-illust.jpg" alt="佐野">
+        </div>
+        <span class="srole2 r-leader">代表・塾長</span>
+        <div class="sname2">佐野 翼（さの つばさ）</div>
+        <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
+        <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度はオンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人の合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
+      </div>
+
+      <div class="scard2 reveal d2">
+        <div class="savatar2">
+          <img src="img/img:staff-sawayagi.png" alt="澤柳">
+        </div>
+        <span class="srole2 r-leader">塾長</span>
+        <div class="sname2">澤柳 旬（さわやなぎ しゅん）</div>
+        <div class="sdomain2">得意科目：英語・数学・物理・化学・生物</div>
+        <p class="sdesc2">指導経験10年目、指導生徒数800人以上。東京医科歯科大・東工大など最難関レベルへの合格実績を持つ。思考力を重視した指導で、毎日課題や各学習のチェック・アドバイスを通して目標達成をサポートします！</p>
+      </div>
+
+      <!-- プロ講師 -->
+      <div class="scard2 reveal d3">
+        <div class="savatar2">
+          <img src="img/img:staff-miura.png" alt="三浦">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">三浦（みうら）</div>
+        <div class="sdomain2">数学IA・IIB / 生物・英語 / 化学・物理・地学基礎 / 古典・現代文</div>
+        <p class="sdesc2">思考力と「なぜそうなるのか」を大切にし、次に繋がる指導をします。</p>
+      </div>
+
+      <div class="scard2 reveal d4">
+        <div class="savatar2">
+          <img src="img/img:staff-tachikawa.png" alt="立川">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">立川（たちかわ）</div>
+        <div class="sdomain2">数学IAIIB・IIIC / 英語 / 物理・化学・生物</div>
+        <p class="sdesc2">指導経験4年目、指導生徒数110名ほど。生徒さんの「なぜ？」を大切にし、根本的な理解のため、粘り強く指導します！</p>
+      </div>
+
+      <div class="scard2 reveal d5">
+        <div class="savatar2">
+          <img src="img/img:staff-kato.png" alt="加藤">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">加藤（かとう）</div>
+        <div class="sdomain2">英語全般</div>
+        <p class="sdesc2">指導経験10年目、指導生徒数100名以上。英語の本質を丁寧に伝え、確かな読解力・表現力を育てます。</p>
+      </div>
+
+      <div class="scard2 reveal d1">
+        <div class="savatar2">
+          <img src="img/img:staff-nakatani.png" alt="中谷">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">中谷（なかたに）</div>
+        <div class="sdomain2">現代文・古文・漢文</div>
+        <p class="sdesc2">【一意専心】一人ひとりに寄り添い、思考のクセまで見抜き、読解力を本気で鍛えます。</p>
+      </div>
+
+      <div class="scard2 reveal d1">
+        <div class="savatar2">
+          <img src="img/img:staff-sakamoto.png" alt="坂本">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">坂本（さかもと）</div>
+        <div class="sdomain2">英語全般</div>
+        <p class="sdesc2">語彙力・言い換える力・内容把握力。この3つの力をバランスよく身に付けられるよう指導します。</p>
+      </div>
+
+      <div class="scard2 reveal d2">
+        <div class="savatar2">
+          <img src="img/img:staff-higuchi.png" alt="樋口">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">樋口（ひぐち）</div>
+        <div class="sdomain2">数学IAIIBIIIC / 英語 / 物理・化学・生物</div>
+        <p class="sdesc2">それぞれの生徒に寄り添い、普遍的で重要な「本質」を理解できる指導をします！</p>
+      </div>
+
+      <div class="scard2 reveal d3">
+        <div class="savatar2">
+          <img src="img/img:staff-nishiyama.png" alt="西山">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">西山（にしやま）</div>
+        <div class="sdomain2">数学IAIIBIIIC / 化学</div>
+        <p class="sdesc2">楽しく長く勉強を続けていけるようサポートして行きます。よろしくお願いします。</p>
+      </div>
+
+      <div class="scard2 reveal d4">
+        <div class="savatar2">
+          <img src="img/img:staff-tsuruta.png" alt="鶴田">
+        </div>
+        <span class="srole2 r-pro">プロ講師</span>
+        <div class="sname2">鶴田（つるた）</div>
+        <div class="sdomain2">現代文・古典・漢文 / 英語・日本史・数学1A</div>
+        <p class="sdesc2">自身の受験経験を活かして、生徒一人一人に合わせた指導を心がけていきたいと思います。</p>
+      </div>
+
+      <!-- 毎日課題 -->
+      <div class="scard2 reveal d5">
+        <div class="savatar2">
+          <img src="img/img:staff-nagata.png" alt="永田">
+        </div>
+        <span class="srole2 r-daily">毎日課題 Dir.</span>
+        <div class="sname2">永田（ながた）</div>
+        <div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div>
+        <p class="sdesc2">一緒に悩んで考えて、できることを増やしていけるように頑張ります！</p>
+      </div>
+
+      <div class="scard2 reveal d1">
+        <div class="savatar2">
+          <img src="img/img:staff-takizawa.png" alt="瀧澤">
+        </div>
+        <span class="srole2 r-daily">毎日課題 Dir.</span>
+        <div class="sname2">瀧澤（たきざわ）</div>
+        <div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div>
+        <p class="sdesc2">ひとり一人にあった勉強の仕方を重視し、自ら進められる学習サポートを心掛けます。</p>
+      </div>
+
+      <div class="scard2 reveal d2">
+        <div class="savatar2">
+          <img src="img/img:staff-hayano.jpg" alt="早野">
+        </div>
+        <span class="srole2 r-daily">毎日課題 Staff</span>
+        <div class="sname2">早野（はやの）</div>
+        <div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div>
+        <p class="sdesc2">一人一人の理解に寄り添い、成長につながる学習支援を行います！</p>
+      </div>
+
+
+      <div class="scard2 reveal d4">
+        <div class="savatar2">
+          <img src="img/img:staff-yonaha.jpg" alt="與那覇">
+        </div>
+        <span class="srole2 r-daily">毎日課題 Staff</span>
+        <div class="sname2">與那覇（よなは）</div>
+        <div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div>
+        <p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p>
+      </div>
+
+    </div>
+  </div><!-- /tab-all -->
+
+  <!-- LEADER -->
+  <div class="staff-panel" id="tab-leader">
+    <div class="staff-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));max-width:640px;">
+      <div class="scard2 leader-card reveal d1">
+        <div class="savatar2"><img src="img/img:staff-sano-illust.jpg" alt="佐野"></div>
+        <span class="srole2 r-leader">代表・塾長</span>
+        <div class="sname2">佐野 翼（さの つばさ）</div>
+        <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
+        <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度オンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人に合わせた合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
+      </div>
+      <div class="scard2 reveal d2">
+        <div class="savatar2"><img src="img/img:staff-sawayagi.png" alt="澤柳"></div>
+        <span class="srole2 r-leader">塾長</span>
+        <div class="sname2">澤柳 旬（さわやなぎ しゅん）</div>
+        <div class="sdomain2">得意科目：英語・数学・物理・化学・生物</div>
+        <p class="sdesc2">指導経験10年目、指導生徒数800人以上。東京医科歯科大・東工大など最難関レベルへの合格実績を持つ。みなさんが勉強を通して成長していけるように、毎日課題や各学習のチェック・アドバイスを通して目標達成をサポートします！</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRO -->
+  <div class="staff-panel" id="tab-pro">
+    <div class="staff-grid wide">
+      <div class="scard2 reveal d1"><div class="savatar2"><img src="img/img:staff-miura.png" alt="三浦"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">三浦（みうら）</div><div class="sdomain2">数学IA・IIB / 生物・英語 / 化学・物理・地学基礎 / 古典・現代文</div><p class="sdesc2">思考力と「なぜそうなるのか」を大切にし、次に繋がる指導をします。</p></div>
+      <div class="scard2 reveal d2"><div class="savatar2"><img src="img/img:staff-tachikawa.png" alt="立川"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">立川（たちかわ）</div><div class="sdomain2">数学IAIIB・IIIC / 英語 / 物理・化学・生物</div><p class="sdesc2">指導経験4年目、指導生徒数110名ほど。生徒さんの「なぜ？」を大切にし、根本的な理解のため粘り強く指導します！</p></div>
+      <div class="scard2 reveal d3"><div class="savatar2"><img src="img/img:staff-kato.png" alt="加藤"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">加藤（かとう）</div><div class="sdomain2">英語全般</div><p class="sdesc2">指導経験10年目、指導生徒数100名以上。英語の本質を丁寧に伝え、確かな読解力・表現力を育てます。</p></div>
+      <div class="scard2 reveal d4"><div class="savatar2"><img src="img/img:staff-nakatani.png" alt="中谷"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">中谷（なかたに）</div><div class="sdomain2">現代文・古文・漢文</div><p class="sdesc2">【一意専心】一人ひとりに寄り添い、思考のクセまで見抜き、読解力を本気で鍛えます。</p></div>
+      <div class="scard2 reveal d4"><div class="savatar2"><img src="img/img:staff-sakamoto.png" alt="坂本"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">坂本（さかもと）</div><div class="sdomain2">英語全般</div><p class="sdesc2">語彙力・言い換える力・内容把握力の3つをバランスよく身に付けられるよう指導します。</p></div>
+      <div class="scard2 reveal d5"><div class="savatar2"><img src="img/img:staff-higuchi.png" alt="樋口"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">樋口（ひぐち）</div><div class="sdomain2">数学IAIIBIIIC / 英語 / 物理・化学・生物</div><p class="sdesc2">それぞれの生徒に寄り添い、普遍的で重要な「本質」を理解できる指導をします！</p></div>
+      <div class="scard2 reveal d1"><div class="savatar2"><img src="img/img:staff-nishiyama.png" alt="西山"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">西山（にしやま）</div><div class="sdomain2">数学IAIIBIIIC / 化学</div><p class="sdesc2">楽しく長く勉強を続けていけるようサポートします。よろしくお願いします。</p></div>
+      <div class="scard2 reveal d2"><div class="savatar2"><img src="img/img:staff-tsuruta.png" alt="鶴田"></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">鶴田（つるた）</div><div class="sdomain2">現代文・古典・漢文 / 英語・日本史・数学1A</div><p class="sdesc2">自身の受験経験を活かして、生徒一人一人に合わせた指導を心がけます。</p></div>
+    </div>
+  </div>
+
+  <!-- DAILY -->
+  <div class="staff-panel" id="tab-daily">
+    <div class="staff-grid wide">
+      <div class="scard2 reveal d1"><div class="savatar2"><img src="img/img:staff-nagata.png" alt="永田"></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">永田（ながた）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">一緒に悩んで考えて、できることを増やしていけるように頑張ります！</p></div>
+      <div class="scard2 reveal d2"><div class="savatar2"><img src="img/img:staff-takizawa.png" alt="瀧澤"></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">瀧澤（たきざわ）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">ひとり一人にあった勉強の仕方を重視し、自ら進められる学習サポートを心掛けます。</p></div>
+      <div class="scard2 reveal d3"><div class="savatar2"><img src="img/img:staff-hayano.jpg" alt="早野"></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">早野（はやの）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">一人一人の理解に寄り添い、成長につながる学習支援を行います！</p></div>
+      <div class="scard2 reveal d5"><div class="savatar2"><img src="img/img:staff-yonaha.jpg" alt="與那覇"></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">與那覇（よなは）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p></div>
+    </div>
+  </div>
+
+
+  <div class="s-count reveal">
+    <span class="s-count-n">文系各科目のプロ講師のみ在籍</span>
+    <p class="s-count-desc">大学入試改革や最新の出題傾向を常に分析し、各大学・学部に合わせた専門的な指導を提供しています。<br>科目指導はもちろん、志望理由書や小論文対策まで幅広く対応可能です。</p>
+  </div>
+</section>
+
+<!-- ===== VOICES ===== -->
+<section id="voices">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Voice</span>
+    <h2 class="sec-ttl">合格者の<span class="ac">声</span></h2>
+    <p class="sec-sub">プラトンで学び、志望校合格を勝ち取った生徒たちのリアルな声です。</p>
+  </div>
+
+  <!-- Before/After showcase -->
+  <div class="voice-hero-wrap reveal">
+    <div class="voice-hero" style="max-width:900px;margin:0 auto;">
+      <div class="voice-hero-before">
+        <span class="voice-hero-label">入塾時（高2・12月）</span>
+        <div class="voice-hero-score">45.7</div>
+        <div class="voice-hero-exam">河合模試 偏差値</div>
+        <div class="voice-hero-hours">週の勉強時間：5時間</div>
+      </div>
+      <div class="voice-hero-after">
+        <span class="voice-hero-label">高3・10月</span>
+        <div class="voice-hero-score">67.2</div>
+        <div class="voice-hero-exam">河合模試 偏差値</div>
+        <div class="voice-hero-hours">週の勉強時間：45〜50時間</div>
+      </div>
+      <div class="voice-hero-arrow">→</div>
+    </div>
+    <div class="voice-hero-caption" style="max-width:900px;margin:0 auto;border-radius:0 0 20px 20px;">
+      偏差値 <strong>+21.5</strong> UP｜ネガティブな発言が消え、自ら考えてギャップを埋める力が身につきました。 — <strong>K.Mさん（現役）</strong>
+    </div>
+  </div>
+
+  <!-- Voice cards -->
+  <div class="v-grid" style="margin-top:2.5rem;">
+    <div class="vcard reveal d1">
+      <div class="vcard-top">
+        <div class="vcard-result">合格<span class="vcard-result-univ">早稲田大学 政治経済学部</span></div>
+      </div>
+      <div class="vcard-body">
+        <span class="vq">"</span>
+        <p class="vtxt">通塾の移動時間がなく、その分勉強に集中できました。わからない問題もLINEで送ればすぐ返答が来るので、ストレスなく学習を続けられました。</p>
+        <div class="vauth">
+          <div class="vavatart"><i data-lucide="user"></i></div>
+          <div class="vname">A.Sさん（現役）<span>高校3年生 → 早稲田大学政経学部</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="vcard reveal d2">
+      <div class="vcard-top" style="background:linear-gradient(135deg,#5a3068,#8a60a0);">
+        <div class="vcard-result">合格<span class="vcard-result-univ">上智大学</span></div>
+      </div>
+      <div class="vcard-body">
+        <span class="vq">"</span>
+        <p class="vtxt">マンツーマンなので自分のペースで進められ、学力向上の実感がありました。毎日課題があることで家でもしっかり勉強する習慣がつき、本当に感謝しています。</p>
+        <div class="vauth">
+          <div class="vavatart"><i data-lucide="user"></i></div>
+          <div class="vname">T.Kさん（現役）<span>高校3年生 → 上智大学</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="vcard reveal d3">
+      <div class="vcard-top" style="background:linear-gradient(135deg,#3a6858,#60a888);">
+        <div class="vcard-result">合格<span class="vcard-result-univ">一橋大学</span></div>
+      </div>
+      <div class="vcard-body">
+        <span class="vq">"</span>
+        <p class="vtxt">ロードマップがあったことで、常に「今自分はどこにいて、次に何をすべきか」が明確でした。そのおかげでゴールまで迷わず辿り着けた気がします。</p>
+        <div class="vauth">
+          <div class="vavatart"><i data-lucide="user"></i></div>
+          <div class="vname">R.Nさん（現役）<span>高校3年生 → 一橋大学</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;" class="reveal">
+    <a href="voices.html" class="voice-more-btn">もっと合格者の声を見る →</a>
+  </div>
+</section>
+
+<!-- ===== RESULTS (合格実績) ===== -->
+<section id="results">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Results</span>
+    <h2 class="sec-ttl">合格<span class="ac">実績</span></h2>
+    <p class="sec-sub">プラトンから志望校合格を勝ち取った生徒たちの実績です。</p>
+  </div>
+
+  <div class="res-year reveal">
+    <div class="res-year-ttl">2024年 合格実績 <span style="font-size:.75rem;font-weight:400;opacity:.7;">（受験生5名）</span></div>
+    <div class="res-tier">
+      <span class="res-tier-label t-national">国公立大学</span>
+      <div class="res-badges">
+        <span class="res-badge">一橋大学 経済学部</span>
+        <span class="res-badge">一橋大学 社会学部</span>
+        <span class="res-badge">北海道大学 文学部</span>
+      </div>
+    </div>
+    <div class="res-tier">
+      <span class="res-tier-label t-waseda">早慶上智</span>
+      <div class="res-badges">
+        <span class="res-badge">早稲田大学 政治経済学部</span>
+        <span class="res-badge">上智大学 外国語学部</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-year reveal">
+    <div class="res-year-ttl">2025年 合格実績 <span style="font-size:.75rem;font-weight:400;opacity:.7;">（受験生4名）</span></div>
+    <div class="res-tier">
+      <span class="res-tier-label t-national">国公立大学</span>
+      <div class="res-badges">
+        <span class="res-badge">名古屋大学 文学部</span>
+        <span class="res-badge">大阪大学 法学部</span>
+        <span class="res-badge">福岡女子大学 国際文理学部</span>
+      </div>
+    </div>
+    <div class="res-tier">
+      <span class="res-tier-label t-march">MARCH</span>
+      <div class="res-badges">
+        <span class="res-badge">法政大学 理工学部</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-note reveal">※ 合格実績は生徒・保護者様の許可を得て掲載しています。詳細は無料相談時にお伝えします。</div>
+</section>
+
+<!-- ===== PRICING (料金) ===== -->
+
+<!-- ===== FLOW (入塾の流れ) ===== -->
+<section id="flow">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Flow</span>
+    <h2 class="sec-ttl">入塾の<span class="ac">流れ</span></h2>
+    <p class="sec-sub">お問い合わせから入塾まで、4つのステップで丁寧にサポートします。</p>
+  </div>
+  <div class="flow-steps">
+    <div class="flow-step reveal d1">
+      <div class="flow-num">STEP<span>1</span></div>
+      <div class="flow-body">
+        <div class="flow-ttl">お問い合わせ・無料相談</div>
+        <div class="flow-desc">フォームまたはLINEからお気軽にご連絡ください。現在の学力・志望校・学習の悩みなどをお伺いし、最適な学習プランをご提案します。</div>
+      </div>
+    </div>
+    <div class="flow-step reveal d2">
+      <div class="flow-num">STEP<span>2</span></div>
+      <div class="flow-body">
+        <div class="flow-ttl">無料体験授業（60分）</div>
+        <div class="flow-desc">実際の授業をご体験いただけます。受験科目や学校の授業科目など、お好きな科目から選択可能です。実際の授業の進め方や講師との相性を、ぜひご確認ください。</div>
+      </div>
+    </div>
+    <div class="flow-step reveal d3">
+      <div class="flow-num">STEP<span>3</span></div>
+      <div class="flow-body">
+        <div class="flow-ttl">学習プラン設計</div>
+        <div class="flow-desc">体験授業の結果をもとに、生徒一人ひとりに合わせた合格ロードマップを作成。目標達成までの具体的なスケジュールをご提示します。</div>
+      </div>
+    </div>
+    <div class="flow-step reveal d4">
+      <div class="flow-num">STEP<span>4</span></div>
+      <div class="flow-body">
+        <div class="flow-ttl">入塾・学習スタート</div>
+        <div class="flow-desc">入塾後は担当講師がマンツーマンでサポート。毎日課題と定期的な確認テストで、着実に学力を伸ばしていきます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="sec-ttl">よくある<span class="ac">質問</span></h2>
+    <p class="sec-sub">入塾前によくいただくご質問をまとめました。</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal d1">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">体験授業はありますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">はい、60分の無料体験授業を実施しています。数学・英語・社会（日本史/世界史/政経）・国語（現代文/古典）から選択可能です。お気軽にお申し込みください。</div></div>
+    </div>
+    <div class="faq-item reveal d2">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">オンラインでの受講は可能ですか？</button>
+      <div class="faq-a"><div class="faq-a-inner">はい、プラトンはオンライン完結型の指導を提供しています。全国どこからでも受講可能です。通塾の移動時間がないため、その分を学習時間に充てることができます。</div></div>
+    </div>
+    <div class="faq-item reveal d3">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">いつから入塾できますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">随時入塾を受け付けています。学年の途中からでも、生徒の現在の学力に合わせて個別のカリキュラムを組むため、いつからでもスタート可能です。</div></div>
+    </div>
+    <div class="faq-item reveal d1">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">文系専門とのことですが、数学の指導はありますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">はい、文系入試に必要な数学（数学IA・IIB）の指導も行っています。一橋大学や国公立大学の文系数学対策にも対応しています。</div></div>
+    </div>
+    <div class="faq-item reveal d2">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">毎日課題はどのくらいの量ですか？</button>
+      <div class="faq-a"><div class="faq-a-inner">生徒の学力や生活リズムに合わせて量を調整します。無理なく継続できることを重視しており、1日あたり1〜2時間程度を目安に設計しています。部活動との両立も可能です。</div></div>
+    </div>
+    <div class="faq-item reveal d3">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">保護者様へのご報告はありますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">はい、定期的に保護者様との面談を実施し、学習の進捗状況や今後の方針を共有しています。また、日々の学習状況もLINEなどで随時ご報告可能です。</div></div>
+    </div>
+    <div class="faq-item reveal d1">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">途中でコースの変更はできますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">はい、学年の進級や学習状況の変化に合わせて、柔軟にコース変更が可能です。担当講師と相談しながら最適なプランに切り替えられます。</div></div>
+    </div>
+    <div class="faq-item reveal d2">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">授業料の支払い方法はどうなっていますか？</button>
+      <div class="faq-a"><div class="faq-a-inner">銀行振込（一括・2回分割・3回分割）とクレジットカード毎月払いの4つの方法からお選びいただけます。また、特定商取引法に基づくクーリングオフ（契約日から8日以内・全額返金）にも対応しており、退塾時にはすでにご納入いただいた翌月以降の指導料金を返金いたします。詳しくは<a href="news.html" style="color:var(--red);text-decoration:underline;">お知らせページ</a>または無料相談時にご確認ください。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTAGRAM ===== -->
+<section id="instagram">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Instagram</span>
+    <h2 class="sec-ttl">Instagram<span class="ac">最新投稿</span></h2>
+    <p class="sec-sub">日々の授業・合格速報・学習tips を発信しています！</p>
+  </div>
+  <div style="max-width:660px;margin:2rem auto 0;">
+    <behold-widget feed-id="pweHFIDZsnQ1jkLHg9ic"></behold-widget>
+    <script>
+      (() => {
+        const d=document,s=d.createElement("script");s.type="module";
+        s.src="https://w.behold.so/widget.js";d.head.append(s);
+      })();
+    </script>
+  </div>
+  <a href="https://www.instagram.com/plato_humanities/" target="_blank" class="ig-link reveal">
+    <i data-lucide="camera"></i> Instagramをフォローする → @plato_humanities
+  </a>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">About Us</span>
+    <h2 class="sec-ttl">塾<span class="ac">概要</span></h2>
+  </div>
+  <div class="about-inner">
+    <div class="ab-txt reveal d2">
+      <h3>「考える人」を育てることが、<br>プラトンの使命です。</h3>
+      <p>プラトンは哲学者の名にちなんだ、文系受験専門の学習塾です。知識の詰め込みではなく、「なぜ？」を問い、論理的に考え、自分の言葉で表現する力を育てることを最大の目標としています。</p>
+      <p>難関大の文系学部が求めるのは、単なる暗記力ではありません。複雑な文章を読み解く力、自分の意見を論理的に述べる力、そして多様な視点から物事を考える柔軟性です。</p>
+      <ul class="ab-list">
+        <li>文系各科目のプロ講師のみ在籍で、専門性の高い指導環境</li>
+        <li>入塾から卒塾まで担当講師が一貫してサポート</li>
+        <li>保護者様との定期面談で学習状況を共有</li>
+        <li>卒塾生による合格体験談・アドバイスの場を提供</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Contact</span>
+    <h2 class="sec-ttl">無料学習相談・<span class="ac">お問い合わせ</span></h2>
+    <p class="sec-sub">まずは気軽にご相談ください。入塾の強制は一切ありません。</p>
+  </div>
+  <div class="contact-inner">
+    <div class="ci-box reveal d1">
+      <h3 class="ci-ttl">お気軽にご連絡ください</h3>
+      <p class="ci-p">現在の学力・志望校・学習の悩みなど、どんな内容でも構いません。専任スタッフが丁寧にご対応します。</p>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:.9rem 1rem;margin:.8rem 0;font-size:.83rem;line-height:1.7;color:rgba(255,255,255,.9);">
+        <div style="font-weight:700;color:#e8c4a0;margin-bottom:.3rem;display:flex;align-items:center;gap:5px;"><i data-lucide="users" style="width:14px;height:14px;"></i> 対象者</div>
+        文系の国公立・私大志望 / 文理選択に悩む高1・高2・高3生 / 中学生・小学生
+        <div style="font-weight:700;color:#e8c4a0;margin:.6rem 0 .3rem;display:flex;align-items:center;gap:5px;"><i data-lucide="gift" style="width:14px;height:14px;"></i> 無料体験 受付中</div>
+        実際の授業をご体験いただけます。受験科目（数学・英語・社会〈日本史/世界史/政経〉・国語〈現代文/古典〉など）からお好きな科目を選択可能。授業の進め方や講師との相性を、ぜひご確認ください。
+      </div>
+    </div>
+    <div class="cform reveal d2">
+      <form id="contact-form" method="POST" novalidate>
+        <div class="fr2">
+          <div class="fg">
+            <label class="fl" for="name">お名前<span class="req">必須</span></label>
+            <input type="text" id="name" name="name" class="fi" placeholder="山田 太郎" required>
+            <span class="ferr" id="err-name">お名前を入力してください</span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="kana">フリガナ<span class="req">必須</span></label>
+            <input type="text" id="kana" name="kana" class="fi" placeholder="ヤマダ タロウ" required>
+            <span class="ferr" id="err-kana">フリガナを入力してください</span>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl" for="email">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="email" name="email" class="fi" placeholder="example@email.com" required>
+          <span class="ferr" id="err-email">正しいメールアドレスを入力してください</span>
+        </div>
+        <div class="fg">
+          <label class="fl" for="tel">電話番号<span class="req">必須</span></label>
+          <input type="tel" id="tel" name="tel" class="fi" placeholder="090-0000-0000" required>
+          <span class="ferr" id="err-tel">電話番号を入力してください</span>
+        </div>
+        <div class="fr2">
+          <div class="fg">
+            <label class="fl" for="grade">学年</label>
+            <select id="grade" name="grade" class="fsel">
+              <option value="">選択してください</option>
+              <option>小学生</option>
+              <option>中学1年生</option>
+              <option>中学2年生</option>
+              <option>中学3年生</option>
+              <option>高校1年生</option>
+              <option>高校2年生</option>
+              <option>高校3年生</option>
+              <option>既卒（浪人）</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl" for="university">志望大学</label>
+            <input type="text" id="university" name="university" class="fi" placeholder="例：早稲田大学">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl" for="message">お悩み・ご相談内容</label>
+          <textarea id="message" name="message" class="fta" placeholder="学習の悩み、志望校についてなど、お気軽にご記入ください。"></textarea>
+        </div>
+        <div id="form-success" class="form-msg form-msg--ok" style="display:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          送信完了！担当者よりご連絡します。
+        </div>
+        <div id="form-error" class="form-msg form-msg--ng" style="display:none;">
+          送信に失敗しました。時間をおいて再度お試しください。
+        </div>
+        <button type="submit" class="fsubmit" id="form-submit">
+          <i data-lucide="send"></i> 無料相談を申し込む →
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-inner">
+    <div>
+      <div class="ft-name">プラトン</div>
+      <div class="ft-sub">Plato Humanities — 文系の大学受験専門塾</div>
+    </div>
+    <ul class="ft-nav">
+      <li><a href="#features">塾の特長</a></li>
+      <li><a href="#courses">コース・料金</a></li>
+      <li><a href="daigaku-juken-junbi.html">大学受験準備コース</a></li>
+      <li><a href="goukaku-senryaku.html">合格戦略プログラム</a></li>
+      <li><a href="goukaku-senryaku-support.html">合格戦略サポート</a></li>
+      <li><a href="mainichi-kadai.html">毎日課題システム</a></li>
+      <li><a href="#daily-flow">毎日課題の仕組み</a></li>
+      <li><a href="#gallery">授業の様子</a></li>
+      <li><a href="#staff">講師紹介</a></li>
+      <li><a href="voices.html">合格者の声</a></li>
+      <li><a href="#results">合格実績</a></li>
+      <li><a href="#flow">入塾の流れ</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="news.html">お知らせ</a></li>
+      <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#about">塾概要</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+  <p class="ft-copy">© 2025 プラトン 文系の大学受験専門塾. All Rights Reserved.</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+}, {threshold: .1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Staff tab switching
+function switchTab(tabId, btn) {
+  // Update buttons
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update panels
+  document.querySelectorAll('.staff-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  // Re-trigger reveal animations for newly shown cards
+  document.querySelectorAll('#tab-' + tabId + ' .reveal').forEach(el => {
+    el.classList.remove('on');
+    obs.observe(el);
+  });
+}
+
+// Hamburger menu
+(function(){
+  const btn  = document.getElementById('hamBtn');
+  const nav  = document.getElementById('spNav');
+  if (!btn || !nav) return;
+
+  function setMenu(open) {
+    btn.classList.toggle('open', open);
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  btn.addEventListener('click', function() {
+    setMenu(!nav.classList.contains('open'));
   });
 
-  // ── スプレッドシートに記録 ──
-  if (SHEET_ID) {
-    try {
-      const ss = SpreadsheetApp.openById(SHEET_ID);
-      let sheet = ss.getSheetByName(SHEET_BOOKING);
-      if (!sheet) {
-        sheet = ss.insertSheet(SHEET_BOOKING);
-        sheet.appendRow(['日時', 'お名前', 'メール', '連絡手段', '聞きたいこと', '伝言', '登録日時']);
-      }
-      sheet.appendRow([
-        Utilities.formatDate(startTime, TIMEZONE, 'yyyy/MM/dd HH:mm'),
-        name, email, meeting, topics.join(', '), note,
-        Utilities.formatDate(new Date(), TIMEZONE, 'yyyy/MM/dd HH:mm:ss')
-      ]);
-    } catch (sheetErr) {
-      Logger.log('予約シート記録エラー: ' + sheetErr.message);
-    }
-  }
+  // Close on any nav link click
+  nav.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { setMenu(false); });
+  });
 
-  // ── 管理者へメール通知 ──
-  try {
-    MailApp.sendEmail({
-      to: CALENDAR_ID,
-      subject: '【プラトン】新規面談予約: ' + name,
-      body: '新しい面談予約が入りました。\n\n'
-          + '日時: ' + slot.dateLabel + ' ' + slot.timeLabel + '\n'
-          + description + '\n\n'
-          + 'Googleカレンダーに自動登録済みです。'
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+      setMenu(false);
+    }
+  });
+})();
+</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+
+<!-- ── Thank-you Modal ── -->
+<div id="ty-modal" role="dialog" aria-modal="true" aria-labelledby="ty-heading">
+  <div class="ty-overlay" id="ty-overlay"></div>
+  <div class="ty-card">
+    <div class="ty-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </div>
+    <div class="ty-en">Thank you</div>
+    <h2 class="ty-head" id="ty-heading">お申し込みありがとう<br>ございます！</h2>
+    <p class="ty-body">
+      お問い合わせを受け付けました。<br>
+      <strong>2〜3営業日以内</strong>に担当者よりご連絡いたします。<br><br>
+      プラトンでの学びを、精一杯サポートします。<br>一緒に合格を目指しましょう！
+    </p>
+    <button class="ty-close" id="ty-close-btn">閉じる</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+
+  function validate() {
+    var valid = true;
+    var fields = [
+      { id: 'name',  check: function(v){ return v.trim() !== ''; } },
+      { id: 'kana',  check: function(v){ return v.trim() !== ''; } },
+      { id: 'email', check: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } },
+      { id: 'tel',   check: function(v){ return v.trim() !== ''; } }
+    ];
+    fields.forEach(function(f) {
+      var el = document.getElementById(f.id);
+      if (f.check(el.value)) {
+        el.classList.remove('invalid');
+      } else {
+        el.classList.add('invalid');
+        valid = false;
+      }
     });
-  } catch (mailErr) {
-    Logger.log('管理者メール通知エラー: ' + mailErr.message);
+    return valid;
   }
 
-  // ── ユーザーへ②予約確定メール ──
-  if (email) {
-    try {
-      MailApp.sendEmail({
-        to: email,
-        subject: '【プラトン】面談日程が確定しました',
-        body: (name ? name + ' 様\n\n' : '')
-            + '面談のご予約ありがとうございます。\n'
-            + '下記の日程で、担当の佐野よりご連絡させていただきます。\n\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n'
-            + '■ 面談日時\n'
-            + '  ' + slot.dateLabel + ' ' + slot.timeLabel + '\n\n'
-            + '■ 連絡方法\n'
-            + '  ' + (meeting || '未選択') + '\n\n'
-            + '■ 所要時間\n'
-            + '  約30分\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n\n'
-            + '当日は、以下のようなご相談に対応いたします。\n\n'
-            + '・お子様に合った学習スタイルについて\n'
-            + '・プラトンの指導内容と他塾との違い\n'
-            + '・具体的な合格実績とその学習プロセス\n'
-            + '・料金体系と入塾までの流れ\n\n'
-            + '無理な勧誘は一切いたしませんので、\n'
-            + 'お気軽にお話しください。\n\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n'
-            + '■ 日程変更・キャンセルについて\n'
-            + '━━━━━━━━━━━━━━━━━━━━\n'
-            + 'ご都合が悪くなった場合は、\n'
-            + '下記メールアドレスまでご連絡ください。\n'
-            + '別日への変更も承ります。\n'
-            + SIGNATURE
-      });
-    } catch (userMailErr) {
-      Logger.log('ユーザーメール送信エラー: ' + userMailErr.message);
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'none';
+    document.getElementById('form-error').style.display = 'none';
+
+    if (!validate()) return;
+
+    var btn = document.getElementById('form-submit');
+    btn.disabled = true;
+    btn.textContent = '送信中…';
+
+    /* ── フォームの値を保存 ── */
+    var savedName  = document.getElementById('name').value;
+    var savedEmail = document.getElementById('email').value;
+
+    /* ── GASへ送信（action=contact） ── */
+    var params = new URLSearchParams();
+    params.append('action', 'contact');
+    params.append('name',       savedName);
+    params.append('kana',       document.getElementById('kana').value);
+    params.append('email',      savedEmail);
+    params.append('tel',        document.getElementById('tel').value);
+    params.append('grade',      document.getElementById('grade').value);
+    params.append('university', document.getElementById('university').value);
+    params.append('message',    document.getElementById('message').value);
+
+    fetch(GAS_URL, {
+      method: 'POST',
+      body: params
+    }).then(function(res) {
+      return res.json();
+    }).then(function(data) {
+      if (data && data.ok) {
+        form.reset();
+        window.__contactName  = savedName;
+        window.__contactEmail = savedEmail;
+        btn.disabled = false;
+        btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
+        lucide.createIcons();
+        openTyModal();
+      } else {
+        throw new Error((data && data.error) || 'unknown');
+      }
+    }).catch(function() {
+      document.getElementById('form-error').style.display = 'flex';
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
+      lucide.createIcons();
+    });
+  });
+
+  var _tyTimer = null;
+  var _bookingOpened = false;
+
+  function openTyModal() {
+    var modal = document.getElementById('ty-modal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('ty-close-btn').focus();
+    _bookingOpened = false;
+
+    /* ── 1.5秒後に予約UIへ自動遷移 ── */
+    _tyTimer = setTimeout(function() {
+      closeTyModal();
+      _openBookingOnce();
+    }, 1500);
+  }
+
+  function _openBookingOnce() {
+    if (_bookingOpened) return;
+    _bookingOpened = true;
+    if (typeof window.__openBookingModal === 'function') {
+      window.__openBookingModal();
     }
   }
 
-  return jsonResponse({ ok: true });
-}
+  function closeTyModal() {
+    var modal = document.getElementById('ty-modal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (_tyTimer) { clearTimeout(_tyTimer); _tyTimer = null; }
+  }
 
-
-// =========================================================
-//  空き枠取得ロジック
-// =========================================================
-function getAvailableSlots(daysAhead, limit) {
-  const cal = CalendarApp.getCalendarById(CALENDAR_ID);
-  if (!cal) throw new Error('カレンダーが見つかりません: ' + CALENDAR_ID);
-
-  const now   = new Date();
-  const start = new Date(now);
-  start.setHours(0, 0, 0, 0);
-
-  const end = new Date(start);
-  end.setDate(end.getDate() + daysAhead);
-
-  const events = cal.getEvents(start, end);
-  const busy = events.map(ev => ({
-    start: ev.getStartTime().getTime(),
-    end:   ev.getEndTime().getTime()
-  }));
-
-  const slots = [];
-  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
-
-  for (let d = 0; d < daysAhead; d++) {
-    const day = new Date(start);
-    day.setDate(day.getDate() + d);
-
-    for (let h = START_HOUR; h < END_HOUR; h++) {
-      const stepsPerHour = Math.floor(60 / SLOT_DURATION_MIN);
-      for (let step = 0; step < stepsPerHour; step++) {
-        const slotStart = new Date(day);
-        slotStart.setHours(h, step * SLOT_DURATION_MIN, 0, 0);
-
-        const slotEnd = new Date(slotStart.getTime() + (SLOT_DURATION_MIN + BUFFER_MIN) * 60 * 1000);
-
-        const dayEnd = new Date(day);
-        dayEnd.setHours(END_HOUR, 0, 0, 0);
-        if (slotEnd.getTime() > dayEnd.getTime()) continue;
-
-        if (slotStart.getTime() < now.getTime() + 60 * 60 * 1000) continue;
-
-        const isBusy = busy.some(b =>
-          slotStart.getTime() < b.end && slotEnd.getTime() > b.start
-        );
-        if (isBusy) continue;
-
-        const mm = ('0' + (slotStart.getMonth() + 1)).slice(-2);
-        const dd = ('0' + slotStart.getDate()).slice(-2);
-        const ww = weekdays[slotStart.getDay()];
-        const hh = ('0' + slotStart.getHours()).slice(-2);
-        const mi = ('0' + slotStart.getMinutes()).slice(-2);
-
-        slots.push({
-          dateLabel: mm + '/' + dd + '（' + ww + '）',
-          timeLabel: hh + ':' + mi + '〜',
-          startIso:  slotStart.toISOString(),
-          start:     slotStart.toISOString()
-        });
-
-        if (limit > 0 && slots.length >= limit) {
-          return slots;
-        }
+  document.getElementById('ty-close-btn').addEventListener('click', function() {
+    closeTyModal();
+    _openBookingOnce();
+  });
+  document.getElementById('ty-overlay').addEventListener('click', function() {
+    closeTyModal();
+    _openBookingOnce();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var tyModal = document.getElementById('ty-modal');
+      if (tyModal && tyModal.classList.contains('open')) {
+        closeTyModal();
+        _openBookingOnce();
       }
     }
-  }
+  });
+})();
+</script>
 
-  return slots;
+<!-- ── Booking Widget (面談予約UI) ── -->
+<div id="booking-root"></div>
+<script>
+(function(){
+const API_BASE = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
+const API_URL_A = API_BASE + '?limit=4';
+const API_URL_ALL = (limit, days) => `${API_BASE}?limit=${limit}&daysAhead=${days}&_ts=${Date.now()}`;
+const WEBHOOK_URL = API_BASE;
+const LOGO_SRC = 'https://storage.googleapis.com/studio-design-asset-files/projects/6kq952mXqp/s-320x320_webp_08673985-fd2e-4d68-ac2b-1820afc5c14d.webp';
+const POWERED_LOGO = 'https://storage.googleapis.com/studio-design-asset-files/projects/6kq952mXqp/s-500x500_webp_2dbd9f85-0a83-498d-9d9a-7a2fb244e618.png';
+const LEAD_API_URL = 'https://script.google.com/macros/s/AKfycby6J6TGQBcflPglhiga39ygn_NgtfGquYqzP-_fP6M-_BioD3qUJkIQM9hGqT8TlrGq/exec';
+const root = document.getElementById('booking-root');
+let _leadFetched = false;
+async function prefillFromSheet(){if (_leadFetched) return;try{const url = LEAD_API_URL + (LEAD_API_URL.includes('?') ? '&' : '?') + 'mode=last&_ts=' + Date.now();
+const r = await fetch(url, { cache:'no-store'});
+const j = await r.json();
+if (j && j.ok){
+const nm = root.querySelector('#qaForm [name="name"]');
+const em = root.querySelector('#qaForm [name="email"]');
+if (nm && j.name) nm.value = j.name;
+if (em && j.email) em.value = j.email;
+_leadFetched = true;}}catch(e){ }}
+root.innerHTML = ''
++ '<style>'
++ '@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap");'
++ '#booking-root, #booking-root *{font-family:"Noto Sans JP",sans-serif !important;}'
++ '.bk-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10000;padding:3px}'
++ '.bk-dialog{width:100%;padding:26px 40px;max-width:1000px;max-height:90vh;overflow-y:auto;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.25);}'
++ '#bk-modalA .bk-dialog{max-width:720px !important;}'
++ '.bk-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:9999;}'
++ '.bk-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:8px;color:#6B7280;}'
++ '.bk-close:hover{color:#111;}'
++ '.bk-header{position:relative;display:flex;align-items:center;justify-content:center;padding:12px 16px;border-bottom:1px solid #eee}'
++ '.bk-title{font-size:20px;font-weight:800;text-align:center;width:100%}'
++ '.bk-body{padding:14px}'
++ '.bk-a-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}'
++ '@media(min-width:860px){.bk-a-grid{grid-template-columns:1fr 1fr;gap:20px}}'
++ '.bk-a-info{color:#111827}'
++ '.bk-a-top{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;text-align:center}'
++ '.bk-avatar{width:60px;height:60px;border-radius:50%;background:#f2f5f7;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}'
++ '.bk-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}'
++ '.bk-a-title{font-weight:700;font-size:18px;line-height:1.3;display:flex;align-items:center;gap:6px}'
++ '.bk-a-title span{font-weight:400;font-size:14px;color:#6B7280}'
++ '.bk-a-desc{font-size:14px;color:#6B7280;line-height:1.7;margin:8px 0 12px;text-align:left}'
++ '.bk-info-list{margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#374151}'
++ '.bk-info-list li{margin:2px 0}'
++ '.bk-a-slots .bk-slot-wrap{padding-top:20px;max-width:unset;margin:0}'
++ '#bk-modalA .bk-a-grid{margin-top:10px}'
++ '#bk-modalA .bk-dialog{max-width:800px !important;}'
++ '.bk-slot-wrap{font-family:inherit;width:100%;max-width:260px;margin:0 auto}'
++ '.bk-slot-list{display:flex;flex-direction:column;gap:12px;padding:0;margin:0 0 16px;list-style:none}'
++ '.bk-slot-item{list-style:none;width:100%;text-align:center;background:#fff;border:1px solid #E6E8EB;border-radius:10px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .03s}'
++ '.bk-slot-item:hover{background:#f9fafb;transform:translateY(-1px)}'
++ '.bk-slot-date,.bk-slot-time{font-size:14px;font-weight:700;line-height:1.2;color:#111827}'
++ '.bk-slot-date{margin-right:6px}'
++ '.bk-slot-empty{color:#6B7280;text-align:center;padding:20px 8px}'
++ '.bk-placeholder{pointer-events:none;opacity:.7}'
++ '.bk-slot-cta{display:flex;align-items:center;justify-content:center;width:100%;height:52px;margin:8px 0 0;border:1px solid #3B82F6;border-radius:10px;background:#3B82F6;color:#fff;font-weight:700;font-size:16px;cursor:pointer;text-align:center;transition:background .15s,transform .03s}'
++ '.bk-slot-cta:hover{background:#2563EB;border-color:#2563EB;transform:translateY(-1px)}'
++ '.bk-form{width:100%;max-width:520px;margin:0 auto;font-size:13px;padding-top:8px}'
++ '.bk-row{margin-bottom:14px}'
++ '.bk-label{font-size:12px;font-weight:600;margin-bottom:6px;line-height:1.4}'
++ '.bk-req-badge{background:#E02424;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;font-weight:normal;vertical-align:middle;display:inline-block}'
++ '.bk-input,.bk-textarea{width:100%;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px;font-size:11px;box-sizing:border-box}'
++ '.bk-textarea{min-height:96px;resize:vertical}'
++ '.bk-checklist,.bk-radiolist{display:flex;flex-direction:column;gap:8px;margin-top:6px;font-size:12px}'
++ '.bk-badge{display:inline-flex;gap:8px;align-items:center;font-size:13px;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:999px;padding:6px 10px;margin-bottom:12px}'
++ '.bk-badge .dt{font-weight:700}'
++ '.bk-success{padding:12px;color:#065f46;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:10px}'
++ '.bk-error{padding:12px;color:#991b1b;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px}'
++ '#bk-selBadge{display:none!important;margin:0 auto 12px!important}'
++ '.bk-row-name,.bk-row-email{display:none}'
++ '.bk-thx-wrap{padding:8px 6px 20px}'
++ '.bk-thx-title{font-size:22px;font-weight:800;text-align:center;margin:8px 0 6px}'
++ '.bk-thx-sub{color:#4B5563;text-align:center;font-size:14px;line-height:1.8;margin-bottom:14px}'
++ '.bk-thx-sub .mail{font-weight:700;color:#111827}'
++ '.bk-thx-card{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px}'
++ '.bk-thx-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;color:#111827;text-align:center;justify-content:center}'
++ '.bk-thx-ico{font-size:18px}'
++ '.bk-thx-ttl{font-weight:700}'
++ '.bk-thx-date{font-weight:700;text-align:center;font-size:16px;margin:6px 0 2px}'
++ '.bk-thx-email-label{letter-spacing:.6em;color:#6B7280;margin-top:10px;text-align:center}'
++ '.bk-powered{margin:16px 0 4px;text-align:center;color:#9CA3AF;font-size:12px;display:flex;justify-content:center;align-items:center;gap:8px}'
++ '.bk-powered .bk-powered-logo{height:50px;width:auto;display:inline-block;vertical-align:middle;border-radius:4px}'
++ '#bk-modalD .bk-cal-wrap{transform:scale(.94);transform-origin:top center}'
++ '.bk-cal-wrap{max-width:1020px;margin:0 auto}'
++ '.bk-gcal-toggle{appearance:none;border:1px solid #E4F0FF;background:#F7FBFF;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;color:#3B82F6;cursor:pointer;margin-bottom:10px;transition:background .15s}'
++ '.bk-gcal-toggle:hover{background:#EEF6FF}'
++ '.bk-gcal-frame{width:100%;height:400px;border:1px solid #E4F0FF;border-radius:12px;margin-bottom:14px}'
++ '@media(max-width:640px){.bk-gcal-frame{height:300px}}'
++ '.bk-cal-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 8px}'
++ '.bk-cal-range{font-weight:800;font-size:18px;letter-spacing:.01em}'
++ '.bk-cal-nav{display:inline-flex;border:1px solid #E4F0FF;border-radius:12px;overflow:hidden;background:#F7FBFF}'
++ '.bk-nav-btn{appearance:none;border:0;background:transparent;padding:8px 14px;line-height:1;font-size:16px;cursor:pointer}'
++ '.bk-nav-btn+.bk-nav-btn{border-left:1px solid #E4F0FF}'
++ '.bk-nav-btn:hover{background:#EEF6FF}'
++ '.bk-nav-btn:active{transform:translateY(1px)}'
++ '.bk-nav-btn[disabled]{opacity:.4;cursor:not-allowed}'
++ '.bk-cal-table{width:100%;border-collapse:separate;border-spacing:8px 6px}'
++ '.bk-cal-table th,.bk-cal-table td{padding:0}'
++ '.bk-cal-table thead th{position:sticky;top:0;background:#F7FBFF;z-index:5;font-size:12px;color:#3B82F6;font-weight:700;text-align:center;padding:6px 4px;border:1px solid #E4F0FF;border-radius:12px}'
++ '.bk-cal-table thead th.bk-day-closed{background:#F3F6FA;border-color:#DFE6EF;color:#98A2B3;opacity:.9}'
++ '.bk-cal-table thead th.bk-cal-spacer{border:0;background:transparent;padding:0;width:54px;min-width:54px;border-radius:0}'
++ '.bk-cal-table thead tr>th:first-child{border:0;background:transparent;padding:0;border-radius:0}'
++ '.bk-cal-table tbody th{width:50px;font-variant-numeric:tabular-nums;font-size:12px;padding-right:10px;color:#94A3B8;font-weight:600;white-space:nowrap;text-align:right}'
++ '.bk-cal-slot{height:40px;border-radius:12px;background:#F4F9FF;border:1px solid #E4F0FF;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}'
++ '.bk-cal-slot.on:hover{background:#EAF3FF;border-color:#CFE5FF}'
++ '.bk-cal-slot.off{background:#EEF2F6;border:1px solid #D6DFEA}'
++ '.bk-cal-slot.off::before{content:"";width:18px;height:2px;background:#96A3B5;border-radius:2px;display:block}'
++ '.bk-cal-dot{width:28px;height:28px;border-radius:999px;border:2px solid #5AB6FF;background:#fff;cursor:pointer;box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .15s,transform .03s}'
++ '.bk-cal-dot:hover{box-shadow:0 0 0 4px rgba(59,130,246,.18)}'
++ '.bk-cal-dot:active{transform:scale(.97)}'
++ '@media(max-width:640px){'
++ '.bk-cal-range{font-size:16px}.bk-cal-table{border-spacing:6px 6px}'
++ '.bk-cal-slot{height:36px}.bk-cal-dot{width:24px;height:24px}'
++ '.bk-modal{padding:8px;width:100%;height:100vh;box-sizing:border-box}'
++ '.bk-modal .bk-dialog{width:98%!important;max-width:99%!important;margin:0 auto;border-radius:12px}'
++ '.bk-modal .bk-title{font-size:13px}'
++ '#bk-modalB .bk-title{font-size:12px}'
++ '.bk-modal .bk-header{padding:14px 16px}'
++ '.bk-modal .bk-body{padding:16px;font-size:12px;line-height:1.6}'
++ '.bk-modal .bk-body li{font-size:9px;line-height:1.6}'
++ '.bk-modal .bk-body p{font-size:10px;line-height:1.6}'
++ '.bk-form{max-width:100%}'
++ '#bk-modalA .bk-a-title{font-size:clamp(12px,3.8vw,16px)!important;white-space:nowrap;gap:1.2vw}#bk-modalA .bk-a-title span{font-size:clamp(11px,3.2vw,14px)!important;white-space:nowrap}'
++ '.bk-avatar{width:50px;height:50px}'
++ '.bk-input,.bk-textarea{font-size:16px}'
++ '.bk-textarea{min-height:80px}'
++ '.bk-checklist,.bk-radiolist{gap:10px}'
++ '.bk-a-slots .bk-slot-wrap{padding-top:5px;max-width:unset;margin:0}'
++ '.bk-slot-cta{display:block;width:100%;max-width:none;margin:16px 0 0}'
++ '.bk-badge{max-width:100%}'
++ '.bk-label{font-size:11px}'
++ '.bk-thx-wrap{padding:12px 16px 20px}'
++ '.bk-thx-card{padding:16px}'
++ '.bk-thx-title{font-size:16px}'
++ '.bk-thx-date{font-size:18px;line-height:1.4;margin:6px 0 8px}'
++ '#bk-thxDT .d,#bk-thxDT .t{display:block;text-align:center}'
++ '.bk-thx-email-label{text-align:center;letter-spacing:.2em}'
++ '#bk-modalC .bk-dialog{width:96%!important;max-width:96%!important;margin:12px auto;padding:8px 14px;border-radius:10px}'
++ '#bk-modalC .bk-body{padding:10px}'
++ '#bk-modalC .bk-thx-card{padding:10px 12px}'
++ '#bk-modalA .bk-a-grid{gap:6px}'
++ '#bk-modalA .bk-a-desc{margin:2px 0 4px;font-size:9px!important}'
++ '#bk-modalA .bk-info-list{margin:4px 0 0;padding-left:16px}'
++ '#bk-modalA .bk-a-slots .bk-slot-wrap{padding-top:3px}'
++ '#bk-modalA .bk-slot-list{gap:8px}'
++ '#bk-modalA .bk-slot-item{height:44px}'
++ '#bk-modalA .bk-slot-cta{height:46px;margin:12px 0 0}'
++ '#bk-modalD .bk-cal-head{gap:6px}'
++ '#bk-modalD .bk-cal-range{font-size:13px!important;line-height:1;white-space:nowrap;word-break:keep-all;letter-spacing:0;min-width:0;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}'
++ '#bk-modalD .bk-cal-nav{flex:0 0 auto}'
++ '#bk-modalD .bk-nav-btn{padding:6px 10px}'
++ '#bk-modalD .bk-dialog{padding-left:10px;padding-right:10px}'
++ '#bk-modalD .bk-cal-table{border-spacing:4px 6px}'
++ '#bk-modalD .bk-cal-table tbody th{width:42px}'
++ '#bk-modalB .bk-header{justify-content:flex-start;padding-left:8px;gap:6px}'
++ '#bk-backToD{position:static!important;transform:none!important;white-space:nowrap!important;font-size:13px!important}'
++ '#bk-modalB .bk-header .bk-title{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}'
++ '#bk-modalA .bk-dialog{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch}'
++ '}'
++ '.bk-modal .bk-body{padding:0}'
++ '#bk-modalA .bk-slot-cta{max-width:unset;margin:18px 0 0;width:100%}'
++ '#bk-modalA .bk-a-grid{gap:10px}'
++ '#bk-modalA .bk-a-title{font-size:16px}'
++ '#bk-modalA .bk-a-title span{font-size:12px}'
++ '#bk-modalA .bk-a-desc{font-size:12px;margin:4px 8px}'
++ '#bk-modalA .bk-info-list{font-size:12px;line-height:1.6;margin:4px 0 0;padding-left:14px}'
++ '#bk-modalA .bk-a-slots .bk-slot-wrap{padding-top:4px}'
++ '@media(min-width:641px) and (max-width:850px){#bk-modalA .bk-slot-list{gap:10px}'
++ '#bk-modalA .bk-slot-item{height:46px}'
++ '#bk-modalA .bk-slot-cta{height:48px;margin:12px 0 0}}'
++ '</style>'
+/* ── HTML: All modals start hidden ── */
++ '<div id="bk-ov" class="bk-overlay" style="display:none;"></div>'
++ '<div id="bk-modalA" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">都合の良い日程をご指定ください</div><button class="bk-close" id="bk-closeA" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body"><div class="bk-a-grid">'
++ '<section class="bk-a-info">'
++ '<div class="bk-a-top"><span class="bk-avatar"><img src="'+LOGO_SRC+'" alt="ロゴ"></span><div class="bk-a-title">\u{1F4DE} 担当からのお電話 <span>（30分）</span></div></div>'
++ '<p class="bk-a-desc">都合の良い日程をご指定ください。お電話の際には当塾代表・佐野より、以下についてご案内致します。<br><br></p>'
++ '<ul class="bk-info-list"><li>お子様に合った学習スタイルの見つけ方</li><li>プラトンならではの強みと、他塾様との違い</li><li>実際に成果が出たご家庭の具体例</li><li>安心して始められる入塾まで流れとご料金</li><li>現在開催中のキャンペーンに関するご案内（ご希望の方のみ）</li></ul>'
++ '<p class="bk-a-desc"><br>無理な押し売りや強引な勧誘は一切いたしません。<br>「まずは気軽に相談してみよう」というお気持ちで大丈夫です。<br><br></p>'
++ '</section>'
++ '<section class="bk-a-slots"><div class="bk-slot-wrap">'
++ '<ul id="bk-slotList" class="bk-slot-list"><li class="bk-slot-item bk-placeholder"><div class="bk-slot-date">読み込み中…</div><div class="bk-slot-time">しばらくお待ちください</div></li></ul>'
++ '<button id="bk-toAll" class="bk-slot-cta" type="button">全ての候補日程を見る</button>'
++ '<div id="bk-slotEmpty" class="bk-slot-empty" style="display:none;">直近の空き枠がありません。<br>別日をご希望の場合は担当者より個別にご案内します。</div>'
++ '</div></section>'
++ '</div></div>'
++ '<div class="bk-powered">powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div>'
++ '</div></div>'
+
++ '<div id="bk-modalB" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">\u{1F4DD} お電話前アンケートのお願い</div><button class="bk-close" id="bk-closeB" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body">'
++ '<div id="bk-selBadge" class="bk-badge" style="display:none">\u{1F4C5} <span class="dt"></span> <span class="tm"></span></div>'
++ '<form id="bk-qaForm" class="bk-form">'
++ '<div class="bk-row bk-row-name"><div class="bk-label">お名前<span class="bk-req-badge">必須</span></div><input class="bk-input" type="text" name="name" placeholder="山田 太郎"></div>'
++ '<div class="bk-row bk-row-email"><div class="bk-label">メールアドレス<span class="bk-req-badge">必須</span></div><input class="bk-input" type="email" name="email" placeholder="you@example.com"></div>'
++ '<div class="bk-row"><div class="bk-label">当日特に聞きたいことを教えて下さい（複数選択可）<span class="bk-req-badge">必須</span></div>'
++ '<div class="bk-checklist">'
++ '<label><input type="checkbox" name="topics" value="当塾の詳細"> 当塾の詳細</label>'
++ '<label><input type="checkbox" name="topics" value="受験対策"> 受験対策の方法がわからないこと</label>'
++ '<label><input type="checkbox" name="topics" value="大学受験"> 大学受験の不安が解消されないこと</label>'
++ '<label><input type="checkbox" name="topics" value="家庭学習"> 子供が家で勉強しないこと</label>'
++ '<label><input type="checkbox" name="topics" value="料金体系"> 料金体系</label>'
++ '</div></div>'
++ '<div class="bk-row"><div class="bk-label">ご連絡手段はお電話で宜しいですか？<span class="bk-req-badge">必須</span></div>'
++ '<div class="bk-radiolist">'
++ '<label><input type="radio" name="meeting" value="電話でOK" required> 電話でOK</label>'
++ '<label><input type="radio" name="meeting" value="オンラインを希望" required> オンライン面談（Google meet）を希望</label>'
++ '</div></div>'
++ '<div class="bk-row"><div class="bk-label">当社代表佐野への伝言（あれば）</div><textarea class="bk-textarea" name="note" placeholder="ご希望や事前共有事項など"></textarea></div>'
++ '<button class="bk-slot-cta" type="submit"><span class="btn-label">送信</span></button>'
++ '</form>'
++ '<div id="bk-result" style="margin-top:10px"></div>'
++ '<div class="bk-powered">Powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div></div></div></div>'
+
++ '<div id="bk-modalC" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title"> </div><button class="bk-close" id="bk-closeC" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body"><div class="bk-thx-wrap">'
++ '<div class="bk-thx-title">メールで詳細をお送りしました！</div>'
++ '<div class="bk-thx-sub">「<span id="bk-thxEmail" class="mail"></span>」宛に<br>電話相談の通知が届いています。</div>'
++ '<div class="bk-thx-card">'
++ '<div class="bk-thx-row"><span class="bk-thx-ico">\u{1F4DE}</span><div class="bk-thx-ttl">担当からのお電話 <span style="font-weight:400;color:#6B7280;">（30分）</span></div></div>'
++ '<div id="bk-thxDT" class="bk-thx-date"></div>'
++ '<div class="bk-thx-email-label">緊急ご連絡先：<br>plato.humanities@gmail.com</div>'
++ '</div></div></div>'
++ '<div class="bk-powered">Powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div>'
++ '</div></div>'
+
++ '<div id="bk-modalD" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">候補日程一覧（カレンダー）</div><button class="bk-close" id="bk-closeD" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body">'
++ '<div style="text-align:center;margin-bottom:8px"><button id="bk-gcalToggle" class="bk-gcal-toggle" type="button">\u{1F4C5} Googleカレンダーで全体を確認</button></div>'
++ '<div id="bk-gcalEmbed" style="display:none"><iframe class="bk-gcal-frame" src="https://calendar.google.com/calendar/embed?src=plato.humanities%40gmail.com&ctz=Asia/Tokyo&mode=WEEK&showTitle=0&showNav=1&showPrint=0&showCalendars=0&showTz=0" frameborder="0" scrolling="no"></iframe></div>'
++ '<div class="bk-cal-wrap"><div class="bk-cal-head">'
++ '<div class="bk-cal-range" id="bk-calRange"></div>'
++ '<div class="bk-cal-nav"><button id="bk-calPrev" class="bk-nav-btn" type="button" aria-label="前の5日">&#8249;</button><button id="bk-calNext" class="bk-nav-btn" type="button" aria-label="次の5日">&#8250;</button></div>'
++ '</div><div id="bk-calGrid"></div></div></div>'
++ '<div class="bk-powered">powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="logo"></div></div></div>';
+
+if(!document.getElementById('bk-btnspin-style')){const st=document.createElement('style');
+st.id='bk-btnspin-style';
+st.textContent='.bk-btn-spinner{display:inline-block;vertical-align:middle;width:16px;height:16px;margin-left:8px;border-radius:50%;border:2px solid #fff;border-top-color:transparent;animation:bkspin .9s linear infinite}@keyframes bkspin{to{transform:rotate(360deg)}}';
+document.head.appendChild(st);}
+
+const $ = function(s){ return root.querySelector(s); };
+const ov=$('#bk-ov'), modalA=$('#bk-modalA'), modalB=$('#bk-modalB'), modalC=$('#bk-modalC'), modalD=$('#bk-modalD');
+function bkOpenA(){ 
+  ov.style.display='block'; modalA.style.display='flex'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='hidden';
+  /* ── 問い合わせフォームの名前・メアドを予約フォームにセット ── */
+  var nm = root.querySelector('#bk-qaForm [name="name"]');
+  var em = root.querySelector('#bk-qaForm [name="email"]');
+  if (nm && window.__contactName)  nm.value = window.__contactName;
+  if (em && window.__contactEmail) em.value = window.__contactEmail;
 }
+function bkOpenB(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='flex'; modalC.style.display='none'; modalD.style.display='none';}
+function bkOpenC(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='flex'; modalD.style.display='none';}
+function bkOpenD(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='flex';}
+function bkCloseAll(){ ov.style.display='none'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='';}
 
+/* ── 外部から呼べる関数を公開 ── */
+window.__openBookingModal = bkOpenA;
 
-// ===== ユーティリティ =====
-function jsonResponse(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+$('#bk-closeA').addEventListener('click', bkCloseAll);
+$('#bk-closeB').addEventListener('click', bkCloseAll);
+$('#bk-closeC').addEventListener('click', bkCloseAll);
+$('#bk-closeD').addEventListener('click', bkCloseAll);
+/* ── Google Calendar embed toggle ── */
+$('#bk-gcalToggle').addEventListener('click', function(){
+var embed = $('#bk-gcalEmbed');
+var btn = $('#bk-gcalToggle');
+if(embed.style.display==='none'){embed.style.display='block';btn.textContent='\u{1F4C5} Googleカレンダーを閉じる';}
+else{embed.style.display='none';btn.textContent='\u{1F4C5} Googleカレンダーで全体を確認';}
+});
+ov.addEventListener('click', bkCloseAll);
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && ov.style.display === 'block') { bkCloseAll(); }
+});
 
-// ===== テスト用 =====
-function testGetSlots() {
-  const slots = getAvailableSlots(7, 10);
-  Logger.log(JSON.stringify(slots, null, 2));
-  Logger.log('空き枠数: ' + slots.length);
-}
+function showCalLoading(){
+const grid = $('#bk-calGrid');
+if(!grid) return;
+grid.innerHTML = '<div style="text-align:center;margin:16px 0;"><div style="font-weight:700;color:#111827;">読み込み中… しばらくお待ちください</div></div>';}
+
+function loadSlots(){
+const ul = $('#bk-slotList');
+const empty = $('#bk-slotEmpty');
+const url = API_URL_A + (API_URL_A.includes('?') ? '&' : '?') + '_ts=' + Date.now();
+ul.innerHTML = '<li class="bk-slot-item bk-placeholder"><div class="bk-slot-date">読み込み中…</div><div class="bk-slot-time">しばらくお待ちください</div></li>';
+empty.style.display = 'none';
+fetch(url, { cache:'no-store' })
+.then(function(r){ return r.text(); })
+.then(function(text){
+var data;
+try{ data = JSON.parse(text); }catch(e){
+ul.innerHTML=''; empty.style.display='block';
+empty.textContent = 'APIがJSONを返しませんでした：' + text.slice(0,200);return;}
+var slots = (data && data.slots) ? data.slots : [];
+ul.innerHTML='';
+if(!slots.length){ empty.style.display='block'; empty.textContent='直近の空き枠がありません。'; return;}
+slots.forEach(function(s){
+var li=document.createElement('li');
+li.className='bk-slot-item';
+li.textContent = s.dateLabel + ' ' + s.timeLabel;
+li.addEventListener('click', function(){
+sessionStorage.setItem('selectedSlot', JSON.stringify(s));
+var badge = $('#bk-selBadge');
+if(badge){badge.style.display='inline-flex';badge.querySelector('.dt').textContent=s.dateLabel;badge.querySelector('.tm').textContent=s.timeLabel;}
+prefillFromSheet();
+bkOpenB();});
+ul.appendChild(li);});})
+.catch(function(err){
+ul.innerHTML=''; empty.style.display='block';
+empty.textContent='Fetch失敗：' + String(err);});}
+
+$('#bk-toAll').addEventListener('click', async function(){
+bkOpenD(); bindCalNav(); showCalLoading(); await renderCalendar();});
+
+function showBtnSpinner(btn){
+if(!btn||btn.querySelector('.bk-btn-spinner'))return;
+btn.style.pointerEvents='none';
+const s=document.createElement('span');s.className='bk-btn-spinner';btn.appendChild(s);}
+function hideBtnSpinner(btn){
+if(!btn)return;btn.style.pointerEvents='';
+const s=btn.querySelector('.bk-btn-spinner');if(s)s.remove();}
+
+$('#bk-qaForm').addEventListener('submit', async function(e){
+e.preventDefault();
+var res=$('#bk-result'); res.innerHTML='';
+var slotStr=sessionStorage.getItem('selectedSlot');
+if(!slotStr){res.innerHTML='<div class="bk-error">日程が選択されていません。</div>';return;}
+var slot=JSON.parse(slotStr);
+var fd=new FormData(e.target);
+var body={name:fd.get('name'),email:fd.get('email'),meeting:fd.get('meeting')||'',topics:fd.getAll('topics')||[],note:fd.get('note')||'',slot:slot};
+if(body.topics.length===0){res.innerHTML='<div class="bk-error">「当日特に聞きたいこと」を1つ以上選択してください。</div>';return;}
+var btn=e.submitter||$('#bk-qaForm .bk-slot-cta');
+if(btn&&btn.querySelector&&btn.querySelector('.bk-btn-spinner'))return;
+try{showBtnSpinner(btn);
+var params=new URLSearchParams();
+params.append('name',body.name||'');params.append('email',body.email||'');params.append('meeting',body.meeting||'');
+(body.topics||[]).forEach(function(t){params.append('topics',t);});
+params.append('note',body.note||'');params.append('slot',JSON.stringify(body.slot||{}));
+var r=await fetch(WEBHOOK_URL,{method:'POST',body:params});
+var data=await r.json();
+if(data&&data.ok){
+var email=body.email||'';
+var thxEmail=$('#bk-thxEmail');var thxDT=$('#bk-thxDT');
+if(thxEmail)thxEmail.textContent=email;
+if(thxDT)thxDT.textContent=slot.dateLabel+'　'+slot.timeLabel;
+e.target.reset();sessionStorage.removeItem('selectedSlot');
+bkOpenC();
+}else{throw new Error((data&&data.error)||'unknown error');}}catch(err){
+res.innerHTML='<div class="bk-error">送信に失敗しました：'+String(err)+'</div>';
+}finally{hideBtnSpinner(btn);}});
+
+const CAL_DAYS=5, CAL_LIMIT=5000, CAL_DAYS_AHEAD=365;
+const CAL_TIME_LABELS=buildTimes('10:00','22:00',60);
+let allSlots=[], calOffset=0;
+function buildTimes(startHHMM,endHHMM,stepMin){const[sh,sm]=startHHMM.split(':').map(Number);const[eh,em]=endHHMM.split(':').map(Number);const times=[];let t=sh*60+sm;const end=eh*60+em;while(t<end){const hh=Math.floor(t/60),mm=t%60;times.push(pad2(hh)+':'+pad2(mm));t+=stepMin;}return times;}
+function pad2(n){return('0'+n).slice(-2);}
+function ymdKey(d){const x=new Date(d);x.setHours(0,0,0,0);return x.getTime();}
+function jpDate(d){const w='日月火水木金土';return pad2(d.getMonth()+1)+'/'+pad2(d.getDate())+'（'+w[d.getDay()]+'）';}
+async function ensureAllSlots(){if(allSlots.length)return allSlots;
+const url=API_URL_ALL(CAL_LIMIT,CAL_DAYS_AHEAD);const r=await fetch(url,{cache:'no-store'});const data=await r.json().catch(()=>({}));
+allSlots=(data&&data.slots)?data.slots:[];
+allSlots.forEach(s=>{const d=new Date(s.startIso||s.startISO||s.start||0);s._start=d;s._dateKey=ymdKey(d);s._timeKey=pad2(d.getHours())+':'+pad2(d.getMinutes());});return allSlots;}
+
+async function renderCalendar(){await ensureAllSlots();
+const start=new Date();start.setHours(0,0,0,0);start.setDate(start.getDate()+calOffset);
+const days=Array.from({length:CAL_DAYS},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);return d;});
+const dayKeys=new Set(days.map(ymdKey));const times=CAL_TIME_LABELS;const map={};
+allSlots.forEach(s=>{if(!dayKeys.has(s._dateKey))return;(map[s._dateKey]||={})[s._timeKey]=s;});
+let html='<table class="bk-cal-table"><thead><tr><th class="bk-cal-spacer"></th>';
+days.forEach(d=>{const dk=ymdKey(d);const hasAny=allSlots.some(s=>s._dateKey===dk);
+html+='<th'+(hasAny?'':' class="bk-day-closed"')+'>'+jpDate(d)+'</th>';});
+html+='</tr></thead><tbody>';
+times.forEach(t=>{html+='<tr><th>'+t+'</th>';
+days.forEach(d=>{const m=map[ymdKey(d)]&&map[ymdKey(d)][t];
+if(m){const payload=encodeURIComponent(JSON.stringify(m));
+html+='<td><div class="bk-cal-slot on"><button class="bk-cal-dot" data-slot="'+payload+'"></button></div></td>';}else{html+='<td><div class="bk-cal-slot off"></div></td>';}});
+html+='</tr>';});
+html+='</tbody></table>';
+$('#bk-calGrid').innerHTML='<div class="bk-cal-scroller">'+html+'</div>';
+$('#bk-calRange').textContent=jpDate(days[0])+' 〜 '+jpDate(days[days.length-1]);
+$('#bk-calGrid').querySelectorAll('.bk-cal-dot').forEach(btn=>{btn.addEventListener('click',()=>{
+const s=JSON.parse(decodeURIComponent(btn.getAttribute('data-slot')));
+sessionStorage.setItem('selectedSlot',JSON.stringify(s));
+const badge=$('#bk-selBadge');
+if(badge){badge.style.display='inline-flex';badge.querySelector('.dt').textContent=s.dateLabel;badge.querySelector('.tm').textContent=s.timeLabel;}
+prefillFromSheet();bkOpenB();});});}
+
+function bindCalNav(){
+const prev=$('#bk-calPrev'),next=$('#bk-calNext');
+if(!prev||!next)return;
+prev.onclick=()=>{if(calOffset>=CAL_DAYS){calOffset-=CAL_DAYS;renderCalendar();}};
+next.onclick=()=>{calOffset+=CAL_DAYS;renderCalendar();};}
+
+/* ── Pre-fetch slots on load ── */
+loadSlots();
+
+/* ── Back button for modalB ── */
+(function(){const hdr=root.querySelector('#bk-modalB .bk-header');if(!hdr||hdr.querySelector('#bk-backToD'))return;
+const btn=document.createElement('button');btn.id='bk-backToD';btn.type='button';btn.setAttribute('aria-label','候補一覧へ戻る');btn.textContent='‹ 戻る';
+btn.style.cssText='appearance:none;border:0;background:transparent;font-size:13px;padding:8px;cursor:pointer;';
+hdr.insertBefore(btn,hdr.firstChild);
+btn.addEventListener('click',function(){bkOpenD();bindCalNav();showCalLoading();renderCalendar();});})();
+})();
+</script>
+
+</body>
+</html>
