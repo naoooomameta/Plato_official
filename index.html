@@ -1988,33 +1988,33 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </div>
     </div>
     <div class="cform reveal d2">
-      <form id="contact-form" action="https://formspree.io/f/mwvrovwq" method="POST" novalidate>
+      <form id="contact-form" method="POST" novalidate>
         <div class="fr2">
           <div class="fg">
             <label class="fl" for="name">お名前<span class="req">必須</span></label>
-            <input type="text" id="name" name="お名前" class="fi" placeholder="山田 太郎" required>
+            <input type="text" id="name" name="name" class="fi" placeholder="山田 太郎" required>
             <span class="ferr" id="err-name">お名前を入力してください</span>
           </div>
           <div class="fg">
             <label class="fl" for="kana">フリガナ<span class="req">必須</span></label>
-            <input type="text" id="kana" name="フリガナ" class="fi" placeholder="ヤマダ タロウ" required>
+            <input type="text" id="kana" name="kana" class="fi" placeholder="ヤマダ タロウ" required>
             <span class="ferr" id="err-kana">フリガナを入力してください</span>
           </div>
         </div>
         <div class="fg">
           <label class="fl" for="email">メールアドレス<span class="req">必須</span></label>
-          <input type="email" id="email" name="メールアドレス" class="fi" placeholder="example@email.com" required>
+          <input type="email" id="email" name="email" class="fi" placeholder="example@email.com" required>
           <span class="ferr" id="err-email">正しいメールアドレスを入力してください</span>
         </div>
         <div class="fg">
           <label class="fl" for="tel">電話番号<span class="req">必須</span></label>
-          <input type="tel" id="tel" name="電話番号" class="fi" placeholder="090-0000-0000" required>
+          <input type="tel" id="tel" name="tel" class="fi" placeholder="090-0000-0000" required>
           <span class="ferr" id="err-tel">電話番号を入力してください</span>
         </div>
         <div class="fr2">
           <div class="fg">
             <label class="fl" for="grade">学年</label>
-            <select id="grade" name="学年" class="fsel">
+            <select id="grade" name="grade" class="fsel">
               <option value="">選択してください</option>
               <option>小学生</option>
               <option>中学1年生</option>
@@ -2028,12 +2028,12 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
           </div>
           <div class="fg">
             <label class="fl" for="university">志望大学</label>
-            <input type="text" id="university" name="志望大学" class="fi" placeholder="例：早稲田大学">
+            <input type="text" id="university" name="university" class="fi" placeholder="例：早稲田大学">
           </div>
         </div>
         <div class="fg">
           <label class="fl" for="message">お悩み・ご相談内容</label>
-          <textarea id="message" name="お悩み・ご相談内容" class="fta" placeholder="学習の悩み、志望校についてなど、お気軽にご記入ください。"></textarea>
+          <textarea id="message" name="message" class="fta" placeholder="学習の悩み、志望校についてなど、お気軽にご記入ください。"></textarea>
         </div>
         <div id="form-success" class="form-msg form-msg--ok" style="display:none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -2176,6 +2176,8 @@ function switchTab(tabId, btn) {
     return valid;
   }
 
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     document.getElementById('form-success').style.display = 'none';
@@ -2187,15 +2189,28 @@ function switchTab(tabId, btn) {
     btn.disabled = true;
     btn.textContent = '送信中…';
 
-    fetch(form.action, {
+    /* ── フォームの値を保存 ── */
+    var savedName  = document.getElementById('name').value;
+    var savedEmail = document.getElementById('email').value;
+
+    /* ── GASへ送信（action=contact） ── */
+    var params = new URLSearchParams();
+    params.append('action', 'contact');
+    params.append('name',       savedName);
+    params.append('kana',       document.getElementById('kana').value);
+    params.append('email',      savedEmail);
+    params.append('tel',        document.getElementById('tel').value);
+    params.append('grade',      document.getElementById('grade').value);
+    params.append('university', document.getElementById('university').value);
+    params.append('message',    document.getElementById('message').value);
+
+    fetch(GAS_URL, {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      body: params
     }).then(function(res) {
-      if (res.ok) {
-        /* ── フォームの名前・メアドを保存してから reset ── */
-        var savedName  = document.getElementById('name').value;
-        var savedEmail = document.getElementById('email').value;
+      return res.json();
+    }).then(function(data) {
+      if (data && data.ok) {
         form.reset();
         window.__contactName  = savedName;
         window.__contactEmail = savedEmail;
@@ -2204,10 +2219,7 @@ function switchTab(tabId, btn) {
         lucide.createIcons();
         openTyModal();
       } else {
-        document.getElementById('form-error').style.display = 'flex';
-        btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
-        lucide.createIcons();
+        throw new Error((data && data.error) || 'unknown');
       }
     }).catch(function() {
       document.getElementById('form-error').style.display = 'flex';
