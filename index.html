@@ -2193,7 +2193,12 @@ function switchTab(tabId, btn) {
       headers: { 'Accept': 'application/json' }
     }).then(function(res) {
       if (res.ok) {
+        /* ── フォームの名前・メアドを保存してから reset ── */
+        var savedName  = document.getElementById('name').value;
+        var savedEmail = document.getElementById('email').value;
         form.reset();
+        window.__contactName  = savedName;
+        window.__contactEmail = savedEmail;
         btn.disabled = false;
         btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
         lucide.createIcons();
@@ -2518,7 +2523,14 @@ document.head.appendChild(st);}
 
 const $ = function(s){ return root.querySelector(s); };
 const ov=$('#bk-ov'), modalA=$('#bk-modalA'), modalB=$('#bk-modalB'), modalC=$('#bk-modalC'), modalD=$('#bk-modalD');
-function bkOpenA(){ ov.style.display='block'; modalA.style.display='flex'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='hidden';}
+function bkOpenA(){ 
+  ov.style.display='block'; modalA.style.display='flex'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='hidden';
+  /* ── 問い合わせフォームの名前・メアドを予約フォームにセット ── */
+  var nm = root.querySelector('#bk-qaForm [name="name"]');
+  var em = root.querySelector('#bk-qaForm [name="email"]');
+  if (nm && window.__contactName)  nm.value = window.__contactName;
+  if (em && window.__contactEmail) em.value = window.__contactEmail;
+}
 function bkOpenB(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='flex'; modalC.style.display='none'; modalD.style.display='none';}
 function bkOpenC(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='flex'; modalD.style.display='none';}
 function bkOpenD(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='flex';}
