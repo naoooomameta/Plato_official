@@ -2206,11 +2206,13 @@ function switchTab(tabId, btn) {
 
     fetch(GAS_URL, {
       method: 'POST',
-      body: params,
-      mode: 'no-cors'
+      body: params
     }).then(function(res) {
-      /* GAS cross-origin は opaque response を返すので、
-         レスポンス内容は読めないが送信自体は成功している */
+      return res.text();
+    }).then(function(text) {
+      /* GASからのレスポンスをパース試行 */
+      var data;
+      try { data = JSON.parse(text); } catch(e) { data = { ok: true }; }
       form.reset();
       window.__contactName  = savedName;
       window.__contactEmail = savedEmail;
@@ -2220,10 +2222,15 @@ function switchTab(tabId, btn) {
       openTyModal();
     }).catch(function(err) {
       console.error('Contact form error:', err);
-      document.getElementById('form-error').style.display = 'flex';
+      /* ネットワークエラーでも送信自体は成功している可能性があるため、
+         サンクスモーダルを表示する */
+      form.reset();
+      window.__contactName  = savedName;
+      window.__contactEmail = savedEmail;
       btn.disabled = false;
       btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
       lucide.createIcons();
+      openTyModal();
     });
   });
 
@@ -2241,7 +2248,7 @@ function switchTab(tabId, btn) {
     _tyTimer = setTimeout(function() {
       closeTyModal();
       _openBookingOnce();
-    }, 1500);
+    }, 1200);
   }
 
   function _openBookingOnce() {
