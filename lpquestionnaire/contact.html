@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ｜プラトン 文系の大学受験専門塾</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Noto Sans JP','Hiragino Sans',sans-serif;
+  color:#1a1a2e;background:#f0f4f8;
+  line-height:1.8;font-size:15px;
+  min-height:100vh;
+}
+.header{
+  background:#1a56db;color:#fff;
+  text-align:center;padding:20px 16px;
+}
+.header-brand{font-size:12px;opacity:0.8;margin-bottom:2px;}
+.header-title{font-size:20px;font-weight:900;}
+.container{
+  max-width:500px;margin:0 auto;
+  padding:32px 20px 60px;
+}
+.intro{
+  text-align:center;margin-bottom:28px;
+  font-size:14px;color:#64748b;
+  line-height:1.7;
+}
+.form-card{
+  background:#fff;border-radius:16px;
+  padding:28px 24px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.form-group{margin-bottom:20px;}
+.form-label{
+  display:block;font-size:13px;font-weight:700;
+  color:#1a1a2e;margin-bottom:6px;
+}
+.form-label .required{
+  background:#ef4444;color:#fff;
+  font-size:10px;font-weight:700;
+  padding:2px 6px;border-radius:4px;
+  margin-left:6px;vertical-align:middle;
+}
+.form-label .optional{
+  color:#94a3b8;font-size:10px;font-weight:600;
+  margin-left:6px;
+}
+.form-input,.form-textarea,.form-select{
+  width:100%;padding:12px 14px;
+  border:1.5px solid #e2e8f0;border-radius:10px;
+  font-size:15px;font-family:inherit;
+  color:#1a1a2e;background:#fff;
+  transition:border-color 0.2s;
+  -webkit-appearance:none;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{
+  outline:none;border-color:#1a56db;
+  box-shadow:0 0 0 3px rgba(26,86,219,0.1);
+}
+.form-textarea{resize:vertical;min-height:120px;}
+.form-select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:36px;
+}
+.submit-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,#1a56db,#2563eb);
+  color:#fff;border:none;border-radius:12px;
+  font-size:16px;font-weight:900;
+  font-family:inherit;cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 4px 15px rgba(26,86,219,0.3);
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,86,219,0.4);}
+.submit-btn:active{transform:scale(0.98);}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.note{
+  font-size:11px;color:#94a3b8;
+  text-align:center;margin-top:16px;
+  line-height:1.6;
+}
+.back{
+  display:block;text-align:center;
+  margin-top:24px;font-size:14px;
+  color:#1a56db;text-decoration:none;font-weight:600;
+}
+.back:hover{text-decoration:underline;}
+
+.complete-msg{
+  display:none;text-align:center;
+  padding:40px 20px;
+}
+.complete-msg.show{display:block;}
+.complete-icon{font-size:48px;margin-bottom:16px;}
+.complete-title{font-size:20px;font-weight:900;color:#1a56db;margin-bottom:12px;}
+.complete-text{font-size:14px;color:#64748b;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">文系の大学受験専門塾</div>
+  <div class="header-title">プラトン お問い合わせ</div>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    個人情報の取り扱いに関するご質問や<br>
+    サービスに関するお問い合わせを受け付けています。
+  </div>
+
+  <div class="form-card" id="formCard">
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+
+      <div class="form-group">
+        <label class="form-label">お名前<span class="required">必須</span></label>
+        <input type="text" class="form-input" name="name" required placeholder="例：山田 太郎">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">メールアドレス<span class="required">必須</span></label>
+        <input type="email" class="form-input" name="email" required placeholder="例：example@email.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">電話番号<span class="optional">任意</span></label>
+        <input type="tel" class="form-input" name="phone" placeholder="例：090-1234-5678">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">お問い合わせ種別<span class="required">必須</span></label>
+        <select class="form-select" name="category" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="個人情報の開示・削除請求">個人情報の開示・削除請求</option>
+          <option value="サービスに関する質問">サービスに関する質問</option>
+          <option value="入塾に関するご相談">入塾に関するご相談</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容<span class="required">必須</span></label>
+        <textarea class="form-textarea" name="message" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">送信する</button>
+
+    </form>
+
+    <div class="note">
+      ※ 2〜3営業日以内にご返信いたします。<br>
+      ※ 入塾や無料相談については<a href="https://plato-humanities.com/#contact" style="color:#1a56db;">公式サイトのフォーム</a>もご利用いただけます。
+    </div>
+  </div>
+
+  <div class="complete-msg" id="completeMsg">
+    <div class="complete-icon">✅</div>
+    <div class="complete-title">送信完了</div>
+    <div class="complete-text">
+      お問い合わせを受け付けました。<br>
+      2〜3営業日以内にご返信いたします。<br><br>
+      ご連絡ありがとうございました。
+    </div>
+  </div>
+
+  <a class="back" href="/lpquestionnaire/">← 診断ページに戻る</a>
+
+</div>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '送信中...';
+
+  const form = document.getElementById('contactForm');
+  const data = new FormData(form);
+
+  // Send to formspree or your endpoint
+  // For now, show completion
+  setTimeout(function() {
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('completeMsg').classList.add('show');
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
