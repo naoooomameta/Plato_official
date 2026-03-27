@@ -837,7 +837,7 @@ body{
 
 <!-- Logo Bar -->
 <div class="logo-bar">
-  <a href="https://plato-humanities.com/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+  <a href="https://naoooomameta.github.io/Plato_official/lpquestionnaire/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
     <img src="images/logo.png" alt="プラトン">
     <div class="logo-text-wrap">
       <span class="logo-sub">文系の大学受験専門塾</span>
@@ -1088,7 +1088,7 @@ body{
 <div class="survey-container" id="surveyContainer">
 
   <!-- Back Link -->
-  <a href="https://plato-humanities.com/" class="back-to-top">← トップページに戻る</a>
+  <a href="javascript:void(0)" onclick="closeSurvey()" class="back-to-top">← 戻る</a>
 
   <!-- Header -->
   <div class="survey-header">
@@ -1338,6 +1338,11 @@ function openSurvey() {
   // Meta Pixel: Survey Start
   if(typeof fbq==='function') fbq('trackCustom', 'SurveyStart');
   updateUI();
+}
+
+function closeSurvey() {
+  document.getElementById('surveyOverlay').classList.remove('show');
+  document.body.style.overflow = '';
 }
 
 // Handler for text input (Q2) — collect up to 3 wishes
