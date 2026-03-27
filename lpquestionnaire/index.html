@@ -408,9 +408,20 @@ body{
   }
 }
 
+/* Back Link */
+.back-to-top{
+  display:flex;align-items:center;gap:4px;
+  padding:12px 20px 0;
+  background:#fff;
+  font-size:13px;font-weight:700;
+  color:#1a56db;text-decoration:none;
+  flex-shrink:0;
+}
+.back-to-top:active{opacity:0.6;}
+
 /* Survey Header */
 .survey-header{
-  padding:20px 20px 16px;
+  padding:12px 20px 16px;
   background:#fff;
   border-bottom:1px solid #f1f5f9;
   flex-shrink:0;
@@ -826,11 +837,13 @@ body{
 
 <!-- Logo Bar -->
 <div class="logo-bar">
-  <img src="images/logo.png" alt="プラトン">
-  <div class="logo-text-wrap">
-    <span class="logo-sub">文系の大学受験専門塾</span>
-    <span class="logo-name">プラトン</span>
-  </div>
+  <a href="https://plato-humanities.com/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+    <img src="images/logo.png" alt="プラトン">
+    <div class="logo-text-wrap">
+      <span class="logo-sub">文系の大学受験専門塾</span>
+      <span class="logo-name">プラトン</span>
+    </div>
+  </a>
 </div>
 
 <div class="stats-bar">
@@ -1073,6 +1086,9 @@ body{
      ════════════════════════════════════════ -->
 <div class="survey-overlay" id="surveyOverlay">
 <div class="survey-container" id="surveyContainer">
+
+  <!-- Back Link -->
+  <a href="https://plato-humanities.com/" class="back-to-top">← トップページに戻る</a>
 
   <!-- Header -->
   <div class="survey-header">
