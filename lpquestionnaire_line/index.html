@@ -1446,34 +1446,6 @@ function updateUI() {
 }
 
 function showComplete() {
-  // Hide all questions
-  document.querySelectorAll('.survey-question').forEach(q => q.classList.remove('active'));
-  // Hide footer
-  document.getElementById('surveyFooter').style.display = 'none';
-  // Update progress
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('progressText').textContent = '完了！';
-  document.getElementById('stepLabel').textContent = 'COMPLETE';
-
-  // Fill summary
-  document.getElementById('sumGrade').textContent = answers.grade || '—';
-  // Target: array of wishes
-  const tgt = answers.target || ['未定'];
-  const tgtArr = Array.isArray(tgt) ? tgt : [tgt];
-  document.getElementById('sumTarget').innerHTML = tgtArr.map((w, i) => {
-    const labels = ['①','②','③'];
-    return tgtArr.length > 1 ? '<span style="color:#94a3b8;font-size:11px;">' + labels[i] + '</span> ' + w : w;
-  }).join('<br>');
-  document.getElementById('sumDev').textContent = answers.deviation || '—';
-  const subs = answers.subjects || [];
-  document.getElementById('sumSubjects').textContent = Array.isArray(subs) ? subs.join('・') : subs || '—';
-
-  // Show complete screen
-  document.getElementById('completeScreen').classList.add('show');
-  document.getElementById('surveyBody').scrollTop = 0;
-
-
-
   // Send data to Google Sheets
   try {
     fetch('https://script.google.com/macros/s/AKfycbyXIuGWwUKv43hh4FkQAxYrBW0yR-f_p-7rE5UFEhdFnefuCP4XpO38FgLzOar4MYt7kw/exec', {
@@ -1490,8 +1462,18 @@ function showComplete() {
     });
   } catch(e) { console.log('Data send error:', e); }
 
-  // Confetti!
-  launchConfetti();
+  // Build query params for thanks page
+  const tgt = answers.target || [];
+  const tgtArr = Array.isArray(tgt) ? tgt : [tgt];
+  const subs = answers.subjects || [];
+  const subsArr = Array.isArray(subs) ? subs : [subs];
+  const params = new URLSearchParams({
+    grade: answers.grade || '',
+    target: tgtArr.join('|'),
+    deviation: answers.deviation || '',
+    subjects: subsArr.join(',')
+  });
+  window.location.href = 'thanks.html?' + params.toString();
 }
 
 function openLine() {
