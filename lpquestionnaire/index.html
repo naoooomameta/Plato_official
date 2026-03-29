@@ -1455,8 +1455,6 @@ function showComplete() {
   document.getElementById('completeScreen').classList.add('show');
   document.getElementById('surveyBody').scrollTop = 0;
 
-  // Meta Pixel: Survey Complete = Lead
-  if(typeof fbq==='function') fbq('track', 'Lead', {content_name: 'survey_complete'});
 
   // Send data to Google Sheets
   try {
@@ -1479,8 +1477,8 @@ function showComplete() {
 }
 
 function openLine() {
-  // Meta Pixel: LINE Click
-  if(typeof fbq==='function') fbq('trackCustom', 'LineAddFriend');
+  // Meta Pixel: Lead = LINE Click
+  if(typeof fbq==='function') fbq('track', 'Lead', {content_name: 'line_add'});
   window.open('https://line.me/ti/p/%40132hiyyh', '_blank');
 }
 
