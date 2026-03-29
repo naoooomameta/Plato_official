@@ -1255,7 +1255,7 @@ body{
         <div class="line-icon">
           <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 3C8.82 3 3 7.95 3 13.97c0 4.58 3.56 8.56 8.87 9.88.34.08.81.24.93.55.1.28.07.72.03 1l-.15.9c-.05.28-.21 1.1.97.6s6.43-3.79 8.78-6.49h0C24.68 18.04 29 16.22 29 13.97 29 7.95 23.18 3 16 3z" fill="#06c755"/><path d="M13.3 11.6h-.73a.24.24 0 00-.24.24v4.55c0 .13.11.24.24.24h.73c.13 0 .24-.11.24-.24v-4.55a.24.24 0 00-.24-.24zm5.63 0h-.73a.24.24 0 00-.24.24v2.7l-2.07-2.83a.24.24 0 00-.2-.11h-.73a.24.24 0 00-.24.24v4.55c0 .13.11.24.24.24h.73c.13 0 .24-.11.24-.24v-2.7l2.07 2.84c.04.06.11.1.19.1h.73c.13 0 .24-.11.24-.24v-4.55a.24.24 0 00-.24-.24zm-7.96 3.81h-1.8v-3.57a.24.24 0 00-.24-.24h-.73a.24.24 0 00-.24.24v4.55c0 .07.03.13.07.17a.24.24 0 00.17.07h2.77c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24zm11.32-2.84a.24.24 0 00.24-.24v-.73a.24.24 0 00-.24-.24H19.5a.24.24 0 00-.17.07.24.24 0 00-.07.17v4.55c0 .07.03.13.07.17a.24.24 0 00.17.07h2.77c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24h-1.8v-.76h1.8c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24h-1.8v-.76h1.8z" fill="#fff"/></svg>
         </div>
-        <div class="line-cta-title">LINE友だち追加で<br>診断結果を受け取る</div>
+        <div class="line-cta-title">LINE登録で<br>診断結果を受け取る</div>
         <div class="line-cta-desc">
           あなたの回答をもとに、プロの講師が<br>
           <strong style="color:#fff;">お子様専用の合格戦略ガイドブック</strong>を作成。<br>
@@ -1263,7 +1263,7 @@ body{
         </div>
         <div class="line-cta-highlight">📩 2日以内にお届けします</div>
         <button class="line-add-btn" onclick="openLine()">
-          LINE友だち追加で受け取る
+          LINE登録して診断結果を受け取る
         </button>
         <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:10px;">※ 診断結果はLINEでのみお届けしています</div>
       </div>
@@ -1455,6 +1455,13 @@ function showComplete() {
   document.getElementById('completeScreen').classList.add('show');
   document.getElementById('surveyBody').scrollTop = 0;
 
+  // Confetti!
+  launchConfetti();
+}
+
+function openLine() {
+  // Meta Pixel: Lead = LINE Click
+  if(typeof fbq==='function') fbq('track', 'Lead', {content_name: 'line_add'});
 
   // Send data to Google Sheets
   try {
@@ -1472,14 +1479,9 @@ function showComplete() {
     });
   } catch(e) { console.log('Data send error:', e); }
 
-  // Confetti!
-  launchConfetti();
-}
-
-function openLine() {
-  // Meta Pixel: Lead = LINE Click
-  if(typeof fbq==='function') fbq('track', 'Lead', {content_name: 'line_add'});
+  // Open LINE in new tab + redirect to thanks page
   window.open('https://line.me/ti/p/%40132hiyyh', '_blank');
+  window.location.href = 'thanks.html';
 }
 
 /* ═══════════════════════════════════════
