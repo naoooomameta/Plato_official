@@ -1436,11 +1436,19 @@ function updateUI() {
 
   // Last step button text & style
   if (currentStep === TOTAL_STEPS) {
-    btn.textContent = 'LINE登録して回答を送信 →';
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:6px;"><path d="M16 3C8.82 3 3 7.95 3 13.97c0 4.58 3.56 8.56 8.87 9.88.34.08.81.24.93.55.1.28.07.72.03 1l-.15.9c-.05.28-.21 1.1.97.6s6.43-3.79 8.78-6.49h0C24.68 18.04 29 16.22 29 13.97 29 7.95 23.18 3 16 3z" fill="#fff"/><path d="M13.3 11.6h-.73a.24.24 0 00-.24.24v4.55c0 .13.11.24.24.24h.73c.13 0 .24-.11.24-.24v-4.55a.24.24 0 00-.24-.24zm5.63 0h-.73a.24.24 0 00-.24.24v2.7l-2.07-2.83a.24.24 0 00-.2-.11h-.73a.24.24 0 00-.24.24v4.55c0 .13.11.24.24.24h.73c.13 0 .24-.11.24-.24v-2.7l2.07 2.84c.04.06.11.1.19.1h.73c.13 0 .24-.11.24-.24v-4.55a.24.24 0 00-.24-.24zm-7.96 3.81h-1.8v-3.57a.24.24 0 00-.24-.24h-.73a.24.24 0 00-.24.24v4.55c0 .07.03.13.07.17a.24.24 0 00.17.07h2.77c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24zm11.32-2.84a.24.24 0 00.24-.24v-.73a.24.24 0 00-.24-.24H19.5a.24.24 0 00-.17.07.24.24 0 00-.07.17v4.55c0 .07.03.13.07.17a.24.24 0 00.17.07h2.77c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24h-1.8v-.76h1.8c.13 0 .24-.11.24-.24v-.73a.24.24 0 00-.24-.24h-1.8v-.76h1.8z" fill="#06c755"/></svg>LINE登録して回答を送信';
     btn.style.background = '#06c755';
+    btn.style.color = '#fff';
+    btn.style.boxShadow = '0 4px 15px rgba(6,199,85,0.4)';
+    btn.style.fontSize = '15px';
+    btn.style.fontWeight = '900';
   } else {
     btn.textContent = '次へ →';
     btn.style.background = '';
+    btn.style.color = '';
+    btn.style.boxShadow = '';
+    btn.style.fontSize = '';
+    btn.style.fontWeight = '';
   }
 
   // Scroll body to top
