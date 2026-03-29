@@ -1384,7 +1384,7 @@ function syncSubjects() {
 
 function nextStep() {
   if (currentStep >= TOTAL_STEPS) {
-    showComplete();
+    openLine();
     return;
   }
   currentStep++;
@@ -1434,8 +1434,14 @@ function updateUI() {
     }
   }
 
-  // Last step button text
-  btn.textContent = currentStep === TOTAL_STEPS ? '回答を送信する →' : '次へ →';
+  // Last step button text & style
+  if (currentStep === TOTAL_STEPS) {
+    btn.textContent = 'LINE登録して回答を送信 →';
+    btn.style.background = '#06c755';
+  } else {
+    btn.textContent = '次へ →';
+    btn.style.background = '';
+  }
 
   // Scroll body to top
   document.getElementById('surveyBody').scrollTop = 0;
