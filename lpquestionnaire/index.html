@@ -1477,24 +1477,26 @@ function openLine() {
   // Meta Pixel: Lead = LINE Click
   if(typeof fbq==='function') fbq('track', 'Lead', {content_name: 'line_add'});
 
-  // Send data to Google Sheets (sendBeacon ensures delivery even on page exit)
-  try {
-    var data = JSON.stringify({
+  // Send data to Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbyXIuGWwUKv43hh4FkQAxYrBW0yR-f_p-7rE5UFEhdFnefuCP4XpO38FgLzOar4MYt7kw/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    keepalive: true,
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
       grade: answers.grade || '',
       target: answers.target || [],
       deviation: answers.deviation || '',
       subjects: answers.subjects || [],
       source: 'ad'
-    });
-    navigator.sendBeacon(
-      'https://script.google.com/macros/s/AKfycbyXIuGWwUKv43hh4FkQAxYrBW0yR-f_p-7rE5UFEhdFnefuCP4XpO38FgLzOar4MYt7kw/exec',
-      new Blob([data], {type: 'application/json'})
-    );
-  } catch(e) { console.log('Data send error:', e); }
+    })
+  }).catch(function(e) { console.log('Data send error:', e); });
 
-  // Open LINE in new tab + redirect to thanks page
+  // Open LINE in new tab, then redirect to thanks after short delay
   window.open('https://line.me/ti/p/%40132hiyyh', '_blank');
-  window.location.href = 'thanks.html';
+  setTimeout(function() {
+    window.location.href = 'thanks.html';
+  }, 800);
 }
 
 /* ═══════════════════════════════════════
