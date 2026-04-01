@@ -2204,34 +2204,22 @@ function switchTab(tabId, btn) {
     params.append('university', document.getElementById('university').value);
     params.append('message',    document.getElementById('message').value);
 
+    /* GASへ送信（レスポンス待ちなし・バックグラウンド送信） */
     fetch(GAS_URL, {
       method: 'POST',
       body: params
-    }).then(function(res) {
-      return res.text();
-    }).then(function(text) {
-      /* GASからのレスポンスをパース試行 */
-      var data;
-      try { data = JSON.parse(text); } catch(e) { data = { ok: true }; }
-      form.reset();
-      window.__contactName  = savedName;
-      window.__contactEmail = savedEmail;
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
-      lucide.createIcons();
-      openTyModal();
     }).catch(function(err) {
       console.error('Contact form error:', err);
-      /* ネットワークエラーでも送信自体は成功している可能性があるため、
-         サンクスモーダルを表示する */
-      form.reset();
-      window.__contactName  = savedName;
-      window.__contactEmail = savedEmail;
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
-      lucide.createIcons();
-      openTyModal();
     });
+
+    /* 送信直後に完了モーダルを表示（レスポンス待ち不要） */
+    form.reset();
+    window.__contactName  = savedName;
+    window.__contactEmail = savedEmail;
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
+    lucide.createIcons();
+    openTyModal();
   });
 
   var _tyTimer = null;
@@ -2402,14 +2390,14 @@ root.innerHTML = ''
 + '@media(max-width:640px){'
 + '.bk-cal-range{font-size:16px}.bk-cal-table{border-spacing:6px 6px}'
 + '.bk-cal-slot{height:36px}.bk-cal-dot{width:24px;height:24px}'
-+ '.bk-modal{padding:8px;width:100%;height:100vh;box-sizing:border-box}'
-+ '.bk-modal .bk-dialog{width:98%!important;max-width:99%!important;margin:0 auto;border-radius:16px;padding:20px 20px!important}'
++ '.bk-modal{padding:12px;width:100%;height:auto;min-height:100vh;box-sizing:border-box;align-items:flex-start;padding-top:16px}'
++ '.bk-modal .bk-dialog{width:94%!important;max-width:440px!important;margin:0 auto;border-radius:16px;padding:16px 16px!important;max-height:calc(100dvh - 40px)}'
 + '.bk-modal .bk-title{font-size:16px}'
 + '#bk-modalB .bk-title{font-size:15px}'
-+ '.bk-modal .bk-header{padding:14px 16px}'
-+ '.bk-modal .bk-body{padding:16px;font-size:15px;line-height:1.7}'
-+ '.bk-modal .bk-body li{font-size:15px;line-height:1.7}'
-+ '.bk-modal .bk-body p{font-size:15px;line-height:1.7}'
++ '.bk-modal .bk-header{padding:10px 16px}'
++ '.bk-modal .bk-body{padding:10px 12px;font-size:14px;line-height:1.6}'
++ '.bk-modal .bk-body li{font-size:14px;line-height:1.6}'
++ '.bk-modal .bk-body p{font-size:14px;line-height:1.6}'
 + '.bk-form{max-width:100%}'
 + '#bk-modalA .bk-a-title{font-size:clamp(15px,4.2vw,18px)!important;white-space:nowrap;gap:1.2vw}#bk-modalA .bk-a-title span{font-size:clamp(13px,3.6vw,16px)!important;white-space:nowrap}'
 + '.bk-avatar{width:46px;height:46px}'
@@ -2431,9 +2419,9 @@ root.innerHTML = ''
 + '#bk-modalC .bk-body{padding:10px}'
 + '#bk-modalC .bk-thx-card{padding:10px 12px}'
 + '#bk-modalA .bk-a-grid{gap:12px;align-content:start}'
-+ '#bk-modalA .bk-a-desc{margin:8px 0 6px;font-size:15px!important;line-height:1.8!important}'
-+ '#bk-modalA .bk-info-list{margin:6px 0 10px;padding-left:18px;line-height:1.9!important}'
-+ '#bk-modalA .bk-info-list li{margin:5px 0}'
++ '#bk-modalA .bk-a-desc{margin:4px 0 4px;font-size:12px!important;line-height:1.6!important}'
++ '#bk-modalA .bk-info-list{margin:4px 0 6px;padding-left:16px;line-height:1.6!important;font-size:12px!important}'
++ '#bk-modalA .bk-info-list li{margin:3px 0}'
 + '#bk-modalA .bk-a-slots .bk-slot-wrap{padding-top:4px}'
 + '#bk-modalA .bk-slot-list{gap:10px}'
 + '#bk-modalA .bk-slot-item{height:48px}'
