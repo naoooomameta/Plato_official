@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>合格戦略プログラム | プラトン 文系の大学受験専門塾</title>
+<title>合格思考トレーニング | プラトン 文系の大学受験専門塾</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & BASE ===== */
@@ -13,18 +13,15 @@
   --pale:   #f1eaec;
   --mid:    #a05070;
   --light:  #f8f0f2;
+  --gold:   #c9a060;
   --cream:  #fdfaf8;
   --white:  #ffffff;
   --txt:    #2a0e18;
   --txt2:   #6a4050;
+  --txt3:   #b08090;
   --bdr:    #e0cdd2;
   --sh:     0 3px 16px rgba(111,45,67,.10);
   --sh2:    0 8px 32px rgba(111,45,67,.18);
-  /* コース固有カラー：紫系 */
-  --course: #5a3068;
-  --course2:#8a60a0;
-  --pale-c: #f0eaf5;
-  --bdr-c:  #d8c8e8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -38,15 +35,16 @@ a{text-decoration:none;color:inherit;}
 
 /* ===== TOP BAR ===== */
 .topbar{
-  background:#2a1035;color:rgba(255,255,255,.75);
+  background:var(--dark);color:rgba(255,255,255,.75);
   text-align:center;padding:8px 16px;font-size:.75rem;
   letter-spacing:.08em;font-weight:500;
 }
+.topbar a{color:#e8b0a0;}
 
 /* ===== HEADER ===== */
 header{
   background:#fff;position:sticky;top:0;z-index:200;
-  border-bottom:4px solid var(--course);
+  border-bottom:4px solid var(--red);
   box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 .hd-top{
@@ -56,165 +54,304 @@ header{
 .hd-logo{display:flex;align-items:center;gap:10px;}
 .hd-logo-img{
   width:52px;height:52px;border-radius:50%;
-  border:2.5px solid var(--course);overflow:hidden;background:transparent;flex-shrink:0;
+  border:2.5px solid var(--red);overflow:hidden;background:transparent;
+  flex-shrink:0;
 }
 .hd-logo-img img{width:100%;height:100%;object-fit:contain;}
-.hd-logo-name{font-family:"Kaisei Opti",serif;font-size:1.5rem;font-weight:700;color:var(--course);display:block;letter-spacing:.04em;}
-.hd-logo-sub{font-size:.68rem;color:var(--course2);letter-spacing:.1em;margin-top:1px;}
-nav{background:var(--course);}
+.hd-logo-name{
+  font-family:"Kaisei Opti",serif;font-size:1.5rem;
+  font-weight:700;color:var(--red);display:block;letter-spacing:.04em;
+}
+.hd-logo-sub{font-size:.68rem;color:var(--mid);letter-spacing:.1em;margin-top:1px;}
+.hd-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+nav{background:var(--red);}
 .nav-ul{display:flex;list-style:none;overflow-x:auto;white-space:nowrap;}
-.nav-ul li a{display:block;padding:11px 16px;color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.06em;transition:background .2s;}
+.nav-ul li a{
+  display:block;padding:11px 16px;color:#fff;
+  font-size:.8rem;font-weight:700;letter-spacing:.06em;
+  transition:background .2s;
+}
 .nav-ul li a:hover{background:rgba(255,255,255,.15);}
-.nav-ul li a.active{background:rgba(255,255,255,.2);}
-.nav-ul li a.hl{background:#fff;color:var(--course);margin:5px 6px;border-radius:5px;padding:6px 16px;}
-.nav-ul li a.hl:hover{background:var(--pale-c);}
+.nav-ul li a.hl{
+  background:#fff;color:var(--red);
+  margin:5px 6px;border-radius:5px;padding:6px 16px;
+}
+.nav-ul li a.hl:hover{background:var(--pale);}
 
 /* ===== PAGE HERO ===== */
 .page-hero{
-  background:linear-gradient(160deg,var(--pale-c) 0%,#faf5ff 40%,#f5f0fa 100%);
+  background:linear-gradient(160deg,var(--pale) 0%,#fff5f7 40%,#f8f0f5 100%);
   padding:60px 4vw 56px;position:relative;overflow:hidden;
 }
 .page-hero::after{
   content:"";position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(90,48,104,.07) 1.5px,transparent 1.5px);
+  background-image:radial-gradient(circle,rgba(111,45,67,.07) 1.5px,transparent 1.5px);
   background-size:28px 28px;pointer-events:none;
 }
 .page-hero-inner{max-width:840px;margin:0 auto;position:relative;z-index:2;}
 .page-hero .eyebrow{
-  display:inline-block;background:#fff;color:var(--course);
+  display:inline-block;
+  background:#fff;color:var(--red);
   font-size:.72rem;font-weight:700;letter-spacing:.15em;
-  padding:5px 16px;border-radius:50px;margin-bottom:.8rem;border:2px solid var(--course);
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.8rem;border:2px solid var(--red);
 }
 .page-hero h1{
-  font-family:"Kaisei Opti",serif;font-size:clamp(1.8rem,4vw,3rem);
-  font-weight:700;color:var(--txt);line-height:1.4;margin-bottom:1rem;
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:700;color:var(--txt);
+  line-height:1.4;margin-bottom:1rem;
 }
-.page-hero h1 em{font-style:normal;color:var(--course);}
-.page-hero-sub{font-size:.95rem;color:var(--txt2);line-height:1.9;max-width:640px;margin-bottom:1.8rem;}
-.target-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:linear-gradient(135deg,var(--course),var(--course2));
-  color:#fff;padding:8px 20px;border-radius:50px;
-  font-size:.82rem;font-weight:700;margin-bottom:1.2rem;
+.page-hero h1 em{
+  font-style:normal;color:var(--red);
+}
+.page-hero-sub{
+  font-size:.95rem;color:var(--txt2);line-height:1.9;
+  max-width:640px;margin-bottom:1.8rem;
 }
 
 /* ===== BUTTONS ===== */
 .btn-r{
-  background:var(--course);color:#fff;font-weight:700;font-size:.9rem;
+  background:var(--red);color:#fff;
+  font-weight:700;font-size:.9rem;
   padding:14px 28px;border-radius:50px;
-  box-shadow:0 5px 18px rgba(90,48,104,.32);
+  box-shadow:0 5px 18px rgba(111,45,67,.32);
   transition:all .3s;display:inline-flex;align-items:center;gap:7px;
   border:none;cursor:pointer;font-family:inherit;
 }
-.btn-r:hover{background:#3d1050;transform:translateY(-2px);box-shadow:0 8px 24px rgba(90,48,104,.4);}
+.btn-r:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
 .btn-w{
-  background:#fff;color:var(--course);font-weight:700;font-size:.9rem;
-  padding:13px 24px;border-radius:50px;border:2px solid var(--course);
+  background:#fff;color:var(--red);
+  font-weight:700;font-size:.9rem;
+  padding:13px 24px;border-radius:50px;
+  border:2px solid var(--red);
   transition:all .3s;display:inline-flex;align-items:center;gap:7px;
 }
-.btn-w:hover{background:var(--pale-c);transform:translateY(-2px);}
+.btn-w:hover{background:var(--pale);transform:translateY(-2px);}
 
 /* ===== SECTION COMMON ===== */
 section{padding:64px 4vw;}
 .eyebrow{
-  display:inline-block;background:var(--pale-c);color:var(--course);
+  display:inline-block;
+  background:var(--pale);color:var(--red);
   font-size:.72rem;font-weight:700;letter-spacing:.15em;
-  padding:5px 16px;border-radius:50px;margin-bottom:.7rem;border:1px solid var(--bdr-c);
+  padding:5px 16px;border-radius:50px;
+  margin-bottom:.7rem;border:1px solid var(--red);
 }
-.sec-ttl{font-family:"Kaisei Opti",serif;font-size:clamp(1.4rem,2.8vw,2.1rem);font-weight:700;color:var(--txt);line-height:1.4;}
-.sec-ttl .ac{color:var(--course);}
+.sec-ttl{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.4rem,2.8vw,2.1rem);
+  font-weight:700;color:var(--txt);line-height:1.4;
+}
+.sec-ttl .ac{color:var(--red);}
 .sec-sub{font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:.6rem;}
 .sec-head{margin-bottom:2.5rem;}
 
-/* ===== PROBLEM ===== */
+/* ===== PROBLEM SECTION ===== */
 #problem{background:#fff;}
-.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:860px;margin:0 auto;align-items:start;}
-.problem-card{background:var(--pale-c);border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);}
-.problem-card h3{font-family:"Kaisei Opti",serif;font-size:1.05rem;color:var(--txt);margin-bottom:1rem;line-height:1.5;}
-.problem-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.problem-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;max-width:860px;margin:0 auto;align-items:start;
+}
+.problem-card{
+  background:var(--pale);border-radius:16px;padding:1.8rem;
+  border:2px solid var(--bdr);
+}
+.problem-card h3{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;
+  color:var(--txt);margin-bottom:1rem;line-height:1.5;
+}
+.problem-list{
+  list-style:none;display:flex;flex-direction:column;gap:8px;
+}
 .problem-list li{
   display:flex;align-items:flex-start;gap:8px;
   font-size:.85rem;color:var(--txt2);line-height:1.6;
   padding:8px 10px;background:#fff;border-radius:8px;
 }
-.problem-list li::before{content:"×";color:var(--course);font-weight:900;flex-shrink:0;line-height:1.6;}
-.solution-card{background:linear-gradient(135deg,#2a1035,var(--course));border-radius:16px;padding:1.8rem;color:#fff;}
-.solution-card h3{font-family:"Kaisei Opti",serif;font-size:1.05rem;color:#fff;margin-bottom:1rem;line-height:1.5;}
-.solution-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.solution-list li{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:rgba(255,255,255,.9);line-height:1.6;}
-.solution-list li::before{content:"✓";color:#d4a8f0;font-weight:900;flex-shrink:0;line-height:1.6;}
-
-/* ===== ROADMAP ===== */
-#roadmap{background:var(--cream);}
-.roadmap-box{
-  max-width:860px;margin:0 auto;
-  background:#fff;border-radius:20px;padding:2.5rem;border:2px solid var(--bdr-c);
+.problem-list li::before{
+  content:"×";color:var(--red);font-weight:900;
+  flex-shrink:0;line-height:1.6;
 }
-.roadmap-box h3{font-family:"Kaisei Opti",serif;font-size:1.2rem;color:var(--txt);margin-bottom:1.2rem;}
-.roadmap-box p{font-size:.9rem;color:var(--txt2);line-height:1.95;margin-bottom:.8rem;}
-.roadmap-hl{
-  background:var(--pale-c);border-radius:12px;padding:1.2rem 1.5rem;
-  border-left:4px solid var(--course);font-size:.9rem;color:var(--txt);line-height:1.9;margin:1.2rem 0;
+.solution-card{
+  background:linear-gradient(135deg,var(--dark),var(--red));
+  border-radius:16px;padding:1.8rem;color:#fff;
+}
+.solution-card h3{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;
+  color:#fff;margin-bottom:1rem;line-height:1.5;
+}
+.solution-list{
+  list-style:none;display:flex;flex-direction:column;gap:8px;
+}
+.solution-list li{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:.85rem;color:rgba(255,255,255,.9);line-height:1.6;
+}
+.solution-list li::before{
+  content:"✓";color:#e8b0a0;font-weight:900;
+  flex-shrink:0;line-height:1.6;
 }
 
-/* ===== FEATURES ===== */
-#features{background:#fff;}
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;max-width:960px;margin:0 auto;}
-.feat-card{background:var(--cream);border-radius:16px;padding:1.8rem 1.6rem;border:2px solid var(--bdr-c);transition:all .3s;}
-.feat-card:hover{border-color:var(--course);transform:translateY(-4px);box-shadow:0 8px 32px rgba(90,48,104,.18);}
-.feat-icon{margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
-.feat-icon svg{width:30px;height:30px;stroke-width:1.8;color:var(--course);}
-.feat-card h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.6rem;line-height:1.4;}
-.feat-card p{font-size:.83rem;color:var(--txt2);line-height:1.85;}
+/* ===== WHAT IS ===== */
+#what-is{background:var(--cream);}
+.what-box{
+  max-width:780px;margin:0 auto;
+  background:#fff;border-radius:20px;
+  padding:2.5rem;border:2px solid var(--bdr);
+}
+.what-box h3{
+  font-family:"Kaisei Opti",serif;font-size:1.25rem;
+  color:var(--txt);margin-bottom:1.2rem;
+}
+.what-box p{
+  font-size:.9rem;color:var(--txt2);line-height:1.95;margin-bottom:1rem;
+}
+.what-highlight{
+  background:var(--pale);border-radius:12px;
+  padding:1.2rem 1.5rem;border-left:4px solid var(--red);
+  font-size:.9rem;color:var(--txt);line-height:1.9;
+  margin:1.2rem 0;
+}
 
-/* ===== CYCLE ===== */
-#cycle{background:var(--cream);}
-.cycle-container{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;}
+/* ===== CYCLE SECTION ===== */
+#cycle{background:#fff;}
+.cycle-container{
+  max-width:900px;margin:0 auto;
+  display:flex;flex-direction:column;gap:1rem;
+}
 .cycle-step{
-  background:#fff;border-radius:16px;border:2px solid var(--bdr-c);
-  display:grid;grid-template-columns:80px 1fr;overflow:hidden;transition:all .3s;
+  background:var(--cream);border-radius:16px;
+  border:2px solid var(--bdr);
+  display:grid;grid-template-columns:80px 1fr;
+  overflow:hidden;transition:all .3s;
 }
-.cycle-step:hover{border-color:var(--course);box-shadow:0 8px 32px rgba(90,48,104,.18);}
+.cycle-step:hover{border-color:var(--red);box-shadow:var(--sh2);}
 .cycle-num{
-  background:linear-gradient(135deg,var(--course),var(--course2));
-  color:#fff;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:4px;padding:1.2rem .8rem;
+  background:linear-gradient(135deg,var(--red),var(--mid));
+  color:#fff;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;padding:1.2rem .8rem;
 }
-.cycle-num .num{font-family:"Kaisei Opti",serif;font-size:1.6rem;font-weight:700;line-height:1;}
-.cycle-num .icon{line-height:1;display:flex;align-items:center;justify-content:center;}
-.cycle-num .icon svg{width:18px;height:18px;stroke-width:2;color:rgba(255,255,255,.9);}
+.cycle-num .num{
+  font-family:"Kaisei Opti",serif;font-size:1.6rem;
+  font-weight:700;line-height:1;
+}
+.cycle-num .icon{display:flex;align-items:center;justify-content:center;}
 .cycle-body{padding:1.3rem 1.5rem;}
-.cycle-body h4{font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;}
-.cycle-body p{font-size:.84rem;color:var(--txt2);line-height:1.85;}
-.cycle-arrow{text-align:center;font-size:1.4rem;color:var(--course);line-height:1;padding:.2rem 0;}
+.cycle-body h4{
+  font-size:1rem;font-weight:700;
+  color:var(--txt);margin-bottom:.5rem;
+}
+.cycle-body p{
+  font-size:.84rem;color:var(--txt2);line-height:1.85;
+}
+.cycle-arrow{
+  text-align:center;font-size:1.4rem;color:var(--red);
+  line-height:1;padding:.2rem 0;
+}
 
-/* ===== CTA ===== */
+/* ===== MERIT SECTION ===== */
+#merit{background:var(--cream);}
+.merit-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.2rem;max-width:900px;margin:0 auto;
+}
+.merit-card{
+  background:#fff;border-radius:16px;
+  padding:1.6rem 1.4rem;
+  border:2px solid var(--bdr);
+  transition:all .3s;
+}
+.merit-card:hover{border-color:var(--red);transform:translateY(-4px);box-shadow:var(--sh2);}
+.merit-icon{margin-bottom:.7rem;display:flex;justify-content:center;}
+.merit-card h4{
+  font-size:.95rem;font-weight:700;
+  color:var(--txt);margin-bottom:.5rem;line-height:1.4;
+}
+.merit-card p{
+  font-size:.82rem;color:var(--txt2);line-height:1.85;
+}
+
+/* ===== ONLINE SECTION ===== */
+#online{background:#fff;}
+.online-inner{
+  max-width:780px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;align-items:center;
+}
+.online-text h3{
+  font-family:"Kaisei Opti",serif;font-size:1.3rem;
+  color:var(--txt);margin-bottom:1rem;line-height:1.5;
+}
+.online-text p{
+  font-size:.88rem;color:var(--txt2);line-height:1.95;margin-bottom:1rem;
+}
+.online-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--pale);border:2px solid var(--red);
+  border-radius:50px;padding:6px 16px;
+  font-size:.82rem;font-weight:700;color:var(--red);
+  margin-bottom:1rem;
+}
+.online-visual{
+  background:linear-gradient(135deg,var(--pale),var(--light));
+  border-radius:20px;padding:2rem;text-align:center;
+  border:2px solid var(--bdr);
+}
+.online-visual .big-icon{margin-bottom:1rem;display:flex;justify-content:center;}
+.online-visual p{font-size:.85rem;color:var(--txt2);line-height:1.8;}
+
+/* ===== CTA SECTION ===== */
 #cta{background:var(--cream);position:relative;}
 #cta::before{
   content:"";position:absolute;top:0;left:0;right:0;height:5px;
-  background:linear-gradient(90deg,var(--course),var(--course2),var(--course));
+  background:linear-gradient(90deg,var(--red),var(--mid),var(--red));
 }
-.cta-box{max-width:700px;margin:0 auto;text-align:center;}
-.cta-box h2{font-family:"Kaisei Opti",serif;font-size:clamp(1.3rem,2.5vw,2rem);color:var(--txt);margin-bottom:1rem;line-height:1.5;}
-.cta-box p{font-size:.9rem;color:var(--txt2);line-height:1.9;margin-bottom:1rem;}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:2rem;}
+.cta-box{
+  max-width:700px;margin:0 auto;text-align:center;
+}
+.cta-box h2{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.3rem,2.5vw,2rem);
+  color:var(--txt);margin-bottom:1rem;line-height:1.5;
+}
+.cta-box p{
+  font-size:.9rem;color:var(--txt2);line-height:1.9;margin-bottom:2rem;
+}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
 
 /* ===== FOOTER ===== */
-footer{background:#2a1035;color:rgba(255,255,255,.65);text-align:center;padding:2rem 4vw;font-size:.78rem;line-height:1.9;}
-footer a{color:#c8a0e8;}
+footer{
+  background:var(--dark);color:rgba(255,255,255,.65);
+  text-align:center;padding:2rem 4vw;font-size:.78rem;
+  line-height:1.9;
+}
+footer a{color:#e8b0a0;}
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:640px){
+@media(max-width:768px){
   .problem-grid{grid-template-columns:1fr;}
+  .online-inner{grid-template-columns:1fr;}
   .cycle-step{grid-template-columns:64px 1fr;}
-  #pricing [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;}
-  #pricing [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+  .ttg-2col{grid-template-columns:1fr!important;}
+  .ttg-3col{grid-template-columns:1fr!important;}
+  .sys-3col{grid-template-columns:1fr!important;}
+  .sys-info-panel{grid-template-columns:1fr 1fr!important;}
+}
+@media(max-width:480px){
+  .ttg-3col{grid-template-columns:1fr!important;}
+  section{padding:40px 4vw;}
 }
 </style>
 </head>
+</head>
 <body>
 
-<div class="topbar">全国対応・オンライン指導 | 文系の大学受験専門塾 プラトン</div>
+<div class="topbar">
+  全国対応・オンライン指導 | 文系の大学受験専門塾 プラトン
+</div>
 
 <header>
   <div class="hd-top">
@@ -227,7 +364,7 @@ footer a{color:#c8a0e8;}
         <span class="hd-logo-sub">文系の大学受験専門塾</span>
       </div>
     </a>
-    <div>
+    <div class="hd-right">
       <a href="index.html#contact" class="btn-r" style="font-size:.8rem;padding:10px 20px;">▶ 無料相談はこちら</a>
     </div>
   </div>
@@ -235,8 +372,8 @@ footer a{color:#c8a0e8;}
     <ul class="nav-ul">
       <li><a href="index.html">トップ</a></li>
       <li><a href="index.html#features">指導システム</a></li>
-      <li><a href="index.html#courses" class="active">コース紹介</a></li>
-      <li><a href="goukaku-shiko-training.html">合格思考トレーニング</a></li>
+      <li><a href="index.html#courses">コース紹介</a></li>
+      <li><a href="goukaku-shiko-training.html" style="background:rgba(255,255,255,.15);">合格思考トレーニング</a></li>
       <li><a href="mainichi-kadai.html">毎日課題</a></li>
       <li><a href="index.html#staff">講師紹介</a></li>
       <li><a href="index.html#voices">合格者の声</a></li>
@@ -249,238 +386,154 @@ footer a{color:#c8a0e8;}
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="target-badge"><i data-lucide="trophy"></i> 高校1年生〜高校3年生 対象</div>
-    <span class="eyebrow">Winning Strategy Program</span>
-    <h1>合格戦略<em>プログラム</em></h1>
-    <p class="page-hero-sub">志望校合格を目指す受験生のためのプログラムです。志望校から逆算した合格ロードマップを作成し、受験本番まで講師が伴走しながら指導を行います。</p>
+    <span class="eyebrow">Thinking Training</span>
+    <h1>合格<em>思考トレーニング</em></h1>
+    <p class="page-hero-sub">「定性的な力」を鍛える。自ら考え、自ら答えを導き出す力こそが、MARCH以上の合格を掴む鍵です。</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
-      <a href="index.html#courses" class="btn-w">他のコースを見る</a>
+      <a href="mainichi-kadai.html" class="btn-w">毎日課題について見る</a>
     </div>
   </div>
 </div>
 
-<!-- ===== PROBLEM ===== -->
-<section id="problem">
+<!-- ===== 合格思考トレーニング ===== -->
+<section id="thinking-training" style="background:#fff;">
   <div class="sec-head" style="text-align:center;">
-    <span class="eyebrow">The Problem</span>
-    <h2 class="sec-ttl">こんな<span class="ac">お悩み</span>はありませんか？</h2>
-    <p class="sec-sub">受験まで時間が限られているからこそ、効率的な戦略と日々の積み重ねが合否を決めます。</p>
+    <span class="eyebrow">Thinking Training</span>
+    <h2 class="sec-ttl">合格思考<span class="ac">トレーニング</span></h2>
+    <p class="sec-sub">数字だけを追いかけていては合格できない。受験生に必要な「定性的な力」を鍛えます。</p>
   </div>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <h3>受験生のよくある悩み</h3>
-      <ul class="problem-list">
-        <li>何をどの順番で勉強すればいいか分からない</li>
-        <li>模試の結果をどう活かせばいいか分からない</li>
-        <li>勉強はしているのに成績が上がらない</li>
-        <li>受験まで残り時間が少なく焦っている</li>
-        <li>志望校のレベルに達しているか不安</li>
-        <li>最後まで学習のモチベーションを維持できるか不安</li>
-      </ul>
+
+  <!-- 定量 vs 定性の問題提起 -->
+  <div style="max-width:780px;margin:0 auto 2.5rem;">
+    <div style="background:var(--cream);border-radius:18px;padding:2rem;border:2px solid var(--bdr);">
+      <h3 style="font-family:'Kaisei Opti',serif;font-size:1.15rem;color:var(--txt);margin-bottom:1.2rem;line-height:1.5;">「定量」だけを追いかける受験生が陥る落とし穴</h3>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.95;margin-bottom:1rem;">多くの受験生は、「いつまでに参考書ルートを終わらせなきゃいけない」「今は偏差値がこれくらいだ」「英単語を何個覚えた」というように、<strong style="color:var(--red);">定量的な数字ばかりを追いかけがち</strong>です。</p>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.95;margin-bottom:1rem;">もちろん、定量的な目標管理は大切です。しかし、大学受験で合格を掴むためには、それだけでは足りません。</p>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.95;"><strong style="color:var(--txt);">定性的な部分</strong>――つまり受験生自身の<strong style="color:var(--red);">主体性や能動性</strong>が極めて重要です。</p>
     </div>
-    <div>
-      <div style="background:#fff;border-radius:16px;padding:1.8rem;border:2px solid var(--bdr-c);margin-bottom:1rem;">
-        <h3 style="font-family:'Kaisei Opti',serif;font-size:1.05rem;color:var(--txt);margin-bottom:1rem;">合否を分けるのは「戦略」と「継続」</h3>
-        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:.8rem;">受験において「どの参考書を使うか」よりも<strong style="color:var(--course);">「何をいつまでに、どの順番で仕上げるか」</strong>の戦略が重要です。</p>
-        <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;">志望校から逆算した戦略と、それを毎日実行し続ける仕組みが揃ったとき、成績は大きく変わります。</p>
+  </div>
+
+  <!-- 2つの力 -->
+  <div style="max-width:780px;margin:0 auto 2.5rem;">
+    <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1.2rem;text-align:center;">合格に不可欠な<span style="color:var(--red);">2つの力</span></h3>
+    <div class="ttg-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+      <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:2rem 1.5rem;color:#fff;text-align:center;">
+        <div style="margin-bottom:.6rem;display:flex;justify-content:center;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.16z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.16z"/></svg>
+        </div>
+        <h4 style="font-size:1.05rem;font-weight:700;margin-bottom:.7rem;">1. 自ら考える力</h4>
+        <p style="font-size:.84rem;line-height:1.85;opacity:.92;">与えられた知識をただ暗記するのではなく、「なぜそうなるのか」「この問題はどうアプローチすべきか」を自分の頭で考え抜く力です。この力がなければ、応用問題や初見の問題に太刀打ちできません。</p>
       </div>
-      <div class="solution-card">
-        <h3>プラトンの解決策</h3>
-        <ul class="solution-list">
-          <li>志望校から逆算した合格ロードマップを作成</li>
-          <li>毎日課題で日々の学習を管理・確認</li>
-          <li>確認テスト・実力診断で学力を定期チェック</li>
-          <li>受験本番まで講師が伴走</li>
+      <div style="background:linear-gradient(135deg,var(--dark),var(--red));border-radius:16px;padding:2rem 1.5rem;color:#fff;text-align:center;">
+        <div style="margin-bottom:.6rem;display:flex;justify-content:center;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+        </div>
+        <h4 style="font-size:1.05rem;font-weight:700;margin-bottom:.7rem;">2. 自ら答えを導き出す力</h4>
+        <p style="font-size:.84rem;line-height:1.85;opacity:.92;">正解が用意されていない問いに対しても、自分なりの根拠を持って答えを出す力です。小論文や記述問題はもちろん、選択式の問題でも「なぜその選択肢が正しいのか」を説明できる力が求められます。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 強調メッセージ -->
+  <div style="max-width:780px;margin:0 auto 2rem;">
+    <div style="background:var(--pale);border-radius:14px;padding:1.6rem 1.8rem;border-left:5px solid var(--red);">
+      <p style="font-size:.95rem;color:var(--txt);line-height:1.9;font-weight:500;"><strong>この2つの力がないと、まずMARCH以上の大学に合格することは不可能</strong>だと思ってください。</p>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.9;margin-top:.8rem;">MARCH以上の入試問題は、単純な暗記や公式の当てはめだけでは解けません。「知識を使ってどう考えるか」が問われるからです。プラトンでは、毎日課題による学習管理と合わせて、受験生の<strong style="color:var(--red);">「考える力」そのものを鍛える合格思考トレーニング</strong>を実施しています。</p>
+    </div>
+  </div>
+
+  <!-- 定量×定性の対比 -->
+  <div style="max-width:780px;margin:0 auto;">
+    <div class="ttg-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:#fff;border-radius:14px;padding:1.5rem;border:2px solid var(--bdr);">
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--txt2);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg> 定量（多くの受験生が重視）</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li style="font-size:.82rem;color:var(--txt2);line-height:1.6;padding:6px 8px;background:var(--light);border-radius:6px;">参考書をいつまでに終わらせるか</li>
+          <li style="font-size:.82rem;color:var(--txt2);line-height:1.6;padding:6px 8px;background:var(--light);border-radius:6px;">偏差値がどのくらいか</li>
+          <li style="font-size:.82rem;color:var(--txt2);line-height:1.6;padding:6px 8px;background:var(--light);border-radius:6px;">英単語を何個覚えたか</li>
+          <li style="font-size:.82rem;color:var(--txt2);line-height:1.6;padding:6px 8px;background:var(--light);border-radius:6px;">一日何時間勉強したか</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:1.5rem;border:2px solid var(--red);">
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--red);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> 定性（プラトンが鍛える）</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li style="font-size:.82rem;color:var(--txt);line-height:1.6;padding:6px 8px;background:var(--pale);border-radius:6px;font-weight:500;">なぜそう考えたのかを説明できるか</li>
+          <li style="font-size:.82rem;color:var(--txt);line-height:1.6;padding:6px 8px;background:var(--pale);border-radius:6px;font-weight:500;">自分で問題の本質を見抜けるか</li>
+          <li style="font-size:.82rem;color:var(--txt);line-height:1.6;padding:6px 8px;background:var(--pale);border-radius:6px;font-weight:500;">初見の問題にも主体的に取り組めるか</li>
+          <li style="font-size:.82rem;color:var(--txt);line-height:1.6;padding:6px 8px;background:var(--pale);border-radius:6px;font-weight:500;">学んだことを自分の言葉で表現できるか</li>
         </ul>
       </div>
     </div>
   </div>
+
+  <!-- 合格思考の3つの柱 -->
+  <div style="max-width:780px;margin:2.5rem auto 0;">
+    <h3 style="font-family:'Kaisei Opti',serif;font-size:1.1rem;color:var(--txt);margin-bottom:1.4rem;text-align:center;">合格思考トレーニングが鍛える<span style="color:var(--red);">3つの思考習慣</span></h3>
+    <div class="ttg-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+      <div style="background:#fff;border-radius:14px;padding:1.5rem 1.2rem;text-align:center;border:2px solid var(--bdr);border-top:4px solid var(--red);">
+        <div style="display:flex;justify-content:center;margin-bottom:.8rem;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;">ゴール逆算思考</h4>
+        <p style="font-size:.78rem;color:var(--txt2);line-height:1.7;">入試から今日を設計する。「いつまでに何を」を自分の頭で組み立てる力。</p>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:1.5rem 1.2rem;text-align:center;border:2px solid var(--bdr);border-top:4px solid var(--red);">
+        <div style="display:flex;justify-content:center;margin-bottom:.8rem;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;">優先順位設計</h4>
+        <p style="font-size:.78rem;color:var(--txt2);line-height:1.7;">やるべきことを正しく選ぶ。限られた時間で最大の成果を出す思考習慣。</p>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:1.5rem 1.2rem;text-align:center;border:2px solid var(--bdr);border-top:4px solid var(--red);">
+        <div style="display:flex;justify-content:center;margin-bottom:.8rem;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;">自己分析・現状把握</h4>
+        <p style="font-size:.78rem;color:var(--txt2);line-height:1.7;">現在地を正確に知る。目標とのギャップを客観的に捉え、改善し続ける力。</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ===== ROADMAP ===== -->
-<section id="roadmap">
+<!-- ===== SYSTEM ===== -->
+<section id="system" style="background:var(--cream);">
   <div class="sec-head" style="text-align:center;">
-    <span class="eyebrow">Roadmap</span>
-    <h2 class="sec-ttl">合格<span class="ac">ロードマップ</span>とは</h2>
+    <span class="eyebrow">Exam Strategy System</span>
+    <h2 class="sec-ttl">プラトン大学受験<span class="ac">戦略管理システム</span></h2>
+    <p class="sec-sub">合格思考で鍛えた「考え方」を、あなただけの設計図に変える。</p>
   </div>
-  <div class="roadmap-box">
-    <h3>志望校から逆算した、あなただけの合格への道筋</h3>
-    <p>合格ロードマップとは、<strong>志望校合格に向けて「今から何をいつまでにやるべきか」を時系列で整理した学習計画</strong>です。</p>
-    <div class="roadmap-hl">
-      受験本番から逆算して「各科目をいつまでにどのレベルまで仕上げるか」を設計します。志望校・現在の学力・残り期間をもとに、あなた専用のプランを作成します。
-    </div>
-    <p>ロードマップを作成したうえで、毎日の学習内容をその計画に沿って提示します。日々の積み重ねを管理しながら、ロードマップ通りに学習が進んでいるかを定期的に確認・調整します。</p>
-    <p style="margin-top:1rem;">模試の結果や確認テストの成績をもとに、ロードマップの内容を適宜見直すことで、常に最適な学習戦略を維持し続けます。</p>
-  </div>
-</section>
 
-<!-- ===== FEATURES ===== -->
-<section id="features">
-  <div class="sec-head" style="text-align:center;">
-    <span class="eyebrow">Course Features</span>
-    <h2 class="sec-ttl">コースの<span class="ac">5つの特徴</span></h2>
-    <p class="sec-sub">合格戦略プログラムは、受験生が合格するために必要な要素をすべて揃えたプログラムです。</p>
-  </div>
-  <div class="feat-grid">
-    <div class="feat-card">
-      <div class="feat-icon"><i data-lucide="map"></i></div>
-      <h4>合格ロードマップの作成</h4>
-      <p>志望校・現在の学力・受験までの期間をもとに、合格ロードマップを作成します。「今日何をすればいいか」だけでなく、「1ヶ月後・3ヶ月後に何を仕上げているべきか」まで設計します。</p>
-    </div>
-    <div class="feat-card">
-      <div class="feat-icon"><i data-lucide="calendar-check"></i></div>
-      <h4>毎日課題による学習管理</h4>
-      <p>ロードマップに沿って、毎日の学習内容を講師が提示します。ノート提出による学習確認と、講師のフィードバックを通して、日々確実に学習を積み重ねます。</p>
-    </div>
-    <div class="feat-card">
-      <div class="feat-icon"><i data-lucide="bar-chart-2"></i></div>
-      <h4>確認テスト・実力診断</h4>
-      <p>定期的に確認テストや実力診断テストを実施します。学力の推移を客観的に把握し、志望校との距離感を確認しながら、必要に応じて学習戦略を調整します。</p>
-    </div>
-    <div class="feat-card">
-      <div class="feat-icon"><i data-lucide="handshake"></i></div>
-      <h4>受験本番まで講師が伴走</h4>
-      <p>入試当日まで講師がサポートを続けます。模試の結果分析、直前期の学習内容の絞り込み、メンタルサポートまで、受験生の伴走者として徹底的に関わります。</p>
-    </div>
-    <div class="feat-card">
-      <div class="feat-icon"><i data-lucide="bar-chart-2"></i></div>
-      <h4>偏差値分析・合格可能性の把握</h4>
-      <p>模試の結果や実力診断テストをもとに、現在の偏差値と志望校合格に必要な偏差値を比較分析します。何をどのくらい伸ばせばいいかを数値で示します。</p>
+  <!-- コンセプト -->
+  <div style="max-width:780px;margin:0 auto 2.5rem;">
+    <div style="background:var(--pale);border-radius:18px;padding:2rem 2.2rem;border-left:5px solid var(--red);">
+      <p style="font-family:'Kaisei Opti',serif;font-size:1.05rem;font-weight:700;color:var(--txt);line-height:1.7;margin-bottom:.8rem;">「合格者の思考回路を、あなたの学習計画に再現する。」</p>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.95;margin-bottom:.8rem;">多くの受験生は「とりあえず参考書を買って、とりあえず始める」。合格する受験生はまずゴールから逆算し、今日やるべきことを決めています。</p>
+      <p style="font-size:.88rem;color:var(--txt2);line-height:1.95;">この「合格思考」を実際の計画として可視化するために開発したのが、プラトン独自の<strong style="color:var(--red);">大学受験 戦略管理システム</strong>です。志望校・現在の偏差値・残り日数をもとに講師が合格から逆算した戦略マップを設計。「何を・いつまでに・どの順番で」を可視化することで、迷わず・ブレずに・毎日前進できる学習環境をつくります。</p>
     </div>
   </div>
-</section>
 
-<!-- ===== CYCLE ===== -->
-<section id="cycle">
-  <div class="sec-head" style="text-align:center;">
-    <span class="eyebrow">Study Cycle</span>
-    <h2 class="sec-ttl">日々の<span class="ac">学習サイクル</span></h2>
-    <p class="sec-sub">毎日このサイクルを繰り返すことで、ロードマップ通りに学習を積み重ねていきます。</p>
+  <!-- UIモックアップ -->
+  <div style="max-width:900px;margin:0 auto 2.5rem;">
+    <div style="border-radius:16px;overflow:hidden;border:2px solid var(--bdr);box-shadow:0 8px 32px rgba(0,0,0,.12);">
+      <img src="img/roadmap-system.png" alt="プラトン大学受験 戦略管理システム" style="width:100%;display:block;">
+    </div>
+    <p style="text-align:center;font-size:.72rem;color:var(--txt2);margin-top:.6rem;">※ イメージ。実際の内容は生徒ごとに個別設計されます。</p>
   </div>
-  <div class="cycle-container">
-    <div class="cycle-step">
-      <div class="cycle-num"><span class="num">①</span><span class="icon"><i data-lucide="inbox"></i></span></div>
-      <div class="cycle-body">
-        <h4>講師が毎日の課題を提示</h4>
-        <p>合格ロードマップに沿って、その日の学習内容を具体的に提示します。どの参考書を・どの範囲まで・どのように進めるかまで明確に指示します。</p>
-      </div>
-    </div>
-    <div class="cycle-arrow">↓</div>
-    <div class="cycle-step">
-      <div class="cycle-num"><span class="num">②</span><span class="icon"><i data-lucide="pencil"></i></span></div>
-      <div class="cycle-body">
-        <h4>自宅で学習・ノートを提出</h4>
-        <p>課題に取り組み、学習内容をノートにまとめて提出します。単なる報告ではなく、実際の学習内容を提出することで、理解度まで確認できます。</p>
-      </div>
-    </div>
-    <div class="cycle-arrow">↓</div>
-    <div class="cycle-step">
-      <div class="cycle-num"><span class="num">③</span><span class="icon"><i data-lucide="file-check"></i></span></div>
-      <div class="cycle-body">
-        <h4>講師が確認・フィードバック</h4>
-        <p>提出ノートを講師が確認し、丸付けとフィードバックを行います。理解不足の部分には具体的なアドバイスを送り、翌日の学習に活かします。</p>
-      </div>
-    </div>
-    <div class="cycle-arrow">↓</div>
-    <div class="cycle-step">
-      <div class="cycle-num"><span class="num">④</span><span class="icon"><i data-lucide="refresh-cw"></i></span></div>
-      <div class="cycle-body">
-        <h4>翌日の課題を提示・繰り返す</h4>
-        <p>その日の学習状況を踏まえながら、翌日の課題を提示します。このサイクルを毎日繰り返すことで、日々の学習を着実に積み重ねていきます。</p>
-      </div>
-    </div>
   </div>
-</section>
 
-<!-- ===== PRICING ===== -->
-<section id="pricing" style="background:#fff;">
-  <div style="max-width:960px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:2rem;">
-      <span style="display:inline-block;background:var(--pale);color:var(--course);font-size:.72rem;font-weight:700;letter-spacing:.15em;padding:5px 16px;border-radius:50px;border:1px solid var(--course);margin-bottom:.7rem;">Pricing</span>
-      <h2 class="sec-ttl">料金<span class="ac">プラン</span></h2>
-      <p class="sec-sub">すべてのプランに毎日課題（週5回）・確認テスト（週1回）・実力診断テスト・偏差値推移の提示が含まれています。</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4rem;margin-bottom:2rem;">
-      <!-- Plan ① -->
-      <div style="border-radius:18px;overflow:hidden;border:2px solid var(--bdr);background:var(--cream);" class="reveal d1">
-        <div style="background:linear-gradient(135deg,var(--course),var(--mid));padding:1.2rem;text-align:center;color:#fff;">
-          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.85;margin-bottom:.3rem;">プラン①</div>
-          <div style="font-family:'Kaisei Opti',serif;font-size:2.2rem;font-weight:700;line-height:1;">45,000<span style="font-size:.9rem;">円</span></div>
-          <div style="font-size:.72rem;opacity:.8;margin-top:.2rem;">税込／月</div>
-        </div>
-        <div style="padding:1.4rem;">
-          <div style="text-align:center;background:#fff;border-radius:10px;padding:.8rem;margin-bottom:1.2rem;border:1.5px solid var(--bdr);">
-            <div style="font-family:'Kaisei Opti',serif;font-size:1.1rem;font-weight:700;color:var(--course);">月2回オンライン</div>
-            <div style="font-size:.75rem;color:var(--txt2);">毎日課題 週5回</div>
-          </div>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格ロードマップ作成</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格思考トレーニング</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>毎日課題 週5回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>確認テスト 週1回実施</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>実力診断テスト 月末1回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>当月の偏差値推移の提示</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>LINE質問対応（随時）</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>三者面談（保護者様・生徒・講師）</li>
-          </ul>
-        </div>
+  <!-- 3機能カード -->
+  <div style="max-width:780px;margin:0 auto;">
+    <div class="sys-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+      <div style="background:#fff;border-radius:14px;padding:1.4rem;text-align:center;border:2px solid var(--bdr);">
+        <div style="display:flex;justify-content:center;margin-bottom:.7rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+        <h4 style="font-size:.88rem;font-weight:700;color:var(--txt);margin-bottom:.4rem;line-height:1.4;">合格から逆算した<br>戦略マップ設計</h4>
+        <p style="font-size:.75rem;color:var(--txt2);line-height:1.7;">志望校・偏差値・残り日数をもとに、科目別の学習ロードマップを個別設計。</p>
       </div>
-      <!-- Plan ② -->
-      <div style="border-radius:18px;overflow:hidden;border:2px solid var(--course);background:var(--cream);position:relative;" class="reveal d2">
-        <div style="position:absolute;top:12px;right:12px;background:#fff;color:var(--course);font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.12);">おすすめ</div>
-        <div style="background:linear-gradient(135deg,var(--dark),var(--course));padding:1.2rem;text-align:center;color:#fff;">
-          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.85;margin-bottom:.3rem;">プラン②</div>
-          <div style="font-family:'Kaisei Opti',serif;font-size:2.2rem;font-weight:700;line-height:1;">64,480<span style="font-size:.9rem;">円</span></div>
-          <div style="font-size:.72rem;opacity:.8;margin-top:.2rem;">税込／月</div>
-        </div>
-        <div style="padding:1.4rem;">
-          <div style="text-align:center;background:#fff;border-radius:10px;padding:.8rem;margin-bottom:1.2rem;border:1.5px solid var(--course);">
-            <div style="font-family:'Kaisei Opti',serif;font-size:1.1rem;font-weight:700;color:var(--course);">週1回オンライン</div>
-            <div style="font-size:.75rem;color:var(--txt2);">毎日課題 週5回</div>
-          </div>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格ロードマップ作成</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格思考トレーニング</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>毎日課題 週5回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>確認テスト 週1回実施</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>実力診断テスト 月末1回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>当月の偏差値推移の提示</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>LINE質問対応（随時）</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>三者面談（保護者様・生徒・講師）</li>
-          </ul>
-        </div>
+      <div style="background:#fff;border-radius:14px;padding:1.4rem;text-align:center;border:2px solid var(--bdr);">
+        <div style="display:flex;justify-content:center;margin-bottom:.7rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h4 style="font-size:.88rem;font-weight:700;color:var(--txt);margin-bottom:.4rem;line-height:1.4;">1ヶ月単位の<br>具体的な学習プラン</h4>
+        <p style="font-size:.75rem;color:var(--txt2);line-height:1.7;">月別・週別の学習内容を明示。「今月何をすべきか」が常に明確になります。</p>
       </div>
-      <!-- Plan ③ -->
-      <div style="border-radius:18px;overflow:hidden;border:2px solid var(--bdr);background:var(--cream);" class="reveal d3">
-        <div style="background:linear-gradient(135deg,var(--course),var(--mid));padding:1.2rem;text-align:center;color:#fff;">
-          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.85;margin-bottom:.3rem;">プラン③</div>
-          <div style="font-family:'Kaisei Opti',serif;font-size:2.2rem;font-weight:700;line-height:1;">83,380<span style="font-size:.9rem;">円</span></div>
-          <div style="font-size:.72rem;opacity:.8;margin-top:.2rem;">税込／月</div>
-        </div>
-        <div style="padding:1.4rem;">
-          <div style="text-align:center;background:#fff;border-radius:10px;padding:.8rem;margin-bottom:1.2rem;border:1.5px solid var(--bdr);">
-            <div style="font-family:'Kaisei Opti',serif;font-size:1.1rem;font-weight:700;color:var(--course);">週2回オンライン</div>
-            <div style="font-size:.75rem;color:var(--txt2);">毎日課題 週5回</div>
-          </div>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格ロードマップ作成</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>合格思考トレーニング</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>毎日課題 週5回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>確認テスト 週1回実施</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>実力診断テスト 月末1回</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>当月の偏差値推移の提示</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>LINE質問対応（随時）</li>
-            <li style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--txt2);"><span style="background:var(--course);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>三者面談（保護者様・生徒・講師）</li>
-          </ul>
-        </div>
+      <div style="background:#fff;border-radius:14px;padding:1.4rem;text-align:center;border:2px solid var(--bdr);">
+        <div style="display:flex;justify-content:center;margin-bottom:.7rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h4 style="font-size:.88rem;font-weight:700;color:var(--txt);margin-bottom:.4rem;line-height:1.4;">偏差値ギャップの<br>数値管理</h4>
+        <p style="font-size:.75rem;color:var(--txt2);line-height:1.7;">現在と目標のギャップを可視化し、どの科目・分野に注力すべきかを明確に。</p>
       </div>
-    </div>
-
-    <div class="reveal" style="text-align:center;font-size:.78rem;color:var(--txt2);line-height:1.8;">
-      ※ 入塾金の詳細は無料相談時にご説明いたします。教材は当塾でご用意してお渡しします。<br>
-      ※ 兄弟割引制度あり。まずはお気軽にお問い合わせください。
     </div>
   </div>
 </section>
@@ -488,12 +541,12 @@ footer a{color:#c8a0e8;}
 <!-- ===== CTA ===== -->
 <section id="cta">
   <div class="cta-box">
-    <h2>戦略と継続で、<span style="color:var(--course);">志望校合格</span>を掴む</h2>
-    <p>合格戦略プログラムでは、志望校から逆算したロードマップと毎日の学習管理を組み合わせ、受験本番まで講師が伴走します。</p>
-    <p>無料相談では、現在の学力と志望校をお伺いしたうえで、合格への最短ルートをご提案します。まずはお気軽にご相談ください。</p>
-    <div class="cta-btns">
+    <h2>「考える力」を鍛え、<span style="color:var(--red);">志望校合格</span>へ</h2>
+    <p>MARCH以上の入試は、知識を使って「どう考えるか」が問われます。合格思考トレーニングで定性的な力を身につけ、毎日課題による学習管理と組み合わせることで、思考力と実行力の両方を鍛えます。</p>
+    <p>無料相談では、現在の学習状況をお伺いしたうえで、最適な学習プランをご提案しています。お気軽にご相談ください。</p>
+    <div class="cta-btns" style="margin-top:2rem;">
       <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
-      <a href="index.html#courses" class="btn-w">他のコースを見る</a>
+      <a href="mainichi-kadai.html" class="btn-w">毎日課題について見る</a>
     </div>
   </div>
 </section>
@@ -502,17 +555,9 @@ footer a{color:#c8a0e8;}
 <footer>
   <p style="margin-bottom:.5rem;font-family:'Kaisei Opti',serif;font-size:1rem;color:#fff;">プラトン</p>
   <p>文系の大学受験専門塾｜全国対応オンライン指導</p>
-  <p style="margin-top:.5rem;">
-    <a href="index.html">トップページ</a> |
-    <a href="index.html#courses">コース紹介</a> |
-    <a href="goukaku-shiko-training.html">合格思考トレーニング</a> | <a href="mainichi-kadai.html">毎日課題</a> |
-    <a href="news.html">お知らせ</a> |
-    <a href="index.html#contact">無料相談</a>
-  </p>
+  <p style="margin-top:.5rem;"><a href="index.html">トップページ</a> | <a href="goukaku-shiko-training.html">合格思考トレーニング</a> | <a href="mainichi-kadai.html">毎日課題</a> | <a href="news.html">お知らせ</a> | <a href="index.html#contact">無料相談</a></p>
   <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2024 Plato. All rights reserved.</p>
 </footer>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
 </body>
 </html>
