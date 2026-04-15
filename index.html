@@ -2198,6 +2198,7 @@ function switchTab(tabId, btn) {
     /* ── GASへ送信（action=contact） ── */
     var params = new URLSearchParams();
     params.append('action', 'contact');
+    params.append('source',     'platon');
     params.append('name',       savedName);
     params.append('kana',       document.getElementById('kana').value);
     params.append('email',      savedEmail);
