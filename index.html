@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プラトン | 文系の大学受験専門塾</title>
+<link rel="preload" as="image" href="img/img:hero-study.webp" type="image/webp">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & BASE ===== */
@@ -1097,7 +1098,11 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </div>
     </div>
     <div class="hero-chara">
-      <img class="hero-photo" src="img/img:hero-study.jpg" alt="指導の様子">
+      <picture>
+        <source srcset="img/img:hero-study.webp" type="image/webp">
+        <img class="hero-photo" src="img/img:hero-study.jpg" alt="指導の様子"
+             fetchpriority="high" decoding="async">
+      </picture>
     </div>
 
   </div>
