@@ -119,13 +119,18 @@ body{
 
 /* Hero FV */
 .hero-fv{
-  background:#fff;text-align:center;padding:28px 24px 20px;
+  background:linear-gradient(160deg,#fff 0%,#f4f7ff 100%);
+  text-align:center;padding:32px 24px 24px;
   position:relative;overflow:hidden;
 }
 .hex-bg{position:absolute;top:-20px;right:-30px;width:200px;height:200px;opacity:0.06;}
 .hex-bg2{position:absolute;top:180px;left:-40px;width:160px;height:160px;opacity:0.04;transform:rotate(30deg);}
 
 .impact-area{position:relative;margin-bottom:16px;}
+.impact-sub{
+  font-size:13px;color:#64748b;line-height:1.7;
+  margin-top:14px;font-weight:500;
+}
 .impact-copy{
   position:relative;z-index:1;
   display:flex;flex-direction:column;align-items:center;
@@ -218,39 +223,49 @@ body{
 .spark3{bottom:30px;right:10px;width:35px;animation:sparkle 2s ease-in-out infinite 1s;}
 @keyframes sparkle{0%,100%{opacity:0.4;transform:scale(0.8) rotate(0deg);}50%{opacity:1;transform:scale(1.2) rotate(15deg);}}
 
-/* Visual Area */
-.visual-area{position:relative;margin:20px auto 32px;max-width:300px;}
-.pain-badge{
-  position:absolute;top:8px;left:0;z-index:3;
-  background:linear-gradient(135deg,#1a56db,#2b6cb0);color:#fff;
-  padding:8px 14px;border-radius:10px;font-size:13px;font-weight:900;
-  line-height:1.4;box-shadow:0 4px 12px rgba(26,86,219,0.25);
-  transform:rotate(-2deg);animation:badgeFloat 3s ease-in-out infinite;
+/* Visual Area — Report Card */
+.visual-area{max-width:300px;margin:24px auto 0;}
+.report-card{
+  background:#fff;border-radius:18px;
+  border:1.5px solid #e0e7ff;
+  box-shadow:0 8px 32px rgba(26,86,219,0.13);
+  overflow:hidden;
 }
-@keyframes badgeFloat{0%,100%{transform:rotate(-2deg) translateY(0);}50%{transform:rotate(-2deg) translateY(-4px);}}
-
-.monitor-wrap{position:relative;width:240px;margin:0 auto;}
-.monitor{
-  width:100%;background:linear-gradient(135deg,#eef2ff,#dbeafe);
-  border:2.5px solid #93c5fd;border-radius:14px;padding:14px;
-  position:relative;box-shadow:0 6px 24px rgba(26,86,219,0.1);
+.report-card-header{
+  background:linear-gradient(135deg,#1a56db,#3b82f6);
+  padding:12px 16px;
+  display:flex;align-items:center;gap:8px;
 }
-.monitor-screen{background:#fff;border-radius:8px;padding:12px;position:relative;}
+.report-icon{font-size:16px;line-height:1;}
+.report-title{flex:1;font-size:12px;font-weight:900;color:#fff;letter-spacing:0.3px;}
+.report-badge-free{
+  background:#f59e0b;color:#fff;
+  font-size:10px;font-weight:900;
+  padding:3px 10px;border-radius:100px;
+  letter-spacing:0.3px;
+}
+.report-chart{padding:14px 14px 10px;background:#f8faff;}
 .mini-chart{display:flex;align-items:flex-end;gap:5px;height:72px;margin-bottom:6px;}
 .mini-bar{flex:1;border-radius:3px 3px 0 0;animation:barGrow 1s ease-out both;}
 @keyframes barGrow{from{height:0 !important;}}
-.mini-bar:nth-child(1){background:#93c5fd;height:25%;}
-.mini-bar:nth-child(2){background:#60a5fa;height:35%;}
-.mini-bar:nth-child(3){background:#3b82f6;height:45%;}
-.mini-bar:nth-child(4){background:#2563eb;height:58%;}
-.mini-bar:nth-child(5){background:#1d4ed8;height:72%;}
+.mini-bar:nth-child(1){background:#bfdbfe;height:25%;}
+.mini-bar:nth-child(2){background:#93c5fd;height:35%;}
+.mini-bar:nth-child(3){background:#60a5fa;height:48%;}
+.mini-bar:nth-child(4){background:#3b82f6;height:62%;}
+.mini-bar:nth-child(5){background:#2563eb;height:78%;}
 .mini-bar:nth-child(6){background:linear-gradient(180deg,#f59e0b,#fbbf24);height:100%;position:relative;border:2px solid #f59e0b;}
 .mini-bar:nth-child(6)::after{content:'🎯';position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:12px;}
-.mini-label{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;font-weight:700;}
-.monitor-stand{width:52px;height:10px;background:#93c5fd;margin:6px auto 0;border-radius:0 0 6px 6px;}
+.mini-label{display:flex;justify-content:space-between;font-size:9px;color:#94a3b8;font-weight:700;}
+.report-footer{
+  padding:8px 16px 10px;font-size:10px;color:#94a3b8;
+  font-weight:700;background:#fff;border-top:1px solid #f1f5f9;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.report-footer-label{color:#64748b;}
+.report-footer-name{color:#1a56db;font-weight:900;}
 
 /* Mascot */
-.mascot{position:absolute;bottom:-8px;right:0;z-index:4;width:84px;height:auto;animation:mascotBounce 3s ease-in-out infinite;}
+.mascot{display:block;width:80px;height:auto;margin-left:auto;margin-top:-6px;position:relative;z-index:2;animation:mascotBounce 3s ease-in-out infinite;}
 @keyframes mascotBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
 
 /* Omakase */
@@ -798,7 +813,7 @@ body{
 @media(min-width:1024px){
   body{
     display:block;
-    background:#f0f4f8;
+    background:#eef2fb;
     padding:40px 24px;
   }
   .phone-frame{
@@ -806,20 +821,24 @@ body{
     border-radius:24px;overflow:hidden;
     box-shadow:0 8px 40px rgba(0,0,0,0.12);
   }
+  .stats-bar{max-width:680px;margin:0 auto;}
   .hero-fv{
     display:grid;
     grid-template-columns:1fr 1fr;
     grid-template-rows:auto auto;
-    column-gap:48px;
-    padding:48px 60px 40px;
+    column-gap:56px;
+    padding:52px 64px 44px;
     text-align:left;
     align-items:start;
+    background:linear-gradient(160deg,#fff 0%,#f4f7ff 100%);
   }
   .impact-area{grid-column:1;grid-row:1;}
   .impact-copy{align-items:flex-start;}
+  .impact-sub{font-size:14px;max-width:380px;}
   .fv-cta{grid-column:1;grid-row:2;}
-  .fv-cta-wrap{max-width:380px;margin:0;}
-  .visual-area{grid-column:2;grid-row:1/3;max-width:380px;margin:0 auto;align-self:start;}
+  .fv-cta-wrap{max-width:360px;margin:0;}
+  .visual-area{grid-column:2;grid-row:1/3;max-width:360px;margin:0 auto;align-self:center;}
+  .report-card{box-shadow:0 12px 48px rgba(26,86,219,0.15);}
   .bridge-benefits{max-width:680px;}
   .preview-gallery{max-width:680px;}
   .survey-container{max-width:640px;}
@@ -906,6 +925,7 @@ body{
       <span class="impact-top">「受かる子」には</span>
       <span class="impact-bottom">戦略<span class="impact-bottom-sub">がある</span></span>
     </div>
+    <p class="impact-sub">4問のかんたん診断で、お子様専用の<br>合格ロードマップを無料でお届けします</p>
   </div>
 
   <!-- FV CTA -->
@@ -921,22 +941,27 @@ body{
   </div>
 
   <div class="visual-area">
-    <div class="pain-badge">受験勉強の<br>お悩み</div>
-    <div class="monitor-wrap">
-      <div class="monitor">
-        <div class="monitor-screen">
-          <div class="mini-chart">
-            <div class="mini-bar" style="height:25%;animation-delay:0.1s"></div>
-            <div class="mini-bar" style="height:35%;animation-delay:0.2s"></div>
-            <div class="mini-bar" style="height:45%;animation-delay:0.3s"></div>
-            <div class="mini-bar" style="height:58%;animation-delay:0.4s"></div>
-            <div class="mini-bar" style="height:72%;animation-delay:0.5s"></div>
-            <div class="mini-bar" style="height:100%;animation-delay:0.6s"></div>
-          </div>
-          <div class="mini-label"><span>4月</span><span>6月</span><span>8月</span><span>10月</span><span>12月</span><span>合格!</span></div>
-        </div>
+    <div class="report-card">
+      <div class="report-card-header">
+        <span class="report-icon">📊</span>
+        <span class="report-title">お子様専用 合格戦略レポート</span>
+        <span class="report-badge-free">無料</span>
       </div>
-      <div class="monitor-stand"></div>
+      <div class="report-chart">
+        <div class="mini-chart">
+          <div class="mini-bar" style="animation-delay:0.1s"></div>
+          <div class="mini-bar" style="animation-delay:0.2s"></div>
+          <div class="mini-bar" style="animation-delay:0.3s"></div>
+          <div class="mini-bar" style="animation-delay:0.4s"></div>
+          <div class="mini-bar" style="animation-delay:0.5s"></div>
+          <div class="mini-bar" style="animation-delay:0.6s"></div>
+        </div>
+        <div class="mini-label"><span>4月</span><span>6月</span><span>8月</span><span>10月</span><span>12月</span><span>合格!</span></div>
+      </div>
+      <div class="report-footer">
+        <span class="report-footer-label">偏差値の推移予測</span>
+        <span class="report-footer-name">プラトン</span>
+      </div>
     </div>
     <img class="mascot" src="images/logo.png" alt="プラトン">
   </div>
