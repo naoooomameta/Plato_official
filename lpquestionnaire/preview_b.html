@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【プレビューB】PC本格2カラム版｜プラトン</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+  font-family:'M PLUS Rounded 1c','Noto Sans JP',sans-serif;
+  color:#1a1a2e;
+  background:#f8faff;
+  -webkit-font-smoothing:antialiased;
+}
+
+.preview-badge{
+  position:fixed;top:20px;left:20px;
+  background:#7c3aed;color:#fff;
+  padding:8px 14px;border-radius:8px;
+  font-size:12px;font-weight:900;
+  z-index:1000;
+  box-shadow:0 4px 12px rgba(124,58,237,0.3);
+}
+
+/* ヘッダー（PC幅） */
+.top-banner{
+  background:linear-gradient(90deg,#1a56db 0%,#2b6cb0 100%);
+  color:#fff;text-align:center;
+  padding:14px 16px;
+  font-size:15px;font-weight:700;letter-spacing:0.5px;
+}
+
+.header{
+  background:#fff;
+  padding:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  position:sticky;top:0;z-index:50;
+}
+.header-inner{
+  max-width:1200px;margin:0 auto;
+  padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo-wrap{display:flex;align-items:center;gap:12px;}
+.logo-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,#1a56db,#60a5fa);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:900;font-size:24px;
+}
+.logo-text-wrap{display:flex;flex-direction:column;line-height:1.2;}
+.logo-sub{font-size:11px;font-weight:700;color:#64748b;letter-spacing:0.5px;}
+.logo-name{font-size:22px;font-weight:900;color:#1a56db;letter-spacing:1.5px;}
+
+.header-cta{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#fff;padding:10px 24px;border-radius:100px;
+  font-weight:900;font-size:14px;text-decoration:none;
+  box-shadow:0 4px 12px rgba(249,115,22,0.3);
+  transition:transform 0.2s;
+}
+.header-cta:hover{transform:translateY(-1px);}
+
+/* ヒーローセクション（2カラム） */
+.hero{
+  background:
+    radial-gradient(circle at 80% 20%, rgba(96,165,250,0.15), transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(167,139,250,0.1), transparent 50%),
+    linear-gradient(135deg,#f0f6ff 0%,#fff 50%,#dbeafe 100%);
+  padding:60px 24px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:center;
+}
+.hero-left{position:relative;z-index:2;}
+.hero-eyebrow{
+  display:inline-block;
+  background:rgba(26,86,219,0.1);color:#1a56db;
+  padding:8px 16px;border-radius:100px;
+  font-size:13px;font-weight:900;
+  margin-bottom:24px;
+}
+.hero-title{
+  font-size:56px;font-weight:900;line-height:1.2;
+  margin-bottom:20px;
+}
+.hero-title .highlight{
+  background:linear-gradient(135deg,#1a56db,#2563eb);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-size:88px;
+}
+.hero-desc{
+  font-size:17px;color:#475569;
+  line-height:1.8;margin-bottom:32px;
+}
+
+/* 統計（横並び） */
+.stats-row{
+  display:flex;gap:24px;margin-bottom:40px;
+}
+.stat-card{
+  flex:1;background:#fff;border-radius:12px;
+  padding:18px;text-align:center;
+  box-shadow:0 2px 8px rgba(26,86,219,0.08);
+}
+.stat-num{font-size:32px;font-weight:900;color:#1a56db;line-height:1;}
+.stat-num span{font-size:16px;}
+.stat-label{font-size:11px;color:#64748b;font-weight:700;margin-top:6px;}
+
+/* CTA */
+.cta-wrap{display:inline-block;}
+.cta-ribbon{
+  background:#dc2626;color:#fff;
+  padding:6px 28px;border-radius:100px 100px 0 0;
+  font-size:14px;font-weight:900;
+  display:inline-block;
+}
+.cta-button{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#fff;padding:24px 48px;border-radius:16px;
+  border:none;cursor:pointer;
+  box-shadow:0 12px 30px rgba(249,115,22,0.4);
+  transition:transform 0.2s;display:block;
+}
+.cta-button:hover{transform:translateY(-3px);}
+.cta-text{font-size:22px;font-weight:900;}
+.cta-sub{font-size:13px;opacity:0.9;margin-top:6px;}
+
+/* ヒーロー右側：プレビューカード */
+.hero-right{position:relative;}
+.preview-card{
+  background:#fff;border-radius:24px;
+  padding:24px;
+  box-shadow:0 30px 80px rgba(26,86,219,0.2);
+  transform:rotate(-2deg);
+  transition:transform 0.3s;
+  position:relative;
+}
+.preview-card:hover{transform:rotate(0deg) scale(1.02);}
+.preview-header{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(90deg,#1a56db,#2563eb);
+  margin:-24px -24px 20px;
+  padding:18px 24px;border-radius:24px 24px 0 0;
+  color:#fff;font-weight:900;font-size:15px;
+}
+.preview-badge-free{
+  background:#fb923c;color:#fff;
+  padding:4px 12px;border-radius:100px;
+  font-size:12px;font-weight:900;
+}
+.chart{
+  display:flex;align-items:flex-end;justify-content:space-around;
+  height:200px;gap:10px;margin:20px 0 30px;
+}
+.bar{
+  flex:1;border-radius:10px 10px 0 0;
+  background:#bfdbfe;
+  position:relative;
+  transition:transform 0.3s;
+}
+.bar.b1{height:30%;}
+.bar.b2{height:45%;}
+.bar.b3{height:60%;}
+.bar.b4{height:75%;background:#60a5fa;}
+.bar.b5{height:90%;background:#3b82f6;}
+.bar.b6{height:100%;background:#fb923c;}
+.bar-label{
+  position:absolute;bottom:-22px;left:50%;
+  transform:translateX(-50%);
+  font-size:11px;color:#64748b;font-weight:700;
+}
+.preview-footer{
+  text-align:center;font-size:13px;color:#64748b;font-weight:700;
+  padding-top:12px;border-top:1px solid #f1f5f9;
+}
+
+/* 装飾要素 */
+.decoration{
+  position:absolute;font-size:60px;opacity:0.5;
+  z-index:1;
+}
+.decoration.d1{top:5%;right:8%;}
+.decoration.d2{bottom:10%;left:5%;font-size:40px;}
+
+/* セクション */
+.section{
+  padding:80px 24px;
+  text-align:center;
+}
+.section-inner{max-width:1000px;margin:0 auto;}
+.section-title{
+  font-size:42px;font-weight:900;
+  margin-bottom:16px;line-height:1.4;
+}
+.section-title .accent{color:#1a56db;}
+.section-sub{font-size:17px;color:#64748b;line-height:1.7;}
+
+.section-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;margin-top:48px;
+}
+.feature-card{
+  background:#fff;border-radius:20px;
+  padding:32px 24px;text-align:center;
+  box-shadow:0 4px 20px rgba(26,86,219,0.08);
+  border:1px solid #e2e8f0;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.feature-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(26,86,219,0.15);
+}
+.feature-icon{
+  width:64px;height:64px;border-radius:16px;
+  background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;font-size:32px;
+}
+.feature-title{
+  font-size:18px;font-weight:900;color:#1a56db;
+  margin-bottom:8px;
+}
+.feature-desc{font-size:13px;color:#64748b;line-height:1.7;}
+
+/* フッター */
+.footer{
+  background:#1a1a2e;color:#fff;
+  padding:40px 24px;text-align:center;
+}
+.footer-text{font-size:13px;opacity:0.7;}
+
+/* タブレット */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:60px;}
+  .hero-title{font-size:42px;}
+  .hero-title .highlight{font-size:64px;}
+  .section-title{font-size:32px;}
+  .section-cards{grid-template-columns:1fr;}
+}
+
+/* スマホ */
+@media(max-width:599px){
+  .top-banner{font-size:13px;}
+  .header-cta{padding:8px 16px;font-size:12px;}
+  .hero{padding:40px 20px;}
+  .hero-title{font-size:32px;}
+  .hero-title .highlight{font-size:52px;}
+  .hero-desc{font-size:14px;}
+  .stats-row{flex-wrap:wrap;}
+  .stat-card{min-width:calc(50% - 12px);}
+  .cta-button{padding:18px 32px;}
+  .cta-text{font-size:18px;}
+  .preview-card{transform:none;}
+  .section{padding:60px 20px;}
+  .section-title{font-size:26px;}
+  .preview-badge{font-size:10px;padding:6px 10px;top:10px;left:10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="preview-badge">プレビューB：PC本格2カラム版</div>
+
+<div class="top-banner">お子様の志望校合格を本気で目指す保護者様へ</div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-icon">P</div>
+      <div class="logo-text-wrap">
+        <span class="logo-sub">文系の大学受験専門塾</span>
+        <span class="logo-name">プラトン</span>
+      </div>
+    </div>
+    <a href="#" class="header-cta">無料診断を始める →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="decoration d1">✨</div>
+  <div class="decoration d2">📚</div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <span class="hero-eyebrow">⭐ 完全無料・30秒で診断</span>
+      <h1 class="hero-title">
+        「受かる子」には<br>
+        <span class="highlight">戦略</span>がある
+      </h1>
+      <p class="hero-desc">
+        4問のかんたん診断で、<br>
+        お子様専用の<strong style="color:#1a56db;">合格戦略ガイドブック</strong>を<br>
+        無料でお届けします。
+      </p>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num">93<span>%</span></div>
+          <div class="stat-label">第一志望合格率</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">+12<span>UP</span></div>
+          <div class="stat-label">平均偏差値</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">98<span>%</span></div>
+          <div class="stat-label">保護者満足度</div>
+        </div>
+      </div>
+
+      <div class="cta-wrap">
+        <div class="cta-ribbon">＼ 完全無料 ／</div>
+        <button class="cta-button">
+          <div class="cta-text">うちの子の戦略を見てみる →</div>
+          <div class="cta-sub">たった30秒で診断完了</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="preview-card">
+        <div class="preview-header">
+          <span>📊 合格戦略レポート</span>
+          <span class="preview-badge-free">無料</span>
+        </div>
+        <div class="chart">
+          <div class="bar b1"><span class="bar-label">4月</span></div>
+          <div class="bar b2"><span class="bar-label">6月</span></div>
+          <div class="bar b3"><span class="bar-label">8月</span></div>
+          <div class="bar b4"><span class="bar-label">10月</span></div>
+          <div class="bar b5"><span class="bar-label">12月</span></div>
+          <div class="bar b6"><span class="bar-label">合格!</span></div>
+        </div>
+        <div class="preview-footer">偏差値の推移予測（イメージ）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <h2 class="section-title">プラトンの戦略システムに<br><span class="accent">まるっとおまかせ！</span></h2>
+    <p class="section-sub">プロの講師陣が、お子様一人ひとりに最適な学習プランを設計します</p>
+
+    <div class="section-cards">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">志望校別の戦略</div>
+        <div class="feature-desc">大学・学部ごとの傾向を分析した、お子様専用の合格戦略を作成</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <div class="feature-title">月別タイムライン</div>
+        <div class="feature-desc">入試本番までの月ごとの学習計画を可視化</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <div class="feature-title">弱点の特定</div>
+        <div class="feature-desc">最優先で取り組むべき課題をプロが分析</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-text">© 2026 プラトン 文系の大学受験専門塾</div>
+</footer>
+
+</body>
+</html>

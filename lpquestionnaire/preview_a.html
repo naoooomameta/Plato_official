@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【プレビューA】控えめPC改善版｜プラトン</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+  font-family:'M PLUS Rounded 1c','Noto Sans JP',sans-serif;
+  color:#1a1a2e;
+  -webkit-font-smoothing:antialiased;
+  /* PC背景：装飾的なグラデーション */
+  background:
+    radial-gradient(circle at 20% 20%, rgba(96,165,250,0.15), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(167,139,250,0.12), transparent 50%),
+    linear-gradient(135deg,#f0f6ff 0%,#e0e7ff 50%,#dbeafe 100%);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:40px 20px;
+}
+
+/* PCコンテナ：500px固定（スマホ縦長を維持しつつ装飾） */
+.container{
+  width:100%;
+  max-width:500px;
+  background:#fff;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:
+    0 20px 60px rgba(26,86,219,0.15),
+    0 0 0 1px rgba(255,255,255,0.5);
+  position:relative;
+}
+
+/* 装飾ラベル（PC専用） */
+.preview-badge{
+  position:fixed;top:20px;left:20px;
+  background:#1a56db;color:#fff;
+  padding:8px 14px;border-radius:8px;
+  font-size:12px;font-weight:900;
+  z-index:1000;
+  box-shadow:0 4px 12px rgba(26,86,219,0.3);
+}
+
+/* 上部バナー */
+.top-banner{
+  background:linear-gradient(90deg,#1a56db 0%,#2b6cb0 100%);
+  color:#fff;text-align:center;
+  padding:12px 16px;
+  font-size:14px;font-weight:700;letter-spacing:0.5px;
+  position:relative;
+}
+.top-banner::after{
+  content:'';position:absolute;bottom:-6px;left:50%;
+  transform:translateX(-50%);
+  width:0;height:0;
+  border-left:8px solid transparent;border-right:8px solid transparent;
+  border-top:6px solid #1a56db;
+}
+
+/* ロゴバー */
+.logo-bar{
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;padding:14px 16px;
+  background:#fff;
+}
+.logo-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,#1a56db,#60a5fa);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:900;font-size:24px;
+}
+.logo-text-wrap{display:flex;flex-direction:column;line-height:1.2;}
+.logo-sub{font-size:10px;font-weight:700;color:#64748b;letter-spacing:0.5px;}
+.logo-name{font-size:22px;font-weight:900;color:#1a56db;letter-spacing:1.5px;}
+
+/* 統計バー */
+.stats-bar{
+  display:flex;align-items:center;justify-content:center;
+  padding:18px 16px;background:#fff;
+  border-bottom:1px solid #f1f5f9;
+}
+.stat-item{text-align:center;flex:1;}
+.stat-num{font-size:28px;font-weight:900;color:#1a56db;line-height:1;}
+.stat-num span{font-size:14px;}
+.stat-label{font-size:10px;color:#64748b;font-weight:700;margin-top:4px;}
+.stat-divider{width:1px;height:32px;background:#e2e8f0;}
+
+/* ヒーロー */
+.hero{
+  padding:32px 24px;
+  background:linear-gradient(180deg,#fff 0%,#f8faff 100%);
+  text-align:center;
+}
+.impact-top{
+  display:inline-block;font-size:22px;font-weight:900;color:#1a56db;
+  padding:0 16px;position:relative;margin-bottom:16px;
+}
+.impact-top::before,.impact-top::after{
+  content:'';position:absolute;top:50%;width:16px;height:2px;background:#1a56db;
+}
+.impact-top::before{left:-16px;}
+.impact-top::after{right:-16px;}
+.impact-main{
+  font-size:80px;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,#1a56db,#2563eb);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin:8px 0;
+}
+.impact-sub{font-size:40px;font-weight:900;color:#1a1a2e;}
+.hero-desc{font-size:14px;color:#64748b;margin-top:16px;line-height:1.7;}
+
+/* CTAボタン */
+.cta-wrap{margin:32px auto 0;max-width:340px;}
+.cta-ribbon{
+  background:#dc2626;color:#fff;
+  padding:5px 24px;border-radius:100px 100px 0 0;
+  font-size:13px;font-weight:900;
+  display:inline-block;
+}
+.cta-button{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#fff;padding:20px 24px;border-radius:16px;
+  border:none;cursor:pointer;width:100%;
+  box-shadow:0 8px 20px rgba(249,115,22,0.35);
+  position:relative;
+  transition:transform 0.2s;
+}
+.cta-button:hover{transform:translateY(-2px);}
+.cta-text{font-size:18px;font-weight:900;}
+.cta-sub{font-size:11px;opacity:0.9;margin-top:4px;}
+
+/* グラフプレビュー */
+.preview-card{
+  margin:24px;
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  border:1.5px solid #dbeafe;
+  box-shadow:0 4px 20px rgba(26,86,219,0.08);
+}
+.preview-header{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(90deg,#1a56db,#2563eb);
+  margin:-20px -20px 16px;
+  padding:14px 20px;border-radius:16px 16px 0 0;
+  color:#fff;font-weight:900;font-size:14px;
+}
+.preview-badge-free{
+  background:#fb923c;color:#fff;
+  padding:3px 10px;border-radius:100px;
+  font-size:11px;font-weight:900;
+}
+.chart{
+  display:flex;align-items:flex-end;justify-content:space-around;
+  height:120px;gap:8px;margin:12px 0;
+}
+.bar{
+  flex:1;border-radius:8px 8px 0 0;
+  background:#bfdbfe;
+  position:relative;
+  transition:transform 0.3s;
+}
+.bar.b1{height:30%;}
+.bar.b2{height:45%;}
+.bar.b3{height:60%;}
+.bar.b4{height:75%;background:#60a5fa;}
+.bar.b5{height:90%;background:#3b82f6;}
+.bar.b6{height:100%;background:#fb923c;}
+.bar-label{
+  position:absolute;bottom:-20px;left:50%;
+  transform:translateX(-50%);
+  font-size:10px;color:#64748b;font-weight:700;
+}
+
+/* セクション */
+.section{padding:32px 24px;text-align:center;}
+.section-title{
+  font-size:26px;font-weight:900;color:#1a1a2e;
+  margin-bottom:8px;line-height:1.4;
+}
+.section-title .accent{color:#1a56db;}
+.section-sub{font-size:13px;color:#64748b;}
+
+/* フッター情報 */
+.footer-info{
+  background:#f0f4f8;padding:16px;text-align:center;
+  font-size:11px;color:#94a3b8;
+}
+
+/* スマホ表示時 */
+@media(max-width:599px){
+  body{padding:0;background:#f0f6ff;}
+  .container{border-radius:0;box-shadow:none;}
+  .preview-badge{font-size:10px;padding:6px 10px;top:10px;left:10px;}
+  .impact-main{font-size:60px;}
+  .impact-sub{font-size:30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="preview-badge">プレビューA：控えめ改善版</div>
+
+<div class="container">
+
+  <div class="top-banner">お子様の志望校合格を本気で目指す保護者様へ</div>
+
+  <div class="logo-bar">
+    <div class="logo-icon">P</div>
+    <div class="logo-text-wrap">
+      <span class="logo-sub">文系の大学受験専門塾</span>
+      <span class="logo-name">プラトン</span>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">93<span>%</span></div>
+      <div class="stat-label">第一志望合格率</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">+12<span>UP</span></div>
+      <div class="stat-label">平均偏差値アップ</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">保護者満足度</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <span class="impact-top">「受かる子」には</span>
+    <div class="impact-main">戦略</div>
+    <div class="impact-sub">がある</div>
+    <p class="hero-desc">4問のかんたん診断で、<br>お子様専用の合格戦略ガイドブックを<br>無料でお届けします</p>
+
+    <div class="cta-wrap">
+      <div class="cta-ribbon">＼ 完全無料 ／</div>
+      <button class="cta-button">
+        <div class="cta-text">うちの子の戦略を見てみる →</div>
+        <div class="cta-sub">たった30秒で診断完了</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="preview-card">
+    <div class="preview-header">
+      <span>📊 お子様専用 合格戦略レポート</span>
+      <span class="preview-badge-free">無料</span>
+    </div>
+    <div class="chart">
+      <div class="bar b1"><span class="bar-label">4月</span></div>
+      <div class="bar b2"><span class="bar-label">6月</span></div>
+      <div class="bar b3"><span class="bar-label">8月</span></div>
+      <div class="bar b4"><span class="bar-label">10月</span></div>
+      <div class="bar b5"><span class="bar-label">12月</span></div>
+      <div class="bar b6"><span class="bar-label">合格!</span></div>
+    </div>
+    <div style="text-align:center;margin-top:24px;font-size:12px;color:#64748b;font-weight:700;">
+      偏差値の推移予測
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">プラトンの戦略システムに<br><span class="accent">まるっとおまかせ！</span></div>
+  </div>
+
+  <div class="footer-info">
+    プラトン 文系の大学受験専門塾
+  </div>
+
+</div>
+
+</body>
+</html>
