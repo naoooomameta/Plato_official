@@ -905,6 +905,195 @@ body{
   .line-cta-title{font-size:16px;}
   .summary-details{max-width:100%;}
 }
+
+/* ═══════════════════════════════════════
+   PC LAYOUT (preview B style) — 900px+
+   ═══════════════════════════════════════ */
+.pc-header{display:none;}
+.hero-stats{display:none;}
+.hero-fv-inner{display:contents;}
+.hero-left,.hero-right{display:contents;}
+
+@media(min-width:900px){
+  body{
+    background:#f8faff;
+    padding:0;
+    display:block;
+  }
+
+  /* phone-frameを廃止して全幅レイアウト */
+  .phone-frame{
+    width:100%;max-width:none;
+    margin:0;padding:0;
+    border-radius:0;background:transparent;
+    box-shadow:none;
+  }
+  .phone-frame::before{display:none;}
+  .phone-inner{
+    width:100%;max-width:none;
+    border-radius:0;overflow:visible;
+    background:transparent;box-shadow:none;
+    max-height:none;
+  }
+
+  /* 上部バナー */
+  .top-banner{
+    padding:14px 16px;font-size:15px;
+    width:100%;
+  }
+  .top-banner::after{display:none;}
+
+  /* デスクトップヘッダー（sticky） */
+  .pc-header{
+    display:block;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    position:sticky;top:0;z-index:100;
+  }
+  .pc-header-inner{
+    max-width:1200px;margin:0 auto;
+    padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .pc-header-logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+  .pc-header-logo img{width:44px;height:44px;object-fit:contain;}
+  .pc-header-logo .logo-text-wrap{display:flex;flex-direction:column;line-height:1.2;}
+  .pc-header-logo .logo-sub{font-size:11px;font-weight:700;color:#64748b;letter-spacing:0.5px;}
+  .pc-header-logo .logo-name{font-size:22px;font-weight:900;color:#1a56db;letter-spacing:1.5px;}
+  .pc-header-cta{
+    background:linear-gradient(135deg,#f97316,#ea580c);
+    color:#fff;padding:10px 24px;border-radius:100px;
+    font-weight:900;font-size:14px;text-decoration:none;
+    box-shadow:0 4px 12px rgba(249,115,22,0.3);
+    transition:transform 0.2s;cursor:pointer;border:none;
+    font-family:inherit;
+  }
+  .pc-header-cta:hover{transform:translateY(-1px);}
+
+  /* オリジナルのlogo-bar/stats-barはPCで非表示（pc-headerで代替） */
+  .logo-bar{display:none;}
+
+  /* ヒーロー：背景フル幅、内部1200px */
+  .hero-fv{
+    background:
+      radial-gradient(circle at 80% 20%, rgba(96,165,250,0.15), transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(167,139,250,0.1), transparent 50%),
+      linear-gradient(135deg,#f0f6ff 0%,#fff 50%,#dbeafe 100%);
+    padding:60px 24px 80px;
+    width:100%;max-width:none;
+    display:block;
+    text-align:left;
+    position:relative;overflow:hidden;
+  }
+  .hero-fv-inner{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:48px;align-items:center;
+  }
+  .hero-left,.hero-right{display:block;}
+  .hero-stats{display:flex;}
+
+  /* PC版では元のstats-bar（モバイル用）を非表示。ヒーロー内のみ表示 */
+  .stats-bar.stats-bar-mobile{display:none !important;}
+
+  .hero-left .stats-bar,
+  .hero-stats{
+    display:flex;gap:16px;
+    background:transparent;
+    padding:0;margin:24px 0 32px;
+    max-width:none;
+    border:none;
+  }
+  .hero-left .stat-item,
+  .hero-stats .stat-item{
+    flex:1;background:#fff;border-radius:12px;
+    padding:16px;text-align:center;
+    box-shadow:0 2px 8px rgba(26,86,219,0.08);
+  }
+  .hero-left .stat-divider,
+  .hero-stats .stat-divider{display:none;}
+  .hero-left .stat-num,
+  .hero-stats .stat-num{font-size:28px;}
+  .hero-left .stat-label,
+  .hero-stats .stat-label{font-size:11px;}
+
+  /* インパクトコピー */
+  .impact-area{margin-bottom:0;}
+  .impact-copy{align-items:flex-start;}
+  .impact-top{font-size:18px;margin-bottom:16px;}
+  .impact-top::before,.impact-top::after{width:24px;}
+  .impact-bottom{
+    font-size:64px;letter-spacing:-1.5px;line-height:1;
+  }
+  .impact-bottom-sub{font-size:38px;}
+  .impact-sub{
+    font-size:16px;line-height:1.8;
+    max-width:480px;color:#475569;margin-top:20px;
+  }
+
+  /* CTA */
+  .fv-cta{margin:32px 0 0;}
+  .fv-cta-wrap{max-width:380px;margin:0;}
+  .fv-cta-mega{padding:24px 24px 18px;border-radius:16px;}
+  .fv-cta-mega-text{font-size:19px;}
+  .fv-cta-mega-sub{font-size:13px;}
+  .fv-cta-ribbon{font-size:13px;padding:5px 22px;top:-12px;}
+  .fv-cta-micro{margin-top:14px;}
+
+  /* グラフ表示エリア */
+  .visual-area{
+    max-width:none;margin:0;
+    align-self:center;position:relative;
+  }
+  .report-card{
+    box-shadow:0 30px 80px rgba(26,86,219,0.2);
+    transform:rotate(-2deg);
+    transition:transform 0.3s;
+  }
+  .report-card:hover{transform:rotate(0) scale(1.02);}
+  .report-chart{padding:24px 20px 16px;}
+  .mini-chart{height:160px;}
+  .mini-label{font-size:12px;}
+  .mascot{width:100px;bottom:-50px;right:10px;}
+
+  /* おまかせエリア：装飾的なセクションに */
+  .omakase-area{
+    padding:60px 24px;
+    border-top:none;
+    background:#fff;
+    text-align:center;
+  }
+  .omakase-brand{font-size:18px;}
+  .omakase-brand em{font-size:20px;}
+  .omakase-main{font-size:42px;}
+
+  /* ブリッジセクション */
+  .bridge-section{
+    padding:80px 24px;
+    max-width:none;
+    background:linear-gradient(180deg,#f8faff 0%,#fff 100%);
+  }
+  .bridge-section > *{max-width:1000px;margin-left:auto;margin-right:auto;}
+  .bridge-heading{font-size:32px;}
+  .bridge-heading .num{font-size:42px;}
+  .bridge-sub{font-size:16px;max-width:640px;}
+  .bridge-benefits{max-width:720px;}
+  .bridge-benefits-title{font-size:17px;}
+  .benefit-item{font-size:15px;}
+  .preview-gallery{max-width:880px;}
+
+  /* サーベイのオーバーレイサイズ調整 */
+  .survey-container{max-width:720px;}
+  .complete-header-inline{max-width:720px;}
+  .summary-details{max-width:720px;}
+  .line-cta-box{max-width:720px;}
+}
+
+@media(min-width:1200px){
+  .impact-bottom{font-size:80px;}
+  .impact-bottom-sub{font-size:48px;}
+  .omakase-main{font-size:48px;}
+}
 </style>
 </head>
 <body>
@@ -917,6 +1106,20 @@ body{
      ════════════════════════════════════════ -->
 <div class="top-banner">お子様の志望校合格を本気で目指す保護者様へ</div>
 
+<!-- PC専用ヘッダー（sticky） -->
+<header class="pc-header">
+  <div class="pc-header-inner">
+    <a href="https://naoooomameta.github.io/Plato_official/lpquestionnaire/" class="pc-header-logo">
+      <img src="images/logo.png" alt="プラトン">
+      <div class="logo-text-wrap">
+        <span class="logo-sub">文系の大学受験専門塾</span>
+        <span class="logo-name">プラトン</span>
+      </div>
+    </a>
+    <button class="pc-header-cta" onclick="openSurvey()">無料診断を始める →</button>
+  </div>
+</header>
+
 <!-- Logo Bar -->
 <div class="logo-bar">
   <a href="https://naoooomameta.github.io/Plato_official/lpquestionnaire/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
@@ -928,7 +1131,7 @@ body{
   </a>
 </div>
 
-<div class="stats-bar">
+<div class="stats-bar stats-bar-mobile">
   <div class="stat-item">
     <div class="stat-num">93<span>%</span></div>
     <div class="stat-label">第一志望合格率</div>
@@ -952,12 +1155,30 @@ body{
   <svg class="spark spark2" viewBox="0 0 40 40"><path d="M20 5 L22 16 L33 20 L22 24 L20 35 L18 24 L7 20 L18 16 Z" fill="#f59e0b"/></svg>
   <svg class="spark spark3" viewBox="0 0 40 40"><path d="M20 2 L23 16 L38 20 L23 24 L20 38 L17 24 L2 20 L17 16 Z" fill="#fbbf24"/></svg>
 
+  <div class="hero-fv-inner">
+  <div class="hero-left">
   <div class="impact-area">
     <div class="impact-copy">
       <span class="impact-top">「受かる子」には</span>
       <span class="impact-bottom">戦略<span class="impact-bottom-sub">がある</span></span>
     </div>
-    <p class="impact-sub">4問のかんたん診断で、お子様専用の<br>合格ロードマップを無料でお届けします</p>
+    <p class="impact-sub">4問のかんたん診断で、お子様専用の<br>合格戦略ガイドブックを無料でお届けします</p>
+  </div>
+
+  <!-- PC専用：ヒーロー内ステータス -->
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">93<span>%</span></div>
+      <div class="stat-label">第一志望合格率</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">+12<span>UP</span></div>
+      <div class="stat-label">平均偏差値</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">保護者満足度</div>
+    </div>
   </div>
 
   <!-- FV CTA -->
@@ -971,7 +1192,9 @@ body{
     </div>
     <div class="fv-cta-micro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="#64748b" stroke-width="2"/><path d="M7 20h10" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><path d="M12 16v4" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="10" r="2" fill="#1a56db"/><path d="M8 14c0-2 2-3 4-3s4 1 4 3" stroke="#1a56db" stroke-width="1.5" stroke-linecap="round"/></svg><span>場所を選ばず、最高峰の学習環境を。<br>全国どこからでも診断・入塾OK</span></div>
   </div>
+  </div><!-- /hero-left -->
 
+  <div class="hero-right">
   <div class="visual-area">
     <div class="report-card">
       <div class="report-card-header">
@@ -997,6 +1220,8 @@ body{
     </div>
     <img class="mascot" src="images/logo.png" alt="プラトン">
   </div>
+  </div><!-- /hero-right -->
+  </div><!-- /hero-fv-inner -->
 </div>
 
 <div class="omakase-area">
