@@ -1032,38 +1032,64 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .banner-row{grid-template-columns:repeat(2,1fr);}
 }
 /* ===== NEWS STRIP ===== */
-.news-strip{
-  background:linear-gradient(90deg,var(--dark) 0%,var(--red) 100%);
-  padding:0 4vw;
+/* ===== NEWS CARD ===== */
+.news-card-section{
+  background:#fff;
+  padding:28px 4vw;
+  border-bottom:1px solid var(--bdr);
 }
-.news-strip-inner{
+.news-card{
   max-width:1080px;margin:0 auto;
-  display:flex;align-items:center;gap:16px;
-  padding:14px 0;
+  background:#fff;
+  border-left:4px solid var(--red);
+  border-radius:0 12px 12px 0;
+  box-shadow:0 4px 24px rgba(111,45,67,.12);
+  padding:22px 28px;
+  display:flex;align-items:flex-start;gap:20px;
+  transition:box-shadow .25s;
 }
-.news-strip-badge{
+.news-card:hover{box-shadow:0 8px 36px rgba(111,45,67,.2);}
+.news-card-icon{
   flex-shrink:0;
+  width:48px;height:48px;
+  background:var(--pale);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.news-card-icon svg{
+  width:26px;height:26px;
+  stroke:var(--red);fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+}
+.news-card-body{flex:1;}
+.news-card-label{
+  display:inline-block;
   background:var(--gold);color:#fff;
-  font-size:.68rem;font-weight:700;letter-spacing:.1em;
-  padding:4px 14px;border-radius:50px;white-space:nowrap;
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  padding:3px 12px;border-radius:50px;margin-bottom:8px;
 }
-.news-strip-items{flex:1;display:flex;flex-direction:column;gap:6px;}
-.news-strip-item{
-  display:flex;align-items:center;gap:12px;
-  color:#fff;text-decoration:none;font-size:.85rem;line-height:1.4;
-  transition:opacity .2s;
+.news-card-title{
+  font-size:1.1rem;font-weight:700;color:var(--dark);
+  margin-bottom:4px;line-height:1.4;
 }
-.news-strip-item:hover{opacity:.8;}
-.news-strip-date{font-size:.72rem;color:rgba(255,255,255,.65);flex-shrink:0;}
-.news-strip-title{flex:1;}
-.news-strip-arrow{
-  flex-shrink:0;font-size:.8rem;color:rgba(255,255,255,.8);
-  transition:transform .2s;white-space:nowrap;
+.news-card-meta{font-size:.78rem;color:var(--txt3);margin-bottom:10px;}
+.news-card-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--red);font-size:.88rem;font-weight:700;
+  text-decoration:none;border-bottom:1.5px solid var(--red);
+  transition:color .2s,border-color .2s;
 }
-.news-strip-item:hover .news-strip-arrow{transform:translateX(4px);}
+.news-card-link:hover{color:var(--dark);border-color:var(--dark);}
+.news-card-link svg{
+  width:14px;height:14px;stroke:currentColor;
+  fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .2s;
+}
+.news-card-link:hover svg{transform:translateX(3px);}
 @media(max-width:640px){
-  .news-strip-inner{flex-wrap:wrap;}
-  .news-strip-item{font-size:.8rem;}
+  .news-card{padding:18px 16px;gap:14px;}
+  .news-card-icon{width:40px;height:40px;}
+  .news-card-title{font-size:1rem;}
 }
 </style>
 </head>
@@ -1143,15 +1169,23 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
 </section>
 
-<!-- ===== NEWS STRIP ===== -->
-<div class="news-strip">
-  <div class="news-strip-inner">
-    <span class="news-strip-badge">重要なお知らせ</span>
-    <div class="news-strip-items">
-      <a href="news-payment.html" class="news-strip-item">
-        <span class="news-strip-date">2026年</span>
-        <span class="news-strip-title">授業料のお支払い・退塾について</span>
-        <span class="news-strip-arrow">詳しく読む →</span>
+<!-- ===== NEWS CARD ===== -->
+<div class="news-card-section">
+  <div class="news-card">
+    <div class="news-card-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        <circle cx="19" cy="5" r="3" fill="var(--red)" stroke="none"/>
+      </svg>
+    </div>
+    <div class="news-card-body">
+      <span class="news-card-label">重要なお知らせ</span>
+      <div class="news-card-title">授業料のお支払い・退塾について</div>
+      <div class="news-card-meta">2026年</div>
+      <a href="news-payment.html" class="news-card-link">
+        詳しく読む
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
   </div>
