@@ -1031,6 +1031,40 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .fr2{grid-template-columns:1fr;}
   .banner-row{grid-template-columns:repeat(2,1fr);}
 }
+/* ===== NEWS STRIP ===== */
+.news-strip{
+  background:linear-gradient(90deg,var(--dark) 0%,var(--red) 100%);
+  padding:0 4vw;
+}
+.news-strip-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;gap:16px;
+  padding:14px 0;
+}
+.news-strip-badge{
+  flex-shrink:0;
+  background:var(--gold);color:#fff;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  padding:4px 14px;border-radius:50px;white-space:nowrap;
+}
+.news-strip-items{flex:1;display:flex;flex-direction:column;gap:6px;}
+.news-strip-item{
+  display:flex;align-items:center;gap:12px;
+  color:#fff;text-decoration:none;font-size:.85rem;line-height:1.4;
+  transition:opacity .2s;
+}
+.news-strip-item:hover{opacity:.8;}
+.news-strip-date{font-size:.72rem;color:rgba(255,255,255,.65);flex-shrink:0;}
+.news-strip-title{flex:1;}
+.news-strip-arrow{
+  flex-shrink:0;font-size:.8rem;color:rgba(255,255,255,.8);
+  transition:transform .2s;white-space:nowrap;
+}
+.news-strip-item:hover .news-strip-arrow{transform:translateX(4px);}
+@media(max-width:640px){
+  .news-strip-inner{flex-wrap:wrap;}
+  .news-strip-item{font-size:.8rem;}
+}
 </style>
 </head>
 <body>
@@ -1108,6 +1142,20 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 
   </div>
 </section>
+
+<!-- ===== NEWS STRIP ===== -->
+<div class="news-strip">
+  <div class="news-strip-inner">
+    <span class="news-strip-badge">重要なお知らせ</span>
+    <div class="news-strip-items">
+      <a href="news-payment.html" class="news-strip-item">
+        <span class="news-strip-date">2026年</span>
+        <span class="news-strip-title">授業料のお支払い・退塾について</span>
+        <span class="news-strip-arrow">詳しく読む →</span>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- STATS -->
 <div class="stats">
