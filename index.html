@@ -1046,9 +1046,10 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   box-shadow:0 4px 24px rgba(111,45,67,.12);
   padding:22px 28px;
   display:flex;align-items:flex-start;gap:20px;
-  transition:box-shadow .25s;
+  transition:box-shadow .25s,transform .25s;
+  color:inherit;text-decoration:none;cursor:pointer;
 }
-.news-card:hover{box-shadow:0 8px 36px rgba(111,45,67,.2);}
+.news-card:hover{box-shadow:0 8px 36px rgba(111,45,67,.2);transform:translateY(-2px);}
 .news-card-icon{
   flex-shrink:0;
   width:48px;height:48px;
@@ -1171,7 +1172,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 
 <!-- ===== NEWS CARD ===== -->
 <div class="news-card-section">
-  <div class="news-card">
+  <a class="news-card" href="news-campaign-gw2026/index.html">
     <div class="news-card-icon">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -1183,12 +1184,12 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <span class="news-card-label">CAMPAIGN</span>
       <div class="news-card-title">【GW限定】4年目突入＆生徒数70名超記念 ゴールデンウィーク特別キャンペーン</div>
       <div class="news-card-meta">2026.04.28 - 05.10｜最大12,000円OFF・1ヶ月目半額・1週間無料体験</div>
-      <a href="news-campaign-gw2026/index.html" class="news-card-link">
+      <span class="news-card-link">
         詳しく読む
         <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+      </span>
     </div>
-  </div>
+  </a>
 </div>
 
 <!-- STATS -->
