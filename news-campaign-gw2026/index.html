@@ -203,6 +203,66 @@ section{padding:64px 4vw;}
   font-size:.72rem;opacity:.85;margin-top:1rem;letter-spacing:.04em;
 }
 
+/* === Mini inline LINE CTA bar === */
+.line-cta-mini{
+  background:linear-gradient(135deg,#06c755 0%,#04a045 100%);
+  color:#fff;border-radius:14px;padding:1.2rem 1.4rem;
+  display:flex;align-items:center;gap:1rem;
+  box-shadow:0 6px 20px rgba(6,199,85,.25);
+  margin:2rem auto;max-width:680px;
+  transition:transform .25s,box-shadow .25s;
+}
+.line-cta-mini:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(6,199,85,.35);}
+.line-cta-mini-icon{
+  width:42px;height:42px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.line-cta-mini-icon svg{width:26px;height:26px;color:#06c755;}
+.line-cta-mini-text{flex:1;}
+.line-cta-mini-text strong{display:block;font-family:"Kaisei Opti",serif;font-size:1.02rem;line-height:1.4;margin-bottom:.15rem;}
+.line-cta-mini-text small{font-size:.72rem;opacity:.92;letter-spacing:.04em;}
+.line-cta-mini-arrow{
+  background:#fff;color:#06c755;font-weight:700;
+  padding:8px 16px;border-radius:50px;font-size:.82rem;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.line-cta-mini-arrow svg{width:14px;height:14px;}
+
+/* === Hero inline LINE button === */
+.line-inline-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#06c755 0%,#04a045 100%);color:#fff;
+  font-weight:700;font-size:.88rem;
+  padding:11px 22px;border-radius:50px;
+  box-shadow:0 5px 16px rgba(6,199,85,.3);
+  transition:transform .25s,box-shadow .25s;margin-top:1.2rem;
+}
+.line-inline-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(6,199,85,.4);}
+.line-inline-btn svg{width:18px;height:18px;}
+
+/* === Floating LINE FAB === */
+.line-fab{
+  position:fixed;bottom:24px;right:24px;z-index:120;
+  background:linear-gradient(135deg,#06c755 0%,#04a045 100%);color:#fff;
+  font-weight:700;font-size:.88rem;letter-spacing:.04em;
+  padding:14px 22px;border-radius:50px;
+  box-shadow:0 10px 28px rgba(6,199,85,.45);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .25s,box-shadow .25s;
+}
+.line-fab:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(6,199,85,.55);}
+.line-fab svg{width:20px;height:20px;}
+.line-fab-pulse{
+  position:absolute;inset:0;border-radius:50px;
+  box-shadow:0 0 0 0 rgba(6,199,85,.6);
+  animation:linePulse 2.2s infinite;pointer-events:none;
+}
+@keyframes linePulse{
+  0%{box-shadow:0 0 0 0 rgba(6,199,85,.55);}
+  70%{box-shadow:0 0 0 14px rgba(6,199,85,0);}
+  100%{box-shadow:0 0 0 0 rgba(6,199,85,0);}
+}
+
 .note-list{
   background:var(--light);border-radius:12px;
   padding:1.2rem 1.4rem;margin:1.5rem 0;
@@ -521,6 +581,10 @@ footer a:hover{color:#e8b0a0;}
   .voices-grid{grid-template-columns:1fr;}
   .faq-body{padding:0 1.2rem 1.1rem 1.2rem;}
   .faq-item summary{font-size:.86rem;padding:1rem 1.2rem;}
+  .line-cta-mini{flex-direction:column;text-align:center;padding:1.1rem 1.2rem;gap:.7rem;}
+  .line-cta-mini-text strong{font-size:.95rem;}
+  .line-fab{bottom:14px;right:14px;padding:12px 18px;font-size:.8rem;}
+  .line-fab svg{width:18px;height:18px;}
 }
 </style>
 </head>
@@ -562,6 +626,10 @@ footer a:hover{color:#e8b0a0;}
     <span class="eyebrow">CAMPAIGN</span>
     <h1>【GW限定】4年目突入＆生徒数70名超を記念した<br><em>ゴールデンウィーク特別キャンペーン</em>のお知らせ</h1>
     <p class="page-hero-sub">日頃のご支援に感謝の気持ちを込めて、ゴールデンウィーク期間限定で3つの特別キャンペーンをご用意しました。期間内のお申し込みで、指導料金の割引や1ヶ月目の指導料半額などの特典が受けられます。</p>
+    <a href="https://line.me/ti/p/%40905eguri" class="line-inline-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      LINEで「体験」と送る
+    </a>
   </div>
 </div>
 
@@ -701,6 +769,20 @@ footer a:hover{color:#e8b0a0;}
       </div>
     </div>
 
+    <a href="https://line.me/ti/p/%40905eguri" class="line-cta-mini reveal" target="_blank" rel="noopener">
+      <div class="line-cta-mini-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      </div>
+      <div class="line-cta-mini-text">
+        <strong>気になった特典をLINEから即お申し込み</strong>
+        <small>「体験」とメッセージを送るだけ・1週間の無料体験つき</small>
+      </div>
+      <span class="line-cta-mini-arrow">
+        LINEで送る
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </a>
+
     <div style="text-align:center;margin-top:3rem;">
       <span class="sect-eyebrow reveal">FEATURE — 第1弾</span>
       <h2 class="sect-ttl reveal">最大級のお得さ <em>12,000円OFF×6ヶ月</em></h2>
@@ -764,6 +846,20 @@ footer a:hover{color:#e8b0a0;}
     </div>
 
     <div class="voices-grid" id="voicesGrid"></div>
+
+    <a href="https://line.me/ti/p/%40905eguri" class="line-cta-mini reveal" target="_blank" rel="noopener" style="margin-top:2.4rem;">
+      <div class="line-cta-mini-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      </div>
+      <div class="line-cta-mini-text">
+        <strong>あなたも「合格までの戦略」を一緒に立てませんか</strong>
+        <small>まずは無料の体験指導から・LINEで「体験」と送るだけ</small>
+      </div>
+      <span class="line-cta-mini-arrow">
+        LINEで送る
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -816,13 +912,22 @@ footer a:hover{color:#e8b0a0;}
 </section>
 
 <section class="cta-section">
-  <p class="cta-ttl">お問い合わせ・無料相談はこちら</p>
-  <p class="cta-sub">キャンペーンの詳細やコース内容について、ご不明な点がございましたらお気軽に無料相談よりお問い合わせください。<br>オンライン対応・全国どこからでも参加可能です。</p>
-  <a href="../index.html#contact" class="btn-r" style="font-size:1rem;padding:16px 36px;">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    無料学習相談を予約する →
+  <p class="cta-ttl">まずはLINEで「体験」と送るだけ</p>
+  <p class="cta-sub">期間内のお申し込みでキャンペーンが自動適用されます。1週間の無料体験は全コース対象。<br>オンライン対応・全国どこからでも参加可能です。</p>
+  <a href="https://line.me/ti/p/%40905eguri" class="line-cta-btn" target="_blank" rel="noopener" style="font-size:1.05rem;padding:16px 38px;">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    LINEで「体験」と送る
   </a>
+  <p style="font-size:.78rem;opacity:.7;margin-top:1.4rem;">
+    LINEではなく直接ご相談ご希望の方は <a href="../index.html#contact" style="color:#e8b0a0;text-decoration:underline;">無料学習相談フォーム</a> もご利用いただけます
+  </p>
 </section>
+
+<a href="https://line.me/ti/p/%40905eguri" class="line-fab" target="_blank" rel="noopener" aria-label="LINEで体験を申し込む">
+  <span class="line-fab-pulse" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+  LINEで体験する
+</a>
 
 <footer>
   <p style="margin-bottom:.5rem;font-family:'Kaisei Opti',serif;font-size:1rem;color:#fff;">プラトン</p>
