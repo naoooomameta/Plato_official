@@ -233,6 +233,247 @@ footer a:hover{color:#e8b0a0;}
 .reveal.on{opacity:1;transform:none;}
 .d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
+/* === Section common === */
+.sect-eyebrow{
+  display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.2em;
+  color:var(--course);margin-bottom:.6rem;
+}
+.sect-ttl{
+  font-family:"Kaisei Opti",serif;font-size:clamp(1.4rem,3vw,1.9rem);
+  font-weight:700;color:var(--txt);line-height:1.5;margin-bottom:1rem;
+}
+.sect-ttl em{font-style:normal;color:var(--course);}
+.sect-lead{font-size:.95rem;line-height:1.95;color:var(--txt2);margin-bottom:2rem;}
+
+/* === 塾長挨拶 === */
+.greet-box{
+  background:linear-gradient(180deg,#fff 0%,var(--cream) 100%);
+  border:1px solid var(--bdr);border-radius:18px;
+  padding:2rem 2rem;box-shadow:var(--sh);
+  max-width:820px;margin:0 auto;position:relative;
+}
+.greet-box::before{
+  content:"";position:absolute;top:0;left:32px;right:32px;height:4px;
+  background:linear-gradient(90deg,var(--course),var(--gold),var(--course));
+  border-radius:0 0 4px 4px;
+}
+.greet-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.4rem;color:var(--course);
+  margin-bottom:1.2rem;border-bottom:2px solid var(--pale);padding-bottom:.6rem;
+}
+.greet-body p{font-size:.92rem;line-height:2;color:var(--txt);margin-bottom:1rem;}
+.greet-sign{
+  text-align:right;margin-top:1.4rem;font-family:"Kaisei Opti",serif;
+  font-size:1rem;color:var(--course);
+}
+.greet-sign small{display:block;font-family:inherit;font-size:.72rem;color:var(--txt3);letter-spacing:.1em;margin-bottom:.2rem;font-weight:400;}
+
+/* === 実績数字カード === */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  max-width:900px;margin:0 auto;
+}
+.stat-card{
+  background:#fff;border:1px solid var(--bdr);border-radius:14px;
+  padding:1.4rem 1rem;text-align:center;box-shadow:var(--sh);
+  position:relative;overflow:hidden;
+}
+.stat-card::after{
+  content:"";position:absolute;left:0;top:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--course),var(--gold));
+}
+.stat-num{
+  font-family:"Kaisei Opti",serif;font-size:2.2rem;color:var(--course);
+  font-weight:700;line-height:1;display:flex;align-items:baseline;justify-content:center;gap:2px;
+}
+.stat-num .unit{font-size:.85rem;color:var(--mid);font-weight:700;margin-left:2px;}
+.stat-num .plus{font-size:1.2rem;color:var(--gold);}
+.stat-label{font-size:.78rem;color:var(--txt2);margin-top:.5rem;letter-spacing:.04em;line-height:1.5;}
+
+/* === 生徒数推移バーチャート === */
+.chart-wrap{
+  max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--bdr);
+  border-radius:18px;padding:2rem 1.6rem 1.6rem;box-shadow:var(--sh);
+}
+.chart-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.1rem;color:var(--txt);
+  text-align:center;margin-bottom:1.4rem;
+}
+.chart-bars{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  height:240px;align-items:end;padding:0 .4rem;
+}
+.bar-col{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;gap:6px;}
+.bar-val{font-family:"Kaisei Opti",serif;font-size:1rem;color:var(--course);font-weight:700;}
+.bar{
+  width:80%;max-width:60px;border-radius:8px 8px 0 0;
+  background:linear-gradient(180deg,var(--mid) 0%,var(--course) 100%);
+  position:relative;transition:height 1.2s cubic-bezier(.2,.8,.3,1);
+  box-shadow:0 -3px 8px rgba(111,45,67,.18) inset;
+}
+.bar.year4{background:linear-gradient(180deg,var(--gold) 0%,var(--course) 100%);}
+.bar-lbl{font-size:.78rem;color:var(--txt2);font-weight:700;margin-top:4px;}
+.chart-note{
+  text-align:center;font-size:.74rem;color:var(--txt3);margin-top:1.2rem;letter-spacing:.04em;
+}
+
+/* === 合格実績ダーク === */
+.results-dark{
+  background:linear-gradient(160deg,var(--dark) 0%,#1f0710 100%);
+  color:#fff;border-radius:0;margin:0 -4vw;padding:64px 4vw;
+  position:relative;overflow:hidden;
+}
+.results-dark::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(201,160,96,.08) 1px,transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+.results-inner{max-width:900px;margin:0 auto;position:relative;z-index:2;}
+.results-dark .sect-eyebrow{color:var(--gold);}
+.results-dark .sect-ttl{color:#fff;}
+.results-dark .sect-ttl em{color:var(--gold);}
+.results-dark .sect-lead{color:rgba(255,255,255,.78);}
+.school-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+}
+.school-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(201,160,96,.25);
+  border-radius:12px;padding:1rem .8rem;text-align:center;
+  transition:all .3s;
+}
+.school-card:hover{background:rgba(201,160,96,.08);border-color:var(--gold);}
+.school-name{
+  font-family:"Kaisei Opti",serif;font-size:1rem;color:#fff;font-weight:700;
+}
+.school-tier{font-size:.66rem;color:var(--gold);letter-spacing:.15em;margin-top:.2rem;}
+
+/* === 3弾カード === */
+.tier-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  max-width:980px;margin:0 auto;
+}
+.tier-card{
+  background:#fff;border:2px solid var(--bdr);border-radius:18px;
+  padding:1.8rem 1.4rem 1.6rem;position:relative;
+  box-shadow:var(--sh);transition:transform .3s,box-shadow .3s;
+}
+.tier-card:hover{transform:translateY(-4px);box-shadow:var(--sh2);}
+.tier-card.featured{border:2px solid var(--course);background:linear-gradient(180deg,#fff 0%,#fff8f5 100%);}
+.tier-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--course);color:#fff;font-size:.7rem;font-weight:700;
+  padding:5px 14px;border-radius:50px;letter-spacing:.1em;white-space:nowrap;
+  box-shadow:0 4px 12px rgba(111,45,67,.3);
+}
+.tier-badge.gold{background:linear-gradient(135deg,var(--gold) 0%,#b08540 100%);}
+.tier-no{
+  font-family:"Kaisei Opti",serif;font-size:.8rem;color:var(--mid);
+  letter-spacing:.2em;text-align:center;margin-bottom:.4rem;
+}
+.tier-period{
+  text-align:center;font-size:.82rem;color:var(--txt2);font-weight:700;
+  margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px dashed var(--bdr);
+}
+.tier-headline{
+  text-align:center;font-family:"Kaisei Opti",serif;
+  font-size:1.4rem;color:var(--course);font-weight:700;line-height:1.4;
+  margin-bottom:.4rem;
+}
+.tier-headline strong{color:var(--dark);font-size:1.7rem;}
+.tier-sub{text-align:center;font-size:.84rem;color:var(--txt2);line-height:1.7;}
+
+/* === 無料体験ブロック === */
+.taiken-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  max-width:900px;margin:0 auto;
+}
+.taiken-card{
+  background:#fff;border:1px solid var(--bdr);border-radius:14px;
+  padding:1.4rem 1.2rem;text-align:center;box-shadow:var(--sh);
+}
+.taiken-icon{
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,var(--pale) 0%,#fff 100%);
+  border:2px solid var(--course);color:var(--course);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;font-family:"Kaisei Opti",serif;font-size:1.3rem;font-weight:700;
+}
+.taiken-ttl{
+  font-family:"Kaisei Opti",serif;font-size:.98rem;color:var(--txt);
+  font-weight:700;line-height:1.5;
+}
+
+/* === 保護者の声 === */
+.voices-filter{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:2rem;
+}
+.vf-btn{
+  background:#fff;border:1.5px solid var(--bdr);color:var(--txt2);
+  font-size:.78rem;font-weight:700;padding:8px 16px;border-radius:50px;
+  cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.05em;
+}
+.vf-btn:hover{border-color:var(--course);color:var(--course);}
+.vf-btn.active{background:var(--course);border-color:var(--course);color:#fff;}
+.voices-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  max-width:1000px;margin:0 auto;
+}
+.voice-card{
+  background:#fff;border:1px solid var(--bdr);border-radius:14px;
+  padding:1.4rem 1.4rem;box-shadow:var(--sh);
+  display:flex;flex-direction:column;gap:.8rem;
+}
+.voice-head{
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  padding-bottom:.7rem;border-bottom:1px dashed var(--bdr);
+}
+.voice-no{
+  font-family:"Kaisei Opti",serif;font-size:.8rem;color:var(--mid);
+  background:var(--pale);padding:2px 10px;border-radius:50px;letter-spacing:.05em;
+}
+.voice-attr{font-size:.78rem;color:var(--txt2);font-weight:700;}
+.voice-school{
+  font-family:"Kaisei Opti",serif;font-size:.95rem;color:var(--course);
+  font-weight:700;width:100%;margin-top:.2rem;
+}
+.voice-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.voice-tag{
+  font-size:.66rem;color:var(--course);background:var(--pale);
+  padding:2px 8px;border-radius:50px;font-weight:700;letter-spacing:.04em;
+}
+.voice-q{margin-top:.2rem;}
+.voice-q-ttl{
+  font-size:.74rem;color:var(--mid);font-weight:700;letter-spacing:.06em;margin-bottom:.3rem;
+}
+.voice-q-body{font-size:.84rem;line-height:1.85;color:var(--txt);}
+
+/* === FAQ === */
+.faq-wrap{max-width:780px;margin:0 auto;}
+.faq-item{
+  background:#fff;border:1px solid var(--bdr);border-radius:12px;
+  margin-bottom:10px;overflow:hidden;box-shadow:var(--sh);
+}
+.faq-item summary{
+  padding:1.1rem 1.4rem;font-size:.92rem;font-weight:700;color:var(--txt);
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:.8rem;
+  transition:background .2s;
+}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary:hover{background:var(--pale);}
+.faq-item summary::before{
+  content:"Q";font-family:"Kaisei Opti",serif;font-size:1.1rem;color:var(--course);
+  background:var(--pale);width:30px;height:30px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.faq-item summary::after{
+  content:"+";margin-left:auto;font-size:1.4rem;color:var(--mid);font-weight:400;
+  transition:transform .2s;
+}
+.faq-item[open] summary::after{content:"−";}
+.faq-body{
+  padding:0 1.4rem 1.2rem 4.2rem;font-size:.86rem;line-height:1.95;color:var(--txt2);
+}
+
 @media (max-width:768px){
   .page-hero{padding:48px 4vw 44px;}
   .page-hero h1{font-size:1.4rem;line-height:1.55;}
@@ -242,6 +483,18 @@ footer a:hover{color:#e8b0a0;}
   .line-cta{padding:1.6rem 1.2rem;}
   .line-cta h3{font-size:1.1rem;}
   .cta-ttl{font-size:1.3rem;}
+  .greet-box{padding:1.4rem 1.2rem;}
+  .greet-ttl{font-size:1.15rem;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-num{font-size:1.7rem;}
+  .chart-bars{height:180px;gap:8px;}
+  .chart-wrap{padding:1.4rem 1rem 1.2rem;}
+  .school-grid{grid-template-columns:repeat(2,1fr);}
+  .tier-grid{grid-template-columns:1fr;}
+  .taiken-grid{grid-template-columns:1fr;}
+  .voices-grid{grid-template-columns:1fr;}
+  .faq-body{padding:0 1.2rem 1.1rem 1.2rem;}
+  .faq-item summary{font-size:.86rem;padding:1rem 1.2rem;}
 }
 </style>
 </head>
@@ -295,54 +548,230 @@ footer a:hover{color:#e8b0a0;}
       日頃のご支援への感謝を込めて、<strong style="color:var(--red);">ゴールデンウィーク期間限定で3つの特典</strong>をご用意しています。1週間の無料体験も全コースを対象に実施中です。
     </div>
 
+    <div class="greet-box reveal">
+      <h2 class="greet-ttl">4年目を迎えて</h2>
+      <div class="greet-body">
+        <p>プラトンは2023年の春に、文系の大学受験に特化したオンライン個別指導塾としてスタートしました。たった一人の生徒さんからお預かりした学習計画が、いま70名を超えるご家庭に広がっていることを、心から嬉しく、また身が引き締まる思いで受け止めています。</p>
+        <p>4年目に入った今も、私たちが大切にしている軸は変わりません。「参考書をどう読むか」「合格までの逆算をどう描くか」――この本質的な部分を、専属の講師が生徒一人ひとりに寄り添って磨き続けることです。偏差値が30台から早慶へ、E判定から国立へ。多くの逆転合格を積み重ねてこられたのは、生徒さんとご家族が「最後まで信じて任せてくださった」結果に他なりません。</p>
+        <p>このゴールデンウィークは、4年目の節目と70名突破の御礼として、これまでで最大級のキャンペーンをご用意しました。新しい一歩を踏み出すどなたにとっても、迷いを払うきっかけになれば幸いです。</p>
+      </div>
+      <p class="greet-sign"><small>文系の大学受験専門塾 プラトン</small>塾長　佐野 翼</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:linear-gradient(180deg,var(--cream) 0%,#fff 100%);">
+  <div class="article-wrap" style="text-align:center;">
+    <span class="sect-eyebrow reveal">OUR NUMBERS</span>
+    <h2 class="sect-ttl reveal">数字で見る<em>プラトン4年間</em>の歩み</h2>
+    <p class="sect-lead reveal">小さな塾としてスタートしてから、生徒さんとご家族に支えられ、ここまで成長してきました。</p>
+
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-num">4<span class="unit">年目</span></div>
+        <div class="stat-label">2023年開塾<br>運営年数</div>
+      </div>
+      <div class="stat-card reveal d1">
+        <div class="stat-num">70<span class="plus">+</span></div>
+        <div class="stat-label">現在の<br>在籍生徒数</div>
+      </div>
+      <div class="stat-card reveal d2">
+        <div class="stat-num">200<span class="plus">+</span></div>
+        <div class="stat-label">これまでの<br>累計指導生徒</div>
+      </div>
+      <div class="stat-card reveal d3">
+        <div class="stat-num">90<span class="unit">%超</span></div>
+        <div class="stat-label">第1志望<br>合格率</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap reveal" style="margin-top:2.4rem;">
+      <p class="chart-ttl">在籍生徒数の推移</p>
+      <div class="chart-bars">
+        <div class="bar-col">
+          <span class="bar-val">10名</span>
+          <div class="bar" style="height:14%;"></div>
+          <span class="bar-lbl">1年目</span>
+        </div>
+        <div class="bar-col">
+          <span class="bar-val">30名</span>
+          <div class="bar" style="height:42%;"></div>
+          <span class="bar-lbl">2年目</span>
+        </div>
+        <div class="bar-col">
+          <span class="bar-val">55名</span>
+          <div class="bar" style="height:78%;"></div>
+          <span class="bar-lbl">3年目</span>
+        </div>
+        <div class="bar-col">
+          <span class="bar-val">70名超</span>
+          <div class="bar year4" style="height:100%;"></div>
+          <span class="bar-lbl">4年目</span>
+        </div>
+      </div>
+      <p class="chart-note">※各年度4月時点の在籍生徒数（自塾調べ）</p>
+    </div>
+  </div>
+</section>
+
+<section class="results-dark">
+  <div class="results-inner">
+    <div style="text-align:center;margin-bottom:2.4rem;">
+      <span class="sect-eyebrow reveal">RESULTS</span>
+      <h2 class="sect-ttl reveal">主な<em>合格実績</em></h2>
+      <p class="sect-lead reveal">難関国公立から早慶上智、MARCH・関関同立まで。文系の合格者を全国から輩出しています。</p>
+    </div>
+    <div class="school-grid">
+      <div class="school-card reveal"><div class="school-name">一橋大学</div><div class="school-tier">NATIONAL</div></div>
+      <div class="school-card reveal d1"><div class="school-name">北海道大学</div><div class="school-tier">NATIONAL</div></div>
+      <div class="school-card reveal d2"><div class="school-name">筑波大学</div><div class="school-tier">NATIONAL</div></div>
+      <div class="school-card reveal"><div class="school-name">早稲田大学</div><div class="school-tier">PRIVATE TOP</div></div>
+      <div class="school-card reveal d1"><div class="school-name">慶應義塾大学</div><div class="school-tier">PRIVATE TOP</div></div>
+      <div class="school-card reveal d2"><div class="school-name">上智大学</div><div class="school-tier">PRIVATE TOP</div></div>
+      <div class="school-card reveal"><div class="school-name">MARCH</div><div class="school-tier">明治・青山・立教・中央・法政</div></div>
+      <div class="school-card reveal d1"><div class="school-name">同志社大学</div><div class="school-tier">KANKANDORITSU</div></div>
+      <div class="school-card reveal d2"><div class="school-name">関西大学</div><div class="school-tier">KANKANDORITSU</div></div>
+    </div>
+    <p class="chart-note" style="color:rgba(255,255,255,.55);margin-top:1.4rem;">※過去3年間の主な合格実績。合格者数・最新の実績はLINEよりお問い合わせください。</p>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="article-wrap">
+    <div style="text-align:center;">
+      <span class="sect-eyebrow reveal">CAMPAIGN OVERVIEW</span>
+      <h2 class="sect-ttl reveal">3つの特典を<em>順番にご用意</em></h2>
+      <p class="sect-lead reveal">キャンペーンは期間を3つに区切り、お申し込みのタイミングに応じた特典をご用意しています。期間内にお申し込みいただくと、自動的にその期間の特典が適用されます。</p>
+    </div>
+
     <div class="campaign-img reveal">
       <img src="images/main.png" alt="GW特別キャンペーン｜3つの特典の全体像">
     </div>
 
-    <h2 class="article-h2">3つの特典を順番にご用意</h2>
-    <div class="article-body reveal">
-      <p>キャンペーンは期間を3つに区切り、お申し込みのタイミングに応じた特典を順番にご用意しています。下記いずれかの期間内にお申し込みいただくと、自動的にその期間の特典が適用されます。</p>
+    <div class="tier-grid" style="margin-top:2rem;">
+      <div class="tier-card featured reveal">
+        <span class="tier-badge gold">最もお得</span>
+        <p class="tier-no">FIRST</p>
+        <p class="tier-period">4/28(火) 〜 5/1(金)</p>
+        <p class="tier-headline"><strong>12,000円</strong>OFF</p>
+        <p class="tier-sub">入塾から6ヶ月間、毎月の指導料金を12,000円割引（全コース対象）</p>
+      </div>
+      <div class="tier-card reveal d1">
+        <span class="tier-badge">第2弾</span>
+        <p class="tier-no">SECOND</p>
+        <p class="tier-period">5/2(土) 〜 5/6(火)</p>
+        <p class="tier-headline">1ヶ月目<br><strong>半額</strong></p>
+        <p class="tier-sub">入塾月の指導料金が半額になります（全コース対象）</p>
+      </div>
+      <div class="tier-card reveal d2">
+        <span class="tier-badge">第3弾</span>
+        <p class="tier-no">THIRD</p>
+        <p class="tier-period">5/7(木) 〜 5/10(日)</p>
+        <p class="tier-headline"><strong>10,000円</strong>OFF</p>
+        <p class="tier-sub">全コースの指導料金から10,000円を割引（全コース対象）</p>
+      </div>
     </div>
 
-    <div class="summary-box reveal">
-      <h3>キャンペーン概要</h3>
-      <ul>
-        <li><strong>第1弾（4/28(火)〜5/1(金)）</strong>：入塾から6ヶ月間、指導料金 <strong>12,000円OFF</strong>（一番お得・全コース対象）</li>
-        <li><strong>第2弾（5/2(土)〜5/6(火)）</strong>：1ヶ月目の指導料が <strong>半額</strong>（全コース対象）</li>
-        <li><strong>第3弾（5/7(木)〜5/10(日)）</strong>：全コースの指導料金 <strong>10,000円OFF</strong></li>
-        <li><strong>全期間共通</strong>：<strong>1週間の無料体験</strong>あり（全コース対象）</li>
-      </ul>
-    </div>
-
-    <h2 class="article-h2">第1弾：指導料金 12,000円OFF（一番お得）</h2>
-    <div class="article-body reveal">
-      <p>4/28(火)〜5/1(金) のお申し込み限定で、入塾から6ヶ月間、指導料金が毎月12,000円OFFになります。3つの特典の中で最もお得なプランです。</p>
+    <div style="text-align:center;margin-top:3rem;">
+      <span class="sect-eyebrow reveal">FEATURE — 第1弾</span>
+      <h2 class="sect-ttl reveal">最大級のお得さ <em>12,000円OFF×6ヶ月</em></h2>
+      <p class="sect-lead reveal">4/28(火)〜5/1(金) 申し込み限定。入塾から6ヶ月間、毎月12,000円が割引され続けます。3つの特典の中で最もお得なプランです。</p>
     </div>
 
     <div class="campaign-img reveal">
       <img src="images/feature-1.png" alt="第1弾 指導料金12,000円OFFの詳細">
     </div>
 
-    <div class="summary-box reveal">
-      <h3>1週間の無料体験について</h3>
-      <ul>
-        <li>志望校合格までの戦略立て</li>
-        <li>参考書を用いた本質的な指導</li>
-        <li>専属講師による完全個別指導</li>
-      </ul>
+    <div style="text-align:center;margin-top:3rem;">
+      <span class="sect-eyebrow reveal">FREE TRIAL</span>
+      <h2 class="sect-ttl reveal">全期間共通 <em>1週間の無料体験</em></h2>
+      <p class="sect-lead reveal">プラトンの指導をそのまま1週間ご体験いただけます。体験後の入会は任意。気軽にお試しください。</p>
     </div>
 
-    <div class="line-cta reveal">
+    <div class="taiken-grid">
+      <div class="taiken-card reveal">
+        <div class="taiken-icon">1</div>
+        <p class="taiken-ttl">志望校合格までの<br>戦略立て</p>
+      </div>
+      <div class="taiken-card reveal d1">
+        <div class="taiken-icon">2</div>
+        <p class="taiken-ttl">参考書を用いた<br>本質的な指導</p>
+      </div>
+      <div class="taiken-card reveal d2">
+        <div class="taiken-icon">3</div>
+        <p class="taiken-ttl">専属講師による<br>完全個別指導</p>
+      </div>
+    </div>
+
+    <div class="line-cta reveal" style="margin-top:2.6rem;">
       <span class="line-cta-eyebrow">お申し込み方法</span>
       <h3>LINEで「体験」とメッセージを送信！</h3>
-      <p>期間内のお申し込みで、キャンペーンが適用されます。<br>お気軽にご連絡ください。</p>
+      <p>期間内のお申し込みで、キャンペーンが自動適用されます。<br>お気軽にご連絡ください。</p>
       <a href="https://line.me/ti/p/%40905eguri" class="line-cta-btn" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
         LINEで「体験」と送る
       </a>
       <p class="line-cta-note">※本キャンペーンは予告なく終了する場合がございます。</p>
     </div>
+  </div>
+</section>
 
+<section style="background:linear-gradient(180deg,var(--cream) 0%,var(--pale) 100%);">
+  <div class="article-wrap">
+    <div style="text-align:center;">
+      <span class="sect-eyebrow reveal">PARENTS' VOICES</span>
+      <h2 class="sect-ttl reveal">保護者の<em>リアルな声</em></h2>
+      <p class="sect-lead reveal">入塾のきっかけと、入塾後の変化。実際に通われたご家庭から寄せられた声を一部ご紹介します。</p>
+    </div>
+
+    <div class="voices-filter" id="voicesFilter">
+      <button class="vf-btn active" data-filter="all">すべて</button>
+      <button class="vf-btn" data-filter="国立">国立</button>
+      <button class="vf-btn" data-filter="早慶上智">早慶上智</button>
+      <button class="vf-btn" data-filter="MARCH">MARCH</button>
+      <button class="vf-btn" data-filter="関関同立">関関同立</button>
+      <button class="vf-btn" data-filter="地方">地方</button>
+      <button class="vf-btn" data-filter="逆転">逆転合格</button>
+    </div>
+
+    <div class="voices-grid" id="voicesGrid"></div>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="article-wrap">
+    <div style="text-align:center;">
+      <span class="sect-eyebrow reveal">FAQ</span>
+      <h2 class="sect-ttl reveal">よくあるご質問</h2>
+      <p class="sect-lead reveal">キャンペーン・無料体験・受講条件について、お問い合わせの多い項目をまとめました。</p>
+    </div>
+    <div class="faq-wrap">
+      <details class="faq-item reveal">
+        <summary>体験は本当に無料ですか？費用は一切かかりませんか？</summary>
+        <div class="faq-body">はい、1週間の無料体験は完全無料です。教材費・入会金・カウンセリング料を含め、体験中に費用が発生することはありません。体験後の入会も任意で、無理な勧誘は一切いたしません。</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>全国どこからでも受講できますか？</summary>
+        <div class="faq-body">はい、プラトンは完全オンラインでの個別指導塾です。インターネット環境とPC・タブレット端末があれば、北海道から沖縄まで全国どこからでもご受講いただけます。海外在住の方の受講実績もございます。</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>中学生でも受講可能ですか？</summary>
+        <div class="faq-body">高校受験対策ではなく「将来の大学受験を見据えた学習」を目的とする中学生の方は受講可能です。中学3年生で英語・現代文の早期スタートをご希望の方など、まずは無料体験でご相談ください。</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>キャンペーンはいつまで実施していますか？</summary>
+        <div class="faq-body">第1弾が4/28(火)〜5/1(金)、第2弾が5/2(土)〜5/6(火)、第3弾が5/7(木)〜5/10(日)です。お申し込みのタイミングで適用される特典が自動的に決まります。期間外の入塾には適用されませんのでご注意ください。</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>入塾するか迷っているのですが、相談だけでも大丈夫ですか？</summary>
+        <div class="faq-body">もちろん大丈夫です。お子さまの現状や志望校、これまでの学習状況などをお伺いした上で、プラトンが本当にお役に立てそうかを率直にお伝えします。合わないと判断した場合は、他の選択肢をご提案することもあります。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;padding-top:0;">
+  <div class="article-wrap">
     <ul class="note-list reveal">
       <li>キャンペーン適用は、各期間内にお申し込みいただいた方が対象です。</li>
       <li>第1弾の12,000円OFFは入塾から6ヶ月間継続して適用されます。</li>
@@ -384,6 +813,127 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
 }, {threshold: .1});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+(function(){
+  const voices = [
+    {n:1, gender:"母", grade:"高3", school:"一橋大学 商学部", tier:"国立", tags:["難関国立","逆転合格"],
+      q1:"高3春の模試でE判定。本人は一橋を諦めかけていましたが、文系専門という点と、参考書ベースで進める方針に魅力を感じて入塾を決めました。",
+      q4:"毎週の戦略面談で『今やるべきこと』が明確になり、夏以降は本人が自走できるように。秋にはB判定まで戻り、最後は商学部に合格できました。",
+      cat:["国立","逆転"]},
+    {n:2, gender:"母", grade:"高3", school:"北海道大学 法学部", tier:"国立", tags:["難関国立"],
+      q1:"地方在住で予備校に通いにくく、オンラインで質の高い文系指導を探していました。体験で講師の方の説明が丁寧で、安心して任せられると感じました。",
+      q4:"二次試験の論述対策がしっかり積み上がり、添削の往復で文章力が見違えるように上達。共通テストの戦略立ても助かりました。",
+      cat:["国立","地方"]},
+    {n:3, gender:"父", grade:"高3", school:"筑波大学 情報学群", tier:"国立", tags:["難関国立"],
+      q1:"二次の英語と現代文に不安があり、専属の先生に継続して見てもらえる塾を探していました。最初の面談で課題を的確に指摘していただき、即決でした。",
+      q4:"参考書1冊を完璧にする、という姿勢が娘にも伝わり、復習の質が大きく変わりました。安定して合格点を取れるようになりました。",
+      cat:["国立"]},
+    {n:4, gender:"母", grade:"高3", school:"大阪大学 外国語学部", tier:"国立", tags:["難関国立","逆転合格"],
+      q1:"夏の判定がDで、母娘ともに焦っていました。文系専門・完全個別という条件にぴったりで、最後の半年に賭けるつもりでお願いしました。",
+      q4:"毎日のタスクが明確になり、不安で勉強が手につかなかった娘が落ち着いて机に向かえるように。共通テスト後の出願戦略も的確でした。",
+      cat:["国立","逆転"]},
+    {n:5, gender:"母", grade:"高3", school:"神戸大学 文学部", tier:"国立", tags:["難関国立"],
+      q1:"通っていた集団塾では質問しづらいタイプで、伸び悩んでいました。専属の先生がついてくれる体制を見て、息子に合うと感じました。",
+      q4:"分からない部分を遠慮なく質問できるようになり、現代文の点数が安定。二次の論述も最後まで丁寧に対策していただきました。",
+      cat:["国立"]},
+    {n:6, gender:"父", grade:"高3", school:"東北大学 経済学部", tier:"国立", tags:["難関国立","逆転合格"],
+      q1:"高3の6月時点で偏差値50台前半。地元の塾では限界を感じ、オンラインで本格的な指導をお願いできる塾を探していました。",
+      q4:"参考書ルートが具体的で、本人が『今、何をどこまでやれば良いか』迷わなくなりました。最後まで諦めずに走り切れたのが大きかったです。",
+      cat:["国立","逆転"]},
+    {n:7, gender:"母", grade:"高3", school:"早稲田大学 法学部", tier:"早慶上智", tags:["私立最難関"],
+      q1:"早稲田法を目指しましたが、世界史の暗記が追いつかず焦っていました。専門塾で体系的に教わりたいと思い、入塾を決めました。",
+      q4:"重要テーマを軸にした指導で、点と点が線でつながる感覚を持てたようです。過去問の得点率が一気に上がりました。",
+      cat:["早慶上智"]},
+    {n:8, gender:"母", grade:"高3", school:"早稲田大学 商学部", tier:"早慶上智", tags:["私立最難関","逆転合格"],
+      q1:"夏の模試で早稲田はE判定。本人がどうしても諦められず、最後の挑戦のつもりで体験を受けました。先生の話を聞いて娘が前向きになったのが入塾の決め手です。",
+      q4:"英語長文の読み方が変わり、設問処理が早くなったと本人が話していました。秋以降に得点が急伸し、無事に合格できました。",
+      cat:["早慶上智","逆転"]},
+    {n:9, gender:"父", grade:"高3", school:"慶應義塾大学 経済学部", tier:"早慶上智", tags:["私立最難関"],
+      q1:"小論文対策が手薄で、独学では限界を感じていました。文系専門で添削までしていただける点が魅力でした。",
+      q4:"論理の組み立てを毎週鍛えていただき、書く速度と精度が大きく向上。本番でも落ち着いて取り組めたようです。",
+      cat:["早慶上智"]},
+    {n:10, gender:"母", grade:"高3", school:"慶應義塾大学 文学部", tier:"早慶上智", tags:["私立最難関"],
+      q1:"国語が安定せず、模試の波が大きい点が悩みでした。古文・現代文を体系的に教わりたく、こちらにお願いしました。",
+      q4:"読解の手順が定着し、模試の点数の振れ幅がどんどん小さくなりました。本人の精神的な余裕にもつながったと思います。",
+      cat:["早慶上智"]},
+    {n:11, gender:"母", grade:"高3", school:"上智大学 総合人間科学部", tier:"早慶上智", tags:["私立最難関","逆転合格"],
+      q1:"高3夏の段階で英検準1級が必要と知り、対策が間に合うか不安でした。専属講師がスケジュールから組んでくれる塾を探していました。",
+      q4:"英検対策と本試験対策を並行で組んでいただき、無事に準1級を取得。英語に自信がついたことで他教科の伸びにもつながりました。",
+      cat:["早慶上智","逆転"]},
+    {n:12, gender:"父", grade:"高3", school:"明治大学 政治経済学部", tier:"MARCH", tags:["MARCH"],
+      q1:"部活引退が遅く、本格的な受験勉強のスタートが夏でした。短期間で仕上げるための戦略立てが必要と感じ、専門塾を選びました。",
+      q4:"優先順位を明確にした学習計画で、無駄なく進められたのが大きかったです。秋以降の伸びにつながりました。",
+      cat:["MARCH"]},
+    {n:13, gender:"母", grade:"高3", school:"立教大学 経営学部", tier:"MARCH", tags:["MARCH"],
+      q1:"志望校がなかなか定まらず、進路面談から相談したいと思っていました。第一志望を一緒に決めてくださる雰囲気が決め手でした。",
+      q4:"娘の興味を引き出してくださり、立教経営に出会えました。目標が定まってから勉強への向き合い方が変わりました。",
+      cat:["MARCH"]},
+    {n:14, gender:"母", grade:"高3", school:"中央大学 法学部", tier:"MARCH", tags:["MARCH","逆転合格"],
+      q1:"国語が苦手で、特に古文がほぼ手付かずの状態でした。基礎から教えていただける塾を探して、こちらに辿り着きました。",
+      q4:"古文の文法・単語を順序立てて学べたことで、読めなかった文章が読めるようになりました。最後は得点源にまでなりました。",
+      cat:["MARCH","逆転"]},
+    {n:15, gender:"父", grade:"高3", school:"青山学院大学 国際政治経済学部", tier:"MARCH", tags:["MARCH"],
+      q1:"英語民間試験の活用方式を狙っており、対策のノウハウがある塾を探していました。文系専門という点で信頼できると感じました。",
+      q4:"民間試験のスコアアップから本試験対策まで、一気通貫でサポートしていただきました。出願戦略も心強かったです。",
+      cat:["MARCH"]},
+    {n:16, gender:"母", grade:"高3", school:"同志社大学 文学部", tier:"関関同立", tags:["関関同立"],
+      q1:"関西在住ですが、信頼できる文系専門塾が近くになく、オンラインで通えるこちらを選びました。体験指導で娘の表情が明るくなりました。",
+      q4:"日本史の覚え方を根本から教えていただき、暗記が苦行ではなくなったようです。秋以降の模試で安定して合格圏に入りました。",
+      cat:["関関同立"]},
+    {n:17, gender:"母", grade:"高3", school:"立命館大学 国際関係学部", tier:"関関同立", tags:["関関同立","逆転合格"],
+      q1:"高3になっても志望校が決まらず、英語も伸び悩んでいました。とにかく面談で進路から相談したいと思いました。",
+      q4:"国際関係に興味があるという娘の気持ちを引き出してくださり、立命館の国関を志望に。短期で英語の伸びも実感できました。",
+      cat:["関関同立","逆転"]},
+    {n:18, gender:"父", grade:"高3", school:"関西大学 経済学部", tier:"関関同立", tags:["関関同立"],
+      q1:"集団塾で授業についていけず、自信を失っていました。完全個別で1から教えていただきたいと思い、入塾を決めました。",
+      q4:"分からないところを恥ずかしがらずに質問できるようになり、息子の表情が変わりました。基礎が固まり、過去問でも得点できるように。",
+      cat:["関関同立"]},
+    {n:19, gender:"母", grade:"高3", school:"広島大学 教育学部", tier:"地方国立", tags:["地方国立"],
+      q1:"地元の進学校に通っていますが、二次試験の小論文対策が学校だけでは手薄で、専門の指導を探していました。",
+      q4:"小論文の添削で、教育観について深く考える機会を持てたようです。論述試験本番でも落ち着いて書ききれました。",
+      cat:["国立","地方"]},
+    {n:20, gender:"父", grade:"高3", school:"新潟大学 法学部", tier:"地方国立", tags:["地方国立","逆転合格"],
+      q1:"夏休み明けにC判定で、本人が不安を抱えていました。地方在住でも質の高い指導が受けられるオンライン塾を探していました。",
+      q4:"共通テストの戦略と二次の論述、両方を計画的に対策していただきました。直前期の精神的な支えにもなり、無事合格できました。",
+      cat:["国立","地方","逆転"]}
+  ];
+
+  const grid = document.getElementById('voicesGrid');
+  const filterWrap = document.getElementById('voicesFilter');
+
+  function render(filter){
+    const list = filter === 'all' ? voices : voices.filter(v => v.cat.includes(filter));
+    grid.innerHTML = list.map(v => `
+      <article class="voice-card reveal">
+        <div class="voice-head">
+          <span class="voice-no">CASE ${String(v.n).padStart(2,'0')}</span>
+          <span class="voice-attr">${v.gender}・${v.grade}</span>
+          <div class="voice-tags">${v.tags.map(t => `<span class="voice-tag">${t}</span>`).join('')}</div>
+          <span class="voice-school">${v.school}</span>
+        </div>
+        <div class="voice-q">
+          <p class="voice-q-ttl">Q. 入塾のきっかけは？</p>
+          <p class="voice-q-body">${v.q1}</p>
+        </div>
+        <div class="voice-q">
+          <p class="voice-q-ttl">Q. 入塾後の変化は？</p>
+          <p class="voice-q-body">${v.q4}</p>
+        </div>
+      </article>
+    `).join('');
+    grid.querySelectorAll('.reveal').forEach(el => { el.classList.add('on'); });
+  }
+
+  filterWrap.addEventListener('click', e => {
+    const btn = e.target.closest('.vf-btn');
+    if (!btn) return;
+    filterWrap.querySelectorAll('.vf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render(btn.dataset.filter);
+  });
+
+  render('all');
+})();
 </script>
 </body>
 </html>
