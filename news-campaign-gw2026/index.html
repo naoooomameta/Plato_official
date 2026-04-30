@@ -301,18 +301,21 @@ footer a:hover{color:#e8b0a0;}
 }
 .chart-bars{
   display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-  height:280px;align-items:end;padding:32px .4rem 0;position:relative;
+  height:320px;padding:36px .4rem 0;position:relative;
 }
-.bar-col{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;gap:6px;position:relative;}
+.bar-col{display:flex;flex-direction:column;align-items:center;height:100%;gap:4px;position:relative;}
 .bar-val{font-family:"Kaisei Opti",serif;font-size:1rem;color:var(--course);font-weight:700;}
-.bar-col.now .bar-val{font-size:1.25rem;color:var(--gold);}
+.bar-col.now .bar-val{font-size:1.3rem;color:var(--gold);}
 .bar-delta{
-  position:absolute;top:-4px;left:-50%;transform:translateX(-15%);
-  font-size:.7rem;font-weight:700;color:var(--mid);
+  position:absolute;top:-12px;left:50%;transform:translateX(-130%);
+  font-size:.68rem;font-weight:700;color:var(--mid);
   background:#fff;border:1px dashed var(--mid);border-radius:50px;
   padding:2px 8px;letter-spacing:.04em;white-space:nowrap;z-index:2;
 }
 .bar-col.now .bar-delta{color:var(--gold);border-color:var(--gold);border-style:solid;}
+.bar-wrap{
+  flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;
+}
 .bar{
   width:80%;max-width:60px;border-radius:8px 8px 0 0;
   background:linear-gradient(180deg,var(--mid) 0%,var(--course) 100%);
@@ -325,11 +328,11 @@ footer a:hover{color:#e8b0a0;}
   box-shadow:0 -3px 8px rgba(111,45,67,.18) inset, 0 8px 24px rgba(201,160,96,.45);
 }
 .bar-col.now::after{
-  content:"現在";position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  content:"現在";position:absolute;top:6px;left:50%;transform:translateX(-50%);
   background:linear-gradient(135deg,var(--gold),#b08540);color:#fff;
   font-size:.66rem;font-weight:700;letter-spacing:.15em;
   padding:3px 10px;border-radius:50px;white-space:nowrap;
-  box-shadow:0 4px 10px rgba(201,160,96,.4);
+  box-shadow:0 4px 10px rgba(201,160,96,.4);z-index:3;
 }
 .bar-lbl{font-size:.78rem;color:var(--txt2);font-weight:700;margin-top:4px;}
 .bar-col.now .bar-lbl{color:var(--course);}
@@ -507,10 +510,10 @@ footer a:hover{color:#e8b0a0;}
   .greet-ttl{font-size:1.15rem;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .stat-num{font-size:1.7rem;}
-  .chart-bars{height:200px;gap:8px;padding-top:28px;}
-  .bar-delta{font-size:.6rem;padding:1px 6px;transform:translateX(-5%);}
-  .bar-col.now .bar-val{font-size:1.05rem;}
-  .bar-col.now::after{font-size:.6rem;padding:2px 8px;top:-18px;}
+  .chart-bars{height:240px;gap:8px;padding:32px .2rem 0;}
+  .bar-delta{font-size:.6rem;padding:1px 6px;transform:translateX(-100%);top:-10px;}
+  .bar-col.now .bar-val{font-size:1.1rem;}
+  .bar-col.now::after{font-size:.58rem;padding:2px 8px;top:4px;}
   .chart-wrap{padding:1.4rem 1rem 1.2rem;}
   .school-grid{grid-template-columns:repeat(2,1fr);}
   .tier-grid{grid-template-columns:1fr;}
@@ -613,25 +616,25 @@ footer a:hover{color:#e8b0a0;}
       <div class="chart-bars">
         <div class="bar-col">
           <span class="bar-val">10名</span>
-          <div class="bar" style="height:14%;"></div>
+          <div class="bar-wrap"><div class="bar" style="height:14%;"></div></div>
           <span class="bar-lbl">1年目</span>
         </div>
         <div class="bar-col">
           <span class="bar-delta">+20名</span>
           <span class="bar-val">30名</span>
-          <div class="bar" style="height:42%;"></div>
+          <div class="bar-wrap"><div class="bar" style="height:42%;"></div></div>
           <span class="bar-lbl">2年目</span>
         </div>
         <div class="bar-col">
           <span class="bar-delta">+25名</span>
           <span class="bar-val">55名</span>
-          <div class="bar" style="height:78%;"></div>
+          <div class="bar-wrap"><div class="bar" style="height:78%;"></div></div>
           <span class="bar-lbl">3年目</span>
         </div>
         <div class="bar-col now">
           <span class="bar-delta">+15名超</span>
           <span class="bar-val">70名超</span>
-          <div class="bar year4" style="height:100%;"></div>
+          <div class="bar-wrap"><div class="bar year4" style="height:100%;"></div></div>
           <span class="bar-lbl">4年目</span>
         </div>
       </div>
