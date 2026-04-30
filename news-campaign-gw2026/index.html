@@ -9,6 +9,24 @@
 <meta property="og:description" content="期間内のお申し込みで指導料金最大12,000円OFF・初月半額・1週間無料体験。LINEで「体験」と送るだけ。">
 <meta property="og:type" content="article">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1055130206582129');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1055130206582129&ev=PageView&noscript=1"
+alt=""/></noscript>
+<!-- End Meta Pixel Code -->
 <style>
 :root{
   --red:    #6f2d43;
@@ -1067,6 +1085,59 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   });
 
   render('all');
+})();
+
+/* === Meta Pixel: LINE click tracking + UTM passthrough === */
+(function(){
+  function uuid(){
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+      var r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);
+    });
+  }
+  function getParams(){
+    var p=new URLSearchParams(window.location.search);
+    var keep=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'];
+    var out={};
+    keep.forEach(function(k){ if(p.get(k)) out[k]=p.get(k); });
+    return out;
+  }
+  var inboundParams=getParams();
+
+  function appendUtm(href){
+    if(!href) return href;
+    try{
+      var u=new URL(href);
+      var defaults={
+        utm_source:'meta',
+        utm_medium:'cpc',
+        utm_campaign:'gw2026'
+      };
+      Object.keys(defaults).forEach(function(k){
+        if(!u.searchParams.has(k)) u.searchParams.set(k, inboundParams[k]||defaults[k]);
+      });
+      ['utm_content','utm_term','fbclid'].forEach(function(k){
+        if(inboundParams[k] && !u.searchParams.has(k)) u.searchParams.set(k, inboundParams[k]);
+      });
+      return u.toString();
+    }catch(e){ return href; }
+  }
+
+  document.querySelectorAll('a[href*="line.me/ti/p"]').forEach(function(a){
+    a.href = appendUtm(a.href);
+    a.addEventListener('click', function(){
+      var eventId = uuid();
+      try{
+        if(typeof fbq==='function'){
+          fbq('track','Lead', {
+            content_name:'GW2026 LINE add',
+            content_category:'campaign-gw2026',
+            source_section: a.closest('[class*="line"], section, footer')?.className || ''
+          }, { eventID: eventId });
+        }
+      }catch(e){}
+      try{ window.sessionStorage.setItem('plato_last_line_event_id', eventId); }catch(e){}
+    });
+  });
 })();
 </script>
 </body>
