@@ -892,16 +892,64 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 
 /* ===== RESULTS (合格実績) ===== */
 #results{background:var(--cream);}
+
+/* Wide schools summary (dark block) */
+.res-summary{
+  max-width:920px;margin:0 auto 2.5rem;
+  background:linear-gradient(160deg,var(--dark) 0%,#1f0710 100%);
+  color:#fff;border-radius:18px;padding:2rem 1.6rem;
+  position:relative;overflow:hidden;
+}
+.res-summary::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,176,160,.07) 1px,transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+.res-summary-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;color:#e8b0a0;
+  text-align:center;margin-bottom:.4rem;letter-spacing:.06em;position:relative;z-index:1;
+}
+.res-summary-sub{
+  font-size:.78rem;color:rgba(255,255,255,.55);text-align:center;
+  margin-bottom:1.4rem;letter-spacing:.04em;position:relative;z-index:1;
+}
+.res-summary-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  position:relative;z-index:1;
+}
+.res-summary-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(232,176,160,.25);
+  border-radius:10px;padding:.85rem .6rem;text-align:center;
+  transition:all .3s;
+}
+.res-summary-card:hover{background:rgba(232,176,160,.08);border-color:#e8b0a0;}
+.res-summary-card .uni{
+  font-family:"Kaisei Opti",serif;font-size:.95rem;color:#fff;font-weight:700;display:block;
+}
+.res-summary-card .tier{
+  font-size:.62rem;color:#e8b0a0;letter-spacing:.12em;display:block;margin-top:.15rem;
+}
+.res-summary-note{
+  font-size:.72rem;color:rgba(255,255,255,.5);margin-top:1.1rem;
+  text-align:center;letter-spacing:.04em;position:relative;z-index:1;
+}
+
 .res-year{
   max-width:900px;margin:0 auto 2.5rem;
 }
 .res-year-ttl{
   font-family:"Kaisei Opti",serif;font-size:1.15rem;font-weight:700;
   color:var(--txt);margin-bottom:1rem;text-align:center;
-  display:flex;align-items:center;justify-content:center;gap:10px;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
 }
 .res-year-ttl::before,.res-year-ttl::after{
   content:"";flex:1;max-width:80px;height:1px;background:var(--bdr);
+}
+.res-perfect-badge{
+  display:inline-block;background:linear-gradient(135deg,var(--gold),#b08540);
+  color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.1em;
+  padding:3px 10px;border-radius:50px;margin-left:6px;vertical-align:middle;
+  box-shadow:0 3px 8px rgba(201,160,96,.3);
 }
 .res-tier{margin-bottom:1rem;}
 .res-tier-label{
@@ -919,6 +967,37 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   transition:all .3s;
 }
 .res-badge:hover{border-color:var(--red);background:var(--pale);}
+
+/* CTA banner inside #results */
+.res-cta{
+  max-width:820px;margin:2.6rem auto 0;
+  background:linear-gradient(160deg,var(--pale) 0%,#fff5f7 100%);
+  border:1.5px solid var(--bdr);border-radius:18px;padding:1.6rem 1.6rem;
+  display:flex;align-items:center;gap:1.4rem;
+  box-shadow:0 4px 18px rgba(111,45,67,.08);
+  transition:transform .25s,box-shadow .25s;
+}
+.res-cta:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(111,45,67,.14);}
+.res-cta-eyebrow{
+  font-size:.66rem;font-weight:700;letter-spacing:.18em;color:var(--red);
+  background:#fff;padding:3px 12px;border-radius:50px;display:inline-block;margin-bottom:.4rem;
+}
+.res-cta-text{flex:1;}
+.res-cta-text strong{display:block;font-family:"Kaisei Opti",serif;font-size:1.05rem;color:var(--red);margin-bottom:.2rem;line-height:1.5;}
+.res-cta-text small{font-size:.78rem;color:var(--txt2);line-height:1.7;display:block;}
+.res-cta-btn{
+  background:var(--red);color:#fff;font-weight:700;font-size:.86rem;
+  padding:11px 22px;border-radius:50px;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;
+  box-shadow:0 4px 14px rgba(111,45,67,.3);
+  transition:transform .25s,box-shadow .25s;
+}
+.res-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(111,45,67,.4);}
+.res-cta-btn svg{width:14px;height:14px;}
+@media (max-width:768px){
+  .res-summary-grid{grid-template-columns:repeat(2,1fr);}
+  .res-cta{flex-direction:column;text-align:center;padding:1.4rem 1.2rem;}
+}
 
 /* ===== PRICING (料金) ===== */
 .price-note{
@@ -1889,12 +1968,29 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 <section id="results">
   <div class="sec-head reveal" style="text-align:center;">
     <span class="eyebrow">Results</span>
-    <h2 class="sec-ttl">合格<span class="ac">実績</span></h2>
-    <p class="sec-sub">プラトンから志望校合格を勝ち取った生徒たちの実績です。</p>
+    <h2 class="sec-ttl">4年間の合格<span class="ac">実績</span></h2>
+    <p class="sec-sub">2023年の開塾以来、毎年第1志望合格者を輩出しています。<br>難関国公立から早慶上智、MARCH・関関同立まで、文系の合格者を全国から輩出。</p>
+  </div>
+
+  <div class="res-summary reveal">
+    <p class="res-summary-ttl">代表が指導してきた主な合格大学</p>
+    <p class="res-summary-sub">— 累計指導生徒200名超の中から ——</p>
+    <div class="res-summary-grid">
+      <div class="res-summary-card"><span class="uni">一橋大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">北海道大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">筑波大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">早稲田大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">慶應義塾大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">上智大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">MARCH</span><span class="tier">明治・青山・立教・中央・法政</span></div>
+      <div class="res-summary-card"><span class="uni">同志社大学</span><span class="tier">KANKANDORITSU</span></div>
+      <div class="res-summary-card"><span class="uni">関西大学</span><span class="tier">KANKANDORITSU</span></div>
+    </div>
+    <p class="res-summary-note">※ 代表 佐野の累計指導実績を含みます。最新の合格者数はLINEよりお問い合わせください。</p>
   </div>
 
   <div class="res-year reveal">
-    <div class="res-year-ttl">2024年 合格実績 <span style="font-size:.75rem;font-weight:400;opacity:.7;">（受験生5名）</span></div>
+    <div class="res-year-ttl">2024年 合格実績 <span style="font-size:.75rem;font-weight:400;opacity:.7;">（受験生5名）</span><span class="res-perfect-badge">全員第1志望合格</span></div>
     <div class="res-tier">
       <span class="res-tier-label t-national">国公立大学</span>
       <div class="res-badges">
@@ -1929,6 +2025,18 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </div>
     </div>
   </div>
+
+  <a href="news-campaign-gw2026/index.html" class="res-cta reveal">
+    <div class="res-cta-text">
+      <span class="res-cta-eyebrow">CAMPAIGN</span>
+      <strong>4年目突入＆生徒数70名超記念<br>GW特別キャンペーン実施中</strong>
+      <small>最大12,000円OFF・1ヶ月目半額・1週間無料体験つき</small>
+    </div>
+    <span class="res-cta-btn">
+      詳細を見る
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </span>
+  </a>
 
   <div class="price-note reveal">※ 合格実績は生徒・保護者様の許可を得て掲載しています。詳細は無料相談時にお伝えします。</div>
 </section>
