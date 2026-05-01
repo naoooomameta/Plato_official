@@ -347,9 +347,14 @@ footer a:hover{color:#e8b0a0;}
 }
 .greet-sign small{display:block;font-family:inherit;font-size:.72rem;color:var(--txt3);letter-spacing:.1em;margin-bottom:.2rem;font-weight:400;}
 .greet-sign-photo{
-  width:110px;height:110px;border-radius:50%;object-fit:cover;
+  width:110px;height:110px;border-radius:50%;overflow:hidden;
   border:2px solid var(--pale);box-shadow:0 2px 8px rgba(111,45,67,.18);
   flex-shrink:0;
+}
+.greet-sign-photo img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:55% 38%;transform:scale(1.7);transform-origin:55% 38%;
+  display:block;
 }
 .greet-sign-text{display:block;text-align:right;line-height:1.5;}
 @media (max-width:600px){
@@ -679,7 +684,7 @@ footer a:hover{color:#e8b0a0;}
         <p>このゴールデンウィークは、4年目の節目と70名突破の御礼として、これまでで最大級のキャンペーンをご用意しました。新しい一歩を踏み出すどなたにとっても、迷いを払うきっかけになれば幸いです。</p>
       </div>
       <div class="greet-sign">
-        <img class="greet-sign-photo" src="../img/staff-sano-portrait.jpg" alt="プラトン塾長 佐野翼" loading="lazy" decoding="async">
+        <span class="greet-sign-photo"><img src="../img/staff-sano-portrait.jpg" alt="プラトン塾長 佐野翼" loading="lazy" decoding="async"></span>
         <span class="greet-sign-text"><small>文系の大学受験専門塾 プラトン</small>塾長　佐野 翼</span>
       </div>
     </div>
