@@ -454,6 +454,73 @@ section{padding:64px 4vw;}
 }
 .c-price-tier-yen{font-size:.72rem;color:var(--txt2);}
 .c-price-tier-tax{font-size:.58rem;color:var(--txt3);margin-top:2px;}
+/* ===== お試しコース バナー ===== */
+.trial-banner{
+  position:relative;max-width:900px;margin:0 auto 1.4rem;
+  background:linear-gradient(135deg,#fff7ef,#fff);
+  border:2px solid var(--red);border-radius:18px;
+  padding:1.6rem 1.8rem 1.4rem;
+  box-shadow:0 8px 24px rgba(160,40,40,.08);
+}
+.trial-banner-tag{
+  position:absolute;top:-12px;left:24px;
+  background:var(--red);color:#fff;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  padding:4px 14px;border-radius:50px;
+}
+.trial-banner-inner{
+  display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;
+}
+.trial-banner-left{
+  flex:0 0 auto;min-width:200px;
+  padding-right:1.6rem;border-right:1.5px dashed var(--bdr);
+}
+.trial-banner-name{
+  font-family:"Kaisei Opti",serif;font-size:1.3rem;font-weight:700;
+  color:var(--red);line-height:1.3;margin-bottom:.4rem;
+}
+.trial-banner-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px;}
+.trial-banner-num{
+  font-family:"Kaisei Opti",serif;font-size:2.4rem;font-weight:700;
+  color:var(--red);line-height:1;
+}
+.trial-banner-yen{font-size:1rem;color:var(--txt2);font-weight:700;}
+.trial-banner-tax{font-size:.68rem;color:var(--txt3);margin-left:4px;}
+.trial-banner-right{flex:1 1 320px;}
+.trial-banner-lead{
+  font-size:.88rem;color:var(--txt);font-weight:700;margin-bottom:.6rem;
+}
+.trial-banner-list{
+  list-style:none;padding:0;margin:0 0 .9rem;
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.trial-banner-list li{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.82rem;color:var(--txt2);line-height:1.5;
+}
+.trial-banner-list li i[data-lucide]{
+  width:16px;height:16px;color:var(--red);flex-shrink:0;
+}
+.trial-banner-btn{
+  display:inline-block;background:var(--red);color:#fff;
+  padding:.6rem 1.2rem;border-radius:50px;
+  font-size:.82rem;font-weight:700;text-decoration:none;
+  transition:all .25s;
+}
+.trial-banner-btn:hover{
+  background:var(--mid);transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(160,40,40,.25);
+}
+@media(max-width:640px){
+  .trial-banner{padding:1.5rem 1.2rem 1.2rem;}
+  .trial-banner-left{
+    padding-right:0;border-right:none;
+    border-bottom:1.5px dashed var(--bdr);padding-bottom:.9rem;margin-bottom:.2rem;
+    width:100%;text-align:center;
+  }
+  .trial-banner-price{justify-content:center;}
+  .trial-banner-btn{display:block;text-align:center;}
+}
 /* ===== Lucide SVG icon sizing ===== */
 i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
@@ -1494,6 +1561,26 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <span class="eyebrow">Courses & Pricing</span>
     <h2 class="sec-ttl">コース紹介・<span class="ac">料金</span></h2>
     <p class="sec-sub">すべてのコースに毎日課題・質問対応・学習管理が含まれています。</p>
+  </div>
+  <!-- お試しコースバナー -->
+  <div class="reveal trial-banner">
+    <div class="trial-banner-tag">まずはお気軽に</div>
+    <div class="trial-banner-inner">
+      <div class="trial-banner-left">
+        <div class="trial-banner-name">お試しコース</div>
+        <div class="trial-banner-price">
+          <span class="trial-banner-num">9,900</span><span class="trial-banner-yen">円</span><span class="trial-banner-tax">（税込・1回のみ）</span>
+        </div>
+      </div>
+      <div class="trial-banner-right">
+        <div class="trial-banner-lead">プラトンの指導を実際に体験できるパックです。</div>
+        <ul class="trial-banner-list">
+          <li><i data-lucide="check"></i><span>1回のオンラインマンツーマン指導（60分）</span></li>
+          <li><i data-lucide="check"></i><span>1週間の毎日課題体験</span></li>
+        </ul>
+        <a href="muryo-shindan/" class="trial-banner-btn">お試しコースを申し込む →</a>
+      </div>
+    </div>
   </div>
   <!-- 柔軟な支払い方法バナー -->
   <div class="reveal" style="background:var(--pale);border:2px solid var(--red);border-radius:14px;padding:1.2rem 1.8rem;margin:0 auto 2rem;max-width:900px;display:flex;align-items:center;gap:1rem;font-size:.95rem;color:var(--txt);">
