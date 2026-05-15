@@ -294,6 +294,47 @@ section{padding:64px 4vw;}
 }
 .parent-card-auth{font-size:.78rem;color:var(--txt2);text-align:right;}
 
+/* ===== RESULTS SUMMARY (合格大学) ===== */
+.res-summary{
+  max-width:920px;margin:0 auto 2rem;
+  background:linear-gradient(160deg,var(--dark) 0%,#1f0710 100%);
+  color:#fff;border-radius:18px;padding:2rem 1.6rem;
+  position:relative;overflow:hidden;
+}
+.res-summary::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,176,160,.07) 1px,transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+.res-summary-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;color:#e8b0a0;
+  text-align:center;margin-bottom:.4rem;letter-spacing:.06em;position:relative;z-index:1;
+}
+.res-summary-sub{
+  font-size:.78rem;color:rgba(255,255,255,.55);text-align:center;
+  margin-bottom:1.4rem;letter-spacing:.04em;position:relative;z-index:1;
+}
+.res-summary-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  position:relative;z-index:1;
+}
+.res-summary-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(232,176,160,.25);
+  border-radius:10px;padding:.85rem .6rem;text-align:center;
+  transition:all .3s;
+}
+.res-summary-card:hover{background:rgba(232,176,160,.08);border-color:#e8b0a0;}
+.res-summary-card .uni{
+  font-family:"Kaisei Opti",serif;font-size:.95rem;color:#fff;font-weight:700;display:block;
+}
+.res-summary-card .tier{
+  font-size:.62rem;color:#e8b0a0;letter-spacing:.12em;display:block;margin-top:.15rem;
+}
+.res-summary-note{
+  font-size:.75rem;color:var(--txt2);margin-top:1.2rem;
+  text-align:center;line-height:1.8;
+}
+
 /* ===== CTA ===== */
 .cta-section{
   background:linear-gradient(135deg,var(--dark),var(--red));
@@ -336,6 +377,7 @@ footer a:hover{color:#e8b0a0;}
   .ba-arrow{margin:0 auto;}
   .voice-grid{grid-template-columns:1fr;}
   .parent-grid{grid-template-columns:1fr;}
+  .res-summary-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:560px){
   section{padding:48px 4vw;}
@@ -646,6 +688,33 @@ footer a:hover{color:#e8b0a0;}
       <div class="parent-card-auth">— 上智大学合格 T.Kさんの保護者様</div>
     </div>
   </div>
+</section>
+
+<!-- ===== RESULTS (合格実績) ===== -->
+<section id="results" style="background:#fff;">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Results</span>
+    <h2 class="sec-ttl">主な合格<span class="ac">実績</span></h2>
+    <p class="sec-sub">難関国公立から早慶上智、MARCH・関関同立まで。<br>文系の合格者を全国から輩出しています。</p>
+  </div>
+
+  <div class="res-summary reveal">
+    <p class="res-summary-ttl">代表が指導してきた主な合格大学</p>
+    <p class="res-summary-sub">— 累計指導生徒200名超の中から ——</p>
+    <div class="res-summary-grid">
+      <div class="res-summary-card"><span class="uni">一橋大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">北海道大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">筑波大学</span><span class="tier">NATIONAL</span></div>
+      <div class="res-summary-card"><span class="uni">早稲田大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">慶應義塾大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">上智大学</span><span class="tier">PRIVATE TOP</span></div>
+      <div class="res-summary-card"><span class="uni">MARCH</span><span class="tier">明治・青山・立教・中央・法政</span></div>
+      <div class="res-summary-card"><span class="uni">同志社大学</span><span class="tier">KANKANDORITSU</span></div>
+      <div class="res-summary-card"><span class="uni">関西大学</span><span class="tier">KANKANDORITSU</span></div>
+    </div>
+  </div>
+
+  <p class="res-summary-note reveal">※ 過去3年間の主な合格実績です。合格者数・最新の実績はLINEよりお問い合わせください。<br>合格実績は生徒・保護者様の許可を得て掲載しています。</p>
 </section>
 
 <!-- ===== CTA ===== -->
