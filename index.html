@@ -510,7 +510,39 @@ section{padding:64px 4vw;}
 }
 .note-more-btn:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
 @media(max-width:860px){
-  .note-grid{grid-template-columns:1fr;max-width:520px;}
+  /* モバイルはカルーセル（横スクロール） */
+  .note-grid{
+    display:flex;
+    grid-template-columns:none;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:14px;
+    max-width:100%;
+    padding:6px 4vw 16px;
+    margin:0 -4vw;
+    scroll-padding-left:4vw;
+    scrollbar-width:none;
+  }
+  .note-grid::-webkit-scrollbar{display:none;}
+  .note-grid iframe.note-embed{
+    flex:0 0 78%;
+    max-width:300px !important;
+    min-width:260px;
+    min-height:300px;
+    scroll-snap-align:start;
+  }
+  /* スクロール促進ヒント */
+  .note-carousel-hint{
+    display:block;text-align:center;
+    font-size:.72rem;color:var(--txt3);letter-spacing:.08em;
+    margin-top:.5rem;
+  }
+  .note-carousel-hint::before{content:"← ";}
+  .note-carousel-hint::after{content:" →";}
+}
+@media(min-width:861px){
+  .note-carousel-hint{display:none;}
 }
 
 /* ===== FEATURES ===== */
@@ -1734,6 +1766,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <iframe class="note-embed" src="https://note.com/embed/notes/n279c55a36d9f" height="400" width="494" loading="lazy" title="note記事"></iframe>
     <iframe class="note-embed" src="https://note.com/embed/notes/nb39abc4eac4d" height="400" width="494" loading="lazy" title="note記事"></iframe>
   </div>
+  <span class="note-carousel-hint" aria-hidden="true">スワイプして他の記事を見る</span>
   <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
 
   <div class="note-more-wrap reveal">
