@@ -276,14 +276,15 @@ nav{background:var(--red);}
 .btn-w:hover{background:var(--pale);transform:translateY(-2px);}
 .hero-chara{
   position:relative;flex-shrink:0;
-  overflow:hidden;
-  border-radius:20px;min-height:520px;
-  box-shadow:0 12px 40px rgba(111,45,67,.12);
+  display:flex;align-items:center;justify-content:center;
+  max-width:100%;
 }
 .hero-chara .hero-photo{
-  width:100%;height:100%;
-  object-fit:contain;object-position:center center;
+  width:auto;max-width:100%;
+  height:auto;max-height:620px;
   display:block;
+  border-radius:20px;
+  box-shadow:0 12px 40px rgba(111,45,67,.12);
 }
 .hero-chibi{
   position:absolute;left:48%;top:50%;
@@ -1444,7 +1445,8 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .hero-brand{justify-content:center;}
   .hero-badges{justify-content:center;}
   .hero-stats{margin-left:auto;margin-right:auto;}
-  .hero-chara{width:100%;max-width:480px;min-height:360px;margin:0 auto;order:-1;border-radius:16px;}
+  .hero-chara{width:100%;max-width:320px;margin:0 auto;order:-1;}
+  .hero-chara .hero-photo{max-height:none;border-radius:16px;}
   .hero-chibi{top:4px;left:4px;transform:none;width:110px;}
   .hero-btns{justify-content:center;}
   .hero-pillars-grid{grid-template-columns:1fr;gap:2rem;}
