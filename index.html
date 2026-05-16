@@ -341,8 +341,18 @@ section{padding:64px 4vw;}
 #worries{background:#fff;}
 .worries-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;max-width:860px;margin:0 auto;
+  grid-template-columns:repeat(8,1fr);
+  gap:14px;max-width:1080px;margin:0 auto;
+}
+.wcard{grid-column:span 2;}
+/* 7枚の場合：下段3枚を中央寄せ（col 2-3 / 4-5 / 6-7） */
+.wcard:nth-child(5){grid-column:2 / span 2;}
+@media(max-width:860px){
+  .worries-grid{grid-template-columns:repeat(2,1fr);}
+  .wcard,.wcard:nth-child(5){grid-column:auto;}
+}
+@media(max-width:480px){
+  .worries-grid{grid-template-columns:1fr;}
 }
 .wcard{
   background:var(--cream);border:2px solid var(--bdr);
