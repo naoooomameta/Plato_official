@@ -98,12 +98,22 @@ nav{background:var(--red);}
 }
 .page-hero h1{
   font-family:"Kaisei Opti",serif;
-  font-size:clamp(1.8rem,4vw,3rem);
+  font-size:clamp(1.6rem,3.6vw,2.6rem);
   font-weight:700;color:var(--txt);
-  line-height:1.4;margin-bottom:1rem;
+  line-height:1.5;margin-bottom:1.2rem;
 }
 .page-hero h1 em{
   font-style:normal;color:var(--red);
+}
+.page-hero-lead{
+  font-family:"Kaisei Opti",serif;
+  font-size:clamp(1.2rem,2.6vw,1.8rem);
+  font-weight:700;color:var(--red);
+  line-height:1.6;margin-bottom:1.2rem;
+}
+.page-hero-lead strong{
+  background:linear-gradient(transparent 60%,rgba(201,160,96,.35) 60%);
+  font-weight:700;
 }
 .page-hero-sub{
   font-size:.95rem;color:var(--txt2);line-height:1.9;
@@ -465,8 +475,9 @@ footer a{color:#e8b0a0;}
 <div class="page-hero">
   <div class="page-hero-inner">
     <span class="eyebrow">Daily Assignment Management</span>
-    <h1>毎日<em>課題</em></h1>
-    <p class="page-hero-sub">生徒一人ひとりに合わせた毎日の学習管理。「今日は何をすればいいか」が明確になり、日々の積み重ねで確実に学力を伸ばします。</p>
+    <h1>塾には行っている。<br>でも、<em>家では勉強が続かない</em>。</h1>
+    <p class="page-hero-lead">毎日課題で、<br><strong>合格までの学習を管理する。</strong></p>
+    <p class="page-hero-sub">今日やるべきことを毎日提示し、学習状況を確認。<br>自宅学習を習慣化しながら、志望校合格まで伴走します。</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <a href="index.html#contact" class="btn-r">無料相談を申し込む</a>
     </div>
