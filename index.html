@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プラトン | 文系の大学受験専門塾</title>
-<link rel="preload" as="image" href="img/hero-student.png" type="image/png">
+<link rel="preload" as="image" href="img/fv-pc.png" type="image/png" media="(min-width:769px)">
+<link rel="preload" as="image" href="img/fv-sp.png" type="image/png" media="(max-width:768px)">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 
 <!-- Meta Pixel Code -->
@@ -167,96 +168,21 @@ nav{background:var(--red);}
 
 /* ===== HERO ===== */
 #hero{
-  background:linear-gradient(160deg, var(--pale) 0%, #fff5f7 40%, #f8f0f5 100%);
-  padding:48px 4vw 3rem;
-  position:relative;overflow:hidden;
+  background:#fff;
+  padding:0;
+  position:relative;
 }
-.hero-dots{
-  position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(111,45,67,.07) 1.5px,transparent 1.5px);
-  background-size:28px 28px;pointer-events:none;
+#hero picture{display:block;}
+#hero img{
+  display:block;
+  width:100%;
+  height:auto;
 }
-.hero-inner{
-  display:grid;grid-template-columns:1.05fr 1fr;
-  gap:3rem;align-items:center;
-  max-width:1200px;margin:0 auto;width:100%;
-  position:relative;z-index:2;
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
 }
-.hero-brand{
-  display:flex;align-items:center;gap:14px;
-  margin-bottom:1.4rem;
-}
-.hero-brand-icon{
-  width:74px;height:74px;border-radius:50%;
-  border:3px solid var(--bdr);background:#fff;
-  object-fit:cover;flex-shrink:0;
-}
-.hero-brand-name{
-  font-family:"Kaisei Opti",serif;font-size:1.85rem;font-weight:700;
-  color:var(--txt);line-height:1.1;letter-spacing:.02em;
-}
-.hero-brand-tag{
-  font-size:.82rem;color:var(--txt2);margin-top:.25rem;letter-spacing:.04em;
-}
-.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.6rem;}
-.hbadge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#fff;border:1.5px solid var(--red);border-radius:50px;
-  padding:9px 18px;font-size:.84rem;font-weight:700;color:var(--red);
-  box-shadow:0 2px 8px rgba(111,45,67,.1);
-  transition:all .25s;
-}
-.hbadge:hover{background:var(--pale);transform:translateY(-1px);box-shadow:0 4px 12px rgba(111,45,67,.18);}
-.hbadge.b{border-color:var(--mid);color:var(--mid);}
-.hero-subhead{
-  font-size:1.02rem;color:var(--txt2);
-  margin-bottom:.7rem;letter-spacing:.02em;
-}
-.hero-h1{
-  font-family:"Kaisei Opti",serif;
-  font-size:clamp(2.2rem,4.8vw,3.8rem);
-  font-weight:700;color:var(--txt);
-  line-height:1.35;margin-bottom:1.4rem;
-  letter-spacing:.01em;
-}
-.hero-h1 em{
-  font-style:normal;color:var(--txt);
-  background:linear-gradient(transparent 62%, rgba(111,45,67,.16) 62%, rgba(111,45,67,.16) 96%, transparent 96%);
-  padding:0 .08em;
-}
-.hero-p{
-  font-size:1rem;color:var(--txt2);
-  line-height:1.9;margin-bottom:1.8rem;
-}
-.hero-stats{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;max-width:500px;margin-top:.2rem;
-}
-.hero-stat{
-  background:rgba(255,255,255,.7);
-  border:1.5px solid rgba(111,45,67,.18);
-  border-radius:12px;
-  padding:.9rem .6rem .8rem;
-  text-align:center;
-  transition:all .25s;
-}
-.hero-stat:hover{border-color:var(--red);background:#fff;}
-.hero-stat-icon{
-  color:var(--red);margin-bottom:.35rem;
-  display:flex;justify-content:center;
-}
-.hero-stat-icon svg{width:22px;height:22px;stroke-width:1.8;}
-.hero-stat-num{
-  font-family:"Kaisei Opti",serif;
-  font-size:1.7rem;font-weight:700;color:var(--txt);
-  line-height:1;letter-spacing:.01em;
-}
-.hero-stat-num span{font-size:.78rem;margin-left:2px;font-weight:700;}
-.hero-stat-lbl{
-  font-size:.66rem;color:var(--txt2);
-  margin-top:.4rem;line-height:1.4;letter-spacing:.02em;
-}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-top:1.8rem;margin-bottom:1rem;}
 .btn-r{
   background:var(--red);color:#fff;
   font-weight:700;font-size:.95rem;
@@ -274,88 +200,6 @@ nav{background:var(--red);}
   transition:all .3s;display:inline-flex;align-items:center;gap:8px;
 }
 .btn-w:hover{background:var(--pale);transform:translateY(-2px);}
-.hero-chara{
-  position:relative;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  max-width:100%;
-}
-.hero-chara .hero-photo{
-  width:auto;max-width:100%;
-  height:auto;max-height:620px;
-  display:block;
-  border-radius:20px;
-  box-shadow:0 12px 40px rgba(111,45,67,.12);
-}
-.hero-chibi{
-  position:absolute;left:48%;top:50%;
-  transform:translate(-50%,-50%);
-  width:140px;height:auto;
-  display:block;pointer-events:none;
-  filter:drop-shadow(0 4px 12px rgba(0,0,0,.2));
-  opacity:.95;z-index:3;
-}
-
-/* HERO PILLARS PANEL */
-.hero-pillars-wrap{
-  max-width:1200px;margin:3rem auto 0;
-  background:rgba(255,255,255,.78);
-  border:2px solid rgba(111,45,67,.22);
-  border-radius:20px;
-  padding:2rem 2rem 2.4rem;
-  position:relative;z-index:2;
-  backdrop-filter:blur(4px);
-}
-.hero-pillars-title{
-  display:flex;align-items:center;gap:1rem;
-  margin-bottom:2rem;justify-content:center;
-}
-.hero-pillars-title .line{
-  flex:1;max-width:120px;height:1.5px;background:var(--red);
-  position:relative;
-}
-.hero-pillars-title .line::before,
-.hero-pillars-title .line::after{
-  content:"";position:absolute;
-  width:6px;height:6px;border-radius:50%;
-  background:var(--red);top:50%;transform:translateY(-50%);
-}
-.hero-pillars-title .line:first-child::after{right:-3px;}
-.hero-pillars-title .line:last-child::before{left:-3px;}
-.hero-pillars-title .text{
-  font-family:"Kaisei Opti",serif;
-  font-size:clamp(1rem,2vw,1.2rem);font-weight:700;
-  color:var(--txt);white-space:nowrap;letter-spacing:.02em;
-}
-.hero-pillars-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1.8rem;
-}
-.hero-pillar{text-align:center;position:relative;padding-top:.5rem;}
-.hero-pillar-num{
-  position:absolute;top:0;left:50%;
-  transform:translate(-50%,-50%);
-  background:var(--red);color:#fff;
-  width:30px;height:30px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.85rem;
-  box-shadow:0 3px 10px rgba(111,45,67,.32);
-  z-index:2;
-}
-.hero-pillar-icon{
-  width:78px;height:78px;margin:1.2rem auto .9rem;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--red);
-}
-.hero-pillar-icon svg{width:56px;height:56px;stroke-width:1.4;}
-.hero-pillar h4{
-  font-family:"Kaisei Opti",serif;
-  font-size:1.1rem;font-weight:700;
-  color:var(--txt);margin-bottom:.5rem;letter-spacing:.02em;
-}
-.hero-pillar p{
-  font-size:.85rem;color:var(--txt2);
-  line-height:1.7;
-}
 
 /* STATS BAR */
 .stats{background:var(--dark);padding:8px 0;}
@@ -722,7 +566,6 @@ section{padding:64px 4vw;}
 /* ===== Lucide SVG icon sizing ===== */
 i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
-.hbadge svg{width:14px;height:14px;stroke-width:2.5;flex-shrink:0;}
 .btn-r svg{width:15px;height:15px;stroke-width:2.5;flex-shrink:0;}
 .bubble svg{width:16px;height:16px;stroke-width:2;}
 .wi svg{width:26px;height:26px;stroke-width:1.8;color:var(--red);}
@@ -1489,17 +1332,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:860px){
-  .hero-inner{grid-template-columns:1fr;text-align:center;gap:2rem;}
-  .hero-brand{justify-content:center;}
-  .hero-badges{justify-content:center;}
-  .hero-stats{margin-left:auto;margin-right:auto;}
-  .hero-chara{width:100%;max-width:320px;margin:0 auto;order:-1;}
-  .hero-chara .hero-photo{max-height:none;border-radius:16px;}
-  .hero-chibi{top:4px;left:4px;transform:none;width:110px;}
-  .hero-btns{justify-content:center;}
-  .hero-pillars-grid{grid-template-columns:1fr;gap:2rem;}
-  .hero-pillars-title .line{max-width:40px;}
-  .hero-pillars-title .text{font-size:1rem;white-space:normal;}
   .feat-grid{grid-template-columns:1fr 1fr;}
   .about-inner,.contact-inner{grid-template-columns:1fr;}
   .voice-hero{grid-template-columns:1fr 1fr;}
@@ -1638,80 +1470,14 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 </header>
 
 <!-- ===== HERO ===== -->
-<section id="hero">
-  <div class="hero-dots"></div>
-  <div class="hero-inner">
-    <div class="hero-text">
-      <div class="hero-brand">
-        <img class="hero-brand-icon" src="img/plato-logochibi.png" alt="プラトン">
-        <div>
-          <div class="hero-brand-name">プラトン</div>
-          <div class="hero-brand-tag">文系の大学受験専門塾</div>
-        </div>
-      </div>
-
-      <div class="hero-badges">
-        <a href="#results" class="hbadge"><i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績</a>
-        <a href="#contact" class="hbadge"><i data-lucide="message-square"></i> 無料学習相談 受付中</a>
-      </div>
-
-      <p class="hero-subhead">塾には行くが、家では勉強しない。</p>
-      <h1 class="hero-h1"><em>毎日課題</em>で、<br>合格まで<em>管理</em>する。</h1>
-      <p class="hero-p">今日やることを毎日提示し、学習状況を確認。<br>自宅学習を習慣化し、志望校合格まで伴走します。</p>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-icon"><i data-lucide="users"></i></div>
-          <div class="hero-stat-num">200<span>名</span></div>
-          <div class="hero-stat-lbl">累計指導生徒数</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-icon"><i data-lucide="calendar"></i></div>
-          <div class="hero-stat-num">7<span>年</span></div>
-          <div class="hero-stat-lbl">文系受験指導の実績</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-icon"><i data-lucide="trending-up"></i></div>
-          <div class="hero-stat-num">90<span>%+</span></div>
-          <div class="hero-stat-lbl">文系受験生<br>志望校合格率</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-chara">
-      <img class="hero-photo" src="img/hero-student.png" alt="プラトンで学ぶ生徒"
-           fetchpriority="high" decoding="async">
-    </div>
-  </div>
-
-  <!-- 3つの仕組み -->
-  <div class="hero-pillars-wrap">
-    <div class="hero-pillars-title">
-      <span class="line"></span>
-      <span class="text">プラトンが結果につなげる3つの仕組み</span>
-      <span class="line"></span>
-    </div>
-    <div class="hero-pillars-grid">
-      <div class="hero-pillar">
-        <div class="hero-pillar-num">1</div>
-        <div class="hero-pillar-icon"><i data-lucide="clipboard-list"></i></div>
-        <h4>毎日の課題設計</h4>
-        <p>その日のやることが<br>明確になる</p>
-      </div>
-      <div class="hero-pillar">
-        <div class="hero-pillar-num">2</div>
-        <div class="hero-pillar-icon"><i data-lucide="clipboard-check"></i></div>
-        <h4>学習状況を確認</h4>
-        <p>提出・確認で、<br>サボリを防ぐ</p>
-      </div>
-      <div class="hero-pillar">
-        <div class="hero-pillar-num">3</div>
-        <div class="hero-pillar-icon"><i data-lucide="map"></i></div>
-        <h4>志望校から逆算</h4>
-        <p>合格までの道筋を管理</p>
-      </div>
-    </div>
-  </div>
+<section id="hero" aria-label="プラトン - 文系の大学受験専門塾。毎日課題で合格まで管理する。">
+  <h1 class="visually-hidden">プラトン｜文系の大学受験専門塾 - 毎日課題で合格まで管理する</h1>
+  <picture>
+    <source media="(max-width:768px)" srcset="img/fv-sp.png">
+    <img src="img/fv-pc.png"
+         alt="プラトン 文系の大学受験専門塾 - 毎日課題で合格まで管理する"
+         fetchpriority="high" decoding="async">
+  </picture>
 </section>
 
 <!-- ===== NEWS CARD ===== -->
