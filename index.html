@@ -373,6 +373,42 @@ section{padding:64px 4vw;}
 .resolve-icon{flex-shrink:0;margin-top:2px;}
 .resolve-icon svg{width:26px;height:26px;stroke-width:2;color:var(--red);}
 
+/* ===== NOTE ARTICLES ===== */
+#note-articles{background:var(--cream);}
+.note-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1.2rem;max-width:1100px;margin:0 auto;
+  padding:0 1rem;align-items:start;
+}
+.note-grid iframe.note-embed{
+  width:100% !important;
+  max-width:100% !important;
+  min-height:340px;
+  border-radius:14px;
+  background:#fff;
+  border:2px solid var(--bdr);
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.note-grid iframe.note-embed:hover{
+  border-color:var(--red);
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(111,45,67,.12);
+}
+.note-more-wrap{text-align:center;margin-top:2.4rem;}
+.note-more-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--red);color:#fff;
+  font-weight:700;font-size:.9rem;
+  padding:14px 32px;border-radius:50px;
+  box-shadow:0 5px 18px rgba(111,45,67,.32);
+  transition:all .3s;
+}
+.note-more-btn:hover{background:var(--dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,45,67,.4);}
+@media(max-width:860px){
+  .note-grid{grid-template-columns:1fr;max-width:520px;}
+}
+
 /* ===== FEATURES ===== */
 #features{background:var(--cream);}
 .feat-grid{
@@ -1521,6 +1557,31 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="wcard reveal d3"><div class="wi"><i data-lucide="calculator"></i></div><div class="wt">「文系だから数学が苦手」「数学の点数がなかなか上がらない」</div></div>
   </div>
   <div class="resolve reveal"><span class="resolve-icon"><i data-lucide="quote"></i></span><span>「家で勉強できない受験生の志望校合格は100%叶わない」— プラトンは毎日の家庭学習を徹底管理し、この問題を根本から解決します！</span></div>
+</section>
+
+<!-- ===== NOTE ARTICLES ===== -->
+<section id="note-articles">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Articles</span>
+    <h2 class="sec-ttl">noteで読む <span class="ac">受験お役立ち記事</span></h2>
+    <p class="sec-sub">プラトン公式 note で発信している、受験勉強のコツや学習法をピックアップ。<br>気になるテーマから読んでみてください。</p>
+  </div>
+
+  <!--
+    note記事を差し替えたい場合：
+    1. note記事URL `https://note.com/platon_online/n/XXXXXXXXXXXX` の末尾の note ID をコピー
+    2. 下記 iframe の `src` の末尾（notes/ の後）の ID を差し替え
+  -->
+  <div class="note-grid reveal">
+    <iframe class="note-embed" src="https://note.com/embed/notes/n90bff36e8b68" height="400" width="494" loading="lazy" title="note記事"></iframe>
+    <iframe class="note-embed" src="https://note.com/embed/notes/n279c55a36d9f" height="400" width="494" loading="lazy" title="note記事"></iframe>
+    <iframe class="note-embed" src="https://note.com/embed/notes/nb39abc4eac4d" height="400" width="494" loading="lazy" title="note記事"></iframe>
+  </div>
+  <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
+
+  <div class="note-more-wrap reveal">
+    <a href="https://note.com/platon_online" target="_blank" rel="noopener" class="note-more-btn">noteで全ての記事を読む →</a>
+  </div>
 </section>
 
 <!-- ===== FEATURES ===== -->
