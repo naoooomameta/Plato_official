@@ -530,6 +530,45 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .wi svg{width:26px;height:26px;stroke-width:1.8;color:var(--red);}
 .fcirc svg{width:28px;height:28px;stroke-width:1.8;}
 .df-icon svg{width:32px;height:32px;stroke-width:1.8;color:var(--red);}
+
+/* === 毎日課題サイクル図 === */
+.daily-flow-grid{
+  max-width:1080px;margin:0 auto;display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;padding:0 1rem;position:relative;
+}
+.df-card{
+  background:#fff;border-radius:16px;padding:1.6rem 1.1rem 1.4rem;
+  border:2px solid var(--bdr);position:relative;text-align:center;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.df-card:hover{border-color:var(--red);transform:translateY(-3px);box-shadow:0 8px 22px rgba(111,45,67,.12);}
+.df-num{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;
+  box-shadow:0 3px 10px rgba(111,45,67,.3);
+}
+.df-card + .df-card::before{
+  content:"";position:absolute;left:-1rem;top:50%;
+  width:1rem;height:2px;background:var(--bdr);
+  transform:translateY(-50%);z-index:0;
+}
+.df-card + .df-card::after{
+  content:"";position:absolute;left:-.55rem;top:50%;
+  width:8px;height:8px;border-top:2px solid var(--red);border-right:2px solid var(--red);
+  transform:translateY(-50%) rotate(45deg);z-index:1;
+}
+.df-ttl{font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);line-height:1.45;}
+.df-desc{font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;}
+@media(max-width:860px){
+  .daily-flow-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .df-card + .df-card::before,
+  .df-card + .df-card::after{display:none;}
+}
+@media(max-width:480px){
+  .daily-flow-grid{grid-template-columns:1fr;}
+}
 .ph-icon svg{width:36px;height:36px;stroke-width:1.4;opacity:.5;}
 .stab svg{width:14px;height:14px;stroke-width:2.5;}
 .vavatart svg{width:20px;height:20px;stroke-width:2;color:var(--red);}
@@ -1541,36 +1580,34 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
 
   <!-- サイクル図 -->
-  <div class="daily-flow-grid reveal" style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;padding:0 1rem;">
-
-    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">①</div>
+  <div class="daily-flow-grid reveal">
+    <div class="df-card">
+      <div class="df-num">①</div>
       <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="send"></i></div>
-      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">講師が課題を提示</h4>
-      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">生徒一人ひとりの学習状況や志望校に合わせて、<strong>どの参考書を・どの範囲まで・どのように</strong>進めるかを具体的に指示します。</p>
+      <h4 class="df-ttl">講師が課題を提示</h4>
+      <p class="df-desc">生徒一人ひとりの学習状況や志望校に合わせて、<strong>どの参考書を・どの範囲まで・どのように</strong>進めるかを具体的に指示します。</p>
     </div>
 
-    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">②</div>
+    <div class="df-card">
+      <div class="df-num">②</div>
       <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="pencil-line"></i></div>
-      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">自宅で学習・ノート提出</h4>
-      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">生徒は課題に取り組み、学習内容をノートにまとめます。ノートを写真で提出することで、単に「やりました」ではなく実際の学習内容を確認できます。</p>
+      <h4 class="df-ttl">自宅で学習・ノート提出</h4>
+      <p class="df-desc">生徒は課題に取り組み、学習内容をノートにまとめます。ノートを写真で提出することで、単に「やりました」ではなく実際の学習内容を確認できます。</p>
     </div>
 
-    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">③</div>
+    <div class="df-card">
+      <div class="df-num">③</div>
       <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="check-square"></i></div>
-      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">講師が丸付け・確認</h4>
-      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">提出されたノートを講師が確認・丸付けします。理解が不十分な部分があれば、解き方のアドバイスや学習方法についてフィードバックを行います。</p>
+      <h4 class="df-ttl">講師が丸付け・確認</h4>
+      <p class="df-desc">提出されたノートを講師が確認・丸付けします。理解が不十分な部分があれば、解き方のアドバイスや学習方法についてフィードバックを行います。</p>
     </div>
 
-    <div class="df-card" style="background:#fff;border-radius:16px;padding:1.6rem 1.2rem;border:2px solid var(--bdr);position:relative;text-align:center;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;">④</div>
+    <div class="df-card">
+      <div class="df-num">④</div>
       <div class="df-icon" style="margin:.4rem 0 .7rem;"><i data-lucide="repeat-2"></i></div>
-      <h4 style="font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--txt);">翌日の課題を提示</h4>
-      <p style="font-size:.8rem;color:var(--txt2);line-height:1.7;text-align:left;">その日の学習状況を踏まえながら、講師が翌日の課題を提示します。このサイクルを毎日繰り返すことで、学習を着実に積み重ねていきます。</p>
+      <h4 class="df-ttl">翌日の課題を提示</h4>
+      <p class="df-desc">その日の学習状況を踏まえながら、講師が翌日の課題を提示します。このサイクルを毎日繰り返すことで、学習を着実に積み重ねていきます。</p>
     </div>
-
   </div>
 
   <!-- メリット -->
