@@ -248,6 +248,30 @@ nav{background:var(--wc);}
   padding:.55rem .8rem;background:var(--cream);border-radius:8px;
   border-left:3px solid var(--wc-bd);
 }
+.step-price-card{
+  margin-top:1rem;background:var(--cream);
+  border:2px solid var(--wc-bd);border-radius:12px;
+  padding:1rem 1.2rem;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;
+}
+.step-price-card-label{
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--wc);
+  margin-bottom:.3rem;
+}
+.step-price-card-name{
+  font-family:"Kaisei Opti",serif;font-size:1rem;font-weight:700;color:var(--txt);
+}
+.step-price-card-scope{
+  font-size:.78rem;color:var(--txt2);margin-top:.25rem;
+}
+.step-price-card-amount{
+  font-family:"Kaisei Opti",serif;font-size:1.55rem;font-weight:900;color:var(--wc);
+  line-height:1;letter-spacing:.01em;text-align:right;
+}
+.step-price-card-amount small{
+  font-size:.7rem;font-weight:700;margin-left:.15rem;
+}
+.step-price-card-meta{font-size:.7rem;color:var(--txt2);margin-top:.3rem;text-align:right;}
 
 /* QUOTE / EXPERIENCE */
 .experience-quote{
@@ -448,7 +472,18 @@ footer a:hover{color:#fff;}
           <h3>ご継続をご希望の場合のみご案内</h3>
           <p>体験後、<strong>「続けたい」と思っていただけた場合のみ</strong>、入塾をご案内しております。</p>
           <p>もちろん、<strong>無理な営業や勧誘は一切行っておりません</strong>。ご家庭でじっくりご相談いただき、納得いただいた上で決めていただければ大丈夫です。</p>
-          <div class="step-note">※ 体験のみのご参加でも問題ございません。</div>
+          <div class="step-price-card">
+            <div>
+              <div class="step-price-card-label">REGULAR COURSE</div>
+              <div class="step-price-card-name">佐野代表の指導</div>
+              <div class="step-price-card-scope">定期テスト対策・共通テスト対策・2次試験対策</div>
+            </div>
+            <div>
+              <div class="step-price-card-amount">税込¥9,900<small>〜</small></div>
+              <div class="step-price-card-meta">月額・コースにより異なります</div>
+            </div>
+          </div>
+          <div class="step-note">※ 体験のみのご参加でも問題ございません。料金詳細は無料相談時にご案内いたします。</div>
         </div>
       </div>
 
