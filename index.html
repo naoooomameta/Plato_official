@@ -566,17 +566,17 @@ section{padding:64px 4vw;}
 /* ===== 通常コース料金カード ===== */
 .regular-course-card{
   max-width:900px;margin:0 auto 1.6rem;
-  background:linear-gradient(135deg,#fff 0%,#fff 55%,rgba(241,234,236,.55) 100%);
-  border:2px solid var(--bdr);border-radius:18px;
-  padding:1.5rem 1.8rem 1.5rem 1.4rem;
+  background:transparent;
+  border:none;border-radius:18px;
+  padding:1.4rem 1.4rem;
   display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem;
-  box-shadow:0 8px 28px rgba(111,45,67,.14);
-  position:relative;overflow:hidden;
+  position:relative;
 }
 .regular-course-card::before{
   content:"";position:absolute;
-  top:-60px;right:-60px;width:200px;height:200px;
-  background:radial-gradient(circle,rgba(111,45,67,.08) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:60%;max-width:520px;height:70%;
+  background:radial-gradient(ellipse at center,rgba(111,45,67,.06) 0%,transparent 70%);
   pointer-events:none;z-index:0;
 }
 .regular-course-portrait{
