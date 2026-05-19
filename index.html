@@ -563,6 +563,70 @@ section{padding:64px 4vw;}
   .trial-banner-price{justify-content:center;}
   .trial-banner-btn{display:block;text-align:center;}
 }
+/* ===== 通常コース料金カード ===== */
+.regular-course-card{
+  max-width:900px;margin:0 auto 1.6rem;
+  background:#fff;border:2px solid var(--bdr);border-radius:14px;
+  padding:1.2rem 1.8rem;
+  display:flex;flex-wrap:wrap;align-items:center;gap:1.2rem;
+  box-shadow:0 3px 14px rgba(111,45,67,.08);
+  position:relative;
+}
+.regular-course-portrait{
+  position:relative;flex-shrink:0;
+  width:120px;height:120px;
+  display:flex;align-items:center;justify-content:center;
+}
+.regular-course-portrait-halo{
+  position:absolute;inset:6px;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%, var(--pale) 0%, rgba(241,234,236,.4) 60%, transparent 80%);
+  z-index:0;
+}
+.regular-course-portrait img{
+  position:relative;z-index:1;
+  width:100%;height:100%;
+  object-fit:contain;object-position:bottom center;
+  filter:drop-shadow(0 4px 8px rgba(111,45,67,.18));
+}
+.regular-course-body{flex:1;min-width:220px;}
+.regular-course-eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  color:var(--red);margin-bottom:.4rem;
+}
+.regular-course-title{
+  font-family:'Kaisei Opti',serif;font-size:1.15rem;font-weight:700;
+  color:var(--txt);line-height:1.5;
+}
+.regular-course-sub{
+  font-size:.85rem;color:var(--txt2);margin-top:.3rem;
+}
+.regular-course-price{text-align:right;flex-shrink:0;}
+.regular-course-price-num{
+  font-family:'Kaisei Opti',serif;font-size:1.9rem;font-weight:900;
+  color:var(--red);line-height:1;letter-spacing:.01em;
+}
+.regular-course-price-tilde{
+  font-size:.85rem;font-weight:700;margin-left:.2rem;
+}
+.regular-course-price-note{
+  font-size:.72rem;color:var(--txt2);margin-top:.35rem;
+}
+@media(max-width:640px){
+  .regular-course-card{
+    padding:1.2rem 1.2rem;gap:.9rem;
+    justify-content:center;text-align:center;
+  }
+  .regular-course-portrait{
+    width:96px;height:96px;
+  }
+  .regular-course-body{
+    flex:1 1 auto;min-width:0;text-align:left;
+  }
+  .regular-course-price{
+    width:100%;text-align:center;
+    border-top:1.5px dashed var(--bdr);padding-top:.8rem;
+  }
+}
 /* ===== Lucide SVG icon sizing ===== */
 i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
@@ -1705,15 +1769,19 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     </div>
   </div>
   <!-- 通常コース料金 -->
-  <div class="reveal" style="max-width:900px;margin:0 auto 1.6rem;background:#fff;border:2px solid var(--bdr);border-radius:14px;padding:1.4rem 1.8rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.2rem;box-shadow:0 3px 14px rgba(111,45,67,.08);">
-    <div style="flex:1;min-width:260px;">
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--red);margin-bottom:.4rem;">REGULAR COURSE</div>
-      <div style="font-family:'Kaisei Opti',serif;font-size:1.15rem;font-weight:700;color:var(--txt);line-height:1.5;">佐野代表の指導</div>
-      <div style="font-size:.85rem;color:var(--txt2);margin-top:.3rem;">定期テスト対策・共通テスト対策・2次試験対策</div>
+  <div class="reveal regular-course-card">
+    <div class="regular-course-portrait">
+      <div class="regular-course-portrait-halo"></div>
+      <img src="img/sano-cutout.png" alt="プラトン代表 佐野 翼" loading="lazy">
     </div>
-    <div style="text-align:right;">
-      <div style="font-family:'Kaisei Opti',serif;font-size:1.9rem;font-weight:900;color:var(--red);line-height:1;letter-spacing:.01em;">税込¥9,900<span style="font-size:.85rem;font-weight:700;margin-left:.2rem;">〜</span></div>
-      <div style="font-size:.72rem;color:var(--txt2);margin-top:.35rem;">月額・コースにより異なります</div>
+    <div class="regular-course-body">
+      <div class="regular-course-eyebrow">REGULAR COURSE</div>
+      <div class="regular-course-title">佐野代表の指導</div>
+      <div class="regular-course-sub">定期テスト対策・共通テスト対策・2次試験対策</div>
+    </div>
+    <div class="regular-course-price">
+      <div class="regular-course-price-num">税込¥9,900<span class="regular-course-price-tilde">〜</span></div>
+      <div class="regular-course-price-note">月額・コースにより異なります</div>
     </div>
   </div>
   <!-- 柔軟な支払い方法バナー -->
