@@ -566,65 +566,87 @@ section{padding:64px 4vw;}
 /* ===== 通常コース料金カード ===== */
 .regular-course-card{
   max-width:900px;margin:0 auto 1.6rem;
-  background:#fff;border:2px solid var(--bdr);border-radius:14px;
-  padding:1.2rem 1.8rem;
-  display:flex;flex-wrap:wrap;align-items:center;gap:1.2rem;
-  box-shadow:0 3px 14px rgba(111,45,67,.08);
-  position:relative;
+  background:linear-gradient(135deg,#fff 0%,#fff 55%,rgba(241,234,236,.55) 100%);
+  border:2px solid var(--bdr);border-radius:18px;
+  padding:1.5rem 1.8rem 1.5rem 1.4rem;
+  display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem;
+  box-shadow:0 8px 28px rgba(111,45,67,.14);
+  position:relative;overflow:hidden;
+}
+.regular-course-card::before{
+  content:"";position:absolute;
+  top:-60px;right:-60px;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(111,45,67,.08) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
 }
 .regular-course-portrait{
   position:relative;flex-shrink:0;
-  width:120px;height:120px;
-  display:flex;align-items:center;justify-content:center;
+  width:170px;height:170px;
+  z-index:1;
 }
 .regular-course-portrait-halo{
-  position:absolute;inset:6px;border-radius:50%;
-  background:radial-gradient(circle at 50% 45%, var(--pale) 0%, rgba(241,234,236,.4) 60%, transparent 80%);
+  position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--pale) 0%, rgba(241,234,236,.55) 55%, transparent 78%),
+    radial-gradient(circle at 50% 50%, rgba(111,45,67,.10) 0%, transparent 60%);
   z-index:0;
 }
 .regular-course-portrait img{
-  position:relative;z-index:1;
+  position:absolute;inset:0;z-index:1;
   width:100%;height:100%;
   object-fit:contain;object-position:bottom center;
-  filter:drop-shadow(0 4px 8px rgba(111,45,67,.18));
+  filter:drop-shadow(0 8px 14px rgba(111,45,67,.22));
 }
-.regular-course-body{flex:1;min-width:220px;}
+.regular-course-badge{
+  position:absolute;
+  bottom:-2px;left:50%;transform:translateX(-50%);
+  background:var(--red);color:#fff;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  padding:.35rem .85rem;border-radius:50px;
+  white-space:nowrap;z-index:2;
+  box-shadow:0 4px 10px rgba(111,45,67,.3);
+  border:2px solid #fff;
+}
+.regular-course-body{flex:1;min-width:220px;position:relative;z-index:1;}
 .regular-course-eyebrow{
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;
   color:var(--red);margin-bottom:.4rem;
 }
 .regular-course-title{
-  font-family:'Kaisei Opti',serif;font-size:1.15rem;font-weight:700;
-  color:var(--txt);line-height:1.5;
+  font-family:'Kaisei Opti',serif;font-size:1.45rem;font-weight:700;
+  color:var(--txt);line-height:1.4;
 }
 .regular-course-sub{
-  font-size:.85rem;color:var(--txt2);margin-top:.3rem;
+  font-size:.88rem;color:var(--txt2);margin-top:.4rem;line-height:1.55;
 }
-.regular-course-price{text-align:right;flex-shrink:0;}
+.regular-course-price{text-align:right;flex-shrink:0;position:relative;z-index:1;}
 .regular-course-price-num{
-  font-family:'Kaisei Opti',serif;font-size:1.9rem;font-weight:900;
+  font-family:'Kaisei Opti',serif;font-size:2rem;font-weight:900;
   color:var(--red);line-height:1;letter-spacing:.01em;
 }
 .regular-course-price-tilde{
-  font-size:.85rem;font-weight:700;margin-left:.2rem;
+  font-size:.9rem;font-weight:700;margin-left:.2rem;
 }
 .regular-course-price-note{
-  font-size:.72rem;color:var(--txt2);margin-top:.35rem;
+  font-size:.72rem;color:var(--txt2);margin-top:.4rem;
 }
 @media(max-width:640px){
   .regular-course-card{
-    padding:1.2rem 1.2rem;gap:.9rem;
+    padding:1.8rem 1.2rem 1.4rem;gap:.6rem;
     justify-content:center;text-align:center;
   }
   .regular-course-portrait{
-    width:96px;height:96px;
+    width:200px;height:200px;
+    margin:0 auto;
   }
   .regular-course-body{
-    flex:1 1 auto;min-width:0;text-align:left;
+    flex:1 1 100%;min-width:0;text-align:center;
+    margin-top:.6rem;
   }
+  .regular-course-title{font-size:1.35rem;}
   .regular-course-price{
     width:100%;text-align:center;
-    border-top:1.5px dashed var(--bdr);padding-top:.8rem;
+    border-top:1.5px dashed var(--bdr);padding-top:.9rem;margin-top:.4rem;
   }
 }
 /* ===== Lucide SVG icon sizing ===== */
@@ -1773,6 +1795,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="regular-course-portrait">
       <div class="regular-course-portrait-halo"></div>
       <img src="img/sano-cutout.png" alt="プラトン代表 佐野 翼" loading="lazy">
+      <span class="regular-course-badge">代表 直接指導</span>
     </div>
     <div class="regular-course-body">
       <div class="regular-course-eyebrow">REGULAR COURSE</div>
