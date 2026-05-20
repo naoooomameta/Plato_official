@@ -206,6 +206,18 @@
     letter-spacing: 0.15em;
   }
 
+  .price-card-mascot {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0 14px;
+  }
+  .price-card-mascot img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 14px rgba(107, 44, 57, 0.18));
+  }
+
   .price-card-amount {
     text-align: center;
     margin-bottom: 8px;
@@ -935,6 +947,9 @@
 <div class="price-card">
   <span class="price-card-badge">まずはお気軽に</span>
   <div class="price-card-title">お試しコース</div>
+  <div class="price-card-mascot">
+    <img src="../img/plato-logochibi.png" alt="プラトン" loading="lazy">
+  </div>
   <div class="price-card-amount">
     <span class="num">9,900</span><span class="yen">円</span>
   </div>
