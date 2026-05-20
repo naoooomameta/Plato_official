@@ -552,6 +552,13 @@ section{padding:64px 4vw;}
   background:var(--mid);transform:translateY(-2px);
   box-shadow:0 4px 12px rgba(160,40,40,.25);
 }
+.trial-banner-link{
+  display:inline-block;margin-top:.75rem;
+  font-size:.82rem;font-weight:700;color:var(--red);
+  text-decoration:underline;text-underline-offset:3px;
+  transition:opacity .2s;
+}
+.trial-banner-link:hover{opacity:.7;}
 @media(max-width:640px){
   .trial-banner{padding:1.5rem 1.2rem 1.2rem;}
   .trial-banner-left{
@@ -561,6 +568,7 @@ section{padding:64px 4vw;}
   }
   .trial-banner-price{justify-content:center;}
   .trial-banner-btn{display:block;text-align:center;}
+  .trial-banner-link{display:block;text-align:center;}
 }
 /* ===== 通常コース料金カード ===== */
 .regular-course-card{
@@ -1785,6 +1793,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
           <li><i data-lucide="check"></i><span>1週間の毎日課題体験</span></li>
         </ul>
         <a href="#contact" class="trial-banner-btn">無料相談で申し込む →</a>
+        <a href="news-otameshi/" class="trial-banner-link">お試しコースの内容を詳しく見る →</a>
       </div>
     </div>
   </div>
