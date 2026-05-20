@@ -506,17 +506,6 @@ section{padding:64px 4vw;}
   color:var(--red);line-height:1.3;margin-bottom:.4rem;
 }
 .trial-banner-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px;}
-.trial-banner-free{
-  font-family:"Kaisei Opti",serif;font-size:2.6rem;font-weight:700;
-  color:var(--red);line-height:1;letter-spacing:.04em;
-}
-.trial-banner-free-en{
-  display:inline-block;font-family:"Kaisei Opti",serif;
-  font-size:.7rem;font-weight:700;letter-spacing:.18em;
-  color:var(--red);background:rgba(111,45,67,.08);
-  padding:3px 10px;border-radius:50px;
-  margin-left:.4rem;vertical-align:middle;
-}
 .trial-banner-sub{
   display:block;font-size:.72rem;color:var(--txt3);
   margin-top:.4rem;letter-spacing:.04em;
@@ -524,7 +513,11 @@ section{padding:64px 4vw;}
 .trial-banner-sub s{color:var(--txt3);text-decoration:line-through;margin-right:.3rem;}
 .trial-banner-num{
   font-family:"Kaisei Opti",serif;font-size:2.4rem;font-weight:700;
-  color:var(--red);line-height:1;
+  color:var(--red);line-height:1;letter-spacing:.02em;
+}
+.trial-banner-yen{
+  font-family:"Kaisei Opti",serif;font-size:1.1rem;font-weight:700;
+  color:var(--red);margin-left:.15rem;
 }
 .trial-banner-yen{font-size:1rem;color:var(--txt2);font-weight:700;}
 .trial-banner-tax{font-size:.68rem;color:var(--txt3);margin-left:4px;}
@@ -1775,9 +1768,9 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <div class="trial-banner-left">
         <div class="trial-banner-name">お試しコース</div>
         <div class="trial-banner-price">
-          <span class="trial-banner-free">無料</span><span class="trial-banner-free-en">FREE</span>
+          <span class="trial-banner-num">9,900<span class="trial-banner-yen">円</span></span>
         </div>
-        <span class="trial-banner-sub"><s>9,900円</s>0円（初回限定・1回のみ）</span>
+        <span class="trial-banner-sub">初回限定・1回のみ</span>
       </div>
       <div class="trial-banner-right">
         <div class="trial-banner-lead">プラトンの指導を実際に体験できるパックです。</div>
