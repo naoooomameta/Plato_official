@@ -32,6 +32,8 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  #otameshi-form { scroll-margin-top: 80px; }
 
   body {
     font-family: var(--font-sans);
@@ -814,6 +816,124 @@
     letter-spacing: 0.05em;
   }
 
+  /* === Inline Contact Form === */
+  .ot-form-wrap {
+    max-width: 560px;
+    margin: 0 auto 28px;
+    background: var(--cream);
+    padding: 36px 32px 32px;
+    border-radius: 16px;
+    text-align: left;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+  }
+  .ot-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .ot-fg { margin-bottom: 16px; }
+  .ot-fg label {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--burgundy-deep);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .ot-req {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    background: var(--burgundy);
+    color: var(--cream);
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+  .ot-fg input,
+  .ot-fg select,
+  .ot-fg textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    background: #fff;
+    color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ot-fg input:focus,
+  .ot-fg select:focus,
+  .ot-fg textarea:focus {
+    outline: none;
+    border-color: var(--burgundy);
+    background: var(--cream-soft);
+  }
+  .ot-fg textarea {
+    min-height: 110px;
+    resize: vertical;
+    font-family: var(--font-sans);
+  }
+  .ot-fg .ot-invalid {
+    border-color: #c62828;
+    background: #fdecea;
+  }
+  .ot-form-msg {
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+  }
+  .ot-form-msg.ot-form-msg--ok,
+  .ot-form-msg.ot-form-msg--ng {
+    display: block;
+  }
+  .ot-form-msg.ot-form-msg--ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+  .ot-form-msg.ot-form-msg--ng {
+    background: #fdecea;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+  .ot-submit {
+    width: 100%;
+    background: var(--burgundy);
+    color: var(--cream);
+    padding: 16px;
+    border: none;
+    border-radius: 40px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .ot-submit:hover {
+    background: var(--burgundy-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+  .ot-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  @media (max-width: 720px) {
+    .ot-form-wrap { padding: 28px 22px 26px; }
+    .ot-form-row { grid-template-columns: 1fr; gap: 0; }
+  }
+
   /* === Footer === */
   footer {
     background: var(--cream-deep);
@@ -919,7 +1039,7 @@
       プラトン
       <div class="logo-sub">文系の大学受験専門塾</div>
     </a>
-    <a href="../#contact" class="header-cta">無料相談はこちら</a>
+    <a href="#otameshi-form" class="header-cta">無料相談はこちら</a>
   </div>
 </header>
 
@@ -966,7 +1086,7 @@
     <li>体験後のヒアリング・継続相談つき</li>
   </ul>
 
-  <a href="../#contact" class="price-card-btn">無料相談で申し込む →</a>
+  <a href="#otameshi-form" class="price-card-btn">無料相談で申し込む →</a>
 </div>
 
 <!-- Why Trial Course Exists -->
@@ -1269,18 +1389,63 @@
   </div>
 </section>
 
-<!-- Final CTA -->
-<section class="final-cta">
+<!-- Final CTA + Inline Form -->
+<section class="final-cta" id="otameshi-form">
   <div class="final-cta-inner">
     <div class="section-label" style="color: var(--gold);">LET'S START</div>
     <h2>まずは1週間、<br>プラトンの指導をそのまま試してみませんか</h2>
     <p class="final-cta-text">
-      無料相談フォームから、お気軽にお申し込みください。<br>
+      下記フォームよりお気軽にお申し込みください。<br>
       1営業日以内に担当者よりご連絡いたします。
     </p>
 
-    <div class="cta-buttons">
-      <a href="../#contact" class="cta-btn-primary">無料相談フォームから申し込む →</a>
+    <div class="ot-form-wrap">
+      <form id="ot-contact-form" novalidate>
+        <div class="ot-form-row">
+          <div class="ot-fg">
+            <label for="ot-name">お名前 <span class="ot-req">必須</span></label>
+            <input type="text" id="ot-name" name="name" placeholder="山田 太郎" required>
+          </div>
+          <div class="ot-fg">
+            <label for="ot-kana">フリガナ <span class="ot-req">必須</span></label>
+            <input type="text" id="ot-kana" name="kana" placeholder="ヤマダ タロウ" required>
+          </div>
+        </div>
+        <div class="ot-fg">
+          <label for="ot-email">メールアドレス <span class="ot-req">必須</span></label>
+          <input type="email" id="ot-email" name="email" placeholder="example@email.com" required>
+        </div>
+        <div class="ot-fg">
+          <label for="ot-tel">電話番号 <span class="ot-req">必須</span></label>
+          <input type="tel" id="ot-tel" name="tel" placeholder="090-0000-0000" required>
+        </div>
+        <div class="ot-form-row">
+          <div class="ot-fg">
+            <label for="ot-grade">学年</label>
+            <select id="ot-grade" name="grade">
+              <option value="">選択してください</option>
+              <option>小学生</option>
+              <option>中学1年生</option>
+              <option>中学2年生</option>
+              <option>中学3年生</option>
+              <option>高校1年生</option>
+              <option>高校2年生</option>
+              <option>高校3年生</option>
+              <option>既卒（浪人）</option>
+            </select>
+          </div>
+          <div class="ot-fg">
+            <label for="ot-university">志望大学</label>
+            <input type="text" id="ot-university" name="university" placeholder="例：早稲田大学">
+          </div>
+        </div>
+        <div class="ot-fg">
+          <label for="ot-message">お悩み・ご相談内容</label>
+          <textarea id="ot-message" name="message" placeholder="学習の悩み、志望校についてなど、お気軽にご記入ください。"></textarea>
+        </div>
+        <div id="ot-form-msg" class="ot-form-msg" role="status" aria-live="polite"></div>
+        <button type="submit" class="ot-submit">無料相談を申し込む →</button>
+      </form>
     </div>
 
     <div class="cta-note">
@@ -1288,6 +1453,64 @@
     </div>
   </div>
 </section>
+
+<script>
+(function() {
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
+  var form = document.getElementById('ot-contact-form');
+  var msg  = document.getElementById('ot-form-msg');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    msg.textContent = '';
+    msg.className = 'ot-form-msg';
+
+    var required = form.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function(el) {
+      if (!el.value.trim()) { valid = false; el.classList.add('ot-invalid'); }
+      else { el.classList.remove('ot-invalid'); }
+    });
+    var email = document.getElementById('ot-email');
+    if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      valid = false; email.classList.add('ot-invalid');
+    }
+    if (!valid) {
+      msg.textContent = '必須項目を正しくご入力ください。';
+      msg.classList.add('ot-form-msg--ng');
+      return;
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    var origText = btn.textContent;
+    btn.textContent = '送信中…';
+
+    var params = new URLSearchParams();
+    params.append('action', 'contact');
+    params.append('source', 'platon-otameshi');
+    params.append('name', document.getElementById('ot-name').value);
+    params.append('kana', document.getElementById('ot-kana').value);
+    params.append('email', email.value);
+    params.append('tel', document.getElementById('ot-tel').value);
+    params.append('grade', document.getElementById('ot-grade').value);
+    params.append('university', document.getElementById('ot-university').value);
+    params.append('message', document.getElementById('ot-message').value);
+
+    fetch(GAS_URL, { method: 'POST', body: params }).catch(function(err) {
+      console.error('Contact form error:', err);
+    });
+
+    form.reset();
+    btn.disabled = false;
+    btn.textContent = origText;
+    msg.textContent = '送信完了！担当者よりご連絡します。';
+    msg.classList.add('ot-form-msg--ok');
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
 
 <!-- Footer -->
 <footer>
