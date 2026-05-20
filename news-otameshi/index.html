@@ -761,6 +761,37 @@
     z-index: 1;
   }
 
+  .final-cta-mascot {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0 18px;
+    position: relative;
+  }
+  .final-cta-mascot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184, 137, 58, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .final-cta-mascot img {
+    position: relative;
+    z-index: 1;
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  }
+  @media (max-width: 720px) {
+    .final-cta-mascot img { width: 110px; height: 110px; }
+    .final-cta-mascot::before { width: 150px; height: 150px; }
+  }
+
   .final-cta h2 {
     color: var(--cream);
     margin-bottom: 24px;
@@ -1394,6 +1425,9 @@
 <section class="final-cta" id="otameshi-form">
   <div class="final-cta-inner">
     <div class="section-label" style="color: var(--gold);">LET'S START</div>
+    <div class="final-cta-mascot">
+      <img src="../img/plato-logochibi.png" alt="プラトン" loading="lazy">
+    </div>
     <h2>まずは1週間、<br>プラトンの指導をそのまま試してみませんか</h2>
     <p class="final-cta-text">
       下記フォームよりお気軽にお申し込みください。<br>
