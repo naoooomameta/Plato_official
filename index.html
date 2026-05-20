@@ -575,8 +575,8 @@ section{padding:64px 4vw;}
 .regular-course-card::before{
   content:"";position:absolute;
   top:50%;left:50%;transform:translate(-50%,-50%);
-  width:60%;max-width:520px;height:70%;
-  background:radial-gradient(ellipse at center,rgba(111,45,67,.06) 0%,transparent 70%);
+  width:55%;max-width:480px;height:65%;
+  background:radial-gradient(ellipse at center,rgba(111,45,67,.04) 0%,transparent 75%);
   pointer-events:none;z-index:0;
 }
 .regular-course-portrait{
@@ -585,11 +585,11 @@ section{padding:64px 4vw;}
   z-index:1;
 }
 .regular-course-portrait-halo{
-  position:absolute;inset:0;border-radius:50%;
+  position:absolute;inset:-8px;border-radius:50%;
   background:
-    radial-gradient(circle at 50% 50%, var(--pale) 0%, rgba(241,234,236,.55) 55%, transparent 78%),
-    radial-gradient(circle at 50% 50%, rgba(111,45,67,.10) 0%, transparent 60%);
+    radial-gradient(circle at 50% 50%, rgba(111,45,67,.10) 0%, rgba(111,45,67,.05) 35%, transparent 70%);
   z-index:0;
+  filter:blur(6px);
 }
 .regular-course-portrait img{
   position:absolute;inset:0;z-index:1;
@@ -605,7 +605,7 @@ section{padding:64px 4vw;}
   padding:.35rem .85rem;border-radius:50px;
   white-space:nowrap;z-index:2;
   box-shadow:0 4px 10px rgba(111,45,67,.3);
-  border:2px solid #fff;
+  border:2px solid var(--cream);
 }
 .regular-course-body{flex:1;min-width:220px;position:relative;z-index:1;}
 .regular-course-eyebrow{
