@@ -958,6 +958,62 @@
     letter-spacing: 0.05em;
   }
 
+  /* === Inline section CTA === */
+  .inline-cta-wrap {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .inline-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--burgundy);
+    color: var(--cream);
+    padding: 15px 36px;
+    border-radius: 40px;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    box-shadow: 0 6px 18px rgba(107, 44, 57, 0.18);
+  }
+  .inline-cta:hover {
+    background: var(--burgundy-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(107, 44, 57, 0.28);
+  }
+  .inline-cta-arrow {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s;
+  }
+  .inline-cta:hover .inline-cta-arrow { transform: translateX(4px); }
+  .inline-cta-note {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+  }
+  /* バーガンディ背景用の反転バリエーション */
+  .bg-burgundy .inline-cta {
+    background: var(--cream);
+    color: var(--burgundy-deep);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  }
+  .bg-burgundy .inline-cta:hover {
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  }
+  .bg-burgundy .inline-cta-note { color: rgba(253, 248, 243, 0.7); }
+  @media (max-width: 480px) {
+    .inline-cta-wrap { margin-top: 36px; }
+    .inline-cta { padding: 13px 28px; font-size: 14px; }
+    .inline-cta-note { font-size: 11px; margin-top: 12px; }
+  }
+
   /* === Inline Contact Form === */
   .ot-form-wrap {
     max-width: 560px;
@@ -1363,6 +1419,13 @@
         </p>
       </div>
     </div>
+
+    <div class="inline-cta-wrap">
+      <a href="#otameshi-form" class="inline-cta">
+        お試しコースを申し込む <span class="inline-cta-arrow">→</span>
+      </a>
+      <span class="inline-cta-note">入塾の強制は一切ありません</span>
+    </div>
   </div>
 </section>
 
@@ -1412,6 +1475,13 @@
         <div class="content-card-meta">無理な勧誘は一切いたしません</div>
       </div>
     </div>
+
+    <div class="inline-cta-wrap">
+      <a href="#otameshi-form" class="inline-cta">
+        お試しコースを申し込む <span class="inline-cta-arrow">→</span>
+      </a>
+      <span class="inline-cta-note">9,900円で全て込み・追加費用なし</span>
+    </div>
   </div>
 </section>
 
@@ -1460,6 +1530,13 @@
           1週間の体験を踏まえて、講師から「お子様の理解度」「学習習慣の定着度」「これから取り組むべきこと」をお伝えします。継続入塾のご希望があれば、そのまま通常コースへ移行できます。継続しない場合も、お困りごとに対するアドバイスをお持ち帰りいただけます。
         </div>
       </div>
+    </div>
+
+    <div class="inline-cta-wrap">
+      <a href="#otameshi-form" class="inline-cta">
+        お試しコースを申し込む <span class="inline-cta-arrow">→</span>
+      </a>
+      <span class="inline-cta-note">お申し込みから初回指導まで最短3〜5営業日</span>
     </div>
   </div>
 </section>
@@ -1564,6 +1641,13 @@
           <div class="voice-meta">高校1年生男子の父 / 首都圏</div>
         </div>
       </div>
+    </div>
+
+    <div class="inline-cta-wrap">
+      <a href="#otameshi-form" class="inline-cta">
+        お試しコースを申し込む <span class="inline-cta-arrow">→</span>
+      </a>
+      <span class="inline-cta-note">1営業日以内に担当者よりご連絡いたします</span>
     </div>
   </div>
 </section>
