@@ -532,6 +532,141 @@
     padding-top: 14px;
   }
 
+  /* === Scene (初回指導の1日) === */
+  .scene-wrap {
+    margin-top: 50px;
+    background: var(--cream);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .scene-header {
+    padding: 28px 36px;
+    background: linear-gradient(180deg, var(--cream-soft) 0%, var(--cream-deep) 100%);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .scene-eyebrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .scene-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--burgundy-deep);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .scene-list {
+    padding: 16px 0;
+  }
+
+  .scene-item {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 28px 36px;
+    border-bottom: 1px dashed var(--line);
+    align-items: start;
+  }
+  .scene-item:last-child { border-bottom: none; }
+
+  .scene-time {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--burgundy);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    padding-top: 4px;
+    position: relative;
+  }
+
+  .scene-time::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--burgundy);
+    margin-top: 10px;
+    opacity: 0.5;
+  }
+
+  .scene-time-sub {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .scene-content-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .scene-content-body {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.95;
+  }
+
+  .scene-content-body em {
+    font-style: normal;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+
+  .scene-quote {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--cream-soft);
+    border-left: 3px solid var(--gold);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--burgundy-deep);
+    line-height: 1.8;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .scene-footer {
+    padding: 24px 36px 28px;
+    background: var(--cream-soft);
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-family: var(--font-serif);
+    line-height: 1.9;
+  }
+
+  @media (max-width: 720px) {
+    .scene-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 24px 22px;
+    }
+    .scene-time { font-size: 22px; }
+    .scene-time::after { display: none; }
+    .scene-header { padding: 22px 22px; }
+    .scene-footer { padding: 20px 22px 24px; }
+  }
+
   /* === FAQ === */
   .faq-list { margin-top: 40px; }
 
@@ -886,65 +1021,6 @@
   </div>
 </section>
 
-<!-- Comparison -->
-<section>
-  <div class="container">
-    <div class="section-label" style="text-align: center;">POSITIONING</div>
-    <h2>無料相談・通常コースとの <em>違い</em></h2>
-    <p class="section-intro">
-      お試しコースは、無料相談と通常入塾のあいだに位置する「実際の指導を確かめる」ためのプランです。
-    </p>
-
-    <div class="compare-table">
-      <div class="compare-row compare-head">
-        <div class="compare-cell">項目</div>
-        <div class="compare-cell">無料相談</div>
-        <div class="compare-cell">お試しコース</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="費用">費用</div>
-        <div class="compare-cell" data-label="無料相談">無料</div>
-        <div class="compare-cell highlight" data-label="お試しコース">9,900円（初回限定・1回のみ）</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="マンツーマン指導">マンツーマン指導</div>
-        <div class="compare-cell" data-label="無料相談">なし（相談のみ）</div>
-        <div class="compare-cell highlight" data-label="お試しコース">あり（60分・1回）</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="学習計画の作成">学習計画の作成</div>
-        <div class="compare-cell" data-label="無料相談">概要のみ</div>
-        <div class="compare-cell highlight" data-label="お試しコース">志望校逆算の詳細プラン</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="毎日課題の体験">毎日課題の体験</div>
-        <div class="compare-cell" data-label="無料相談">なし</div>
-        <div class="compare-cell highlight" data-label="お試しコース">1週間分を本番同様に</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="所要期間">所要期間</div>
-        <div class="compare-cell" data-label="無料相談">30〜45分</div>
-        <div class="compare-cell highlight" data-label="お試しコース">約1週間</div>
-      </div>
-
-      <div class="compare-row">
-        <div class="compare-cell" data-label="向いている方">向いている方</div>
-        <div class="compare-cell" data-label="無料相談">まず話を聞いてみたい方</div>
-        <div class="compare-cell highlight" data-label="お試しコース">「続けられるか」を確かめたい方</div>
-      </div>
-    </div>
-
-    <p style="text-align: center; margin-top: 30px; font-size: 13px; color: var(--ink-mute);">
-      ※どちらから始めていただいても構いません。「まず話だけ」という方は無料相談から、「実際の指導を確かめたい」という方はお試しコースからどうぞ。
-    </p>
-  </div>
-</section>
-
 <!-- Flow -->
 <section class="bg-cream">
   <div class="container">
@@ -994,42 +1070,105 @@
   </div>
 </section>
 
-<!-- Voices -->
+<!-- Scene + Voices -->
 <section class="bg-burgundy">
   <div class="container">
-    <div class="section-label" style="text-align: center;">VOICES</div>
-    <h2>お試しコースを受講された <em>ご家庭の声</em></h2>
+    <div class="section-label" style="text-align: center;">A DAY WITH PLATON</div>
+    <h2>お試し<em>初日</em>に起こること</h2>
     <p class="section-intro">
-      実際にお試しコースから入塾された方からいただいた声を、一部ご紹介します。
+      60分の初回指導は、自己紹介で終わる時間にはしません。<br>
+      実際にお試しを受けた高2生・Aさん（仮名・志望校：早稲田大学 文化構想学部）の初日を例に、当日の流れをご紹介します。
     </p>
 
-    <div class="voices-grid">
-      <div class="voice-card">
-        <div class="voice-body">
-          無料相談だけだと「いい話だけ聞かされた感じ」が残ってしまうので、実際の指導を1週間試せたのは本当にありがたかったです。毎朝の課題に取り組む子どもの様子を見て、続けられそうだと確信できました。
-        </div>
-        <div class="voice-meta">高2男子の母 / 北関東</div>
+    <div class="scene-wrap">
+      <div class="scene-header">
+        <div class="scene-eyebrow">CASE — Aさん（高2女子・早稲田志望）</div>
+        <div class="scene-title">「現代文の点数が安定しない」というご相談から始まった1日</div>
       </div>
 
-      <div class="voice-card">
-        <div class="voice-body">
-          1週間という短い期間でも、子どもが「課題を出さなきゃ」と自分から机に向かうようになったのが驚きでした。塾選びで何度か失敗してきたので、いきなり契約せずに試せる仕組みは助かりました。
+      <div class="scene-list">
+        <div class="scene-item">
+          <div class="scene-time">
+            20:00
+            <span class="scene-time-sub">LESSON START</span>
+          </div>
+          <div>
+            <div class="scene-content-title">志望校・現状・「困っていること」を15分でヒアリング</div>
+            <div class="scene-content-body">
+              講師がまず聞くのは、模試の点数ではなく <em>「何に困っているか」</em> です。Aさんの場合、河合模試の現代文偏差値は52前後で安定せず、特に <em>評論で時間が足りなくなる</em> ことが悩みでした。志望校の出題傾向（早稲田・文化構想は記述比重が大きい）と照らし、どこにギャップがあるかを共有しました。
+            </div>
+          </div>
         </div>
-        <div class="voice-meta">高3女子の母 / 関西</div>
+
+        <div class="scene-item">
+          <div class="scene-time">
+            20:15
+            <span class="scene-time-sub">DIAGNOSIS</span>
+          </div>
+          <div>
+            <div class="scene-content-title">画面共有で、Aさん自身の答案を一緒に分解</div>
+            <div class="scene-content-body">
+              事前に送ってもらっていた直近の模試答案を、画面共有で開きます。「設問を読む前に本文を全部読んでしまう」「設問の傍線部以外にメモが残っていない」といった <em>読解プロセスそのものの癖</em> を、講師が言語化してフィードバック。「自分でもなんとなく感じていた違和感が、はっきり言語化されたのがすごく腹落ちした」というのが、Aさんの初日の感想でした。
+            </div>
+            <div class="scene-quote">
+              「『現代文が苦手』ではなく、『傍線部の前後20行に印をつける習慣がない』というレベルまで分解できると、明日からやることが見えてきます」
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-item">
+          <div class="scene-time">
+            20:40
+            <span class="scene-time-sub">PLAN</span>
+          </div>
+          <div>
+            <div class="scene-content-title">次の1週間で取り組む教材と進め方を、その場で決める</div>
+            <div class="scene-content-body">
+              Aさんには『現代文読解力の開発講座』を中心に、1日1題のペースで取り組むプランを提示しました。「何ページまでやるか」ではなく <em>「どこに線を引きながら読むか」「解いたあと、解説のどこを真似するか」</em> を具体化。ここまでで約40分。残りの20分は、保護者様も画面に入っていただき、ご家庭での声かけや進捗共有の方法をお伝えしました。
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-item">
+          <div class="scene-time">
+            翌朝 5:00
+            <span class="scene-time-sub">DAILY TASK</span>
+          </div>
+          <div>
+            <div class="scene-content-title">初日の課題が、LINEとGmailに同時到着</div>
+            <div class="scene-content-body">
+              翌朝5時、前夜に決めた内容に沿った課題が、お子様と保護者様の両方にLINE/Gmailで届きます。Aさんはその日のうちに評論1題を解いて23:59までに提出。講師が丸つけ・解説を入れ、翌朝5時までに返却。これが7日間、毎日繰り返されます。
+            </div>
+            <div class="scene-quote">
+              ※ご紹介したのは指導例の一つです。志望校・学年・現状によって、初日の進め方は一人ひとり異なります。
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="voice-card">
-        <div class="voice-body">
-          講師の方の話し方と、課題のフィードバックの丁寧さで決めました。9,900円で1週間まるごと体験できるなら、合わなかったとしてもまったく損はしない、というのが正直な感想です。
-        </div>
-        <div class="voice-meta">高1男子の父 / 首都圏</div>
+      <div class="scene-footer">
+        ─ 1週間後、Aさんは通常コースへ移行されました ─
       </div>
+    </div>
 
-      <div class="voice-card">
-        <div class="voice-body">
-          オンラインの塾は子どもと相性が合わないかも、と心配していました。お試しの段階で「これなら続けられそう」と本人が言ったので、安心して入塾を決められました。
+    <!-- Voices (2件に縮小) -->
+    <div style="margin-top: 70px;">
+      <h2 style="font-size: 22px;">お試しを受けたご家庭の <em>声</em></h2>
+
+      <div class="voices-grid">
+        <div class="voice-card">
+          <div class="voice-body">
+            無料相談だけだと「いい話だけ聞かされた感じ」が残ってしまうので、実際の指導を1週間試せたのは本当にありがたかったです。毎朝の課題に取り組む子どもの様子を見て、続けられそうだと確信できました。
+          </div>
+          <div class="voice-meta">高2男子の母 / 北関東</div>
         </div>
-        <div class="voice-meta">高2女子の母 / 東北</div>
+
+        <div class="voice-card">
+          <div class="voice-body">
+            講師の方の話し方と、課題のフィードバックの丁寧さで決めました。9,900円で1週間まるごと体験できるなら、合わなかったとしてもまったく損はしない、というのが正直な感想です。
+          </div>
+          <div class="voice-meta">高1男子の父 / 首都圏</div>
+        </div>
       </div>
     </div>
   </div>
