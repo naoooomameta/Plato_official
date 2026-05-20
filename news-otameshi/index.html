@@ -1014,6 +1014,24 @@
     .inline-cta-note { font-size: 11px; margin-top: 12px; }
   }
 
+  /* === Thank You modal (申込完了) === */
+  #ty-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;}
+  #ty-modal.open{opacity:1;visibility:visible;}
+  #ty-modal.open .ty-card{transform:translateY(0) scale(1);}
+  .ty-overlay{position:absolute;inset:0;background:rgba(29,6,13,.72);backdrop-filter:blur(4px);}
+  .ty-card{position:relative;background:#fff;border-radius:20px;padding:2.8rem 2.4rem 2.6rem;max-width:480px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(107,44,57,.32);transform:translateY(32px) scale(.96);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+  .ty-icon{width:72px;height:72px;background:var(--cream-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;animation:ty-pop .5s .2s cubic-bezier(.22,1,.36,1) both;}
+  @keyframes ty-pop{from{transform:scale(0) rotate(-20deg);}to{transform:scale(1) rotate(0deg);}}
+  .ty-icon svg{width:36px;height:36px;stroke:var(--burgundy);}
+  .ty-en{font-size:.72rem;font-weight:700;letter-spacing:.18em;color:var(--burgundy-light);text-transform:uppercase;margin-bottom:.5rem;font-family:var(--font-sans);}
+  .ty-head{font-size:1.55rem;font-weight:900;color:var(--burgundy-deep);line-height:1.3;margin-bottom:1rem;font-family:var(--font-serif);}
+  .ty-head span{color:var(--burgundy);}
+  .ty-body{font-size:.9rem;color:var(--ink-soft);line-height:1.75;margin-bottom:1.6rem;}
+  .ty-body strong{color:var(--ink);font-weight:700;}
+  .ty-close{display:inline-block;background:var(--burgundy);color:#fff;font-size:.88rem;font-weight:700;padding:.75rem 2.2rem;border-radius:50px;border:none;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;letter-spacing:.06em;font-family:var(--font-sans);}
+  .ty-close:hover{background:var(--burgundy-deep);transform:translateY(-2px);box-shadow:0 8px 24px rgba(107,44,57,.35);}
+  @media(max-width:520px){.ty-card{padding:2.2rem 1.6rem 2rem;}.ty-head{font-size:1.3rem;}}
+
   /* === Inline Contact Form === */
   .ot-form-wrap {
     max-width: 560px;
@@ -1793,6 +1811,464 @@
   </div>
 </section>
 
+
+<!-- Footer -->
+<footer>
+  <div class="logo">プラトン</div>
+  <div style="font-size: 12px; color: var(--ink-mute);">文系の大学受験専門塾｜全国対応オンライン指導</div>
+  <nav>
+    <a href="../">トップページ</a> |
+    <a href="../#courses">コース紹介</a> |
+    <a href="../#results">合格実績</a> |
+    <a href="../news.html">お知らせ</a> |
+    <a href="../#contact">無料相談</a>
+  </nav>
+  <div class="copyright">© 2026 Plato. All rights reserved.</div>
+</footer>
+
+
+<!-- ── Thank You Modal ── -->
+<div id="ty-modal" role="dialog" aria-modal="true" aria-labelledby="ty-heading">
+  <div class="ty-overlay" id="ty-overlay"></div>
+  <div class="ty-card">
+    <div class="ty-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </div>
+    <div class="ty-en">Thank you</div>
+    <h2 class="ty-head" id="ty-heading">お申し込みありがとう<br>ございます！</h2>
+    <p class="ty-body">
+      お問い合わせを受け付けました。<br>
+      <strong>2〜3営業日以内</strong>に担当者よりご連絡いたします。<br><br>
+      プラトンでの学びを、精一杯サポートします。<br>一緒に合格を目指しましょう！
+    </p>
+    <button class="ty-close" id="ty-close-btn">閉じる</button>
+  </div>
+</div>
+
+<!-- ── Booking Widget (面談予約UI) ── -->
+<div id="booking-root"></div>
+<script>
+(function(){
+const API_BASE = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
+const API_URL_A = API_BASE + '?limit=4';
+const API_URL_ALL = (limit, days) => `${API_BASE}?limit=${limit}&daysAhead=${days}&_ts=${Date.now()}`;
+const WEBHOOK_URL = API_BASE;
+const LOGO_SRC = 'https://storage.googleapis.com/studio-design-asset-files/projects/6kq952mXqp/s-320x320_webp_08673985-fd2e-4d68-ac2b-1820afc5c14d.webp';
+const POWERED_LOGO = 'https://storage.googleapis.com/studio-design-asset-files/projects/6kq952mXqp/s-500x500_webp_2dbd9f85-0a83-498d-9d9a-7a2fb244e618.png';
+const LEAD_API_URL = 'https://script.google.com/macros/s/AKfycby6J6TGQBcflPglhiga39ygn_NgtfGquYqzP-_fP6M-_BioD3qUJkIQM9hGqT8TlrGq/exec';
+const root = document.getElementById('booking-root');
+let _leadFetched = false;
+async function prefillFromSheet(){if (_leadFetched) return;try{const url = LEAD_API_URL + (LEAD_API_URL.includes('?') ? '&' : '?') + 'mode=last&_ts=' + Date.now();
+const r = await fetch(url, { cache:'no-store'});
+const j = await r.json();
+if (j && j.ok){
+const nm = root.querySelector('#qaForm [name="name"]');
+const em = root.querySelector('#qaForm [name="email"]');
+if (nm && j.name) nm.value = j.name;
+if (em && j.email) em.value = j.email;
+_leadFetched = true;}}catch(e){ }}
+root.innerHTML = ''
++ '<style>'
++ '@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap");'
++ '#booking-root, #booking-root *{font-family:"Noto Sans JP",sans-serif !important;}'
++ '#booking-root section{padding:0;}'
++ '.bk-modal{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:center;z-index:10000;padding:16px 12px 12px}'
++ '.bk-dialog{width:94%;padding:16px;max-width:440px;max-height:calc(100dvh - 40px);overflow-y:auto;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.25);margin:0 auto}'
++ '#bk-modalA .bk-dialog{max-width:440px !important;}'
++ '.bk-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:9999;}'
++ '.bk-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:8px;color:#6B7280;}'
++ '.bk-close:hover{color:#111;}'
++ '.bk-header{position:relative;display:flex;align-items:center;justify-content:center;padding:12px 16px;border-bottom:1px solid #eee}'
++ '.bk-title{font-size:20px;font-weight:800;text-align:center;width:100%}'
++ '.bk-body{padding:14px}'
++ '.bk-a-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}'
++ '@media(min-width:860px){.bk-a-grid{grid-template-columns:1fr 1fr;gap:20px}}'
++ '.bk-a-info{color:#111827}'
++ '.bk-a-top{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;text-align:center}'
++ '.bk-avatar{width:60px;height:60px;border-radius:50%;background:#f2f5f7;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}'
++ '.bk-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}'
++ '.bk-a-title{font-weight:700;font-size:18px;line-height:1.3;display:flex;align-items:center;gap:6px}'
++ '.bk-a-title span{font-weight:400;font-size:14px;color:#6B7280}'
++ '.bk-a-desc{font-size:14px;color:#374151;line-height:1.85;margin:10px 0 14px;text-align:left}'
++ '.bk-info-list{margin:0 0 14px;padding-left:20px;font-size:14px;line-height:1.85;color:#374151}'
++ '.bk-info-list li{margin:5px 0}'
++ '.bk-a-slots .bk-slot-wrap{padding-top:20px;max-width:unset;margin:0}'
++ '#bk-modalA .bk-a-grid{margin-top:10px}'
++ '#bk-modalA .bk-dialog{max-width:440px !important;}'
++ '.bk-slot-wrap{font-family:inherit;width:100%;max-width:260px;margin:0 auto}'
++ '.bk-slot-list{display:flex;flex-direction:column;gap:12px;padding:0;margin:0 0 16px;list-style:none}'
++ '.bk-slot-item{list-style:none;width:100%;text-align:center;background:#fff;border:1px solid #E6E8EB;border-radius:10px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .03s}'
++ '.bk-slot-item:hover{background:#f9fafb;transform:translateY(-1px)}'
++ '.bk-slot-date,.bk-slot-time{font-size:16px;font-weight:700;line-height:1.2;color:#111827}'
++ '.bk-slot-date{margin-right:6px}'
++ '.bk-slot-empty{color:#6B7280;text-align:center;padding:20px 8px}'
++ '.bk-placeholder{pointer-events:none;opacity:.7}'
++ '.bk-slot-cta{display:flex;align-items:center;justify-content:center;width:100%;height:52px;margin:8px 0 0;border:1px solid #3B82F6;border-radius:10px;background:#3B82F6;color:#fff;font-weight:700;font-size:16px;cursor:pointer;text-align:center;transition:background .15s,transform .03s}'
++ '.bk-slot-cta:hover{background:#2563EB;border-color:#2563EB;transform:translateY(-1px)}'
++ '.bk-form{width:100%;max-width:520px;margin:0 auto;font-size:13px;padding-top:8px}'
++ '.bk-row{margin-bottom:14px}'
++ '.bk-label{font-size:12px;font-weight:600;margin-bottom:6px;line-height:1.4}'
++ '.bk-req-badge{background:#E02424;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;font-weight:normal;vertical-align:middle;display:inline-block}'
++ '.bk-input,.bk-textarea{width:100%;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px;font-size:11px;box-sizing:border-box}'
++ '.bk-textarea{min-height:96px;resize:vertical}'
++ '.bk-checklist,.bk-radiolist{display:flex;flex-direction:column;gap:8px;margin-top:6px;font-size:12px}'
++ '.bk-badge{display:inline-flex;gap:8px;align-items:center;font-size:13px;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:999px;padding:6px 10px;margin-bottom:12px}'
++ '.bk-badge .dt{font-weight:700}'
++ '.bk-success{padding:12px;color:#065f46;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:10px}'
++ '.bk-error{padding:12px;color:#991b1b;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px}'
++ '#bk-selBadge{display:none!important;margin:0 auto 12px!important}'
++ '.bk-row-name,.bk-row-email{display:none}'
++ '.bk-thx-wrap{padding:8px 6px 20px}'
++ '.bk-thx-title{font-size:22px;font-weight:800;text-align:center;margin:8px 0 6px}'
++ '.bk-thx-sub{color:#4B5563;text-align:center;font-size:14px;line-height:1.8;margin-bottom:14px}'
++ '.bk-thx-sub .mail{font-weight:700;color:#111827}'
++ '.bk-thx-card{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px}'
++ '.bk-thx-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;color:#111827;text-align:center;justify-content:center}'
++ '.bk-thx-ico{font-size:18px}'
++ '.bk-thx-ttl{font-weight:700}'
++ '.bk-thx-date{font-weight:700;text-align:center;font-size:16px;margin:6px 0 2px}'
++ '.bk-thx-email-label{letter-spacing:.6em;color:#6B7280;margin-top:10px;text-align:center}'
++ '.bk-powered{margin:16px 0 4px;text-align:center;color:#9CA3AF;font-size:12px;display:flex;justify-content:center;align-items:center;gap:8px}'
++ '.bk-powered .bk-powered-logo{height:50px;width:auto;display:inline-block;vertical-align:middle;border-radius:4px}'
++ '#bk-modalD .bk-cal-wrap{transform:scale(.94);transform-origin:top center}'
++ '.bk-cal-wrap{max-width:1020px;margin:0 auto}'
++ '.bk-cal-scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}'
++ '.bk-gcal-toggle{appearance:none;border:1px solid #E4F0FF;background:#F7FBFF;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;color:#3B82F6;cursor:pointer;margin-bottom:10px;transition:background .15s}'
++ '.bk-gcal-toggle:hover{background:#EEF6FF}'
++ '.bk-gcal-frame{width:100%;height:400px;border:1px solid #E4F0FF;border-radius:12px;margin-bottom:14px}'
++ '@media(max-width:640px){.bk-gcal-frame{height:300px}}'
++ '.bk-cal-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 8px}'
++ '.bk-cal-range{font-weight:800;font-size:18px;letter-spacing:.01em}'
++ '.bk-cal-nav{display:inline-flex;border:1px solid #E4F0FF;border-radius:12px;overflow:hidden;background:#F7FBFF}'
++ '.bk-nav-btn{appearance:none;border:0;background:transparent;padding:8px 14px;line-height:1;font-size:16px;cursor:pointer}'
++ '.bk-nav-btn+.bk-nav-btn{border-left:1px solid #E4F0FF}'
++ '.bk-nav-btn:hover{background:#EEF6FF}'
++ '.bk-nav-btn:active{transform:translateY(1px)}'
++ '.bk-nav-btn[disabled]{opacity:.4;cursor:not-allowed}'
++ '.bk-cal-table{width:100%;border-collapse:separate;border-spacing:8px 6px}'
++ '.bk-cal-table th,.bk-cal-table td{padding:0}'
++ '.bk-cal-table thead th{position:sticky;top:0;background:#F7FBFF;z-index:5;font-size:12px;color:#3B82F6;font-weight:700;text-align:center;padding:6px 4px;border:1px solid #E4F0FF;border-radius:12px}'
++ '.bk-cal-table thead th.bk-day-closed{background:#F3F6FA;border-color:#DFE6EF;color:#98A2B3;opacity:.9}'
++ '.bk-cal-table thead th.bk-cal-spacer{border:0;background:transparent;padding:0;width:54px;min-width:54px;border-radius:0}'
++ '.bk-cal-table thead tr>th:first-child{border:0;background:transparent;padding:0;border-radius:0}'
++ '.bk-cal-table tbody th{width:50px;font-variant-numeric:tabular-nums;font-size:12px;padding-right:10px;color:#94A3B8;font-weight:600;white-space:nowrap;text-align:right}'
++ '.bk-cal-slot{height:40px;border-radius:12px;background:#F4F9FF;border:1px solid #E4F0FF;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}'
++ '.bk-cal-slot.on:hover{background:#EAF3FF;border-color:#CFE5FF}'
++ '.bk-cal-slot.off{background:#EEF2F6;border:1px solid #D6DFEA}'
++ '.bk-cal-slot.off::before{content:"";width:18px;height:2px;background:#96A3B5;border-radius:2px;display:block}'
++ '.bk-cal-dot{width:28px;height:28px;border-radius:999px;border:2px solid #5AB6FF;background:#fff;cursor:pointer;box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .15s,transform .03s}'
++ '.bk-cal-dot:hover{box-shadow:0 0 0 4px rgba(59,130,246,.18)}'
++ '.bk-cal-dot:active{transform:scale(.97)}'
++ '@media(max-width:640px){'
++ '.bk-cal-range{font-size:16px}.bk-cal-table{border-spacing:6px 6px}'
++ '.bk-cal-slot{height:32px}.bk-cal-dot{width:20px;height:20px}'
++ '.bk-modal{padding:12px;width:100%;height:auto;min-height:100vh;box-sizing:border-box;align-items:flex-start;padding-top:16px}'
++ '.bk-modal .bk-dialog{width:94%!important;max-width:440px!important;margin:0 auto;border-radius:16px;padding:12px 14px!important;max-height:calc(100dvh - 40px)}'
++ '.bk-modal .bk-title{font-size:15px}'
++ '#bk-modalB .bk-title{font-size:14px}'
++ '.bk-modal .bk-header{padding:8px 14px}'
++ '.bk-modal .bk-body{padding:10px 12px;font-size:14px;line-height:1.6}'
++ '.bk-modal .bk-body li{font-size:14px;line-height:1.6}'
++ '.bk-modal .bk-body p{font-size:14px;line-height:1.6}'
++ '.bk-form{max-width:100%}'
++ '#bk-modalA .bk-a-title{font-size:clamp(15px,4.2vw,18px)!important;white-space:nowrap;gap:1.2vw}#bk-modalA .bk-a-title span{font-size:clamp(13px,3.6vw,16px)!important;white-space:nowrap}'
++ '.bk-avatar{width:46px;height:46px}'
++ '#bk-modalA .bk-a-top{margin-bottom:6px;gap:8px}'
++ '.bk-input,.bk-textarea{font-size:16px}'
++ '.bk-textarea{min-height:80px}'
++ '.bk-checklist,.bk-radiolist{gap:10px}'
++ '.bk-a-slots .bk-slot-wrap{padding-top:5px;max-width:unset;margin:0}'
++ '.bk-slot-cta{display:block;width:100%;max-width:none;margin:16px 0 0}'
++ '.bk-badge{max-width:100%}'
++ '.bk-label{font-size:14px}'
++ '.bk-thx-wrap{padding:12px 16px 20px}'
++ '.bk-thx-card{padding:16px}'
++ '.bk-thx-title{font-size:16px}'
++ '.bk-thx-date{font-size:18px;line-height:1.4;margin:6px 0 8px}'
++ '#bk-thxDT .d,#bk-thxDT .t{display:block;text-align:center}'
++ '.bk-thx-email-label{text-align:center;letter-spacing:.2em}'
++ '#bk-modalC .bk-dialog{width:96%!important;max-width:96%!important;margin:12px auto;padding:8px 14px;border-radius:10px}'
++ '#bk-modalC .bk-body{padding:10px}'
++ '#bk-modalC .bk-thx-card{padding:10px 12px}'
++ '#bk-modalA .bk-a-grid{gap:8px;align-content:start}'
++ '#bk-modalA .bk-a-desc{margin:4px 0 4px;font-size:12px!important;line-height:1.6!important}'
++ '#bk-modalA .bk-info-list{margin:4px 0 6px;padding-left:16px;line-height:1.6!important;font-size:12px!important}'
++ '#bk-modalA .bk-info-list li{margin:3px 0;font-size:12px!important;line-height:1.6!important}'
++ '#bk-modalA .bk-a-slots .bk-slot-wrap{padding-top:4px}'
++ '#bk-modalA .bk-slot-list{gap:10px}'
++ '#bk-modalA .bk-slot-item{height:44px}'
++ '#bk-modalA .bk-slot-cta{height:46px;margin:8px 0 0}'
++ '#bk-modalD .bk-cal-head{gap:6px}'
++ '#bk-modalD .bk-cal-range{font-size:13px!important;line-height:1;white-space:nowrap;word-break:keep-all;letter-spacing:0;min-width:0;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}'
++ '#bk-modalD .bk-cal-nav{flex:0 0 auto}'
++ '#bk-modalD .bk-nav-btn{padding:6px 10px}'
++ '#bk-modalD{align-items:flex-end!important;padding:0!important}'
++ '#bk-modalD .bk-dialog{width:100%!important;max-width:100%!important;border-radius:16px 16px 0 0!important;margin:0!important;max-height:92dvh!important;padding-left:10px;padding-right:10px}'
++ '#bk-modalD .bk-cal-wrap{transform:none!important}'
++ '#bk-modalD .bk-cal-table{border-spacing:3px 4px}'
++ '#bk-modalD .bk-cal-table tbody th{width:38px}'
++ '#bk-modalB .bk-header{justify-content:flex-start;padding-left:8px;gap:6px}'
++ '#bk-backToD{position:static!important;transform:none!important;white-space:nowrap!important;font-size:13px!important}'
++ '#bk-modalB .bk-header .bk-title{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}'
++ '#bk-modalA .bk-dialog{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch}'
++ '}'
++ '.bk-modal .bk-body{padding:0}'
++ '#bk-modalA .bk-slot-cta{max-width:unset;margin:10px 0 0;width:100%}'
++ '@media(min-width:641px){#bk-modalA .bk-a-grid{gap:10px}}'
++ '#bk-modalA .bk-a-title{font-size:16px}'
++ '#bk-modalA .bk-a-title span{font-size:12px}'
++ '#bk-modalA .bk-a-desc{font-size:12px;line-height:1.6;margin:4px 0}'
++ '#bk-modalA .bk-info-list{font-size:12px;line-height:1.6;margin:4px 0 4px;padding-left:14px}'
++ '#bk-modalA .bk-info-list li{font-size:12px;line-height:1.6}'
++ '#bk-modalA .bk-a-slots .bk-slot-wrap{padding-top:4px}'
++ '@media(min-width:641px) and (max-width:850px){#bk-modalA .bk-slot-list{gap:10px}'
++ '#bk-modalA .bk-slot-item{height:46px}'
++ '#bk-modalA .bk-slot-cta{height:48px;margin:12px 0 0}}'
++ '</style>'
+/* ── HTML: All modals start hidden ── */
++ '<div id="bk-ov" class="bk-overlay" style="display:none;"></div>'
++ '<div id="bk-modalA" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">都合の良い日程をご指定ください</div><button class="bk-close" id="bk-closeA" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body"><div class="bk-a-grid">'
++ '<section class="bk-a-info">'
++ '<div class="bk-a-top"><span class="bk-avatar"><img src="'+LOGO_SRC+'" alt="ロゴ"></span><div class="bk-a-title">\u{1F4DE} 担当からのお電話 <span>（30分）</span></div></div>'
++ '<p class="bk-a-desc">都合の良い日程をご指定ください。<br><br>お電話の際には当塾代表・佐野より、<br>以下についてご案内致します。</p>'
++ '<ul class="bk-info-list"><li>お子様に合った学習スタイルの見つけ方</li><li>プラトンならではの強みと、他塾様との違い</li><li>実際に成果が出たご家庭の具体例</li><li>安心して始められる入塾まで流れとご料金</li><li>現在開催中のキャンペーンに関するご案内（ご希望の方のみ）</li></ul>'
++ '<p class="bk-a-desc">無理な押し売りや強引な勧誘は一切いたしません。<br><br>「まずは気軽に相談してみよう」という<br>お気持ちで大丈夫です。</p>'
++ '</section>'
++ '<section class="bk-a-slots"><div class="bk-slot-wrap">'
++ '<ul id="bk-slotList" class="bk-slot-list"><li class="bk-slot-item bk-placeholder"><div class="bk-slot-date">読み込み中…</div><div class="bk-slot-time">しばらくお待ちください</div></li></ul>'
++ '<button id="bk-toAll" class="bk-slot-cta" type="button">全ての候補日程を見る</button>'
++ '<div id="bk-slotEmpty" class="bk-slot-empty" style="display:none;">直近の空き枠がありません。<br>別日をご希望の場合は担当者より個別にご案内します。</div>'
++ '</div></section>'
++ '</div></div>'
++ '<div class="bk-powered">powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div>'
++ '</div></div>'
+
++ '<div id="bk-modalB" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">\u{1F4DD} お電話前アンケートのお願い</div><button class="bk-close" id="bk-closeB" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body">'
++ '<div id="bk-selBadge" class="bk-badge" style="display:none">\u{1F4C5} <span class="dt"></span> <span class="tm"></span></div>'
++ '<form id="bk-qaForm" class="bk-form">'
++ '<div class="bk-row bk-row-name"><div class="bk-label">お名前<span class="bk-req-badge">必須</span></div><input class="bk-input" type="text" name="name" placeholder="山田 太郎"></div>'
++ '<div class="bk-row bk-row-email"><div class="bk-label">メールアドレス<span class="bk-req-badge">必須</span></div><input class="bk-input" type="email" name="email" placeholder="you@example.com"></div>'
++ '<div class="bk-row"><div class="bk-label">当日特に聞きたいことを教えて下さい（複数選択可）<span class="bk-req-badge">必須</span></div>'
++ '<div class="bk-checklist">'
++ '<label><input type="checkbox" name="topics" value="当塾の詳細"> 当塾の詳細</label>'
++ '<label><input type="checkbox" name="topics" value="受験対策"> 受験対策の方法がわからないこと</label>'
++ '<label><input type="checkbox" name="topics" value="大学受験"> 大学受験の不安が解消されないこと</label>'
++ '<label><input type="checkbox" name="topics" value="家庭学習"> 子供が家で勉強しないこと</label>'
++ '<label><input type="checkbox" name="topics" value="料金体系"> 料金体系</label>'
++ '</div></div>'
++ '<div class="bk-row"><div class="bk-label">ご連絡手段はお電話で宜しいですか？<span class="bk-req-badge">必須</span></div>'
++ '<div class="bk-radiolist">'
++ '<label><input type="radio" name="meeting" value="電話でOK" required> 電話でOK</label>'
++ '<label><input type="radio" name="meeting" value="オンラインを希望" required> オンライン面談（Google meet）を希望</label>'
++ '</div></div>'
++ '<div class="bk-row"><div class="bk-label">当社代表佐野への伝言（あれば）</div><textarea class="bk-textarea" name="note" placeholder="ご希望や事前共有事項など"></textarea></div>'
++ '<button class="bk-slot-cta" type="submit"><span class="btn-label">送信</span></button>'
++ '</form>'
++ '<div id="bk-result" style="margin-top:10px"></div>'
++ '<div class="bk-powered">Powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div></div></div></div>'
+
++ '<div id="bk-modalC" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title"> </div><button class="bk-close" id="bk-closeC" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body"><div class="bk-thx-wrap">'
++ '<div class="bk-thx-title">メールで詳細をお送りしました！</div>'
++ '<div class="bk-thx-sub">「<span id="bk-thxEmail" class="mail"></span>」宛に<br>電話相談の通知が届いています。</div>'
++ '<div class="bk-thx-card">'
++ '<div class="bk-thx-row"><span class="bk-thx-ico">\u{1F4DE}</span><div class="bk-thx-ttl">担当からのお電話 <span style="font-weight:400;color:#6B7280;">（30分）</span></div></div>'
++ '<div id="bk-thxDT" class="bk-thx-date"></div>'
++ '<div class="bk-thx-email-label">緊急ご連絡先：<br>plato.humanities@gmail.com</div>'
++ '</div></div></div>'
++ '<div class="bk-powered">Powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="plato"></div>'
++ '</div></div>'
+
++ '<div id="bk-modalD" class="bk-modal" role="dialog" aria-modal="true" style="display:none;">'
++ '<div class="bk-dialog">'
++ '<div class="bk-header"><div class="bk-title">候補日程一覧（カレンダー）</div><button class="bk-close" id="bk-closeD" aria-label="閉じる">&times;</button></div>'
++ '<div class="bk-body">'
++ '<div style="text-align:center;margin-bottom:8px"><button id="bk-gcalToggle" class="bk-gcal-toggle" type="button">\u{1F4C5} Googleカレンダーで全体を確認</button></div>'
++ '<div id="bk-gcalEmbed" style="display:none"><iframe class="bk-gcal-frame" src="https://calendar.google.com/calendar/embed?src=plato.humanities%40gmail.com&ctz=Asia/Tokyo&mode=WEEK&showTitle=0&showNav=1&showPrint=0&showCalendars=0&showTz=0" frameborder="0" scrolling="no"></iframe></div>'
++ '<div class="bk-cal-wrap"><div class="bk-cal-head">'
++ '<div class="bk-cal-range" id="bk-calRange"></div>'
++ '<div class="bk-cal-nav"><button id="bk-calPrev" class="bk-nav-btn" type="button" aria-label="前の5日">&#8249;</button><button id="bk-calNext" class="bk-nav-btn" type="button" aria-label="次の5日">&#8250;</button></div>'
++ '</div><div id="bk-calGrid"></div></div></div>'
++ '<div class="bk-powered">powered by <img class="bk-powered-logo" src="'+POWERED_LOGO+'" alt="logo"></div></div></div>';
+
+if(!document.getElementById('bk-btnspin-style')){const st=document.createElement('style');
+st.id='bk-btnspin-style';
+st.textContent='.bk-btn-spinner{display:inline-block;vertical-align:middle;width:16px;height:16px;margin-left:8px;border-radius:50%;border:2px solid #fff;border-top-color:transparent;animation:bkspin .9s linear infinite}@keyframes bkspin{to{transform:rotate(360deg)}}';
+document.head.appendChild(st);}
+
+const $ = function(s){ return root.querySelector(s); };
+const ov=$('#bk-ov'), modalA=$('#bk-modalA'), modalB=$('#bk-modalB'), modalC=$('#bk-modalC'), modalD=$('#bk-modalD');
+function bkOpenA(){ 
+  ov.style.display='block'; modalA.style.display='flex'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='hidden';
+  /* ── 問い合わせフォームの名前・メアドを予約フォームにセット ── */
+  var nm = root.querySelector('#bk-qaForm [name="name"]');
+  var em = root.querySelector('#bk-qaForm [name="email"]');
+  if (nm && window.__contactName)  nm.value = window.__contactName;
+  if (em && window.__contactEmail) em.value = window.__contactEmail;
+}
+function bkOpenB(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='flex'; modalC.style.display='none'; modalD.style.display='none';}
+function bkOpenC(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='flex'; modalD.style.display='none';}
+function bkOpenD(){ ov.style.display='block'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='flex';}
+function bkCloseAll(){ ov.style.display='none'; modalA.style.display='none'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='';}
+
+/* ── 外部から呼べる関数を公開 ── */
+window.__openBookingModal = bkOpenA;
+
+$('#bk-closeA').addEventListener('click', bkCloseAll);
+$('#bk-closeB').addEventListener('click', bkCloseAll);
+$('#bk-closeC').addEventListener('click', bkCloseAll);
+$('#bk-closeD').addEventListener('click', bkCloseAll);
+/* ── Google Calendar embed toggle ── */
+$('#bk-gcalToggle').addEventListener('click', function(){
+var embed = $('#bk-gcalEmbed');
+var btn = $('#bk-gcalToggle');
+if(embed.style.display==='none'){embed.style.display='block';btn.textContent='\u{1F4C5} Googleカレンダーを閉じる';}
+else{embed.style.display='none';btn.textContent='\u{1F4C5} Googleカレンダーで全体を確認';}
+});
+ov.addEventListener('click', bkCloseAll);
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && ov.style.display === 'block') { bkCloseAll(); }
+});
+
+function showCalLoading(){
+const grid = $('#bk-calGrid');
+if(!grid) return;
+grid.innerHTML = '<div style="text-align:center;margin:16px 0;"><div style="font-weight:700;color:#111827;">読み込み中… しばらくお待ちください</div></div>';}
+
+function loadSlots(){
+const ul = $('#bk-slotList');
+const empty = $('#bk-slotEmpty');
+const url = API_URL_A + (API_URL_A.includes('?') ? '&' : '?') + '_ts=' + Date.now();
+ul.innerHTML = '<li class="bk-slot-item bk-placeholder"><div class="bk-slot-date">読み込み中…</div><div class="bk-slot-time">しばらくお待ちください</div></li>';
+empty.style.display = 'none';
+fetch(url, { cache:'no-store' })
+.then(function(r){ return r.text(); })
+.then(function(text){
+var data;
+try{ data = JSON.parse(text); }catch(e){
+ul.innerHTML=''; empty.style.display='block';
+empty.textContent = 'APIがJSONを返しませんでした：' + text.slice(0,200);return;}
+var slots = (data && data.slots) ? data.slots : [];
+ul.innerHTML='';
+if(!slots.length){ empty.style.display='block'; empty.textContent='直近の空き枠がありません。'; return;}
+slots.forEach(function(s){
+var li=document.createElement('li');
+li.className='bk-slot-item';
+li.textContent = s.dateLabel + ' ' + s.timeLabel;
+li.addEventListener('click', function(){
+sessionStorage.setItem('selectedSlot', JSON.stringify(s));
+var badge = $('#bk-selBadge');
+if(badge){badge.style.display='inline-flex';badge.querySelector('.dt').textContent=s.dateLabel;badge.querySelector('.tm').textContent=s.timeLabel;}
+prefillFromSheet();
+bkOpenB();});
+ul.appendChild(li);});})
+.catch(function(err){
+ul.innerHTML=''; empty.style.display='block';
+empty.textContent='Fetch失敗：' + String(err);});}
+
+$('#bk-toAll').addEventListener('click', async function(){
+bkOpenD(); bindCalNav(); showCalLoading(); await renderCalendar();});
+
+function showBtnSpinner(btn){
+if(!btn||btn.querySelector('.bk-btn-spinner'))return;
+btn.style.pointerEvents='none';
+const s=document.createElement('span');s.className='bk-btn-spinner';btn.appendChild(s);}
+function hideBtnSpinner(btn){
+if(!btn)return;btn.style.pointerEvents='';
+const s=btn.querySelector('.bk-btn-spinner');if(s)s.remove();}
+
+$('#bk-qaForm').addEventListener('submit', async function(e){
+e.preventDefault();
+var res=$('#bk-result'); res.innerHTML='';
+var slotStr=sessionStorage.getItem('selectedSlot');
+if(!slotStr){res.innerHTML='<div class="bk-error">日程が選択されていません。</div>';return;}
+var slot=JSON.parse(slotStr);
+var fd=new FormData(e.target);
+var body={name:fd.get('name'),email:fd.get('email'),meeting:fd.get('meeting')||'',topics:fd.getAll('topics')||[],note:fd.get('note')||'',slot:slot};
+if(body.topics.length===0){res.innerHTML='<div class="bk-error">「当日特に聞きたいこと」を1つ以上選択してください。</div>';return;}
+var btn=e.submitter||$('#bk-qaForm .bk-slot-cta');
+if(btn&&btn.querySelector&&btn.querySelector('.bk-btn-spinner'))return;
+try{showBtnSpinner(btn);
+var params=new URLSearchParams();
+params.append('name',body.name||'');params.append('email',body.email||'');params.append('meeting',body.meeting||'');
+(body.topics||[]).forEach(function(t){params.append('topics',t);});
+params.append('note',body.note||'');params.append('slot',JSON.stringify(body.slot||{}));
+var r=await fetch(WEBHOOK_URL,{method:'POST',body:params});
+var data=await r.json();
+if(data&&data.ok){
+var email=body.email||'';
+var thxEmail=$('#bk-thxEmail');var thxDT=$('#bk-thxDT');
+if(thxEmail)thxEmail.textContent=email;
+if(thxDT)thxDT.textContent=slot.dateLabel+'　'+slot.timeLabel;
+e.target.reset();sessionStorage.removeItem('selectedSlot');
+bkOpenC();
+}else{throw new Error((data&&data.error)||'unknown error');}}catch(err){
+res.innerHTML='<div class="bk-error">送信に失敗しました：'+String(err)+'</div>';
+}finally{hideBtnSpinner(btn);}});
+
+const CAL_LIMIT=5000, CAL_DAYS_AHEAD=365;
+function getCalDays(){return window.innerWidth<=640?3:5;}
+const CAL_TIME_LABELS=buildTimes('10:00','22:00',60);
+let allSlots=[], calOffset=0;
+function buildTimes(startHHMM,endHHMM,stepMin){const[sh,sm]=startHHMM.split(':').map(Number);const[eh,em]=endHHMM.split(':').map(Number);const times=[];let t=sh*60+sm;const end=eh*60+em;while(t<end){const hh=Math.floor(t/60),mm=t%60;times.push(pad2(hh)+':'+pad2(mm));t+=stepMin;}return times;}
+function pad2(n){return('0'+n).slice(-2);}
+function ymdKey(d){const x=new Date(d);x.setHours(0,0,0,0);return x.getTime();}
+function jpDate(d){const w='日月火水木金土';return pad2(d.getMonth()+1)+'/'+pad2(d.getDate())+'（'+w[d.getDay()]+'）';}
+async function ensureAllSlots(){if(allSlots.length)return allSlots;
+const url=API_URL_ALL(CAL_LIMIT,CAL_DAYS_AHEAD);const r=await fetch(url,{cache:'no-store'});const data=await r.json().catch(()=>({}));
+allSlots=(data&&data.slots)?data.slots:[];
+allSlots.forEach(s=>{const d=new Date(s.startIso||s.startISO||s.start||0);s._start=d;s._dateKey=ymdKey(d);s._timeKey=pad2(d.getHours())+':'+pad2(d.getMinutes());});return allSlots;}
+
+async function renderCalendar(){await ensureAllSlots();
+const start=new Date();start.setHours(0,0,0,0);start.setDate(start.getDate()+calOffset);
+const days=Array.from({length:getCalDays()},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);return d;});
+const dayKeys=new Set(days.map(ymdKey));const times=CAL_TIME_LABELS;const map={};
+allSlots.forEach(s=>{if(!dayKeys.has(s._dateKey))return;(map[s._dateKey]||={})[s._timeKey]=s;});
+let html='<table class="bk-cal-table"><thead><tr><th class="bk-cal-spacer"></th>';
+days.forEach(d=>{const dk=ymdKey(d);const hasAny=allSlots.some(s=>s._dateKey===dk);
+html+='<th'+(hasAny?'':' class="bk-day-closed"')+'>'+jpDate(d)+'</th>';});
+html+='</tr></thead><tbody>';
+times.forEach(t=>{html+='<tr><th>'+t+'</th>';
+days.forEach(d=>{const m=map[ymdKey(d)]&&map[ymdKey(d)][t];
+if(m){const payload=encodeURIComponent(JSON.stringify(m));
+html+='<td><div class="bk-cal-slot on"><button class="bk-cal-dot" data-slot="'+payload+'"></button></div></td>';}else{html+='<td><div class="bk-cal-slot off"></div></td>';}});
+html+='</tr>';});
+html+='</tbody></table>';
+$('#bk-calGrid').innerHTML='<div class="bk-cal-scroller">'+html+'</div>';
+$('#bk-calRange').textContent=jpDate(days[0])+' 〜 '+jpDate(days[days.length-1]);
+$('#bk-calGrid').querySelectorAll('.bk-cal-dot').forEach(btn=>{btn.addEventListener('click',()=>{
+const s=JSON.parse(decodeURIComponent(btn.getAttribute('data-slot')));
+sessionStorage.setItem('selectedSlot',JSON.stringify(s));
+const badge=$('#bk-selBadge');
+if(badge){badge.style.display='inline-flex';badge.querySelector('.dt').textContent=s.dateLabel;badge.querySelector('.tm').textContent=s.timeLabel;}
+prefillFromSheet();bkOpenB();});});}
+
+function bindCalNav(){
+const prev=$('#bk-calPrev'),next=$('#bk-calNext');
+if(!prev||!next)return;
+prev.onclick=()=>{if(calOffset>=getCalDays()){calOffset-=getCalDays();renderCalendar();}};
+next.onclick=()=>{calOffset+=getCalDays();renderCalendar();};}
+
+/* ── Pre-fetch slots on load ── */
+loadSlots();
+
+/* ── Back button for modalB ── */
+(function(){const hdr=root.querySelector('#bk-modalB .bk-header');if(!hdr||hdr.querySelector('#bk-backToD'))return;
+const btn=document.createElement('button');btn.id='bk-backToD';btn.type='button';btn.setAttribute('aria-label','候補一覧へ戻る');btn.textContent='‹ 戻る';
+btn.style.cssText='appearance:none;border:0;background:transparent;font-size:13px;padding:8px;cursor:pointer;';
+hdr.insertBefore(btn,hdr.firstChild);
+btn.addEventListener('click',function(){bkOpenD();bindCalNav();showCalLoading();renderCalendar();});})();
+})();
+</script>
+
 <script>
 (function() {
   var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
@@ -1826,12 +2302,15 @@
     var origText = btn.textContent;
     btn.textContent = '送信中…';
 
+    var savedName  = document.getElementById('ot-name').value;
+    var savedEmail = email.value;
+
     var params = new URLSearchParams();
     params.append('action', 'contact');
     params.append('source', 'platon-otameshi');
-    params.append('name', document.getElementById('ot-name').value);
+    params.append('name', savedName);
     params.append('kana', document.getElementById('ot-kana').value);
-    params.append('email', email.value);
+    params.append('email', savedEmail);
     params.append('tel', document.getElementById('ot-tel').value);
     params.append('grade', document.getElementById('ot-grade').value);
     params.append('university', document.getElementById('ot-university').value);
@@ -1844,26 +2323,75 @@
     form.reset();
     btn.disabled = false;
     btn.textContent = origText;
-    msg.textContent = '送信完了！担当者よりご連絡します。';
-    msg.classList.add('ot-form-msg--ok');
-    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    /* グローバルに保存(予約UI側でprefill用) */
+    window.__contactName  = savedName;
+    window.__contactEmail = savedEmail;
+
+    openTyModal();
+  });
+
+  /* === Thank You Modal control === */
+  var _tyTimer = null;
+  var _bookingOpened = false;
+
+  function openTyModal() {
+    var modal = document.getElementById('ty-modal');
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var closeBtn = document.getElementById('ty-close-btn');
+    if (closeBtn) closeBtn.focus();
+    _bookingOpened = false;
+
+    /* 1.2秒後に予約UIへ自動遷移 */
+    _tyTimer = setTimeout(function() {
+      closeTyModal();
+      _openBookingOnce();
+    }, 1200);
+  }
+
+  function _openBookingOnce() {
+    if (_bookingOpened) return;
+    _bookingOpened = true;
+    if (typeof window.__openBookingModal === 'function') {
+      window.__openBookingModal();
+    }
+  }
+
+  function closeTyModal() {
+    var modal = document.getElementById('ty-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (_tyTimer) { clearTimeout(_tyTimer); _tyTimer = null; }
+  }
+
+  var tyCloseBtn = document.getElementById('ty-close-btn');
+  if (tyCloseBtn) {
+    tyCloseBtn.addEventListener('click', function() {
+      closeTyModal();
+      _openBookingOnce();
+    });
+  }
+  var tyOverlay = document.getElementById('ty-overlay');
+  if (tyOverlay) {
+    tyOverlay.addEventListener('click', function() {
+      closeTyModal();
+      _openBookingOnce();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var tyModal = document.getElementById('ty-modal');
+      if (tyModal && tyModal.classList.contains('open')) {
+        closeTyModal();
+        _openBookingOnce();
+      }
+    }
   });
 })();
 </script>
-
-<!-- Footer -->
-<footer>
-  <div class="logo">プラトン</div>
-  <div style="font-size: 12px; color: var(--ink-mute);">文系の大学受験専門塾｜全国対応オンライン指導</div>
-  <nav>
-    <a href="../">トップページ</a> |
-    <a href="../#courses">コース紹介</a> |
-    <a href="../#results">合格実績</a> |
-    <a href="../news.html">お知らせ</a> |
-    <a href="../#contact">無料相談</a>
-  </nav>
-  <div class="copyright">© 2026 Plato. All rights reserved.</div>
-</footer>
 
 </body>
 </html>
