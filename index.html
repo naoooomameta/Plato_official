@@ -1072,7 +1072,28 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   content:"";position:absolute;bottom:-25px;right:-25px;
   width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%;
 }
-.ci-ttl{font-family:"Kaisei Opti",serif;font-size:1.1rem;font-weight:700;color:#f0c4b4;margin-bottom:.4rem;}
+.ci-brand{
+  position:relative;z-index:1;text-align:center;
+  padding-bottom:1.3rem;margin-bottom:1.4rem;
+  border-bottom:1px solid rgba(255,255,255,.13);
+}
+.ci-logo{
+  width:84px;height:84px;border-radius:50%;
+  background:linear-gradient(135deg,#fff 0%,#fff5ec 100%);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto .8rem;padding:7px;
+  box-shadow:0 10px 28px rgba(0,0,0,.38),
+             0 0 0 4px rgba(255,255,255,.06);
+}
+.ci-logo img{width:100%;height:100%;object-fit:contain;}
+.ci-brand-name{
+  font-family:"Kaisei Opti",serif;font-size:1.35rem;font-weight:900;
+  color:#fff;letter-spacing:.08em;line-height:1.2;margin-bottom:.25rem;
+}
+.ci-brand-sub{
+  font-size:.66rem;color:#e8c4a0;letter-spacing:.18em;line-height:1.4;
+}
+.ci-ttl{font-family:"Kaisei Opti",serif;font-size:1.1rem;font-weight:700;color:#f0c4b4;margin-bottom:.4rem;position:relative;z-index:1;}
 .ci-p{font-size:.8rem;color:rgba(255,255,255,.88);margin-bottom:1.6rem;line-height:1.7;}
 .ci-tel{font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:.04em;display:block;margin-bottom:.2rem;}
 .ci-hrs{font-size:.75rem;opacity:.65;margin-bottom:1.5rem;}
@@ -2463,6 +2484,16 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
   <div class="contact-inner">
     <div class="ci-box reveal d1">
+      <div class="ci-brand">
+        <div class="ci-logo">
+          <picture>
+            <source type="image/webp" srcset="img/plato-logochibi.webp">
+            <img src="img/plato-logochibi.png" alt="プラトン" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="ci-brand-name">プラトン</div>
+        <div class="ci-brand-sub">Plato Humanities</div>
+      </div>
       <h3 class="ci-ttl">お気軽にご連絡ください</h3>
       <p class="ci-p">現在の学力・志望校・学習の悩みなど、どんな内容でも構いません。専任スタッフが丁寧にご対応します。</p>
       <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:.9rem 1rem;margin:.8rem 0;font-size:.83rem;line-height:1.7;color:rgba(255,255,255,.9);">
