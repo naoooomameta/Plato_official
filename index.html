@@ -1341,6 +1341,73 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .res-cta{flex-direction:column;text-align:center;padding:1.4rem 1.2rem;}
 }
 
+/* ===== Inline CTA banner (sections) ===== */
+.inline-cta{
+  max-width:880px;margin:3rem auto;
+  background:linear-gradient(135deg,var(--red) 0%,#8a3a55 100%);
+  border-radius:20px;padding:1.8rem 2rem;
+  display:flex;align-items:center;gap:1.4rem;
+  box-shadow:0 10px 30px rgba(111,45,67,.22);
+  color:#fff;position:relative;overflow:hidden;
+}
+.inline-cta::before{
+  content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.inline-cta-text{flex:1;position:relative;z-index:1;}
+.inline-cta-eyebrow{
+  font-size:.68rem;font-weight:700;letter-spacing:.18em;
+  background:rgba(255,255,255,.18);color:#fff;
+  padding:4px 12px;border-radius:50px;display:inline-block;margin-bottom:.6rem;
+}
+.inline-cta-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.2rem;font-weight:700;
+  line-height:1.5;margin-bottom:.3rem;color:#fff;
+}
+.inline-cta-sub{font-size:.82rem;line-height:1.7;opacity:.92;color:#fff;}
+.inline-cta-btn{
+  background:#fff;color:var(--red);font-weight:700;font-size:.92rem;
+  padding:14px 26px;border-radius:50px;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+  transition:transform .25s,box-shadow .25s;position:relative;z-index:1;
+}
+.inline-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.28);}
+.inline-cta-btn svg{width:16px;height:16px;}
+@media (max-width:768px){
+  .inline-cta{flex-direction:column;text-align:center;padding:1.6rem 1.2rem;margin:2rem 1rem;}
+  .inline-cta-btn{width:100%;justify-content:center;}
+}
+
+/* ===== Floating CTA (always visible) ===== */
+.float-cta{
+  position:fixed;right:20px;bottom:20px;z-index:150;
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--red) 0%,#8a3a55 100%);
+  color:#fff;font-weight:700;font-size:.92rem;
+  padding:14px 22px;border-radius:50px;
+  box-shadow:0 8px 24px rgba(111,45,67,.45);
+  opacity:0;visibility:hidden;transform:translateY(20px);
+  transition:opacity .35s ease,visibility .35s ease,transform .35s ease,box-shadow .25s;
+}
+.float-cta.show{opacity:1;visibility:visible;transform:translateY(0);}
+.float-cta:hover{box-shadow:0 12px 32px rgba(111,45,67,.55);transform:translateY(-2px);}
+.float-cta svg{width:18px;height:18px;}
+.float-cta-pulse{
+  position:absolute;inset:0;border-radius:50px;
+  border:2px solid var(--red);opacity:.6;
+  animation:floatPulse 2s ease-out infinite;pointer-events:none;
+}
+@keyframes floatPulse{
+  0%{transform:scale(1);opacity:.6;}
+  100%{transform:scale(1.25);opacity:0;}
+}
+@media (max-width:768px){
+  .float-cta{right:12px;bottom:12px;padding:12px 18px;font-size:.85rem;}
+  .float-cta svg{width:16px;height:16px;}
+}
+
 /* ===== PRICING (料金) ===== */
 .price-note{
   max-width:700px;margin:2rem auto 0;text-align:center;
@@ -1620,6 +1687,16 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="wcard reveal d3"><div class="wi"><i data-lucide="calculator"></i></div><div class="wt">「文系だから数学が苦手」「数学の点数がなかなか上がらない」</div></div>
   </div>
   <div class="resolve reveal"><span class="resolve-icon"><i data-lucide="quote"></i></span><span>「家で勉強できない受験生の志望校合格は100%叶わない」— プラトンは毎日の家庭学習を徹底管理し、この問題を根本から解決します！</span></div>
+
+  <!-- Inline CTA -->
+  <a href="#contact" class="inline-cta reveal">
+    <div class="inline-cta-text">
+      <span class="inline-cta-eyebrow">FREE CONSULTATION</span>
+      <div class="inline-cta-ttl">同じ悩みをお持ちですか？まずは無料相談から</div>
+      <div class="inline-cta-sub">入塾の強制は一切ありません。お子様の状況に合わせた学習法を一緒に考えます。</div>
+    </div>
+    <span class="inline-cta-btn"><i data-lucide="message-circle"></i>無料相談を申し込む →</span>
+  </a>
 </section>
 
 <!-- ===== NOTE ARTICLES ===== -->
@@ -1768,6 +1845,16 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <div style="text-align:center;margin-top:2rem;" class="reveal">
     <a href="mainichi-kadai.html" class="btn-r" style="display:inline-flex;">毎日課題の詳細を見る →</a>
   </div>
+
+  <!-- Inline CTA -->
+  <a href="#contact" class="inline-cta reveal">
+    <div class="inline-cta-text">
+      <span class="inline-cta-eyebrow">FREE CONSULTATION</span>
+      <div class="inline-cta-ttl">毎日課題システムを詳しく知りたい方へ</div>
+      <div class="inline-cta-sub">プラトンの指導内容・学習プランを無料相談で詳しくご案内します。</div>
+    </div>
+    <span class="inline-cta-btn"><i data-lucide="message-circle"></i>無料相談を申し込む →</span>
+  </a>
 </section>
 
 <!-- ===== COURSES & PRICING ===== -->
@@ -2260,6 +2347,16 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <div style="text-align:center;" class="reveal">
     <a href="voices.html" class="voice-more-btn">もっと合格者の声を見る →</a>
   </div>
+
+  <!-- Inline CTA -->
+  <a href="#contact" class="inline-cta reveal">
+    <div class="inline-cta-text">
+      <span class="inline-cta-eyebrow">FREE CONSULTATION</span>
+      <div class="inline-cta-ttl">あなたも合格への第一歩を踏み出しませんか？</div>
+      <div class="inline-cta-sub">志望校・現在の学力・お悩みをお聞かせください。最適な学習プランをご提案します。</div>
+    </div>
+    <span class="inline-cta-btn"><i data-lucide="message-circle"></i>無料相談を申し込む →</span>
+  </a>
 </section>
 
 <!-- ===== Survey modal ===== -->
@@ -2296,6 +2393,16 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
 
   <div class="price-note reveal">※ 過去3年間の主な合格実績です。合格者数・最新の実績はLINEよりお問い合わせください。<br>合格実績は生徒・保護者様の許可を得て掲載しています。</div>
+
+  <!-- Inline CTA -->
+  <a href="#contact" class="inline-cta reveal">
+    <div class="inline-cta-text">
+      <span class="inline-cta-eyebrow">FREE CONSULTATION</span>
+      <div class="inline-cta-ttl">あなたの志望校合格を全力でサポートします</div>
+      <div class="inline-cta-sub">難関国公立・早慶上智・MARCH・関関同立への合格を目指す方は、まず無料相談へ。</div>
+    </div>
+    <span class="inline-cta-btn"><i data-lucide="message-circle"></i>無料相談を申し込む →</span>
+  </a>
 </section>
 
 <!-- ===== PRICING (料金) ===== -->
@@ -2532,11 +2639,38 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <p class="ft-copy">© 2025 プラトン 文系の大学受験専門塾. All Rights Reserved.</p>
 </footer>
 
+<!-- ===== Floating CTA ===== -->
+<a href="#contact" class="float-cta" id="floatCta" aria-label="無料相談を申し込む">
+  <span class="float-cta-pulse" aria-hidden="true"></span>
+  <i data-lucide="message-circle"></i>
+  <span>無料相談を申し込む</span>
+</a>
+
 <script>
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
 }, {threshold: .1});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Floating CTA: show after scrolling past hero, hide near contact form
+(function(){
+  const floatCta = document.getElementById('floatCta');
+  const contact  = document.getElementById('contact');
+  if (!floatCta) return;
+  const showAfter = 400;
+  function update(){
+    const y = window.scrollY || window.pageYOffset;
+    let show = y > showAfter;
+    if (contact){
+      const rect = contact.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) show = false;
+    }
+    floatCta.classList.toggle('show', show);
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
 
 // Staff tab switching
 function switchTab(tabId, btn) {
