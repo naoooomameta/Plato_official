@@ -248,30 +248,6 @@ section{padding:64px 4vw;}
 .img-ph .ph-icon{font-size:2rem;opacity:.5;}
 .img-ph .ph-txt{font-weight:500;letter-spacing:.04em;}
 
-/* VIDEO PLACEHOLDER */
-.video-ph{
-  background:#000;border-radius:14px;overflow:hidden;
-  position:relative;padding-top:56.25%;/* 16:9 */
-  cursor:pointer;
-}
-.video-ph-inner{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--dark),#6f2d43);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:12px;
-}
-.play-btn{
-  width:64px;height:64px;border-radius:50%;
-  background:rgba(255,255,255,.18);
-  border:3px solid rgba(255,255,255,.5);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;
-  transition:all .3s;
-}
-.video-ph:hover .play-btn{background:rgba(255,255,255,.3);transform:scale(1.1);}
-.video-ph-label{color:rgba(255,255,255,.8);font-size:.82rem;font-weight:700;letter-spacing:.08em;}
-
 /* BANNER ROW */
 .banner-row{
   display:grid;grid-template-columns:repeat(4,1fr);
@@ -669,17 +645,6 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .gallery-item:hover{transform:scale(1.03);box-shadow:var(--sh2);border-color:var(--red);}
 .gallery-item .img-ph{min-height:140px;border-radius:0;border:none;}
 .gallery-item img{width:100%;height:200px;object-fit:cover;display:block;}
-
-/* ===== VIDEO SECTION ===== */
-#videos{background:#fff;}
-.video-wrap{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:1.5rem;max-width:860px;margin:0 auto;
-}
-.video-label{
-  font-size:.8rem;font-weight:700;color:var(--txt2);
-  margin-top:.7rem;text-align:center;letter-spacing:.04em;
-}
 
 /* ===== STAFF (NEW TAB DESIGN) ===== */
 #staff{background:var(--cream);}
@@ -1434,7 +1399,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .about-inner,.contact-inner{grid-template-columns:1fr;}
   .voice-hero{grid-template-columns:1fr 1fr;}
   .voice-hero-score{font-size:2.6rem;}
-  .video-wrap{grid-template-columns:1fr;}
   .banner-row{grid-template-columns:repeat(2,1fr);}
   .gallery-grid{grid-template-columns:repeat(2,1fr);}
   .ig-grid{grid-template-columns:repeat(2,1fr);}
@@ -1875,39 +1839,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="gallery-item reveal d1"><picture><source type="image/webp" srcset="img/img:gallery-pass.webp"><img src="img/img:gallery-pass.jpg" alt="合格発表の瞬間" loading="lazy" decoding="async"></picture></div>
   </div>
 </section>
-
-<!-- ===== VIDEOS ===== -->
-<section id="videos" style="background:var(--cream);">
-  <div class="sec-head reveal" style="text-align:center;">
-    <span class="eyebrow">Movie</span>
-    <h2 class="sec-ttl">プラトンを<span class="ac">動画</span>で見る</h2>
-    <p class="sec-sub">塾内の雰囲気・授業スタイルを動画でご確認ください。</p>
-  </div>
-  <div class="video-wrap">
-    <div class="reveal d1">
-      <div class="video-ph">
-        <div class="video-ph-inner">
-          <div class="play-btn">▶</div>
-          <div class="video-ph-label">塾紹介動画<br><small style="font-weight:400;opacity:.7">現在準備中です</small></div>
-        </div>
-      </div>
-      <div class="video-label">▶ プラトンってどんな塾？</div>
-    </div>
-    <div class="reveal d2">
-      <div class="video-ph">
-        <div class="video-ph-inner">
-          <div class="play-btn">▶</div>
-          <div class="video-ph-label">授業体験動画<br><small style="font-weight:400;opacity:.7">現在準備中です</small></div>
-        </div>
-      </div>
-      <div class="video-label">▶ 実際の授業を体験してみよう</div>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:1.5rem;" class="reveal">
-    <p style="font-size:.8rem;color:var(--txt3);">順次公開予定です。しばらくお待ちください。</p>
-  </div>
-</section>
-
 
 <!-- ===== STAFF ===== -->
 <section id="staff">
