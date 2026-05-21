@@ -1095,6 +1095,9 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   font-family:"Noto Sans JP",sans-serif;color:var(--txt);
   border-radius:9px;outline:none;transition:all .3s;appearance:none;
 }
+@media (max-width:768px){
+  .fi,.fsel,.fta{font-size:16px;}
+}
 .fi:focus,.fsel:focus,.fta:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(111,45,67,.1);}
 .fta{min-height:100px;resize:vertical;}
 .fr2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
@@ -3122,7 +3125,17 @@ function _bkApplyMobileLayout(){
   if (slotWrap) slotWrap.style.cssText = 'font-family:inherit;width:100%;max-width:100%;margin:0;padding:4px 0 0;box-sizing:border-box;';
   if (slotCta) slotCta.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;max-width:100%;height:48px;margin:10px 0 0;border:1px solid #3B82F6;border-radius:10px;background:#3B82F6;color:#fff;font-weight:700;font-size:15px;cursor:pointer;text-align:center;box-sizing:border-box;';
 }
+function _bkResetViewportZoom(){
+  try {
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (!vp) return;
+    var original = vp.getAttribute('content') || 'width=device-width, initial-scale=1.0';
+    vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    setTimeout(function(){ vp.setAttribute('content', original); }, 350);
+  } catch(_){}
+}
 function bkOpenA(){
+  _bkResetViewportZoom();
   ov.style.display='block'; modalA.style.display='flex'; modalB.style.display='none'; modalC.style.display='none'; modalD.style.display='none'; document.body.style.overflow='hidden';
   _bkApplyMobileLayout();
   /* ── 問い合わせフォームの名前・メアドを予約フォームにセット ── */
