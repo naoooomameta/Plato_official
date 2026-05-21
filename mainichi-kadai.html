@@ -358,6 +358,67 @@ section{padding:64px 4vw;}
   font-size:.82rem;color:var(--txt2);line-height:1.85;
 }
 
+/* ===== EXAMPLES SECTION ===== */
+#examples{background:var(--pale);}
+.example-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.4rem;max-width:1040px;margin:0 auto;
+}
+.example-card{
+  background:#fff;border-radius:18px;
+  padding:1.6rem 1.5rem 1.4rem;
+  border:2px solid var(--bdr);
+  display:flex;flex-direction:column;
+  transition:all .3s;
+}
+.example-card:hover{border-color:var(--red);transform:translateY(-4px);box-shadow:var(--sh2);}
+.example-tag{
+  display:inline-block;align-self:flex-start;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  color:var(--red);background:var(--pale);
+  padding:.3rem .7rem;border-radius:50px;
+  border:1px solid var(--bdr);margin-bottom:.8rem;
+}
+.example-icon{margin-bottom:.6rem;}
+.example-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.1rem;font-weight:700;
+  color:var(--txt);line-height:1.5;margin-bottom:.7rem;
+}
+.example-ttl em{
+  font-style:normal;color:var(--red);
+  background:linear-gradient(transparent 60%, rgba(111,45,67,.15) 60%);
+  padding:0 .15em;
+}
+.example-desc{
+  font-size:.83rem;color:var(--txt2);line-height:1.85;margin-bottom:1rem;
+}
+.example-spec{
+  margin-top:auto;padding-top:.9rem;
+  border-top:1.5px dashed var(--bdr);
+  display:flex;flex-direction:column;gap:.55rem;
+}
+.example-spec > div{display:flex;gap:.7rem;align-items:flex-start;}
+.example-spec dt{
+  flex-shrink:0;width:48px;
+  font-size:.65rem;font-weight:800;letter-spacing:.08em;
+  color:#fff;background:var(--red);
+  padding:.25rem .35rem;border-radius:4px;
+  text-align:center;line-height:1.2;
+}
+.example-spec dd{
+  font-size:.78rem;color:var(--txt2);line-height:1.65;margin:0;
+}
+.example-note{
+  max-width:1040px;margin:1.6rem auto 0;
+  text-align:center;font-size:.78rem;color:var(--txt2);
+}
+@media(max-width:640px){
+  .example-grid{grid-template-columns:1fr;}
+  .example-card{padding:1.4rem 1.2rem 1.2rem;}
+  .example-ttl{font-size:1rem;}
+}
+
 /* ===== ONLINE SECTION ===== */
 #online{background:#fff;}
 .online-inner{
@@ -559,6 +620,55 @@ footer a{color:#e8b0a0;}
     <p>また、生徒が報告した学習内容を講師が確認・採点し、必要に応じてフィードバックを行います。この仕組みにより、日々の学習を着実に積み重ねながら学力を伸ばしていきます。</p>
     <p style="margin-top:1rem;">当塾の「毎日課題」は、ただ課題を出すだけではありません。<strong>講師と生徒が日々やり取りを行いながら、学習を積み重ねていく仕組み</strong>になっています。</p>
   </div>
+</section>
+
+<!-- ===== EXAMPLES ===== -->
+<section id="examples">
+  <div class="sec-head" style="text-align:center;">
+    <span class="eyebrow">Concrete Examples</span>
+    <h2 class="sec-ttl">毎日課題で<span class="ac">実現できること</span></h2>
+    <p class="sec-sub">「毎日課題」を続けると、こんな成果が手に届く範囲になります。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-card">
+      <div class="example-tag">英語 / 語彙</div>
+      <div class="example-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <h3 class="example-ttl">英単語を <em>毎週300単語</em> 暗記できる</h3>
+      <p class="example-desc">毎日約60単語を「初見 → 翌日リテスト → 週末まとめ確認」のサイクルで定着。1ヶ月で1,200語、半年で大学受験用の基礎語彙を一周できるペースです。</p>
+      <dl class="example-spec">
+        <div><dt>WHAT</dt><dd>英単語帳の指定範囲（例：システム英単語・ターゲット1900）</dd></div>
+        <div><dt>WHEN</dt><dd>朝の課題提示 → 当日提出 → 翌朝までに講師フィードバック</dd></div>
+        <div><dt>HOW</dt><dd>暗記法を講師が指定。翌日にリテストを組み込み、抜けを潰す</dd></div>
+      </dl>
+    </div>
+
+    <div class="example-card">
+      <div class="example-tag">日本史 / 世界史</div>
+      <div class="example-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <h3 class="example-ttl">一問一答を <em>30日で2周</em> できる</h3>
+      <p class="example-desc">1日あたり1テーマ（約60〜80問）を解き、翌日に前日分の再テストを実施。「進める＋戻る」を組み合わせることで、30日で全範囲を2周まわせます。</p>
+      <dl class="example-spec">
+        <div><dt>WHAT</dt><dd>『山川一問一答（日本史/世界史）』など指定教材</dd></div>
+        <div><dt>WHEN</dt><dd>15日で1周目完了 → 残り15日で2周目＋苦手範囲集中</dd></div>
+        <div><dt>HOW</dt><dd>正答率に応じて講師が翌日の出題範囲を調整、抜けの可視化</dd></div>
+      </dl>
+    </div>
+
+    <div class="example-card">
+      <div class="example-tag">数学 / 単元集中</div>
+      <div class="example-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 17l4-6 3 3 5-8"/></svg></div>
+      <h3 class="example-ttl">二次関数が <em>2週間で得意科目</em> になる</h3>
+      <p class="example-desc">苦手単元を絞り、基本問題 → 典型問題 → 応用問題 → 過去問演習までを2週間で集中攻略。毎日のミスを翌日中に潰し、定着度の高い状態で次単元に進めます。</p>
+      <dl class="example-spec">
+        <div><dt>WHAT</dt><dd>二次関数（場合分け・最大最小・グラフ移動）など弱点単元</dd></div>
+        <div><dt>WHEN</dt><dd>1〜3日：基本／4〜7日：典型／8〜11日：応用／12〜14日：過去問</dd></div>
+        <div><dt>HOW</dt><dd>解けなかった問題を「翌日課題」として再出題し、確実に潰す</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <p class="example-note">※ ペースは生徒の状況・志望校・既習度合いに応じて調整します。上記は標準的な目安例です。</p>
 </section>
 
 <!-- ===== CYCLE ===== -->
