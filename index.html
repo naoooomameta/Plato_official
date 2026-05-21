@@ -570,92 +570,6 @@ section{padding:64px 4vw;}
   .trial-banner-btn{display:block;text-align:center;}
   .trial-banner-link{display:block;text-align:center;}
 }
-/* ===== 通常コース料金カード ===== */
-.regular-course-card{
-  max-width:900px;margin:0 auto 1.6rem;
-  background:transparent;
-  border:none;border-radius:18px;
-  padding:1.4rem 1.4rem;
-  display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem;
-  position:relative;
-}
-.regular-course-card::before{
-  content:"";position:absolute;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  width:55%;max-width:480px;height:65%;
-  background:radial-gradient(ellipse at center,rgba(111,45,67,.04) 0%,transparent 75%);
-  pointer-events:none;z-index:0;
-}
-.regular-course-portrait{
-  position:relative;flex-shrink:0;
-  width:170px;height:170px;
-  z-index:1;
-}
-.regular-course-portrait-halo{
-  position:absolute;inset:-8px;border-radius:50%;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(111,45,67,.10) 0%, rgba(111,45,67,.05) 35%, transparent 70%);
-  z-index:0;
-  filter:blur(6px);
-}
-.regular-course-portrait img{
-  position:absolute;inset:0;z-index:1;
-  width:100%;height:100%;
-  object-fit:contain;object-position:bottom center;
-  filter:drop-shadow(0 8px 14px rgba(111,45,67,.22));
-}
-.regular-course-badge{
-  position:absolute;
-  bottom:-2px;left:50%;transform:translateX(-50%);
-  background:var(--red);color:#fff;
-  font-size:.7rem;font-weight:700;letter-spacing:.08em;
-  padding:.35rem .85rem;border-radius:50px;
-  white-space:nowrap;z-index:2;
-  box-shadow:0 4px 10px rgba(111,45,67,.3);
-  border:2px solid var(--cream);
-}
-.regular-course-body{flex:1;min-width:220px;position:relative;z-index:1;}
-.regular-course-eyebrow{
-  font-size:.75rem;font-weight:700;letter-spacing:.14em;
-  color:var(--red);margin-bottom:.4rem;
-}
-.regular-course-title{
-  font-family:'Kaisei Opti',serif;font-size:1.45rem;font-weight:700;
-  color:var(--txt);line-height:1.4;
-}
-.regular-course-sub{
-  font-size:.88rem;color:var(--txt2);margin-top:.4rem;line-height:1.55;
-}
-.regular-course-price{text-align:right;flex-shrink:0;position:relative;z-index:1;}
-.regular-course-price-num{
-  font-family:'Kaisei Opti',serif;font-size:2rem;font-weight:900;
-  color:var(--red);line-height:1;letter-spacing:.01em;
-}
-.regular-course-price-tilde{
-  font-size:.9rem;font-weight:700;margin-left:.2rem;
-}
-.regular-course-price-note{
-  font-size:.72rem;color:var(--txt2);margin-top:.4rem;
-}
-@media(max-width:640px){
-  .regular-course-card{
-    padding:1.8rem 1.2rem 1.4rem;gap:.6rem;
-    justify-content:center;text-align:center;
-  }
-  .regular-course-portrait{
-    width:200px;height:200px;
-    margin:0 auto;
-  }
-  .regular-course-body{
-    flex:1 1 100%;min-width:0;text-align:center;
-    margin-top:.6rem;
-  }
-  .regular-course-title{font-size:1.35rem;}
-  .regular-course-price{
-    width:100%;text-align:center;
-    border-top:1.5px dashed var(--bdr);padding-top:.9rem;margin-top:.4rem;
-  }
-}
 /* ===== Lucide SVG icon sizing ===== */
 i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .topbar svg{width:13px;height:13px;stroke-width:2;flex-shrink:0;}
@@ -1653,7 +1567,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </svg>
     </div>
     <div class="news-card-body">
-      <div class="news-card-title">【お試しコース 9,900円】まずは1週間、プラトンの指導をそのまま体験</div>
+      <div class="news-card-title">【お試しコース 3,980円】まずは1週間、プラトンの指導をそのまま体験</div>
       <div class="news-card-meta">1回60分のマンツーマン指導＋1週間の毎日課題体験｜初回限定・1回のみ</div>
       <span class="news-card-link">
         詳しく読む
@@ -1870,7 +1784,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <picture><source type="image/webp" srcset="img/plato-logochibi.webp"><img class="trial-banner-mascot" src="img/plato-logochibi.png" alt="プラトン" loading="lazy" decoding="async"></picture>
         <div class="trial-banner-name">お試しコース</div>
         <div class="trial-banner-price">
-          <span class="trial-banner-num">9,900<span class="trial-banner-yen">円</span></span>
+          <span class="trial-banner-num">3,980<span class="trial-banner-yen">円</span></span>
         </div>
         <span class="trial-banner-sub">初回限定・1回のみ</span>
       </div>
@@ -1883,23 +1797,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <a href="#contact" class="trial-banner-btn">無料相談で申し込む →</a>
         <a href="news-otameshi/" class="trial-banner-link">お試しコースの内容を詳しく見る →</a>
       </div>
-    </div>
-  </div>
-  <!-- 通常コース料金 -->
-  <div class="reveal regular-course-card">
-    <div class="regular-course-portrait">
-      <div class="regular-course-portrait-halo"></div>
-      <picture><source type="image/webp" srcset="img/sano-cutout.webp"><img src="img/sano-cutout.png" alt="プラトン代表 佐野 翼" loading="lazy" decoding="async"></picture>
-      <span class="regular-course-badge">代表 直接指導</span>
-    </div>
-    <div class="regular-course-body">
-      <div class="regular-course-eyebrow">REGULAR COURSE</div>
-      <div class="regular-course-title">佐野代表の指導</div>
-      <div class="regular-course-sub">定期テスト対策・共通テスト対策・2次試験対策</div>
-    </div>
-    <div class="regular-course-price">
-      <div class="regular-course-price-num">税込¥9,900<span class="regular-course-price-tilde">〜</span></div>
-      <div class="regular-course-price-note">月額・コースにより異なります</div>
     </div>
   </div>
   <!-- 柔軟な支払い方法バナー -->
