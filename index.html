@@ -1066,6 +1066,16 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   text-align:center;font-size:.74rem;color:var(--mid);
   margin:1.4rem auto 0;letter-spacing:.08em;
 }
+/* Microlink自動カード */
+.x-microlink-wrap{
+  max-width:560px;margin:2.2rem auto 0;
+}
+.x-microlink-wrap .microlink_card{
+  width:100%!important;max-width:560px!important;
+  border-radius:18px!important;overflow:hidden!important;
+  box-shadow:0 12px 40px rgba(0,0,0,.18)!important;
+  border:1px solid var(--bdr)!important;
+}
 
 /* ===== ABOUT ===== */
 #about{background:#fff;}
@@ -2494,7 +2504,12 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <h2 class="sec-ttl">塾長の<span class="ac">X発信</span></h2>
     <p class="sec-sub">入試情報・受験のコツ・塾長の想いをリアルタイム発信中！</p>
   </div>
-  <div class="x-card reveal">
+  <!-- Microlink自動取得カード(成功時に表示) -->
+  <div class="x-microlink-wrap reveal" id="xMicrolinkWrap" hidden>
+    <a href="https://x.com/sano_platox" class="x-microlink-link" id="xMicrolinkLink" target="_blank" rel="noopener">プラトンのXプロフィール (@sano_platox)</a>
+  </div>
+  <!-- 手動フォールバックカード(Microlink失敗時に表示) -->
+  <div class="x-card reveal" id="xManualCard">
     <div class="x-banner" aria-hidden="true"></div>
     <div class="x-card-body">
       <div class="x-card-head">
@@ -2539,18 +2554,48 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
        data-chrome="noheader nofooter transparent"
        href="https://twitter.com/sano_platox?ref_src=twsrc%5Etfw">Posts by @sano_platox</a>
   </div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@5.7.6/dist/microlink.min.js"></script>
   <script>
     (function(){
+      // === Microlink自動カード制御 ===
+      const mlWrap = document.getElementById('xMicrolinkWrap');
+      const manual = document.getElementById('xManualCard');
+      if (mlWrap && manual) {
+        window.addEventListener('load', () => {
+          if (typeof microlink !== 'function') return;
+          mlWrap.hidden = false;
+          try {
+            microlink('#xMicrolinkLink', {
+              size: 'large',
+              media: ['image', 'logo'],
+              contrast: true
+            });
+          } catch(e) { mlWrap.hidden = true; return; }
+          // 4秒以内にMicrolinkカードが生成されたら手動カードを非表示
+          let attempts = 0;
+          const check = setInterval(() => {
+            attempts++;
+            const card = mlWrap.querySelector('.microlink_card');
+            if (card && card.querySelector('img')) {
+              manual.style.display = 'none';
+              clearInterval(check);
+            } else if (attempts >= 20) {
+              // 失敗 → Microlink非表示、手動カード維持
+              mlWrap.hidden = true;
+              clearInterval(check);
+            }
+          }, 200);
+        });
+      }
+      // === X公式timeline制御 ===
       const wrap = document.getElementById('xTimelineWrap');
       const label = document.getElementById('xTimelineLabel');
       if (!wrap) return;
-      // Insert widget script
       const s = document.createElement('script');
       s.async = true;
       s.src = 'https://platform.twitter.com/widgets.js';
       s.charset = 'utf-8';
       document.head.appendChild(s);
-      // Reveal once loaded; hide permanently if no iframe after timeout
       let attempts = 0;
       const check = setInterval(() => {
         attempts++;
@@ -2558,7 +2603,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
           wrap.hidden = false;
           if (label) label.hidden = false;
           clearInterval(check);
-        } else if (attempts >= 30) { // ~6s
+        } else if (attempts >= 30) {
           clearInterval(check);
         }
       }, 200);
