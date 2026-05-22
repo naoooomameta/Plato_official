@@ -983,25 +983,71 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 
 /* ===== X (旧Twitter) ===== */
 #x-feed{background:#fff;}
-.x-embed{
-  max-width:660px;margin:2rem auto 0;
-  border-radius:14px;overflow:hidden;
-  border:1px solid var(--bdr);
-  background:#fff;
-  min-height:200px;
+.x-card{
+  max-width:560px;margin:2.2rem auto 0;
+  background:linear-gradient(160deg,#0f0f0f 0%,#1a1a1a 60%,#0f0f0f 100%);
+  color:#fff;border-radius:18px;
+  padding:1.8rem 1.6rem 1.6rem;
+  position:relative;overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.18);
 }
-.x-embed .twitter-timeline{margin:0 auto;}
+.x-card::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:22px 22px;pointer-events:none;
+}
+.x-card-head{
+  display:flex;align-items:center;gap:14px;
+  position:relative;z-index:1;margin-bottom:1.2rem;
+}
+.x-avatar{
+  width:64px;height:64px;border-radius:50%;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+  border:2px solid rgba(255,255,255,.12);
+}
+.x-avatar img{width:100%;height:100%;object-fit:cover;}
+.x-card-meta{flex:1;min-width:0;}
+.x-card-name{
+  font-family:"Kaisei Opti",serif;font-size:1.05rem;font-weight:700;
+  color:#fff;display:flex;align-items:center;gap:6px;line-height:1.3;
+}
+.x-card-name .x-verified{
+  width:16px;height:16px;color:#1d9bf0;flex-shrink:0;
+}
+.x-handle{font-size:.82rem;color:rgba(255,255,255,.55);margin-top:2px;}
+.x-card-bio{
+  font-size:.84rem;line-height:1.7;color:rgba(255,255,255,.82);
+  position:relative;z-index:1;margin-bottom:1.2rem;
+}
+.x-card-tags{
+  display:flex;flex-wrap:wrap;gap:.4rem;
+  position:relative;z-index:1;margin-bottom:1.3rem;
+}
+.x-card-tag{
+  font-size:.7rem;padding:4px 10px;border-radius:999px;
+  background:rgba(29,155,240,.14);color:#7cc3f6;
+  border:1px solid rgba(29,155,240,.28);
+}
+.x-card-cta{
+  display:flex;justify-content:center;
+  position:relative;z-index:1;
+}
 .x-link{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  margin:1.5rem auto 0;padding:12px 28px;
-  background:#000;color:#fff;border-radius:50px;
+  padding:12px 28px;
+  background:#fff;color:#000;border-radius:50px;
   font-weight:700;font-size:.88rem;
   transition:transform .3s,box-shadow .3s,opacity .3s;
-  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
 }
-.x-link:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:.92;}
+.x-link:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,255,255,.18);opacity:.92;}
 .x-link svg{width:16px;height:16px;}
-.x-link-wrap{text-align:center;}
+@media(max-width:520px){
+  .x-card{padding:1.4rem 1.1rem 1.3rem;}
+  .x-avatar{width:54px;height:54px;}
+  .x-card-name{font-size:.98rem;}
+}
 
 /* ===== ABOUT ===== */
 #about{background:#fff;}
@@ -2427,22 +2473,41 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 <section id="x-feed">
   <div class="sec-head reveal" style="text-align:center;">
     <span class="eyebrow">X (旧Twitter)</span>
-    <h2 class="sec-ttl">X<span class="ac">最新ポスト</span></h2>
+    <h2 class="sec-ttl">塾長の<span class="ac">X発信</span></h2>
     <p class="sec-sub">入試情報・受験のコツ・塾長の想いをリアルタイム発信中！</p>
   </div>
-  <div class="x-embed reveal">
-    <a class="twitter-timeline"
-       data-height="600"
-       data-theme="light"
-       data-chrome="noheader nofooter transparent"
-       href="https://twitter.com/sano_platox?ref_src=twsrc%5Etfw">Posts by @sano_platox</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-  <div class="x-link-wrap reveal">
-    <a href="https://x.com/sano_platox" target="_blank" rel="noopener" class="x-link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      Xをフォローする → @sano_platox
-    </a>
+  <div class="x-card reveal">
+    <div class="x-card-head">
+      <div class="x-avatar">
+        <picture>
+          <source type="image/webp" srcset="img/plato-logochibi.webp">
+          <img src="img/plato-logochibi.png" alt="プラトン" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="x-card-meta">
+        <div class="x-card-name">
+          佐野塾長 ／ プラトン
+          <svg class="x-verified" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg>
+        </div>
+        <div class="x-handle">@sano_platox</div>
+      </div>
+    </div>
+    <p class="x-card-bio">
+      文系の大学受験専門塾「プラトン」塾長。<br>
+      毎日課題で合格まで管理する指導法、入試最新情報、受験生応援メッセージなどを日々発信中。
+    </p>
+    <div class="x-card-tags">
+      <span class="x-card-tag">#大学受験</span>
+      <span class="x-card-tag">#文系</span>
+      <span class="x-card-tag">#毎日課題</span>
+      <span class="x-card-tag">#プラトン</span>
+    </div>
+    <div class="x-card-cta">
+      <a href="https://x.com/sano_platox" target="_blank" rel="noopener" class="x-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Xをフォローする → @sano_platox
+      </a>
+    </div>
   </div>
 </section>
 
