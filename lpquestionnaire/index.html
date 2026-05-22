@@ -1422,135 +1422,99 @@ body{
     <!-- Q1: 学年 -->
     <div class="survey-question active" data-step="1">
       <span class="q-icon">🎒</span>
-      <div class="q-title">お子様の学年を<br>教えてください</div>
+      <div class="q-title">今の学年は？</div>
       <div class="q-desc">現在の学年を選択してください</div>
       <div class="option-grid" data-name="grade">
-        <div class="option-card" data-value="中1" onclick="selectOption(this)">
+        <div class="option-card" data-value="中学生" onclick="selectOption(this)">
           <div class="option-radio"></div>
-          <div><div class="option-label">中学1年生</div></div>
-        </div>
-        <div class="option-card" data-value="中2" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">中学2年生</div></div>
-        </div>
-        <div class="option-card" data-value="中3" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">中学3年生</div></div>
+          <div><div class="option-label">中学生</div></div>
         </div>
         <div class="option-card" data-value="高1" onclick="selectOption(this)">
           <div class="option-radio"></div>
-          <div><div class="option-label">高校1年生</div></div>
+          <div><div class="option-label">高1</div></div>
         </div>
         <div class="option-card" data-value="高2" onclick="selectOption(this)">
           <div class="option-radio"></div>
-          <div><div class="option-label">高校2年生</div></div>
+          <div><div class="option-label">高2</div></div>
         </div>
-        <div class="option-card" data-value="高3" onclick="selectOption(this)">
+        <div class="option-card" data-value="高3・高卒" onclick="selectOption(this)">
           <div class="option-radio"></div>
-          <div><div class="option-label">高校3年生</div></div>
+          <div><div class="option-label">高3・高卒生</div></div>
         </div>
       </div>
     </div>
 
-    <!-- Q2: 志望校（第一〜第三志望まで自由入力） -->
-    <div class="survey-question" data-step="2" data-type="text">
-      <span class="q-icon">🏫</span>
-      <div class="q-title">志望大学・学部を<br>教えてください</div>
-      <div class="q-desc">第一志望は必須です。第二・第三志望は任意でOK！</div>
-      <div class="text-input-area">
-
-        <!-- 第一志望 -->
-        <div class="wish-group">
-          <div class="wish-label"><span class="wish-badge first">第1志望</span><span class="wish-req">必須</span></div>
-          <div class="wish-fields">
-            <input type="text" class="text-field" id="univ1" placeholder="大学名（例：早稲田大学）" oninput="onTextInput()">
-            <input type="text" class="text-field sm" id="dept1" placeholder="学部・学科（例：商学部）" oninput="onTextInput()">
-          </div>
-        </div>
-
-        <!-- 第二志望 -->
-        <div class="wish-group">
-          <div class="wish-label"><span class="wish-badge second">第2志望</span></div>
-          <div class="wish-fields">
-            <input type="text" class="text-field" id="univ2" placeholder="大学名" oninput="onTextInput()">
-            <input type="text" class="text-field sm" id="dept2" placeholder="学部・学科" oninput="onTextInput()">
-          </div>
-        </div>
-
-        <!-- 第三志望 -->
-        <div class="wish-group">
-          <div class="wish-label"><span class="wish-badge third">第3志望</span></div>
-          <div class="wish-fields">
-            <input type="text" class="text-field" id="univ3" placeholder="大学名" oninput="onTextInput()">
-            <input type="text" class="text-field sm" id="dept3" placeholder="学部・学科" oninput="onTextInput()">
-          </div>
-        </div>
-
-        <div class="text-hint">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#94a3b8" stroke-width="1.5"/><path d="M7 6.5V10" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="4.5" r="0.75" fill="#94a3b8"/></svg>
-          <span>第二・第三志望は任意です。<br>第一志望の大学名を入力すると次へ進めます。</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q3: 現在の偏差値 -->
-    <div class="survey-question" data-step="3">
-      <span class="q-icon">📐</span>
-      <div class="q-title">現在の偏差値は<br>どれくらいですか？</div>
-      <div class="q-desc">直近の模試の偏差値をおおよそで構いません</div>
-      <div class="option-grid" data-name="deviation">
-        <div class="option-card" data-value="〜40" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">〜40（これから伸ばしたい）</div></div>
-        </div>
-        <div class="option-card" data-value="41〜50" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">41〜50（平均くらい）</div></div>
-        </div>
-        <div class="option-card" data-value="51〜58" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">51〜58（中堅レベル）</div></div>
-        </div>
-        <div class="option-card" data-value="59〜65" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">59〜65（上位層）</div></div>
-        </div>
-        <div class="option-card" data-value="66〜" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">66〜（難関レベル）</div></div>
-        </div>
-        <div class="option-card" data-value="わからない" onclick="selectOption(this)">
-          <div class="option-radio"></div>
-          <div><div class="option-label">わからない / 模試を受けていない</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: 苦手な科目・対策したい科目 -->
-    <div class="survey-question" data-step="4">
-      <span class="q-icon">📊</span>
-      <div class="q-title">お子様の苦手な科目・<br>対策したい科目はありますか？</div>
+    <!-- Q2: 希望科目（複数選択） -->
+    <div class="survey-question" data-step="2">
+      <span class="q-icon">📚</span>
+      <div class="q-title">毎日課題で希望する科目は？</div>
       <div class="q-desc">当てはまるものをすべて選択してください（複数可）</div>
       <div class="chip-grid" data-name="subjects">
         <button class="chip" data-value="英語R" onclick="toggleChip(this)">英語R</button>
         <button class="chip" data-value="英語L" onclick="toggleChip(this)">英語L</button>
-        <button class="chip" data-value="数学1A" onclick="toggleChip(this)">数学1A</button>
-        <button class="chip" data-value="数学2BC" onclick="toggleChip(this)">数学2BC</button>
         <button class="chip" data-value="現代文" onclick="toggleChip(this)">現代文</button>
         <button class="chip" data-value="古文" onclick="toggleChip(this)">古文</button>
         <button class="chip" data-value="漢文" onclick="toggleChip(this)">漢文</button>
+        <button class="chip" data-value="数学ⅠA" onclick="toggleChip(this)">数学ⅠA</button>
+        <button class="chip" data-value="数学ⅡBC" onclick="toggleChip(this)">数学ⅡBC</button>
         <button class="chip" data-value="日本史" onclick="toggleChip(this)">日本史</button>
         <button class="chip" data-value="世界史" onclick="toggleChip(this)">世界史</button>
         <button class="chip" data-value="地理" onclick="toggleChip(this)">地理</button>
-        <button class="chip" data-value="公民" onclick="toggleChip(this)">公民</button>
-        <button class="chip" data-value="理科基礎" onclick="toggleChip(this)">理科基礎</button>
+        <button class="chip" data-value="倫理" onclick="toggleChip(this)">倫理</button>
+        <button class="chip" data-value="政治・経済" onclick="toggleChip(this)">政治・経済</button>
+        <button class="chip" data-value="物理基礎" onclick="toggleChip(this)">物理基礎</button>
+        <button class="chip" data-value="化学基礎" onclick="toggleChip(this)">化学基礎</button>
+        <button class="chip" data-value="生物基礎" onclick="toggleChip(this)">生物基礎</button>
+        <button class="chip" data-value="地学基礎" onclick="toggleChip(this)">地学基礎</button>
         <button class="chip" data-value="物理" onclick="toggleChip(this)">物理</button>
         <button class="chip" data-value="化学" onclick="toggleChip(this)">化学</button>
         <button class="chip" data-value="生物" onclick="toggleChip(this)">生物</button>
         <button class="chip" data-value="地学" onclick="toggleChip(this)">地学</button>
-        <button class="chip" data-value="情報" onclick="toggleChip(this)">情報</button>
+        <button class="chip" data-value="情報Ⅰ" onclick="toggleChip(this)">情報Ⅰ</button>
+        <button class="chip" data-value="中学生用" onclick="toggleChip(this)">中学生用</button>
       </div>
-      <button class="chip-none" id="chipNone" onclick="toggleNone(this)">特になし</button>
+    </div>
+
+    <!-- Q3: 1日に勉強できる時間 -->
+    <div class="survey-question" data-step="3">
+      <span class="q-icon">⏰</span>
+      <div class="q-title">1日に勉強できる時間は？</div>
+      <div class="q-desc">平日の計算でお答えください</div>
+      <div class="option-grid" data-name="studyTime">
+        <div class="option-card" data-value="1時間以内" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">1時間以内</div></div>
+        </div>
+        <div class="option-card" data-value="3時間以内" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">3時間以内</div></div>
+        </div>
+        <div class="option-card" data-value="5時間以内" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">5時間以内</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4: 課題の量 -->
+    <div class="survey-question" data-step="4">
+      <span class="q-icon">💪</span>
+      <div class="q-title">課題の量はどれくらい希望？</div>
+      <div class="q-desc">負担感の希望を選んでください</div>
+      <div class="option-grid" data-name="volume">
+        <div class="option-card" data-value="お手柔らかに" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">お手柔らかに</div></div>
+        </div>
+        <div class="option-card" data-value="普通" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">普通の量で</div></div>
+        </div>
+        <div class="option-card" data-value="ガッツリ" onclick="selectOption(this)">
+          <div class="option-radio"></div>
+          <div><div class="option-label">ガッツリ欲しい！</div></div>
+        </div>
+      </div>
     </div>
 
     <!-- COMPLETE SCREEN -->
@@ -1641,27 +1605,6 @@ function closeSurvey() {
   document.body.style.overflow = '';
 }
 
-// Handler for text input (Q2) — collect up to 3 wishes
-function onTextInput() {
-  const wishes = [];
-  for (let i = 1; i <= 3; i++) {
-    const univ = document.getElementById('univ' + i).value.trim();
-    const dept = document.getElementById('dept' + i).value.trim();
-    if (univ || dept) {
-      let line = '';
-      if (univ && dept) line = univ + '　' + dept;
-      else if (univ) line = univ;
-      else line = dept;
-      wishes.push(line);
-    }
-  }
-  answers.target = wishes.length > 0 ? wishes : ['未定'];
-
-  // Require at least univ1
-  const univ1 = document.getElementById('univ1').value.trim();
-  document.getElementById('nextBtn').disabled = univ1.length === 0;
-}
-
 function selectOption(card) {
   const grid = card.closest('.option-grid');
   grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
@@ -1674,29 +1617,12 @@ function selectOption(card) {
 }
 
 function toggleChip(chip) {
-  // Deselect "特になし" if a subject chip is toggled
-  document.getElementById('chipNone').classList.remove('selected');
-
   chip.classList.toggle('selected');
-  syncSubjects();
-}
-
-function toggleNone(btn) {
-  // Deselect all subject chips
-  document.querySelectorAll('.chip-grid .chip').forEach(c => c.classList.remove('selected'));
-  btn.classList.toggle('selected');
-  syncSubjects();
-}
-
-function syncSubjects() {
-  const noneBtn = document.getElementById('chipNone');
-  if (noneBtn.classList.contains('selected')) {
-    answers.subjects = ['特になし'];
-  } else {
-    const selected = document.querySelectorAll('.chip-grid .chip.selected');
-    answers.subjects = Array.from(selected).map(c => c.dataset.value);
-  }
-  document.getElementById('nextBtn').disabled = answers.subjects.length === 0;
+  const grid = chip.closest('.chip-grid');
+  const name = grid.dataset.name;
+  const selected = grid.querySelectorAll('.chip.selected');
+  answers[name] = Array.from(selected).map(c => c.dataset.value);
+  document.getElementById('nextBtn').disabled = answers[name].length === 0;
 }
 
 function nextStep() {
@@ -1732,21 +1658,17 @@ function updateUI() {
   // Back button
   document.getElementById('backBtn').style.display = currentStep > 1 ? 'flex' : 'none';
 
-  // Next button state
+  // Next button state — type-based validation
   const btn = document.getElementById('nextBtn');
   const q = document.querySelector(`.survey-question[data-step="${currentStep}"]`);
   if (q) {
-    const isTextStep = q.dataset.type === 'text';
-    if (isTextStep) {
-      // Text input step — require first choice university
-      const univ1 = document.getElementById('univ1');
-      btn.disabled = !univ1 || univ1.value.trim().length === 0;
-    } else if (currentStep === 4) {
-      // Chip-based multi-select
-      btn.disabled = !answers.subjects || answers.subjects.length === 0;
-    } else {
-      const grid = q.querySelector('.option-grid');
-      const name = grid?.dataset.name;
+    const chipGrid = q.querySelector('.chip-grid');
+    const optionGrid = q.querySelector('.option-grid');
+    if (chipGrid) {
+      const name = chipGrid.dataset.name;
+      btn.disabled = !answers[name] || answers[name].length === 0;
+    } else if (optionGrid) {
+      const name = optionGrid.dataset.name;
       btn.disabled = !answers[name];
     }
   }
@@ -1802,19 +1724,19 @@ function openLine() {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       grade: answers.grade || '',
-      target: answers.target || [],
-      deviation: answers.deviation || '',
       subjects: answers.subjects || [],
+      studyTime: answers.studyTime || '',
+      volume: answers.volume || '',
       source: 'ad'
     })
   }).catch(function(e) { console.log('Data send error:', e); });
 
   // DM本文（回答を同梱）
-  var msg = 'プラトン\n\n【無料診断の回答】\n'
+  var msg = 'プラトン\n\n【毎日課題の希望】\n'
     + '学年：' + (answers.grade || '未入力') + '\n'
-    + '志望校：' + ((answers.target || []).join('、') || '未入力') + '\n'
-    + '現在の偏差値：' + (answers.deviation || '未入力') + '\n'
-    + '対策科目：' + ((answers.subjects || []).join('、') || '特になし');
+    + '希望科目：' + ((answers.subjects || []).join('、') || '未入力') + '\n'
+    + '勉強時間：' + (answers.studyTime || '未入力') + '\n'
+    + '課題量：' + (answers.volume || '未入力');
   var igUrl = 'https://ig.me/m/plato_humanities?text=' + encodeURIComponent(msg);
 
   // Instagram DMを新規タブで開き、少し遅れてthanksへ
