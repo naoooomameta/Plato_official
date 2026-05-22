@@ -67,9 +67,11 @@ a{text-decoration:none;color:inherit;}
 .topbar-sep{opacity:.45;flex-shrink:0;}
 @media(max-width:640px){
   .topbar{flex-wrap:wrap;gap:4px 8px;padding:6px 12px;}
-  /* Instagramアイテム(5番目)とその前のセパレータ(4番目)を非表示 */
+  /* Instagram / X アイテムとそのセパレータをモバイルで非表示 */
   .topbar > span:nth-child(4),
-  .topbar > span:nth-child(5){display:none;}
+  .topbar > span:nth-child(5),
+  .topbar > span:nth-child(6),
+  .topbar > span:nth-child(7){display:none;}
 }
 @media(max-width:400px){
   .topbar > span:nth-child(2){display:none;}
@@ -979,6 +981,28 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 }
 .ig-link:hover{opacity:.85;}
 
+/* ===== X (旧Twitter) ===== */
+#x-feed{background:#fff;}
+.x-embed{
+  max-width:660px;margin:2rem auto 0;
+  border-radius:14px;overflow:hidden;
+  border:1px solid var(--bdr);
+  background:#fff;
+  min-height:200px;
+}
+.x-embed .twitter-timeline{margin:0 auto;}
+.x-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  margin:1.5rem auto 0;padding:12px 28px;
+  background:#000;color:#fff;border-radius:50px;
+  font-weight:700;font-size:.88rem;
+  transition:transform .3s,box-shadow .3s,opacity .3s;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+}
+.x-link:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:.92;}
+.x-link svg{width:16px;height:16px;}
+.x-link-wrap{text-align:center;}
+
 /* ===== ABOUT ===== */
 #about{background:#fff;}
 .about-inner{
@@ -1502,6 +1526,8 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <span class="topbar-item"><i data-lucide="trophy"></i> 一橋・北大・早稲田・上智 合格実績</span>
   <span class="topbar-sep">|</span>
   <span class="topbar-item"><a href="https://www.instagram.com/plato_humanities/" target="_blank"><i data-lucide="camera"></i> Instagram @plato_humanities</a></span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item"><a href="https://x.com/sano_platox" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X @sano_platox</a></span>
 </div>
 
 <header>
@@ -2397,6 +2423,29 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </a>
 </section>
 
+<!-- ===== X (旧Twitter) ===== -->
+<section id="x-feed">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">X (旧Twitter)</span>
+    <h2 class="sec-ttl">X<span class="ac">最新ポスト</span></h2>
+    <p class="sec-sub">入試情報・受験のコツ・塾長の想いをリアルタイム発信中！</p>
+  </div>
+  <div class="x-embed reveal">
+    <a class="twitter-timeline"
+       data-height="600"
+       data-theme="light"
+       data-chrome="noheader nofooter transparent"
+       href="https://twitter.com/sano_platox?ref_src=twsrc%5Etfw">Posts by @sano_platox</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+  <div class="x-link-wrap reveal">
+    <a href="https://x.com/sano_platox" target="_blank" rel="noopener" class="x-link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Xをフォローする → @sano_platox
+    </a>
+  </div>
+</section>
+
 <!-- ===== ABOUT ===== -->
 <section id="about">
   <div class="sec-head reveal" style="text-align:center;">
@@ -2537,6 +2586,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <li><a href="news.html">お知らせ</a></li>
       <li><a href="muryo-shindan/">無料合格診断</a></li>
       <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#x-feed">X (旧Twitter)</a></li>
       <li><a href="#about">塾概要</a></li>
       <li><a href="#contact">お問い合わせ</a></li>
     </ul>
