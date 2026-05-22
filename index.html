@@ -1133,6 +1133,15 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 .ft-nav{list-style:none;display:flex;flex-wrap:wrap;gap:.7rem 1.5rem;}
 .ft-nav a{color:rgba(255,255,255,.45);font-size:.76rem;transition:color .3s;}
 .ft-nav a:hover{color:#e8b0a0;}
+.ft-sns{display:flex;gap:.6rem;margin-top:1rem;}
+.ft-sns a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);
+  transition:background .3s,color .3s,transform .3s;
+}
+.ft-sns a:hover{background:#e8b0a0;color:#fff;transform:translateY(-2px);}
+.ft-sns svg{width:16px;height:16px;}
 .ft-copy{text-align:center;font-size:.68rem;color:rgba(255,255,255,.2);}
 
 /* ===== RESULTS (合格実績) ===== */
@@ -2505,6 +2514,14 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div>
       <div class="ft-name">プラトン</div>
       <div class="ft-sub">Plato Humanities — 文系の大学受験専門塾</div>
+      <div class="ft-sns">
+        <a href="https://x.com/sano_platox" target="_blank" rel="noopener" aria-label="X (旧Twitter)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/plato_humanities/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+      </div>
     </div>
     <ul class="ft-nav">
       <li><a href="#features">塾の特長</a></li>
