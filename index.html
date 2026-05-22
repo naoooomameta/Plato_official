@@ -1048,6 +1048,20 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   .x-avatar{width:54px;height:54px;}
   .x-card-name{font-size:.98rem;}
 }
+.x-timeline-wrap{
+  max-width:560px;margin:1.5rem auto 0;
+  border-radius:14px;overflow:hidden;
+  border:1px solid var(--bdr);background:#fff;
+}
+.x-timeline-wrap .twitter-timeline{margin:0 auto;}
+.x-timeline-wrap > a:not(.twitter-tweet):not([data-twitter]){
+  display:block;padding:1rem;text-align:center;
+  color:var(--mid);font-size:.78rem;
+}
+.x-timeline-label{
+  text-align:center;font-size:.74rem;color:var(--mid);
+  margin:1.4rem auto 0;letter-spacing:.08em;
+}
 
 /* ===== ABOUT ===== */
 #about{background:#fff;}
@@ -2509,6 +2523,39 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </a>
     </div>
   </div>
+  <div class="x-timeline-label reveal" id="xTimelineLabel" hidden>━ 最新ポスト ━</div>
+  <div class="x-timeline-wrap reveal" id="xTimelineWrap" hidden>
+    <a class="twitter-timeline"
+       data-height="600"
+       data-theme="light"
+       data-chrome="noheader nofooter transparent"
+       href="https://twitter.com/sano_platox?ref_src=twsrc%5Etfw">Posts by @sano_platox</a>
+  </div>
+  <script>
+    (function(){
+      const wrap = document.getElementById('xTimelineWrap');
+      const label = document.getElementById('xTimelineLabel');
+      if (!wrap) return;
+      // Insert widget script
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://platform.twitter.com/widgets.js';
+      s.charset = 'utf-8';
+      document.head.appendChild(s);
+      // Reveal once loaded; hide permanently if no iframe after timeout
+      let attempts = 0;
+      const check = setInterval(() => {
+        attempts++;
+        if (wrap.querySelector('iframe')) {
+          wrap.hidden = false;
+          if (label) label.hidden = false;
+          clearInterval(check);
+        } else if (attempts >= 30) { // ~6s
+          clearInterval(check);
+        }
+      }, 200);
+    })();
+  </script>
 </section>
 
 <!-- ===== ABOUT ===== -->
