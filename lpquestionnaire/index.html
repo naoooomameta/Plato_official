@@ -129,6 +129,11 @@ body{
 .hex-bg2{position:absolute;top:180px;left:-40px;width:160px;height:160px;opacity:0.04;transform:rotate(30deg);}
 
 .impact-area{position:relative;margin-bottom:16px;}
+.impact-message{
+  font-size:13px;color:#1a1a2e;line-height:1.9;
+  margin-top:16px;font-weight:700;
+}
+.impact-message strong{color:#1a56db;}
 .impact-sub{
   font-size:13px;color:#64748b;line-height:1.7;
   margin-top:14px;font-weight:500;
@@ -151,11 +156,11 @@ body{
   border-radius:2px;vertical-align:middle;margin:0 8px;
 }
 .impact-bottom{
-  font-size:52px;font-weight:900;color:#1a56db;
-  line-height:1;letter-spacing:-1px;
+  font-size:38px;font-weight:900;color:#1a56db;
+  line-height:1.1;letter-spacing:-1px;
 }
 .impact-bottom-sub{
-  font-size:30px;font-weight:900;color:#1a1a2e;
+  font-size:26px;font-weight:900;color:#1a1a2e;
   letter-spacing:0;
 }
 
@@ -846,8 +851,9 @@ body{
   .impact-copy{align-items:flex-start;}
   .impact-top{font-size:20px;margin-bottom:10px;}
   .impact-top::before,.impact-top::after{width:22px;}
-  .impact-bottom{font-size:64px;letter-spacing:-1.5px;}
-  .impact-bottom-sub{font-size:36px;}
+  .impact-bottom{font-size:50px;letter-spacing:-1.5px;}
+  .impact-bottom-sub{font-size:32px;}
+  .impact-message{font-size:14px;max-width:420px;line-height:1.9;}
   .impact-sub{font-size:14px;max-width:380px;line-height:1.8;}
   .fv-cta{grid-column:1;grid-row:2;margin:24px 0 0;}
   .fv-cta-wrap{max-width:320px;margin:0;display:block;}
@@ -886,8 +892,8 @@ body{
   /* FV adjustments */
   .impact-top{font-size:22px;}
   .impact-top::before,.impact-top::after{width:16px;}
-  .impact-bottom{font-size:56px;}
-  .impact-bottom-sub{font-size:32px;}
+  .impact-bottom{font-size:44px;}
+  .impact-bottom-sub{font-size:28px;}
   .fv-cta-mega-text{font-size:17px;}
   .fv-cta-ribbon{font-size:13px;padding:4px 20px;}
   .omakase-main{font-size:32px;}
@@ -1025,12 +1031,16 @@ body{
   .impact-top{font-size:18px;margin-bottom:16px;}
   .impact-top::before,.impact-top::after{width:24px;}
   .impact-bottom{
-    font-size:64px;letter-spacing:-1.5px;line-height:1;
+    font-size:56px;letter-spacing:-1.5px;line-height:1.1;
   }
-  .impact-bottom-sub{font-size:38px;}
+  .impact-bottom-sub{font-size:34px;}
+  .impact-message{
+    font-size:15px;line-height:1.9;
+    max-width:480px;color:#1a1a2e;margin-top:18px;
+  }
   .impact-sub{
     font-size:16px;line-height:1.8;
-    max-width:480px;color:#475569;margin-top:20px;
+    max-width:480px;color:#475569;margin-top:14px;
   }
 
   /* CTA */
@@ -1093,8 +1103,8 @@ body{
 }
 
 @media(min-width:1200px){
-  .impact-bottom{font-size:80px;}
-  .impact-bottom-sub{font-size:48px;}
+  .impact-bottom{font-size:62px;}
+  .impact-bottom-sub{font-size:38px;}
   .omakase-main{font-size:48px;}
 }
 </style>
@@ -1136,18 +1146,18 @@ body{
 
 <div class="stats-bar stats-bar-mobile">
   <div class="stat-item">
-    <div class="stat-num">93<span>%</span></div>
-    <div class="stat-label">第一志望合格率</div>
+    <div class="stat-num">週5<span>回</span></div>
+    <div class="stat-label">毎日課題を配信</div>
   </div>
   <div class="stat-divider"></div>
   <div class="stat-item">
-    <div class="stat-num">+12<span>UP</span></div>
-    <div class="stat-label">平均偏差値アップ</div>
+    <div class="stat-num">5<span>日間</span></div>
+    <div class="stat-label">無料で体験OK</div>
   </div>
   <div class="stat-divider"></div>
   <div class="stat-item">
-    <div class="stat-num">98<span>%</span></div>
-    <div class="stat-label">保護者満足度</div>
+    <div class="stat-num">全国<span>対応</span></div>
+    <div class="stat-label">オンライン完結</div>
   </div>
 </div>
 
@@ -1163,24 +1173,31 @@ body{
   <div class="impact-area">
     <div class="impact-copy">
       <span class="impact-top">「受かる子」には</span>
-      <span class="impact-bottom">戦略<span class="impact-bottom-sub">がある</span></span>
+      <span class="impact-bottom">毎日の積み重ね<span class="impact-bottom-sub">がある</span></span>
     </div>
-    <p class="impact-sub">4問のかんたん診断で、お子様専用の<br>合格戦略ガイドブックを無料でお届けします</p>
+    <p class="impact-message">
+      成績は、授業の日だけでは大きく変わりません。<br>
+      志望校合格には、<strong>“毎日の積み重ね”</strong>が何より大切です。<br>
+      <br>
+      だからこそ、お子様に合った<br>
+      <strong>「毎日課題」</strong>を作成します。
+    </p>
+    <p class="impact-sub">4問のかんたんアンケートで、<br>お子様専用の毎日課題プランを無料作成。</p>
   </div>
 
   <!-- PC専用：ヒーロー内ステータス -->
   <div class="hero-stats">
     <div class="stat-item">
-      <div class="stat-num">93<span>%</span></div>
-      <div class="stat-label">第一志望合格率</div>
+      <div class="stat-num">週5<span>回</span></div>
+      <div class="stat-label">毎日課題を配信</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">+12<span>UP</span></div>
-      <div class="stat-label">平均偏差値</div>
+      <div class="stat-num">5<span>日間</span></div>
+      <div class="stat-label">無料で体験OK</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">98<span>%</span></div>
-      <div class="stat-label">保護者満足度</div>
+      <div class="stat-num">全国<span>対応</span></div>
+      <div class="stat-label">オンライン完結</div>
     </div>
   </div>
 
@@ -1189,11 +1206,11 @@ body{
     <div class="fv-cta-wrap" onclick="openSurvey()">
       <div class="fv-cta-ribbon">＼ 完全無料 ／</div>
       <div class="fv-cta-mega">
-        <div class="fv-cta-mega-text">うちの子の戦略を見てみる <span class="fv-cta-arrow">→</span></div>
-        <div class="fv-cta-mega-sub">たった30秒で診断完了</div>
+        <div class="fv-cta-mega-text">うちの子の毎日課題を作ってみる <span class="fv-cta-arrow">→</span></div>
+        <div class="fv-cta-mega-sub">たった30秒でアンケート完了</div>
       </div>
     </div>
-    <div class="fv-cta-micro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="#64748b" stroke-width="2"/><path d="M7 20h10" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><path d="M12 16v4" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="10" r="2" fill="#1a56db"/><path d="M8 14c0-2 2-3 4-3s4 1 4 3" stroke="#1a56db" stroke-width="1.5" stroke-linecap="round"/></svg><span>場所を選ばず、最高峰の学習環境を。<br>全国どこからでも診断・入塾OK</span></div>
+    <div class="fv-cta-micro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="#64748b" stroke-width="2"/><path d="M7 20h10" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><path d="M12 16v4" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="10" r="2" fill="#1a56db"/><path d="M8 14c0-2 2-3 4-3s4 1 4 3" stroke="#1a56db" stroke-width="1.5" stroke-linecap="round"/></svg><span>📖 家でも学習習慣を。<br>全国どこからでも毎日管理OK</span></div>
   </div>
   </div><!-- /hero-left -->
 
@@ -1202,7 +1219,7 @@ body{
     <div class="report-card">
       <div class="report-card-header">
         <span class="report-icon">📊</span>
-        <span class="report-title">お子様専用 合格戦略レポート</span>
+        <span class="report-title">お子様専用 毎日課題プラン</span>
         <span class="report-badge-free">無料</span>
       </div>
       <div class="report-chart">
@@ -1214,10 +1231,10 @@ body{
           <div class="mini-bar" style="animation-delay:0.5s"></div>
           <div class="mini-bar" style="animation-delay:0.6s"></div>
         </div>
-        <div class="mini-label"><span>4月</span><span>6月</span><span>8月</span><span>10月</span><span>12月</span><span>合格!</span></div>
+        <div class="mini-label"><span>1日目</span><span>2日目</span><span>3日目</span><span>4日目</span><span>5日目</span><span>習慣化!</span></div>
       </div>
       <div class="report-footer">
-        <span class="report-footer-label">偏差値の推移予測</span>
+        <span class="report-footer-label">学習習慣の定着イメージ</span>
         <span class="report-footer-name">プラトン</span>
       </div>
     </div>
@@ -1375,8 +1392,8 @@ body{
   <div class="fv-cta-wrap bridge-cta" onclick="openSurvey()" style="max-width:300px;margin:0 auto;">
     <div class="fv-cta-ribbon">＼ 完全無料 ／</div>
     <div class="fv-cta-mega">
-      <div class="fv-cta-mega-text">うちの子の戦略を見てみる <span class="fv-cta-arrow">→</span></div>
-      <div class="fv-cta-mega-sub">たった30秒で診断完了</div>
+      <div class="fv-cta-mega-text">うちの子の毎日課題を作ってみる <span class="fv-cta-arrow">→</span></div>
+      <div class="fv-cta-mega-sub">たった30秒でアンケート完了</div>
     </div>
   </div>
 </div>
@@ -1389,10 +1406,10 @@ body{
   <div class="floating-cta-inner">
     <div class="floating-cta-text">
       <span class="floating-cta-free">無料</span>
-      うちの子の戦略を見てみる
+      うちの子の毎日課題を作ってみる
     </div>
     <button class="floating-cta-btn" onclick="openSurvey()">
-      診断スタート →
+      アンケート →
     </button>
   </div>
 </div>
