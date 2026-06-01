@@ -1407,7 +1407,7 @@ body{
         </div>
         <div class="line-cta-highlight">📩 2日以内にご提案します</div>
         <button class="line-add-btn" onclick="openLine()">
-          Instagramのメッセージで受け取る
+          Instagramで「毎日課題」と送信
         </button>
         <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:10px;">※ 毎日課題ロードマップのご提案はInstagramのメッセージでお届けします</div>
       </div>
@@ -1538,7 +1538,7 @@ function updateUI() {
 
   // Last step button text & style
   if (currentStep === TOTAL_STEPS) {
-    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>Instagramで回答を送信';
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:6px;"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>Instagramで「毎日課題」と送信';
     btn.style.background = 'linear-gradient(135deg,#f09433,#dc2743,#bc1888)';
     btn.style.color = '#fff';
     btn.style.boxShadow = '0 4px 15px rgba(220,39,67,0.4)';
@@ -1594,12 +1594,8 @@ function openLine() {
     })
   }).catch(function(e) { console.log('Data send error:', e); });
 
-  // DM本文（回答を同梱）
-  var msg = 'プラトン\n\n【毎日課題の希望】\n'
-    + '学年：' + (answers.grade || '未入力') + '\n'
-    + '希望科目：' + ((answers.subjects || []).join('、') || '未入力') + '\n'
-    + '勉強時間：' + (answers.studyTime || '未入力') + '\n'
-    + '課題量：' + (answers.volume || '未入力');
+  // DM本文：キーワード「毎日課題」のみを送信（回答内容はGoogle Sheetsへ別途送信済み）
+  var msg = '毎日課題';
   var igUrl = 'https://ig.me/m/plato_humanities?text=' + encodeURIComponent(msg);
 
   // Instagram DMを新規タブで開き、少し遅れてthanksへ
