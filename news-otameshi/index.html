@@ -142,8 +142,9 @@
   }
   .breadcrumb a:hover { color: var(--burgundy); }
 
-  /* === FV (key visual) === */
+  /* === FV (key visual / hero) === */
   .fv {
+    display: block;
     max-width: 1040px;
     margin: 24px auto 0;
     padding: 0 24px;
@@ -153,13 +154,25 @@
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 1200 / 440;
+    aspect-ratio: 1672 / 941;
     border-radius: 16px;
     box-shadow: 0 12px 44px rgba(74, 30, 39, 0.18);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .fv:hover img {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 54px rgba(74, 30, 39, 0.22);
+  }
+  .fv-sronly {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    white-space: nowrap; border: 0;
   }
   @media (max-width: 720px) {
     .fv { padding: 0 16px; margin-top: 16px; }
-    .fv img { aspect-ratio: 1 / 1; border-radius: 12px; }
+    .fv img { aspect-ratio: 1086 / 1448; border-radius: 12px; }
   }
   @media (max-width: 480px) {
     .fv { padding: 0 12px; }
@@ -1394,54 +1407,19 @@
   お試しコースのご案内
 </nav>
 
-<!-- FV (key visual) — ※プレースホルダー画像。本番のバナーに差し替えてください（images/fv-pc.svg / fv-sp.svg） -->
-<div class="fv">
+<!-- FV (key visual / hero) -->
+<h1 class="fv-sronly">まずは1週間、プラトンの指導をそのまま体験できる初回限定のお試しコース（3,980円）</h1>
+<a class="fv" href="#otameshi-form" aria-label="無料相談で申し込む（お試しコース 3,980円・初回限定）">
   <picture>
-    <source media="(max-width: 720px)" srcset="images/fv-sp.svg">
-    <img src="images/fv-pc.svg"
-         alt="お試しコース 3,980円｜まずは1週間、プラトンの指導をそのまま体験"
+    <source media="(max-width: 720px)" type="image/webp" srcset="images/fv-sp.webp">
+    <source media="(max-width: 720px)" srcset="images/fv-sp.jpg">
+    <source type="image/webp" srcset="images/fv-pc.webp">
+    <img src="images/fv-pc.jpg"
+         alt="お試しコース 3,980円。まずは1週間、プラトンのオンライン60分マンツーマン指導と毎日課題をそのまま体験できる初回限定パック。専属講師による学習計画の作成・体験後のヒアリング／継続相談つき。"
+         width="1672" height="941"
          fetchpriority="high" decoding="async">
   </picture>
-</div>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="section-label">TRIAL COURSE</div>
-  <h1>
-    まずは1週間、プラトンの指導を<br>
-    <em>そのまま体験できる</em>パックです
-  </h1>
-  <p class="hero-lead">
-    ホームページや無料相談だけでは見えてこない、毎日の指導の手触り。<br>
-    お試しコースは、入塾を決める前に「本当にうちの子に合うか」を確かめていただくための、初回限定のパックです。
-  </p>
-</section>
-
-<!-- Price Card -->
-<div class="price-card">
-  <span class="price-card-badge">まずはお気軽に</span>
-  <div class="price-card-title">お試しコース</div>
-  <div class="price-card-mascot">
-    <img src="../img/plato-logochibi.png" alt="プラトン" loading="lazy">
-  </div>
-  <div class="price-card-amount">
-    <span class="num">3,980</span><span class="yen">円</span>
-  </div>
-  <div class="price-card-note">初回限定・1回のみ</div>
-
-  <hr class="price-card-divider">
-
-  <div class="price-card-lead">プラトンの指導を実際に体験できるパックです。</div>
-
-  <ul class="price-card-list">
-    <li>1回のオンラインマンツーマン指導（60分）</li>
-    <li>1週間の毎日課題体験</li>
-    <li>専属講師による学習計画の作成</li>
-    <li>体験後のヒアリング・継続相談つき</li>
-  </ul>
-
-  <a href="#otameshi-form" class="price-card-btn">無料相談で申し込む →</a>
-</div>
+</a>
 
 <!-- Why Trial Course Exists -->
 <section>
