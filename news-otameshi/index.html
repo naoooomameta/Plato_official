@@ -8,6 +8,32 @@
 <meta property="og:title" content="お試しコース 3,980円｜まずは1週間プラトンの指導を体験 | プラトン" />
 <meta property="og:description" content="1回60分のオンラインマンツーマン指導と1週間の毎日課題体験で3,980円。入塾前に「本当に続けられるか」を確かめるための、初回限定パックです。" />
 <meta property="og:type" content="article" />
+<meta property="og:url" content="https://plato-humanities.com/news-otameshi/" />
+<meta property="og:site_name" content="プラトン 文系の大学受験専門塾" />
+<meta property="og:image" content="https://plato-humanities.com/news-otameshi/images/fv-pc.jpg" />
+<meta property="og:image:width" content="1448" />
+<meta property="og:image:height" content="1086" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://plato-humanities.com/news-otameshi/images/fv-pc.jpg" />
+<link rel="canonical" href="https://plato-humanities.com/news-otameshi/" />
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1055130206582129');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1055130206582129&ev=PageView&noscript=1"
+alt=""/></noscript>
+<!-- End Meta Pixel Code -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2381,6 +2407,7 @@ btn.addEventListener('click',function(){bkOpenD();bindCalNav();showCalLoading();
 
     var savedName  = document.getElementById('ot-name').value;
     var savedEmail = email.value;
+    var savedIntent = document.getElementById('ot-intent').value;
 
     var params = new URLSearchParams();
     params.append('action', 'contact');
@@ -2405,6 +2432,14 @@ btn.addEventListener('click',function(){bkOpenD();bindCalNav();showCalLoading();
     /* グローバルに保存(予約UI側でprefill用) */
     window.__contactName  = savedName;
     window.__contactEmail = savedEmail;
+
+    /* Meta Pixel: フォーム送信を Lead として計測 */
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead', {
+        content_name: 'otameshi-form',
+        content_category: savedIntent || ''
+      });
+    }
 
     openTyModal();
   });
