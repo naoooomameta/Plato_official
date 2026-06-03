@@ -142,6 +142,29 @@
   }
   .breadcrumb a:hover { color: var(--burgundy); }
 
+  /* === FV (key visual) === */
+  .fv {
+    max-width: 1040px;
+    margin: 24px auto 0;
+    padding: 0 24px;
+  }
+  .fv picture { display: block; }
+  .fv img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 440;
+    border-radius: 16px;
+    box-shadow: 0 12px 44px rgba(74, 30, 39, 0.18);
+  }
+  @media (max-width: 720px) {
+    .fv { padding: 0 16px; margin-top: 16px; }
+    .fv img { aspect-ratio: 1 / 1; border-radius: 12px; }
+  }
+  @media (max-width: 480px) {
+    .fv { padding: 0 12px; }
+  }
+
   /* === Hero === */
   .hero {
     max-width: 880px;
@@ -1370,6 +1393,16 @@
   <a href="../news.html">お知らせ</a> &rsaquo;
   お試しコースのご案内
 </nav>
+
+<!-- FV (key visual) — ※プレースホルダー画像。本番のバナーに差し替えてください（images/fv-pc.svg / fv-sp.svg） -->
+<div class="fv">
+  <picture>
+    <source media="(max-width: 720px)" srcset="images/fv-sp.svg">
+    <img src="images/fv-pc.svg"
+         alt="お試しコース 3,980円｜まずは1週間、プラトンの指導をそのまま体験"
+         fetchpriority="high" decoding="async">
+  </picture>
+</div>
 
 <!-- Hero -->
 <section class="hero">

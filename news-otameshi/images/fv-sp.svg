@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" role="img" aria-label="お試しコース 3,980円｜まずは1週間、プラトンの指導を体験">
+  <defs>
+    <linearGradient id="fvsp-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4A1E27"/>
+      <stop offset="1" stop-color="#6B2C39"/>
+    </linearGradient>
+    <linearGradient id="fvsp-medal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDF8F3"/>
+      <stop offset="1" stop-color="#F5EBE0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#fvsp-bg)"/>
+
+  <!-- decorative accents -->
+  <circle cx="1010" cy="90" r="280" fill="#8B4151" opacity="0.18"/>
+  <circle cx="70" cy="1010" r="240" fill="#8B4151" opacity="0.13"/>
+
+  <!-- eyebrow -->
+  <text x="540" y="158" text-anchor="middle" fill="#E8DCD0" font-family="'Noto Sans JP','Yu Gothic',sans-serif" font-size="27" letter-spacing="7">文系の大学受験専門塾　プラトン</text>
+  <line x1="495" y1="190" x2="585" y2="190" stroke="#B8893A" stroke-width="1.5"/>
+
+  <!-- catch copy -->
+  <text x="540" y="332" text-anchor="middle" fill="#FDF8F3" font-family="'Noto Serif JP','Yu Mincho',serif" font-weight="600" font-size="70" letter-spacing="2">まずは1週間、</text>
+  <text x="540" y="424" text-anchor="middle" fill="#FDF8F3" font-family="'Noto Serif JP','Yu Mincho',serif" font-weight="600" font-size="70" letter-spacing="2">プラトンの指導を</text>
+  <text x="540" y="516" text-anchor="middle" fill="#E7B96B" font-family="'Noto Serif JP','Yu Mincho',serif" font-weight="600" font-size="70" letter-spacing="2">体験する。</text>
+
+  <!-- sub copy -->
+  <text x="540" y="600" text-anchor="middle" fill="#E8DCD0" font-family="'Noto Sans JP','Yu Gothic',sans-serif" font-size="28" letter-spacing="1">オンライン60分マンツーマン指導</text>
+  <text x="540" y="646" text-anchor="middle" fill="#E8DCD0" font-family="'Noto Sans JP','Yu Gothic',sans-serif" font-size="28" letter-spacing="1">＋ 1週間の毎日課題体験</text>
+
+  <!-- price medallion -->
+  <circle cx="540" cy="838" r="172" fill="url(#fvsp-medal)"/>
+  <circle cx="540" cy="838" r="172" fill="none" stroke="#B8893A" stroke-width="2.5"/>
+  <circle cx="540" cy="838" r="157" fill="none" stroke="#B8893A" stroke-width="1.5" opacity="0.45"/>
+  <text x="540" y="768" text-anchor="middle" fill="#6B2C39" font-family="'Noto Sans JP','Yu Gothic',sans-serif" font-size="26" letter-spacing="5">初回限定</text>
+  <text x="540" y="868" text-anchor="middle" fill="#6B2C39" font-family="'Noto Serif JP','Yu Mincho',serif" font-weight="700" font-size="88">3,980<tspan font-size="42" dx="2">円</tspan></text>
+  <text x="540" y="918" text-anchor="middle" fill="#8A7B7F" font-family="'Noto Sans JP','Yu Gothic',sans-serif" font-size="24" letter-spacing="2">1回のみ・税込</text>
+</svg>
