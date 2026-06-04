@@ -1494,6 +1494,44 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .news-card-icon{width:40px;height:40px;}
   .news-card-title{font-size:1rem;}
 }
+
+/* ===== HOME NEWS ===== */
+.home-news{max-width:880px;margin:0 auto;border-top:1px solid var(--bdr);}
+.home-news-row{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 10px;border-bottom:1px solid var(--bdr);
+  text-decoration:none;color:var(--txt);transition:background .2s;
+}
+.home-news-row:hover{background:var(--light);}
+.home-news-date{
+  flex:0 0 auto;min-width:96px;
+  font-family:"Kaisei Opti",serif;font-size:.9rem;
+  color:var(--txt3);letter-spacing:.04em;
+}
+.home-news-badge{
+  flex:0 0 auto;white-space:nowrap;
+  font-size:.66rem;font-weight:700;letter-spacing:.04em;
+  padding:4px 12px;border-radius:50px;
+  background:var(--pale);color:var(--red);border:1px solid var(--red);
+}
+.home-news-badge--new{background:var(--red);color:#fff;}
+.home-news-badge--gold{background:#faf3e6;color:#9a7330;border-color:var(--gold);}
+.home-news-title{flex:1 1 auto;font-size:.95rem;font-weight:500;line-height:1.6;}
+.home-news-row:hover .home-news-title{color:var(--red);}
+.home-news-more{text-align:center;margin-top:2.4rem;}
+.home-news-btn{
+  display:inline-block;font-family:"Kaisei Opti",serif;
+  font-weight:700;font-size:.95rem;color:var(--red);
+  border:1.5px solid var(--red);border-radius:50px;
+  padding:13px 42px;text-decoration:none;transition:all .25s;
+}
+.home-news-btn:hover{background:var(--red);color:#fff;}
+@media(max-width:600px){
+  .home-news-row{flex-wrap:wrap;gap:8px 10px;padding:16px 6px;}
+  .home-news-date{min-width:auto;font-size:.82rem;order:1;}
+  .home-news-badge{order:2;}
+  .home-news-title{flex:1 1 100%;order:3;font-size:.9rem;}
+}
 </style>
 </head>
 <body>
@@ -2510,6 +2548,34 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         </button>
       </form>
     </div>
+  </div>
+</section>
+
+<!-- ===== NEWS ===== -->
+<section id="news" style="background:var(--cream);">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">News</span>
+    <h2 class="sec-ttl"><span class="ac">お知らせ</span></h2>
+  </div>
+  <div class="home-news reveal">
+    <a class="home-news-row" href="news-otameshi/">
+      <span class="home-news-date">2026.05.20</span>
+      <span class="home-news-badge home-news-badge--new">NEW</span>
+      <span class="home-news-title">【お試しコース 3,980円】まずは1週間、プラトンの指導をそのまま体験</span>
+    </a>
+    <a class="home-news-row" href="news-campaign-gw2026/">
+      <span class="home-news-date">2026.04.29</span>
+      <span class="home-news-badge home-news-badge--gold">キャンペーン</span>
+      <span class="home-news-title">【GW限定】ゴールデンウィーク特別キャンペーンのお知らせ</span>
+    </a>
+    <a class="home-news-row" href="news-payment.html">
+      <span class="home-news-date">2026年</span>
+      <span class="home-news-badge">重要</span>
+      <span class="home-news-title">授業料のお支払い・退塾について</span>
+    </a>
+  </div>
+  <div class="home-news-more reveal">
+    <a href="news.html" class="home-news-btn">お知らせ一覧を見る →</a>
   </div>
 </section>
 
