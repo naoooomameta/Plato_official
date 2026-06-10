@@ -405,6 +405,52 @@ section{padding:64px 4vw;}
 }
 .fdesc{font-size:.8rem;color:var(--txt2);line-height:1.85;}
 
+/* ===== 3つの指導コース（指導システム内） ===== */
+.course-lineup{max-width:1000px;margin:3.2rem auto 0;}
+.course-lineup-head{text-align:center;margin-bottom:1.6rem;}
+.course-lineup-ttl{
+  font-family:"Kaisei Opti",serif;font-size:1.15rem;font-weight:700;
+  color:var(--txt);margin-bottom:.4rem;
+}
+.course-lineup-sub{font-size:.85rem;color:var(--txt2);line-height:1.9;}
+.course-common{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:.6rem 1rem;max-width:860px;margin:0 auto 1.8rem;
+  background:linear-gradient(135deg,var(--red),var(--mid));
+  border-radius:14px;padding:1rem 1.4rem;
+}
+.course-common-label{
+  background:#fff;color:var(--red);
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  padding:4px 12px;border-radius:50px;flex-shrink:0;
+}
+.course-common-txt{font-size:.82rem;font-weight:700;color:#fff;}
+.course-common-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;}
+.course-common-tags span{
+  border:1px solid rgba(255,255,255,.55);color:#fff;
+  font-size:.72rem;font-weight:700;
+  padding:3px 10px;border-radius:50px;
+}
+.course-lineup .ccard.recommended::before{content:"メインプログラム";}
+.cl-divider{
+  font-size:.7rem;font-weight:700;color:var(--txt3);letter-spacing:.08em;
+  border-top:1.5px dashed var(--bdr);
+  padding-top:.9rem;margin:.2rem 0 .7rem;
+}
+.cl-included{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem;}
+.cl-included li{
+  display:flex;align-items:flex-start;gap:.5rem;
+  font-size:.8rem;color:var(--txt2);line-height:1.6;
+}
+.cl-included li i[data-lucide],
+.cl-included li svg{
+  width:15px;height:15px;color:var(--red);flex-shrink:0;margin-top:3px;
+}
+.course-lineup-note{
+  text-align:center;font-size:.82rem;color:var(--txt2);
+  line-height:1.9;margin-top:1.6rem;
+}
+
 /* ===== COURSES & PRICING (unified) ===== */
 #courses{background:#fff;position:relative;}
 .c-grid{
@@ -1733,6 +1779,95 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <h3 class="fttl">志望校から逆算した受験戦略</h3>
       <p class="fdesc">生徒の志望校や現在の学力を分析し、志望校合格までのロードマップを作成します。どの参考書を・どの順番で・どの時期までに進めるべきかを明確にします。</p>
     </div>
+  </div>
+
+  <!-- 3つの指導コース -->
+  <div id="course-lineup" class="course-lineup">
+    <div class="course-lineup-head reveal">
+      <h3 class="course-lineup-ttl">学年・目的に合わせて選べる<span style="color:var(--red);">3つの指導コース</span></h3>
+      <p class="course-lineup-sub">生徒一人ひとりの学習状況に合わせて、最適なコースを無料相談でご提案します。</p>
+    </div>
+
+    <!-- 全コース共通 -->
+    <div class="course-common reveal">
+      <span class="course-common-label">全コース共通</span>
+      <span class="course-common-txt">すべてのコースに、以下すべてが含まれます</span>
+      <div class="course-common-tags">
+        <span>毎日課題（管理）</span>
+        <span>LINE質問対応</span>
+        <span>三者面談</span>
+      </div>
+    </div>
+
+    <div class="c-grid">
+      <!-- 大学受験準備コース -->
+      <div class="ccard reveal d1">
+        <div class="chd">
+          <span class="cg">中学生・高校1年生</span>
+          <div class="cn">大学受験準備コース</div>
+        </div>
+        <div class="cbd">
+          <p class="cdesc">本格的な受験勉強を始める前に、基礎学力と毎日の学習習慣を身につけるコース。毎日課題で学習リズムをつくり、大学受験に向けた土台を固めます。</p>
+          <div class="cl-divider">このコースに含まれるもの</div>
+          <ul class="cl-included">
+            <li><i data-lucide="check"></i><span>オンライン個別指導（60分／回）</span></li>
+            <li><i data-lucide="check"></i><span>自学自習トレーニング</span></li>
+            <li><i data-lucide="check"></i><span>毎日課題（管理）</span></li>
+            <li><i data-lucide="check"></i><span>LINE質問対応（無制限）</span></li>
+            <li><i data-lucide="check"></i><span>三者面談（保護者・生徒・講師）</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 合格戦略プログラム -->
+      <div class="ccard recommended reveal d2">
+        <div class="chd">
+          <span class="cg">高校2年生・高校3年生</span>
+          <div class="cn">合格戦略プログラム</div>
+        </div>
+        <div class="cbd">
+          <p class="cdesc">志望校から逆算した受験戦略と毎日の学習管理で、志望校合格まで伴走する当塾のメインプログラム。個別指導に加えて、受験全体をトータルでサポートします。</p>
+          <div class="ctags">
+            <span class="ctag">合格ロードマップ</span>
+            <span class="ctag">受験戦略面談</span>
+            <span class="ctag">模試分析</span>
+          </div>
+          <div class="cl-divider">このコースに含まれるもの</div>
+          <ul class="cl-included">
+            <li><i data-lucide="check"></i><span>オンライン個別指導（60分／回）</span></li>
+            <li><i data-lucide="check"></i><span>自学自習トレーニング</span></li>
+            <li><i data-lucide="check"></i><span>毎日課題（管理）</span></li>
+            <li><i data-lucide="check"></i><span>合格ロードマップ作成</span></li>
+            <li><i data-lucide="check"></i><span>受験戦略面談</span></li>
+            <li><i data-lucide="check"></i><span>模試分析</span></li>
+            <li><i data-lucide="check"></i><span>LINE質問対応（無制限）</span></li>
+            <li><i data-lucide="check"></i><span>三者面談（保護者・生徒・講師）</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 合格戦略サポート -->
+      <div class="ccard reveal d3">
+        <div class="chd">
+          <span class="cg">受験生向け</span>
+          <div class="cn">合格戦略サポート</div>
+        </div>
+        <div class="cbd">
+          <p class="cdesc">個別指導（授業）は行わず、毎日課題による学習管理と受験戦略のサポートに特化したプラン。志望校選びや参考書の進め方など、「何を・どう進めるか」を専門的にサポートします。</p>
+          <div class="cl-divider">このコースに含まれるもの</div>
+          <ul class="cl-included">
+            <li><i data-lucide="check"></i><span>毎日課題（管理）</span></li>
+            <li><i data-lucide="check"></i><span>合格ロードマップ作成</span></li>
+            <li><i data-lucide="check"></i><span>受験戦略面談</span></li>
+            <li><i data-lucide="check"></i><span>模試分析・学習計画の提案</span></li>
+            <li><i data-lucide="check"></i><span>LINE質問対応</span></li>
+            <li><i data-lucide="check"></i><span>三者面談（保護者・生徒・講師）</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="course-lineup-note">どのコースが合うか迷う場合も、無料相談で学習状況をお伺いしたうえでご提案します。<br><a href="#contact" style="color:var(--red);font-weight:700;text-decoration:underline;">無料相談はこちら →</a></p>
   </div>
 </section>
 
