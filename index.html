@@ -2704,9 +2704,11 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
      target="_blank" rel="sponsored noopener"
      aria-label="新R25の企業インタビュー記事を読む（外部サイト・新しいタブで開きます）">
     <div class="media-card-thumb">
-      <!-- サムネは自己ホスト必須（img/r25-interview.jpg）。媒体CDNへの直リンク禁止。
-           ※現在は仮の単色プレースホルダー。本番のサムネ画像に差し替えてください。 -->
-      <img src="img/r25-interview.jpg" alt="新R25 企業インタビュー記事のサムネイル" loading="lazy" decoding="async">
+      <!-- サムネは自己ホスト（img/r25-interview.*）。媒体CDNへの直リンクはしない。 -->
+      <picture>
+        <source type="image/webp" srcset="img/r25-interview.webp">
+        <img src="img/r25-interview.jpg" alt="新R25 企業インタビュー記事のサムネイル（代表 佐野翼）" loading="lazy" decoding="async">
+      </picture>
     </div>
     <div class="media-card-body">
       <span class="media-card-label">新R25 企業インタビュー</span>
