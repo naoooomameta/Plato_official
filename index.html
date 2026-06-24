@@ -687,6 +687,7 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   gap:10px;max-width:860px;margin:0 auto;
 }
 .gallery-item{
+  position:relative;
   border-radius:12px;overflow:hidden;
   border:2px solid var(--bdr);
   transition:all .3s;cursor:pointer;
@@ -694,6 +695,15 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .gallery-item:hover{transform:scale(1.03);box-shadow:var(--sh2);border-color:var(--red);}
 .gallery-item .img-ph{min-height:140px;border-radius:0;border:none;}
 .gallery-item img{width:100%;height:200px;object-fit:cover;display:block;}
+.gallery-item::after{
+  content:"\1F50D";
+  position:absolute;right:.45rem;bottom:.45rem;
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(0,0,0,.5);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;line-height:1;pointer-events:none;
+}
+.gallery-item:focus-visible{outline:3px solid var(--red);outline-offset:2px;}
 
 /* ===== STAFF (NEW TAB DESIGN) ===== */
 #staff{background:var(--cream);}
@@ -2951,16 +2961,29 @@ function switchTab(tabId, btn) {
   const img = document.getElementById('surveyModalImg');
   const caption = document.getElementById('surveyModalCaption');
   const closeBtn = modal.querySelector('.survey-modal-close');
-  const open = (src, univ, name) => {
+  const openImage = (src, captionText, altText) => {
     img.src = src;
-    img.alt = name + 'アンケート（' + univ + ' 合格）';
-    caption.textContent = univ + '　' + name;
+    img.alt = altText || '';
+    caption.textContent = captionText || '';
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
   };
+  const open = (src, univ, name) => openImage(src, univ + '　' + name, name + 'アンケート（' + univ + ' 合格）');
   const close = () => { modal.hidden = true; img.src = ''; document.body.style.overflow = ''; };
+  // 保護者アンケート画像
   document.querySelectorAll('.survey-card').forEach(card => {
     card.addEventListener('click', () => open(card.dataset.src, card.dataset.univ, card.dataset.name));
+  });
+  // ギャラリー画像（タップ／クリックで拡大表示）
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    const im = item.querySelector('img');
+    if(!im) return;
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', (im.alt ? im.alt + 'の画像' : '画像') + 'を拡大表示');
+    const trigger = () => openImage(im.currentSrc || im.src, '', im.alt);
+    item.addEventListener('click', trigger);
+    item.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); trigger(); } });
   });
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
