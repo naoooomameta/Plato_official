@@ -1192,6 +1192,17 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 .ferr{display:none;font-size:.72rem;color:#c0392b;margin-top:.25rem;}
 .fi.invalid,.fsel.invalid,.fta.invalid{border-color:#c0392b;}
 .fi.invalid+.ferr,.fsel.invalid+.ferr,.fta.invalid+.ferr{display:block;}
+/* ── お問い合わせ区分（保護者/生徒 選択ボタン） ── */
+.fchoice{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fchoice input[type="radio"]{position:absolute;left:14px;bottom:0;width:1px;height:1px;opacity:0;margin:0;padding:0;border:0;pointer-events:none;}
+.fchoice label{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:14px 12px;border:2px solid var(--bdr);border-left:3px solid var(--bdr);border-radius:10px;background:var(--cream);color:var(--txt);font-size:.86rem;font-weight:700;text-align:center;cursor:pointer;transition:all .3s;}
+.fchoice label:hover{border-color:var(--red);border-left-color:var(--red);}
+.fchoice input[type="radio"]:checked+label{background:rgba(111,45,67,.06);border-color:var(--red);border-left-color:var(--gold);color:var(--red);box-shadow:0 0 0 3px rgba(111,45,67,.1);}
+.fchoice input[type="radio"]:focus-visible+label{box-shadow:0 0 0 3px rgba(111,45,67,.2);}
+.fchoice label svg{width:18px;height:18px;fill:currentColor;flex:none;opacity:.75;}
+.fchoice.invalid label{border-color:#c0392b;border-left-color:#c0392b;}
+.fchoice.invalid+.ferr{display:block;}
+.fnote{font-size:.72rem;color:var(--txt2);margin-top:8px;line-height:1.7;}
 .form-msg{padding:.8rem 1rem;border-radius:8px;font-size:.83rem;font-weight:600;margin-bottom:.8rem;display:flex;align-items:center;}
 .form-msg--ok{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
 .form-msg--ng{background:#fdecea;color:#c62828;border:1px solid #ef9a9a;}
@@ -1556,6 +1567,9 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .survey-grid{grid-template-columns:repeat(3,1fr);}
 }
 @media(max-width:560px){
+  .fchoice{gap:8px;}
+  .fchoice label{font-size:.8rem;padding:12px 8px;gap:6px;}
+  .fchoice label svg{width:16px;height:16px;}
   .survey-grid{grid-template-columns:repeat(2,1fr);gap:.7rem;}
   .survey-info{padding:.55rem .65rem .7rem;}
   .survey-univ{font-size:.78rem;}
@@ -2800,6 +2814,17 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     </div>
     <div class="cform reveal d2">
       <form id="contact-form" method="POST" novalidate>
+        <div class="fg">
+          <label class="fl" id="ctype-label">どちらからのお問い合わせですか？<span class="req">必須</span></label>
+          <div class="fchoice" id="ctype-choice" role="radiogroup" aria-labelledby="ctype-label">
+            <input type="radio" id="ctype-parent" name="contactType" value="保護者" required>
+            <label for="ctype-parent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>保護者の方</label>
+            <input type="radio" id="ctype-student" name="contactType" value="生徒本人">
+            <label for="ctype-student"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 13.5L5 12.72v3.5L12 20l7-3.78v-3.5L12 16.5z"/></svg>生徒ご本人</label>
+          </div>
+          <span class="ferr" id="err-ctype">お問い合わせ区分を選択してください</span>
+          <p class="fnote">お名前・ご連絡先は、ご入力される方（保護者様またはご本人）の情報をご記入ください。</p>
+        </div>
         <div class="fr2">
           <div class="fg">
             <label class="fl" for="name">お名前<span class="req">必須</span></label>
@@ -3049,6 +3074,18 @@ function switchTab(tabId, btn) {
 
   function validate() {
     var valid = true;
+
+    /* お問い合わせ区分（ラジオ） */
+    var choice = document.getElementById('ctype-choice');
+    if (choice) {
+      if (form.querySelector('input[name="contactType"]:checked')) {
+        choice.classList.remove('invalid');
+      } else {
+        choice.classList.add('invalid');
+        valid = false;
+      }
+    }
+
     var fields = [
       { id: 'name',  check: function(v){ return v.trim() !== ''; } },
       { id: 'kana',  check: function(v){ return v.trim() !== ''; } },
@@ -3066,6 +3103,14 @@ function switchTab(tabId, btn) {
     });
     return valid;
   }
+
+  /* 区分を選び直したらエラー表示をすぐ消す */
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="contactType"]'), function(radio) {
+    radio.addEventListener('change', function() {
+      var choice = document.getElementById('ctype-choice');
+      if (choice) choice.classList.remove('invalid');
+    });
+  });
 
   var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
 
@@ -3085,9 +3130,12 @@ function switchTab(tabId, btn) {
     var savedEmail = document.getElementById('email').value;
 
     /* ── GASへ送信（action=contact） ── */
+    var checkedType = form.querySelector('input[name="contactType"]:checked');
+
     var params = new URLSearchParams();
     params.append('action', 'contact');
-    params.append('source',     'platon');
+    params.append('source',      'platon');
+    params.append('contactType', checkedType ? checkedType.value : '');
     params.append('name',       savedName);
     params.append('kana',       document.getElementById('kana').value);
     params.append('email',      savedEmail);
