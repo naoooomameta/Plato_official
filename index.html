@@ -2825,17 +2825,10 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
           <span class="ferr" id="err-ctype">お問い合わせ区分を選択してください</span>
           <p class="fnote">お名前・ご連絡先は、ご入力される方（保護者様またはご本人）の情報をご記入ください。</p>
         </div>
-        <div class="fr2">
-          <div class="fg">
-            <label class="fl" for="name">お名前<span class="req">必須</span></label>
-            <input type="text" id="name" name="name" class="fi" placeholder="山田 太郎" required>
-            <span class="ferr" id="err-name">お名前を入力してください</span>
-          </div>
-          <div class="fg">
-            <label class="fl" for="kana">フリガナ<span class="req">必須</span></label>
-            <input type="text" id="kana" name="kana" class="fi" placeholder="ヤマダ タロウ" required>
-            <span class="ferr" id="err-kana">フリガナを入力してください</span>
-          </div>
+        <div class="fg">
+          <label class="fl" for="name">お名前<span class="req">必須</span></label>
+          <input type="text" id="name" name="name" class="fi" placeholder="山田 太郎" required>
+          <span class="ferr" id="err-name">お名前を入力してください</span>
         </div>
         <div class="fg">
           <label class="fl" for="email">メールアドレス<span class="req">必須</span></label>
@@ -3088,7 +3081,6 @@ function switchTab(tabId, btn) {
 
     var fields = [
       { id: 'name',  check: function(v){ return v.trim() !== ''; } },
-      { id: 'kana',  check: function(v){ return v.trim() !== ''; } },
       { id: 'email', check: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } },
       { id: 'tel',   check: function(v){ return v.trim() !== ''; } }
     ];
@@ -3137,7 +3129,6 @@ function switchTab(tabId, btn) {
     params.append('source',      'platon');
     params.append('contactType', checkedType ? checkedType.value : '');
     params.append('name',       savedName);
-    params.append('kana',       document.getElementById('kana').value);
     params.append('email',      savedEmail);
     params.append('tel',        document.getElementById('tel').value);
     params.append('grade',      document.getElementById('grade').value);
