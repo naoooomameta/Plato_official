@@ -82,7 +82,9 @@ const items = [...xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/g)]
     const d = new Date(tag(meta, 'pubDate'));
     if (!title || !url || Number.isNaN(d.getTime())) return null;
     const f = fmtJst(d);
-    const excerpt = Array.from(tag(x, 'description').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()).slice(0, EXCERPT_LEN).join('');
+    // 本文末尾に付く note 側のリンク文言「続きをみる」は抜粋から除く
+    const body = tag(x, 'description').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').replace(/\s*続きをみる\s*$/, '').trim();
+    const excerpt = Array.from(body).slice(0, EXCERPT_LEN).join('');
     return { title, url, date: f.iso, dateLabel: f.label, publishedAt: d.toISOString(), thumbnail: thumbnail(meta), excerpt };
   })
   .filter(Boolean)
