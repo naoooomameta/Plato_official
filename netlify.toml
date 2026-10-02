@@ -1,3 +1,9 @@
 [build]
   publish = "."
   command = ""
+
+# note更新情報（data/note-feed.json）は GitHub Actions が随時更新するため、常に最新を配信する
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

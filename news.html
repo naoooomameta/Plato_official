@@ -152,6 +152,10 @@ nav{background:var(--course);}
   background:var(--pale);color:var(--red);
   border:1px solid var(--red);
 }
+/* note 最新記事（data/note-feed.json から自動表示）。note のブランドカラー #41C9B4 はバッジにのみ使用 */
+.news-card[hidden]{display:none;}
+.news-card-tag.note{background:#fff;color:#41C9B4;border-color:#41C9B4;font-weight:800;letter-spacing:-.01em;font-size:.78rem;}
+.news-card-tag.note-new{background:#41C9B4;color:#fff;border-color:#41C9B4;}
 .news-card-title{
   font-family:"Kaisei Opti",serif;
   font-size:1.1rem;font-weight:700;color:var(--txt);
@@ -247,8 +251,23 @@ footer a:hover{color:#e8b0a0;}
 <!-- NEWS INDEX -->
 <section style="background:#fff;">
   <div class="news-index">
-    <p class="news-count reveal">3件のお知らせ</p>
+    <p class="news-count reveal" id="newsCount">3件のお知らせ</p>
     <div class="news-list">
+
+      <!-- note 最新記事（data/note-feed.json から自動表示。GitHub Actions が6時間ごとに更新。手で編集・削除しない） -->
+      <a id="noteNewsItem" href="https://note.com/platon_online" target="_blank" rel="noopener" class="news-card reveal on" hidden>
+        <div class="news-card-meta">
+          <span class="news-card-date" id="noteNewsDate"></span>
+          <span class="news-card-tag note">note</span>
+          <span class="news-card-tag note-new" id="noteNewsNew" hidden>新着記事</span>
+        </div>
+        <p class="news-card-title" id="noteNewsTitle"></p>
+        <p class="news-card-desc" id="noteNewsDesc" hidden></p>
+        <span class="news-card-link">
+          noteで記事を読む
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+      </a>
 
       <a href="news-otameshi/index.html" class="news-card reveal d1">
         <div class="news-card-meta">
@@ -324,6 +343,38 @@ footer a:hover{color:#e8b0a0;}
   <p style="margin-top:1rem;font-size:.72rem;opacity:.6;">&copy; 2025 Plato. All rights reserved.</p>
 </footer>
 
+<script>
+// note 更新情報（data/note-feed.json を GitHub Actions が定期更新。取得できない時は非表示のまま）
+(function(){
+  var row=document.getElementById('noteNewsItem');
+  if(!row)return;
+  fetch('data/note-feed.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d||!d.items||!d.items.length)return;
+    var it=d.items[0];
+    if(!it.url||!it.title||!/^https:\/\/note\.com\//.test(it.url))return;
+    var dl=it.dateLabel||'';
+    row.href=it.url;
+    document.getElementById('noteNewsDate').textContent=dl;
+    document.getElementById('noteNewsTitle').textContent='noteを更新しました「'+it.title+'」';
+    var desc=document.getElementById('noteNewsDesc');
+    if(it.excerpt){desc.textContent=it.excerpt+'…';desc.hidden=false}
+    // 公開から30日以内なら「新着記事」バッジを付ける
+    if(it.date){var pd=new Date(it.date+'T00:00:00+09:00');if(!isNaN(pd.getTime())&&(Date.now()-pd.getTime())<31*86400000)document.getElementById('noteNewsNew').hidden=false}
+    // 既存のお知らせと日付順（新しい順）にマージ。note記事の方が古い時に先頭へ来ないようにする
+    var list=row.parentElement,rows=list.querySelectorAll('.news-card'),before=null,key=dl.replace(/[^\d.]/g,'');
+    for(var i=0;i<rows.length;i++){
+      if(rows[i]===row)continue;
+      var dd=rows[i].querySelector('.news-card-date');
+      if(dd&&dd.textContent.trim().replace(/[^\d.]/g,'')<=key){before=rows[i];break}
+    }
+    list.insertBefore(row,before);
+    row.hidden=false;
+    // 件数表示を +1
+    var c=document.getElementById('newsCount');
+    if(c){var m=c.textContent.match(/\d+/);if(m)c.textContent=c.textContent.replace(m[0],String(Number(m[0])+1))}
+  }).catch(function(){});
+})();
+</script>
 <script>
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });

@@ -1661,6 +1661,50 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   .news-card-title{font-size:1rem;}
 }
 
+/* ===== note 最新記事カード（お知らせ欄。data/note-feed.json から自動表示） ===== */
+/* note のブランドカラー（#41C9B4）はロゴ・バッジ・左ボーダーにのみ使用 */
+.note-card{
+  max-width:1080px;margin:14px auto 0;
+  display:flex;align-items:stretch;
+  background:#fff;
+  border-left:4px solid #41C9B4;
+  border-radius:0 12px 12px 0;
+  box-shadow:0 4px 24px rgba(111,45,67,.12);
+  overflow:hidden;
+  color:inherit;text-decoration:none;cursor:pointer;
+  transition:box-shadow .25s,transform .25s;
+}
+.note-card[hidden]{display:none;}
+.note-card:hover{box-shadow:0 8px 36px rgba(111,45,67,.2);transform:translateY(-2px);}
+.note-card-thumb{flex:0 0 236px;background:var(--pale);display:flex;align-items:center;justify-content:center;}
+.note-card-thumb[hidden]{display:none;}
+.note-card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.note-card-body{flex:1;min-width:0;padding:18px 28px 18px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px;}
+.note-card-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.note-logo{display:inline-flex;align-items:center;font-weight:800;font-size:24px;letter-spacing:-.02em;color:#41C9B4;line-height:1;}
+.note-card-label{background:#41C9B4;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.12em;padding:3px 12px;border-radius:50px;}
+.note-card-date{font-size:.8rem;font-weight:600;color:var(--txt3);margin-left:auto;}
+.note-card-title{
+  font-size:1.1rem;font-weight:700;line-height:1.45;color:var(--dark);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.note-card-link{
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  color:var(--red);font-size:.88rem;font-weight:700;
+  border-bottom:1.5px solid var(--red);padding-bottom:1px;
+  transition:color .2s,border-color .2s;
+}
+.note-card:hover .note-card-link{color:var(--dark);border-bottom-color:var(--dark);}
+@media(max-width:640px){
+  .note-card{flex-direction:column;}
+  .note-card-thumb{flex:none;width:100%;max-height:170px;}
+  .note-card-thumb img{aspect-ratio:1.91/1;max-height:170px;}
+  .note-card-body{padding:14px 16px 16px;gap:7px;}
+  .note-logo{font-size:21px;}
+  .note-card-date{margin-left:0;flex-basis:100%;}
+  .note-card-title{font-size:1rem;}
+}
+
 /* ===== MEDIA COVERAGE — 新R25 掲載（帯 + 記事カード） ===== */
 /* 帯（ファーストビュー直下の控えめな1行） */
 .media-band{background:#fff;border-bottom:1px solid var(--bdr);padding:14px 4vw;}
@@ -1825,6 +1869,19 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         詳しく読む
         <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </span>
+    </div>
+  </a>
+  <!-- note 最新記事（data/note-feed.json から自動表示。GitHub Actions が6時間ごとに更新。手で編集しない） -->
+  <a id="noteUpdate" class="note-card" href="https://note.com/platon_online" target="_blank" rel="noopener" hidden>
+    <div class="note-card-thumb" id="noteUpdateThumb" hidden><img id="noteUpdateThumbImg" src="" alt="" loading="lazy" width="800" height="419"></div>
+    <div class="note-card-body">
+      <div class="note-card-head">
+        <span class="note-logo" aria-label="note">note</span>
+        <span class="note-card-label">新着記事</span>
+        <time class="note-card-date" id="noteUpdateDate"></time>
+      </div>
+      <span class="note-card-title" id="noteUpdateTitle"></span>
+      <span class="note-card-link">noteで記事を読む →</span>
     </div>
   </a>
 </div>
@@ -3027,6 +3084,30 @@ function switchTab(tabId, btn) {
       setMenu(false);
     }
   });
+})();
+</script>
+<script>
+// note 更新情報（data/note-feed.json を GitHub Actions が定期更新。取得できない時はカード非表示のまま）
+(function(){
+  var top=document.getElementById('noteUpdate');
+  if(!top)return;
+  fetch('data/note-feed.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d||!d.items||!d.items.length)return;
+    var it=d.items[0];
+    if(!it.url||!it.title||!/^https:\/\/note\.com\//.test(it.url))return;
+    var chars=Array.from(it.title),title=chars.length>40?chars.slice(0,40).join('')+'…':it.title; // 絵文字を途中で切らない
+    // トップのカードは公開から30日以内の記事だけ表示（古い記事を「新着」と見せない。お知らせ一覧 news.html の行は残る）
+    var fresh=false;
+    if(it.date){var pd=new Date(it.date+'T00:00:00+09:00');fresh=!isNaN(pd.getTime())&&(Date.now()-pd.getTime())<31*86400000}
+    if(!fresh)return;
+    top.href=it.url;
+    var t=document.getElementById('noteUpdateDate');t.textContent=(it.dateLabel||'')+' 公開';if(it.date)t.setAttribute('datetime',it.date);
+    document.getElementById('noteUpdateTitle').textContent=title;
+    // アイキャッチ画像（note側のURL）。無い・読めない時は画像枠ごと非表示
+    var th=document.getElementById('noteUpdateThumb'),im=document.getElementById('noteUpdateThumbImg');
+    if(it.thumbnail&&/^https:\/\//.test(it.thumbnail)){im.onerror=function(){th.hidden=true};im.src=it.thumbnail;th.hidden=false}
+    top.hidden=false;
+  }).catch(function(){});
 })();
 </script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
