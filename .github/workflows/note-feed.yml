@@ -1,0 +1,66 @@
+name: Update note feed
+
+# note.com（https://note.com/platon_online）の最新記事を定期取得し、data/note-feed.json を更新する。
+# トップページ（index.html）のお知らせカードと、お知らせ一覧（news.html）はこのJSONを読んで表示される。
+# 手動で今すぐ更新したい時は Actions タブ → "Update note feed" → Run workflow。
+# ガリレオ公式サイト（naoooomameta/galileo）の note-feed.yml と同じ仕組み。
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'   # 6時間ごと（UTC）
+  workflow_dispatch:
+  push:                      # サイトを更新（mainへマージ）するたびにも1回確認する
+    branches: [main]         # ※このワークフロー自身の push（GITHUB_TOKEN）は再起動の対象外なのでループしない
+
+permissions:
+  contents: write
+  actions: write   # 更新後に GitHub Pages のデプロイ（static.yml）を起動するため
+
+concurrency:
+  group: note-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      # ★ note のユーザーID（https://note.com/XXXX の XXXX 部分）
+      NOTE_USER: "platon_online"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch note RSS
+        run: node scripts/fetch-note-feed.mjs
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          if git diff --quiet -- data/note-feed.json; then
+            echo "note-feed.json に変更なし"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/note-feed.json
+          git commit -m "note更新情報を自動更新"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # GITHUB_TOKEN による push は他のワークフローを起動しないため、
+      # GitHub Pages で公開している場合に向けてデプロイを明示的に起動する。
+      # （Netlify で公開している場合は push 自体で自動デプロイされるので、この手順は無害）
+      - name: Trigger Pages deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run static.yml --ref main || echo "Pages デプロイの起動をスキップしました"
