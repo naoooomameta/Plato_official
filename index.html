@@ -2454,7 +2454,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       </div>
 
 
-      <div class="scard2 reveal d4">
+      <div class="scard2 has-profile reveal d4" data-profile="yonaha">
         <div class="savatar2">
           <picture><source type="image/webp" srcset="img/img:staff-yonaha.webp"><img src="img/img:staff-yonaha.jpg" alt="與那覇" loading="lazy" decoding="async"></picture>
         </div>
@@ -2462,6 +2462,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="sname2">與那覇（よなは）</div>
         <div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div>
         <p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p>
+        <button type="button" class="sprofile-btn" data-profile="yonaha">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
       </div>
 
     </div>
@@ -2509,7 +2510,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <div class="scard2 reveal d1"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-nagata.webp"><img src="img/img:staff-nagata.png" alt="永田" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">永田（ながた）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">一緒に悩んで考えて、できることを増やしていけるように頑張ります！</p></div>
       <div class="scard2 reveal d2"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-takizawa.webp"><img src="img/img:staff-takizawa.png" alt="瀧澤" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">瀧澤（たきざわ）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">ひとり一人にあった勉強の仕方を重視し、自ら進められる学習サポートを心掛けます。</p></div>
       <div class="scard2 reveal d3"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-hayano.webp"><img src="img/img:staff-hayano.jpg" alt="早野" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">早野（はやの）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">一人一人の理解に寄り添い、成長につながる学習支援を行います！</p></div>
-      <div class="scard2 reveal d5"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-yonaha.webp"><img src="img/img:staff-yonaha.jpg" alt="與那覇" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">與那覇（よなは）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p></div>
+      <div class="scard2 has-profile reveal d5" data-profile="yonaha"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-yonaha.webp"><img src="img/img:staff-yonaha.jpg" alt="與那覇" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">與那覇（よなは）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p><button type="button" class="sprofile-btn" data-profile="yonaha">詳しいプロフィールを見る <span aria-hidden="true">›</span></button></div>
     </div>
   </div>
 
@@ -2700,10 +2701,10 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 </section>
 
 <!-- ===== Profile modal（代表プロフィール） ===== -->
-<div id="profileModal" class="profile-modal" hidden role="dialog" aria-modal="true" aria-label="代表 佐野翼 プロフィール">
+<div id="profileModal" class="profile-modal" hidden role="dialog" aria-modal="true" aria-label="講師プロフィール">
   <button type="button" class="survey-modal-close" aria-label="閉じる">&times;</button>
   <div class="profile-modal-content">
-    <picture><source type="image/webp" srcset="img/sano-profile.webp"><img src="img/sano-profile.jpg" alt="プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ" loading="lazy" decoding="async" width="935" height="1683"></picture>
+    <picture><source id="profileModalWebp" type="image/webp" srcset=""><img id="profileModalImg" src="" alt="" decoding="async" width="935" height="1683"></picture>
   </div>
 </div>
 
@@ -3164,10 +3165,20 @@ function switchTab(tabId, btn) {
   if(!modal) return;
   const closeBtn = modal.querySelector('.survey-modal-close');
   let lastFocus = null;
-  const open = () => { lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
+  const webp = document.getElementById('profileModalWebp');
+  const img = document.getElementById('profileModalImg');
+  const PROFILES = {
+    sano: { src: 'img/sano-profile', label: '代表 佐野翼 プロフィール', alt: 'プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ' },
+    yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' }
+  };
+  const open = (key) => {
+    const p = PROFILES[key]; if(!p) return;
+    webp.srcset = p.src + '.webp'; img.src = p.src + '.jpg'; img.alt = p.alt;
+    modal.setAttribute('aria-label', p.label);
+    lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
   const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
   document.querySelectorAll('.scard2.has-profile').forEach(card => {
-    card.addEventListener('click', open);
+    card.addEventListener('click', () => open(card.dataset.profile));
   });
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', e => { if(!e.target.closest('img')) close(); });
