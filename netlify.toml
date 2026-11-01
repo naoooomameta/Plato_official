@@ -7,3 +7,9 @@
   for = "/data/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# 講師プロフィール画像：ブラウザに1週間キャッシュさせ、2回目以降の表示を即時にする
+[[headers]]
+  for = "/img/*-profile.*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"

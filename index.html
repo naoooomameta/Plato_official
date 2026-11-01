@@ -1074,7 +1074,14 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 }
 .profile-modal[hidden]{display:none;}
 .profile-modal .survey-modal-close{position:fixed;}
-.profile-modal-content{max-width:min(100%,800px);margin:0 auto;}
+.profile-modal-content{max-width:min(100%,800px);margin:0 auto;position:relative;}
+.profile-modal-content.loading::before{
+  content:"";position:absolute;top:min(30vh,240px);left:50%;width:40px;height:40px;margin-left:-20px;
+  border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;
+  animation:profileSpin .8s linear infinite;
+}
+.profile-modal-content.loading img{opacity:0;}
+@keyframes profileSpin{to{transform:rotate(360deg);}}
 .profile-modal-content img{
   display:block;width:100%;height:auto;border-radius:10px;background:#fff;
   box-shadow:0 10px 40px rgba(0,0,0,.4);
@@ -2704,7 +2711,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 <div id="profileModal" class="profile-modal" hidden role="dialog" aria-modal="true" aria-label="講師プロフィール">
   <button type="button" class="survey-modal-close" aria-label="閉じる">&times;</button>
   <div class="profile-modal-content">
-    <picture><source id="profileModalWebp" type="image/webp" srcset=""><img id="profileModalImg" src="" alt="" decoding="async" width="935" height="1683"></picture>
+    <img id="profileModalImg" alt="" decoding="async" width="935" height="1683">
   </div>
 </div>
 
@@ -3165,20 +3172,47 @@ function switchTab(tabId, btn) {
   if(!modal) return;
   const closeBtn = modal.querySelector('.survey-modal-close');
   let lastFocus = null;
-  const webp = document.getElementById('profileModalWebp');
   const img = document.getElementById('profileModalImg');
+  const box = modal.querySelector('.profile-modal-content');
   const PROFILES = {
     sano: { src: 'img/sano-profile', label: '代表 佐野翼 プロフィール', alt: 'プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ' },
     yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' }
   };
+  const cache = {};
+  // WebP対応判定（未対応ブラウザはJPGを使う）
+  let ext = '.webp';
+  const probe = new Image();
+  probe.onerror = () => { ext = '.jpg'; Object.keys(cache).forEach(k => { cache[k].src = PROFILES[k].src + ext; }); };
+  probe.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
+  // 先読み：カードが画面に近づいた時・触れた時に画像を読み込んでおく
+  const preload = (key) => {
+    const p = PROFILES[key]; if(!p || cache[key]) return;
+    const im = new Image(); im.decoding = 'async'; im.src = p.src + ext;
+    cache[key] = im;
+  };
   const open = (key) => {
     const p = PROFILES[key]; if(!p) return;
-    webp.srcset = p.src + '.webp'; img.src = p.src + '.jpg'; img.alt = p.alt;
+    preload(key);
+    const url = cache[key].src;
+    if(img.src !== url){
+      box.classList.add('loading');
+      img.onload = img.onerror = () => box.classList.remove('loading');
+      img.src = url;
+    }
+    if(img.complete && img.naturalWidth) box.classList.remove('loading');
+    img.alt = p.alt;
     modal.setAttribute('aria-label', p.label);
     lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
   const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
-  document.querySelectorAll('.scard2.has-profile').forEach(card => {
-    card.addEventListener('click', () => open(card.dataset.profile));
+  const cards = document.querySelectorAll('.scard2.has-profile');
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    entries.forEach(en => { if(en.isIntersecting){ preload(en.target.dataset.profile); io.unobserve(en.target); } });
+  }, { rootMargin: '600px 0px' }) : null;
+  cards.forEach(card => {
+    const key = card.dataset.profile;
+    card.addEventListener('click', () => open(key));
+    ['pointerenter','touchstart','focusin'].forEach(ev => card.addEventListener(ev, () => preload(key), { passive: true, once: true }));
+    if(io) io.observe(card);
   });
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', e => { if(!e.target.closest('img')) close(); });
