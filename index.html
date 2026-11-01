@@ -1058,6 +1058,28 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   letter-spacing:.04em;
 }
 
+/* 代表プロフィール（詳細） */
+.scard2.has-profile{cursor:pointer;}
+.sprofile-btn{
+  margin-top:1rem;display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--red);color:#fff;border:none;border-radius:50px;
+  padding:.55rem 1.2rem;font-size:.78rem;font-weight:700;letter-spacing:.05em;
+  cursor:pointer;font-family:inherit;transition:opacity .2s,transform .2s;
+}
+.sprofile-btn:hover{opacity:.88;transform:translateY(-1px);}
+.profile-modal{
+  position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  padding:3.5rem 1rem 2rem;
+}
+.profile-modal[hidden]{display:none;}
+.profile-modal .survey-modal-close{position:fixed;}
+.profile-modal-content{max-width:min(100%,800px);margin:0 auto;}
+.profile-modal-content img{
+  display:block;width:100%;height:auto;border-radius:10px;background:#fff;
+  box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
+
 /* ===== INSTAGRAM ===== */
 #instagram{background:var(--light);}
 .ig-grid{
@@ -2286,7 +2308,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <div class="staff-grid wide">
 
       <!-- 代表・塾長 -->
-      <div class="scard2 leader-card reveal d1">
+      <div class="scard2 leader-card has-profile reveal d1" data-profile="sano">
         <div class="savatar2">
           <picture><source type="image/webp" srcset="img/img:staff-sano-illust.webp"><img src="img/img:staff-sano-illust.jpg" alt="佐野" loading="lazy" decoding="async"></picture>
         </div>
@@ -2294,6 +2316,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="sname2">佐野 翼（さの つばさ）</div>
         <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
         <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度はオンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人の合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
+        <button type="button" class="sprofile-btn" data-profile="sano">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
       </div>
 
       <div class="scard2 reveal d2">
@@ -2447,12 +2470,13 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <!-- LEADER -->
   <div class="staff-panel" id="tab-leader">
     <div class="staff-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));max-width:640px;">
-      <div class="scard2 leader-card reveal d1">
+      <div class="scard2 leader-card has-profile reveal d1" data-profile="sano">
         <div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-sano-illust.webp"><img src="img/img:staff-sano-illust.jpg" alt="佐野" loading="lazy" decoding="async"></picture></div>
         <span class="srole2 r-leader">代表・塾長</span>
         <div class="sname2">佐野 翼（さの つばさ）</div>
         <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
         <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度オンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人に合わせた合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
+        <button type="button" class="sprofile-btn" data-profile="sano">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
       </div>
       <div class="scard2 reveal d2">
         <div class="savatar2"><picture><source type="image/webp" srcset="img/plato-logochibi.webp"><img src="img/plato-logochibi.png" alt="担当塾長" loading="lazy" decoding="async" style="object-fit:contain;padding:12px;"></picture></div>
@@ -2674,6 +2698,14 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <span class="inline-cta-btn"><i data-lucide="message-circle"></i>無料相談を申し込む →</span>
   </a>
 </section>
+
+<!-- ===== Profile modal（代表プロフィール） ===== -->
+<div id="profileModal" class="profile-modal" hidden role="dialog" aria-modal="true" aria-label="代表 佐野翼 プロフィール">
+  <button type="button" class="survey-modal-close" aria-label="閉じる">&times;</button>
+  <div class="profile-modal-content">
+    <picture><source type="image/webp" srcset="img/sano-profile.webp"><img src="img/sano-profile.jpg" alt="プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ" loading="lazy" decoding="async" width="935" height="1683"></picture>
+  </div>
+</div>
 
 <!-- ===== Survey modal ===== -->
 <div id="surveyModal" class="survey-modal" hidden role="dialog" aria-modal="true" aria-labelledby="surveyModalCaption">
@@ -3126,6 +3158,22 @@ function switchTab(tabId, btn) {
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>lucide.createIcons();</script>
 
+<script>
+(function(){
+  const modal = document.getElementById('profileModal');
+  if(!modal) return;
+  const closeBtn = modal.querySelector('.survey-modal-close');
+  let lastFocus = null;
+  const open = () => { lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
+  document.querySelectorAll('.scard2.has-profile').forEach(card => {
+    card.addEventListener('click', open);
+  });
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', e => { if(!e.target.closest('img')) close(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && !modal.hidden) close(); });
+})();
+</script>
 <script>
 (function(){
   const modal = document.getElementById('surveyModal');
