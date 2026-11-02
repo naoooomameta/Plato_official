@@ -1149,6 +1149,72 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   .book-buy-btn{width:100%;justify-content:center;}
 }
 
+/* 保護者様アンケート：横スクロール＋一覧モーダル */
+.survey-block-note{font-size:.72rem;color:var(--txt3);margin-top:.3rem;}
+.sp-only{display:none;}
+.survey-rail-wrap{position:relative;}
+.survey-rail{
+  display:grid;grid-auto-flow:column;grid-auto-columns:200px;gap:1rem;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 4px;
+  padding:4px 4px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  overscroll-behavior-x:contain;
+}
+.survey-rail .survey-card{scroll-snap-align:start;}
+.survey-rail:focus-visible{outline:2px solid var(--red);outline-offset:4px;border-radius:12px;}
+.survey-rail-nav{
+  position:absolute;top:38%;transform:translateY(-50%);z-index:2;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--bdr);
+  background:#fff;color:var(--red);font-size:1.7rem;line-height:1;cursor:pointer;
+  box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;padding-bottom:3px;
+}
+.survey-rail-nav.prev{left:-18px;}
+.survey-rail-nav.next{right:-18px;}
+.survey-rail-nav[hidden]{display:none;}
+.survey-rail-foot{display:flex;flex-direction:column;align-items:center;gap:.7rem;margin-top:.6rem;}
+.survey-rail-hint{display:none;font-size:.72rem;color:var(--txt3);letter-spacing:.05em;}
+.survey-all-btn{
+  font:inherit;font-size:.86rem;font-weight:700;color:var(--red);background:#fff;
+  border:2px solid var(--red);border-radius:50px;padding:.75rem 1.6rem;cursor:pointer;transition:all .2s;
+}
+.survey-all-btn:hover{background:var(--red);color:#fff;}
+.survey-all-modal{position:fixed;inset:0;z-index:9998;background:rgba(30,8,14,.6);display:flex;align-items:flex-end;justify-content:center;}
+.survey-all-modal[hidden]{display:none;}
+.survey-all-panel{
+  background:var(--cream);width:100%;max-width:1100px;height:92vh;height:92dvh;
+  border-radius:20px 20px 0 0;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 -10px 40px rgba(0,0,0,.25);
+}
+@media(min-width:769px){
+  .survey-all-modal{align-items:center;padding:3vh 2rem;}
+  .survey-all-panel{height:94vh;border-radius:20px;}
+}
+.survey-all-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.2rem 1.3rem .8rem;background:#fff;border-bottom:1px solid var(--bdr);}
+.survey-all-ttl{font-family:"Kaisei Opti",serif;font-size:1.15rem;font-weight:700;color:var(--txt);}
+.survey-all-sub{font-size:.72rem;color:var(--txt2);margin-top:.2rem;line-height:1.6;}
+.survey-all-close{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:none;background:var(--pale);color:var(--red);font-size:1.5rem;cursor:pointer;line-height:1;}
+.survey-filter{display:flex;gap:.5rem;padding:.8rem 1.3rem;overflow-x:auto;background:#fff;border-bottom:1px solid var(--bdr);scrollbar-width:none;}
+.survey-filter::-webkit-scrollbar{display:none;}
+.survey-filter button{
+  flex:0 0 auto;font:inherit;font-size:.78rem;font-weight:700;color:var(--red);
+  background:#fff;border:1px solid var(--bdr);border-radius:50px;padding:.45rem 1rem;cursor:pointer;
+}
+.survey-filter button[aria-selected="true"]{background:var(--red);border-color:var(--red);color:#fff;}
+.survey-filter button span{font-weight:500;opacity:.75;margin-left:.25rem;}
+.survey-all-grid{
+  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;
+  padding:1.1rem 1.3rem 2rem;align-content:start;grid-auto-rows:max-content;
+}
+.survey-all-grid .survey-card{min-height:max-content;}
+.survey-all-grid .survey-card[hidden]{display:none;}
+@media(max-width:560px){
+  .sp-only{display:inline;}
+  .survey-rail-hint{display:block;}
+  .survey-rail{grid-auto-columns:46%;gap:.7rem;}
+  .survey-rail-nav{display:none;}
+  .survey-all-grid{grid-template-columns:repeat(2,1fr);gap:.65rem;padding:.9rem .9rem 2rem;}
+}
+
 /* ===== INSTAGRAM ===== */
 #instagram{background:var(--light);}
 .ig-grid{
@@ -2664,90 +2730,99 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <div class="survey-block reveal">
     <div class="survey-block-head">
       <h3 class="survey-block-ttl">保護者様<span class="ac">アンケート</span></h3>
-      <p class="survey-block-sub">実際にいただいた保護者様アンケートの一部です。画像をクリックすると拡大表示できます。<br>※生徒・保護者様の許可を得て掲載しています。</p>
+      <p class="survey-block-sub">実際にいただいた保護者様アンケート（全20件）。<br class="sp-only">タップすると拡大して読めます。</p>
+      <p class="survey-block-note">※生徒・保護者様の許可を得て掲載しています。</p>
     </div>
 
-    <div class="survey-grid">
-      <button type="button" class="survey-card reveal" data-src="img/voices/hk-hitotsubashi.jpg" data-univ="一橋大学 商学部" data-name="H.Kさんの保護者様">
+    <div class="survey-rail-wrap">
+      <button type="button" class="survey-rail-nav prev" aria-label="前のアンケートへ" hidden>&#8249;</button>
+      <div class="survey-rail" id="surveyRail" tabindex="0" aria-label="保護者様アンケート一覧（横にスクロールできます）">
+      <button type="button" class="survey-card" data-src="img/voices/hk-hitotsubashi.jpg" data-univ="一橋大学 商学部" data-name="H.Kさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/hk-hitotsubashi.webp"><img src="img/voices/hk-hitotsubashi.jpg" alt="H.Kさんの保護者様アンケート（一橋大学 商学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">一橋大学 商学部</span><span class="survey-name">H.Kさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ms-hokkaido.jpg" data-univ="北海道大学 法学部" data-name="M.Sさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ms-hokkaido.jpg" data-univ="北海道大学 法学部" data-name="M.Sさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ms-hokkaido.webp"><img src="img/voices/ms-hokkaido.jpg" alt="M.Sさんの保護者様アンケート（北海道大学 法学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">北海道大学 法学部</span><span class="survey-name">M.Sさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/tf-tsukuba.jpg" data-univ="筑波大学 情報学群" data-name="T.Fさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/tf-tsukuba.jpg" data-univ="筑波大学 情報学群" data-name="T.Fさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/tf-tsukuba.webp"><img src="img/voices/tf-tsukuba.jpg" alt="T.Fさんの保護者様アンケート（筑波大学 情報学群 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">筑波大学 情報学群</span><span class="survey-name">T.Fさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ht-tohoku.jpg" data-univ="東北大学 経済学部" data-name="H.Tさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ht-tohoku.jpg" data-univ="東北大学 経済学部" data-name="H.Tさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ht-tohoku.webp"><img src="img/voices/ht-tohoku.jpg" alt="H.Tさんの保護者様アンケート（東北大学 経済学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">東北大学 経済学部</span><span class="survey-name">H.Tさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/yn-osaka.jpg" data-univ="大阪大学 外国語学部" data-name="Y.Nさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/yn-osaka.jpg" data-univ="大阪大学 外国語学部" data-name="Y.Nさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/yn-osaka.webp"><img src="img/voices/yn-osaka.jpg" alt="Y.Nさんの保護者様アンケート（大阪大学 外国語学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">大阪大学 外国語学部</span><span class="survey-name">Y.Nさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/km-kobe.jpg" data-univ="神戸大学 文学部" data-name="K.Mさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/km-kobe.jpg" data-univ="神戸大学 文学部" data-name="K.Mさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/km-kobe.webp"><img src="img/voices/km-kobe.jpg" alt="K.Mさんの保護者様アンケート（神戸大学 文学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">神戸大学 文学部</span><span class="survey-name">K.Mさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ym-hiroshima.jpg" data-univ="広島大学 教育学部" data-name="Y.Mさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ym-hiroshima.jpg" data-univ="広島大学 教育学部" data-name="Y.Mさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ym-hiroshima.webp"><img src="img/voices/ym-hiroshima.jpg" alt="Y.Mさんの保護者様アンケート（広島大学 教育学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">広島大学 教育学部</span><span class="survey-name">Y.Mさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/sn-niigata.jpg" data-univ="新潟大学 法学部" data-name="S.Nさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/sn-niigata.jpg" data-univ="新潟大学 法学部" data-name="S.Nさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/sn-niigata.webp"><img src="img/voices/sn-niigata.jpg" alt="S.Nさんの保護者様アンケート（新潟大学 法学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">国公立</span><span class="survey-univ">新潟大学 法学部</span><span class="survey-name">S.Nさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ak-waseda.jpg" data-univ="早稲田大学 法学部" data-name="A.Kさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ak-waseda.jpg" data-univ="早稲田大学 法学部" data-name="A.Kさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ak-waseda.webp"><img src="img/voices/ak-waseda.jpg" alt="A.Kさんの保護者様アンケート（早稲田大学 法学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">早慶上智</span><span class="survey-univ">早稲田大学 法学部</span><span class="survey-name">A.Kさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ro-waseda.jpg" data-univ="早稲田大学 商学部" data-name="R.Oさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ro-waseda.jpg" data-univ="早稲田大学 商学部" data-name="R.Oさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ro-waseda.webp"><img src="img/voices/ro-waseda.jpg" alt="R.Oさんの保護者様アンケート（早稲田大学 商学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">早慶上智</span><span class="survey-univ">早稲田大学 商学部</span><span class="survey-name">R.Oさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/si-keio.jpg" data-univ="慶應義塾大学 経済学部" data-name="S.Iさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/si-keio.jpg" data-univ="慶應義塾大学 経済学部" data-name="S.Iさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/si-keio.webp"><img src="img/voices/si-keio.jpg" alt="S.Iさんの保護者様アンケート（慶應義塾大学 経済学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">早慶上智</span><span class="survey-univ">慶應義塾大学 経済学部</span><span class="survey-name">S.Iさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/nw-keio.jpg" data-univ="慶應義塾大学 文学部" data-name="N.Wさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/nw-keio.jpg" data-univ="慶應義塾大学 文学部" data-name="N.Wさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/nw-keio.webp"><img src="img/voices/nw-keio.jpg" alt="N.Wさんの保護者様アンケート（慶應義塾大学 文学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">早慶上智</span><span class="survey-univ">慶應義塾大学 文学部</span><span class="survey-name">N.Wさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/cf-sophia.jpg" data-univ="上智大学 総合人間科学部" data-name="C.Fさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/cf-sophia.jpg" data-univ="上智大学 総合人間科学部" data-name="C.Fさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/cf-sophia.webp"><img src="img/voices/cf-sophia.jpg" alt="C.Fさんの保護者様アンケート（上智大学 総合人間科学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">早慶上智</span><span class="survey-univ">上智大学 総合人間科学部</span><span class="survey-name">C.Fさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/th-meiji.jpg" data-univ="明治大学 政治経済学部" data-name="T.Hさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/th-meiji.jpg" data-univ="明治大学 政治経済学部" data-name="T.Hさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/th-meiji.webp"><img src="img/voices/th-meiji.jpg" alt="T.Hさんの保護者様アンケート（明治大学 政治経済学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">MARCH</span><span class="survey-univ">明治大学 政治経済学部</span><span class="survey-name">T.Hさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/ky-aoyama.jpg" data-univ="青山学院大学 国際政治経済学部" data-name="K.Yさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/ky-aoyama.jpg" data-univ="青山学院大学 国際政治経済学部" data-name="K.Yさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/ky-aoyama.webp"><img src="img/voices/ky-aoyama.jpg" alt="K.Yさんの保護者様アンケート（青山学院大学 国際政治経済学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">MARCH</span><span class="survey-univ">青山学院大学 国際政治経済学部</span><span class="survey-name">K.Yさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/yn-rikkyo.jpg" data-univ="立教大学 経営学部" data-name="Y.Nさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/yn-rikkyo.jpg" data-univ="立教大学 経営学部" data-name="Y.Nさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/yn-rikkyo.webp"><img src="img/voices/yn-rikkyo.jpg" alt="Y.Nさんの保護者様アンケート（立教大学 経営学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">MARCH</span><span class="survey-univ">立教大学 経営学部</span><span class="survey-name">Y.Nさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/hs-chuo.jpg" data-univ="中央大学 法学部" data-name="H.Sさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/hs-chuo.jpg" data-univ="中央大学 法学部" data-name="H.Sさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/hs-chuo.webp"><img src="img/voices/hs-chuo.jpg" alt="H.Sさんの保護者様アンケート（中央大学 法学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">MARCH</span><span class="survey-univ">中央大学 法学部</span><span class="survey-name">H.Sさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/mn-doshisha.jpg" data-univ="同志社大学 文学部" data-name="M.Nさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/mn-doshisha.jpg" data-univ="同志社大学 文学部" data-name="M.Nさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/mn-doshisha.webp"><img src="img/voices/mn-doshisha.jpg" alt="M.Nさんの保護者様アンケート（同志社大学 文学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">関関同立</span><span class="survey-univ">同志社大学 文学部</span><span class="survey-name">M.Nさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/at-ritsumeikan.jpg" data-univ="立命館大学 国際関係学部" data-name="A.Tさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/at-ritsumeikan.jpg" data-univ="立命館大学 国際関係学部" data-name="A.Tさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/at-ritsumeikan.webp"><img src="img/voices/at-ritsumeikan.jpg" alt="A.Tさんの保護者様アンケート（立命館大学 国際関係学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">関関同立</span><span class="survey-univ">立命館大学 国際関係学部</span><span class="survey-name">A.Tさんの保護者様</span></div>
       </button>
-      <button type="button" class="survey-card reveal" data-src="img/voices/rk-kansai.jpg" data-univ="関西大学 経済学部" data-name="R.Kさんの保護者様">
+      <button type="button" class="survey-card" data-src="img/voices/rk-kansai.jpg" data-univ="関西大学 経済学部" data-name="R.Kさんの保護者様">
         <div class="survey-card-imgwrap"><picture><source type="image/webp" srcset="img/voices/rk-kansai.webp"><img src="img/voices/rk-kansai.jpg" alt="R.Kさんの保護者様アンケート（関西大学 経済学部 合格）" loading="lazy" decoding="async"></picture></div>
         <div class="survey-info"><span class="survey-tier">関関同立</span><span class="survey-univ">関西大学 経済学部</span><span class="survey-name">R.Kさんの保護者様</span></div>
       </button>
+      </div>
+      <button type="button" class="survey-rail-nav next" aria-label="次のアンケートへ">&#8250;</button>
+    </div>
+    <div class="survey-rail-foot">
+      <span class="survey-rail-hint" aria-hidden="true">← 横にスワイプして見る →</span>
+      <button type="button" class="survey-all-btn" id="surveyAllBtn">すべてのアンケートを一覧で見る（20件）</button>
     </div>
   </div>
 
@@ -2771,6 +2846,21 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   <button type="button" class="survey-modal-close" aria-label="閉じる">&times;</button>
   <div class="profile-modal-content">
     <img id="profileModalImg" alt="" decoding="async" width="935" height="1683">
+  </div>
+</div>
+
+<!-- ===== Survey list modal（保護者様アンケート一覧） ===== -->
+<div id="surveyAllModal" class="survey-all-modal" hidden role="dialog" aria-modal="true" aria-labelledby="surveyAllTtl">
+  <div class="survey-all-panel">
+    <div class="survey-all-head">
+      <div>
+        <div class="survey-all-ttl" id="surveyAllTtl">保護者様アンケート</div>
+        <div class="survey-all-sub">タップすると拡大して読めます。※生徒・保護者様の許可を得て掲載しています。</div>
+      </div>
+      <button type="button" class="survey-all-close" aria-label="閉じる">&times;</button>
+    </div>
+    <div class="survey-filter" role="tablist" aria-label="合格大学の区分で絞り込み"></div>
+    <div class="survey-all-grid"></div>
   </div>
 </div>
 
@@ -3368,6 +3458,72 @@ function switchTab(tabId, btn) {
 </script>
 <script>
 (function(){
+  const rail = document.getElementById('surveyRail');
+  if(!rail) return;
+  const wrap = rail.parentElement;
+  const prev = wrap.querySelector('.survey-rail-nav.prev');
+  const next = wrap.querySelector('.survey-rail-nav.next');
+  const step = () => { const c = rail.querySelector('.survey-card'); return c ? (c.getBoundingClientRect().width + 16) * 2 : 400; };
+  prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+  const sync = () => {
+    prev.hidden = rail.scrollLeft < 8;
+    next.hidden = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
+  };
+  rail.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+
+  // 一覧モーダル（区分で絞り込み）
+  const modal = document.getElementById('surveyAllModal');
+  const btn = document.getElementById('surveyAllBtn');
+  if(!modal || !btn) return;
+  const grid = modal.querySelector('.survey-all-grid');
+  const filter = modal.querySelector('.survey-filter');
+  const viewer = document.getElementById('surveyModal');
+  let built = false, lastFocus = null;
+  const build = () => {
+    const cards = Array.from(rail.querySelectorAll('.survey-card'));
+    const tiers = [];
+    cards.forEach(c => {
+      const clone = c.cloneNode(true);
+      const t = (clone.querySelector('.survey-tier') || {}).textContent || '';
+      clone.dataset.tier = t;
+      if(t && tiers.indexOf(t) < 0) tiers.push(t);
+      clone.querySelectorAll('img').forEach(im => im.loading = 'lazy');
+      grid.appendChild(clone);
+    });
+    const mk = (label, val, count) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.tier = val;
+      b.setAttribute('aria-selected', val === '' ? 'true' : 'false');
+      b.innerHTML = label + '<span>' + count + '</span>';
+      b.addEventListener('click', () => {
+        filter.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+        grid.querySelectorAll('.survey-card').forEach(c => { c.hidden = !!val && c.dataset.tier !== val; });
+        grid.scrollTop = 0;
+      });
+      filter.appendChild(b);
+    };
+    mk('すべて', '', cards.length);
+    tiers.forEach(t => mk(t, t, grid.querySelectorAll('.survey-card[data-tier="' + t + '"]').length));
+    built = true;
+  };
+  const open = () => {
+    if(!built) build();
+    lastFocus = document.activeElement;
+    modal.hidden = false; document.body.style.overflow = 'hidden';
+    modal.querySelector('.survey-all-close').focus();
+  };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
+  btn.addEventListener('click', open);
+  modal.querySelector('.survey-all-close').addEventListener('click', close);
+  modal.addEventListener('click', e => { if(e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && !modal.hidden && (!viewer || viewer.hidden)) close(); });
+})();
+</script>
+<script>
+(function(){
   const modal = document.getElementById('surveyModal');
   if(!modal) return;
   const img = document.getElementById('surveyModalImg');
@@ -3381,10 +3537,11 @@ function switchTab(tabId, btn) {
     document.body.style.overflow = 'hidden';
   };
   const open = (src, univ, name) => openImage(src, univ + '　' + name, name + 'アンケート（' + univ + ' 合格）');
-  const close = () => { modal.hidden = true; img.src = ''; document.body.style.overflow = ''; };
+  const close = () => { modal.hidden = true; img.src = ''; const list = document.getElementById('surveyAllModal'); document.body.style.overflow = (list && !list.hidden) ? 'hidden' : ''; };
   // 保護者アンケート画像
-  document.querySelectorAll('.survey-card').forEach(card => {
-    card.addEventListener('click', () => open(card.dataset.src, card.dataset.univ, card.dataset.name));
+  document.addEventListener('click', e => {
+    const card = e.target.closest('.survey-card');
+    if(card) open(card.dataset.src, card.dataset.univ, card.dataset.name);
   });
   // ギャラリー画像（タップ／クリックで拡大表示）
   document.querySelectorAll('.gallery-item').forEach(item => {
