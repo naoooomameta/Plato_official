@@ -817,16 +817,16 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 /* 講師カード */
 .tcards{display:grid;gap:1.6rem;}
 .tcard{
-  display:grid;grid-template-columns:minmax(0,4.3fr) minmax(0,7.7fr);gap:2.2rem;align-items:center;
+  display:grid;grid-template-columns:minmax(0,3.3fr) minmax(0,8.7fr);gap:2.2rem;align-items:center;
   background:#fff;border:1.5px solid var(--red);border-radius:18px;padding:1.5rem;
   position:relative;cursor:pointer;transition:box-shadow .3s,transform .3s;
 }
 .tcard.reveal.on:hover{box-shadow:var(--sh2);transform:translateY(-3px);}
-.tcard.flip{grid-template-columns:minmax(0,7.7fr) minmax(0,4.3fr);}
-.tcard.flip .tcard-photo{order:2;}
+.tcard.flip{grid-template-columns:minmax(0,8.7fr) minmax(0,3.3fr);}
+.tcard.flip .tcard-photo{order:2;justify-self:end;}
 .tcard.flip .tcard-body{order:1;}
 .tcard-photo{
-  aspect-ratio:4/5;width:100%;border-radius:14px;overflow:hidden;
+  aspect-ratio:4/5;width:100%;max-width:270px;border-radius:14px;overflow:hidden;
   background:var(--pale);box-shadow:0 6px 18px rgba(111,45,67,.12);
 }
 .tcard-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;}
@@ -897,9 +897,9 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   .tboard-lead br{display:none;}
   .tbr{display:inline;}
   .tcard,.tcard.flip{grid-template-columns:1fr;gap:1.1rem;padding:1rem;}
-  .tcard.flip .tcard-photo{order:1;}
+  .tcard.flip .tcard-photo{order:1;justify-self:center;}
   .tcard.flip .tcard-body{order:2;}
-  .tcard-photo{max-width:300px;margin-inline:auto;}
+  .tcard-photo{max-width:220px;margin-inline:auto;}
   .tcard-deco{width:86px;height:50px;top:-6px;}
   .tcopy{padding-left:1.4rem;}
   .tnote{grid-template-columns:1fr;gap:10px;padding:.9rem 1rem;}
