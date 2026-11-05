@@ -6,7 +6,7 @@
 <title>プラトン | 文系の大学受験専門塾</title>
 <link rel="preload" as="image" href="img/fv-pc.webp" type="image/webp" media="(min-width:769px)">
 <link rel="preload" as="image" href="img/fv-sp.webp" type="image/webp" media="(max-width:768px)">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Kaisei+Opti:wght@400;700&family=Yusei+Magic&display=swap" rel="stylesheet">
 
 <!-- Meta Pixel Code -->
 <script>
@@ -687,7 +687,6 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   .daily-flow-grid{grid-template-columns:1fr;}
 }
 .ph-icon svg{width:36px;height:36px;stroke-width:1.4;opacity:.5;}
-.stab svg{width:14px;height:14px;stroke-width:2.5;}
 .vavatart svg{width:20px;height:20px;stroke-width:2;color:var(--red);}
 .fsubmit svg{width:15px;height:15px;stroke-width:2.5;flex-shrink:0;}
 .ig-link svg{width:20px;height:20px;stroke-width:2;}
@@ -749,136 +748,163 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 }
 .gallery-item:focus-visible{outline:3px solid var(--red);outline-offset:2px;}
 
-/* ===== STAFF (NEW TAB DESIGN) ===== */
+/* ===== STAFF（こんな先生が、プラトンにいます。） ===== */
 #staff{background:var(--cream);}
-
-/* Tab navigation */
-.staff-tabs{
-  display:flex;gap:8px;justify-content:center;
-  flex-wrap:wrap;margin-bottom:2.2rem;
-}
-.stab{
-  background:#fff;border:2px solid var(--bdr);color:var(--txt2);
-  font-size:.82rem;font-weight:700;letter-spacing:.06em;
-  padding:9px 20px;border-radius:50px;cursor:pointer;
-  transition:all .25s;font-family:inherit;
-}
-.stab:hover{border-color:var(--mid);color:var(--mid);}
-.stab.active{
-  background:var(--red);border-color:var(--red);color:#fff;
-  box-shadow:0 4px 14px rgba(111,45,67,.28);
+.tstaff{max-width:1000px;margin:0 auto;}
+.tstaff-eyebrow{text-align:center;margin-bottom:1.1rem;}
+.tstaff-eyebrow .eyebrow{
+  background:var(--cream);font-family:"Kaisei Opti",serif;
+  font-size:.78rem;letter-spacing:.22em;margin-bottom:0;
 }
 
-/* Tab panels */
-.staff-panel{display:none;}
-.staff-panel.active{display:block;}
-
-/* Grid layout */
-.staff-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:1.2rem;max-width:960px;margin:0 auto;
-}
-.staff-grid.wide{
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-}
-
-/* Card */
-.scard2{
-  background:#fff;border-radius:20px;
-  border:2px solid var(--bdr);
-  padding:1.6rem 1.2rem 1.4rem;
-  text-align:center;
-  transition:all .3s;
+/* 黒板バナー */
+.tboard{
   position:relative;overflow:hidden;
+  border-radius:16px 16px 0 0;
+  padding:2.8rem 1.8rem 2.4rem;text-align:center;
+  color:#f2eee3;
+  background:radial-gradient(120% 90% at 50% 10%,#1f4a3a 0%,#173a2e 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
 }
-.scard2::after{
-  content:"";position:absolute;
-  bottom:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--red),var(--mid));
-  transform:scaleX(0);transition:transform .3s;
+.tboard::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 40% at 20% 80%,rgba(255,255,255,.05),transparent 60%),
+    radial-gradient(50% 40% at 80% 20%,rgba(255,255,255,.04),transparent 60%);
 }
-.scard2:hover{
-  border-color:var(--red);
-  transform:translateY(-5px);
-  box-shadow:var(--sh2);
+.tboard-frame{
+  height:14px;border-radius:0 0 10px 10px;margin-bottom:2.6rem;
+  background:linear-gradient(180deg,#8c6239,#7b5433 55%,#5e3f25);
+  box-shadow:0 3px 0 rgba(0,0,0,.08);
 }
-.scard2:hover::after{transform:scaleX(1);}
-.scard2.leader-card{border-color:var(--red);}
+.tboard-ttl{
+  position:relative;z-index:1;
+  font-family:"Yusei Magic","Noto Sans JP",sans-serif;font-weight:400;
+  font-size:clamp(1.55rem,4.4vw,2.7rem);line-height:1.35;letter-spacing:.02em;
+  color:#f2eee3;-webkit-text-stroke:.5px #f2eee3;text-shadow:0 1px 0 rgba(0,0,0,.25);
+}
+.tboard-ttl .u{position:relative;display:inline-block;padding:0 .05em;}
+.tboard-ttl .u::after{
+  content:"";position:absolute;left:2%;right:2%;bottom:.04em;height:.16em;
+  border-radius:3px;opacity:.9;z-index:-1;
+}
+.tboard-ttl .u-v::after{background:#9b79e3;transform:rotate(-1deg);}
+.tboard-ttl .u-y::after{background:#ffd84d;transform:rotate(1deg);}
+.tboard-ttl .hi{color:#f2a338;}
+.tbr{display:none;}
+.tboard-lead{
+  position:relative;z-index:1;margin-top:.8rem;
+  font-size:clamp(.8rem,1.6vw,.95rem);line-height:1.9;color:rgba(242,238,227,.92);
+}
+.tchalk{position:absolute;color:rgba(242,238,227,.55);pointer-events:none;}
+.tchalk svg{width:100%;height:100%;display:block;}
+.tchalk.c-col{left:3%;top:10%;width:80px;height:80px;}
+.tchalk.c-stack{left:3%;bottom:8%;width:110px;height:60px;}
+.tchalk.c-open{right:4%;top:12%;width:100px;height:60px;}
+.tchalk.c-spark{right:20%;top:8%;width:36px;height:36px;color:#ffd84d;opacity:.9;}
+.tchalk.c-spark2{left:22%;bottom:14%;width:28px;height:28px;color:#9b79e3;opacity:.9;}
+.tchalk.c-pencil{right:5%;bottom:10%;width:90px;height:40px;}
 
-/* Avatar */
-.savatar2{
-  width:88px;height:88px;border-radius:50%;
-  margin:0 auto 1rem;
-  border:3px solid var(--bdr);
-  overflow:hidden;
-  background:linear-gradient(135deg,var(--pale),var(--light));
-  display:flex;align-items:center;justify-content:center;
-  transition:border-color .3s;
-  position:relative;
+/* 見出し */
+.tstory-ttl{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;
+  margin:0 0 1.6rem;text-align:center;
+  font-family:"Kaisei Opti",serif;font-weight:700;
+  font-size:clamp(1.25rem,3vw,1.7rem);letter-spacing:.06em;color:var(--red);
 }
-.scard2:hover .savatar2{border-color:var(--red);}
-.leader-card .savatar2{width:110px;height:110px;border-width:4px;border-color:var(--red);}
-.savatar2 img{width:100%;height:100%;object-fit:cover;}
-.savatar2-initials{
-  font-family:"Kaisei Opti",serif;
-  font-size:1.6rem;font-weight:700;
-  color:var(--red);line-height:1;
-}
+.tstory-ttl::before,.tstory-ttl::after{content:"";height:1px;background:var(--red);opacity:.55;}
 
-/* Role badge */
-.srole2{
-  display:inline-block;
-  font-size:.65rem;font-weight:700;letter-spacing:.1em;
-  padding:3px 12px;border-radius:50px;margin-bottom:.6rem;
+/* 講師カード */
+.tcards{display:grid;gap:1.6rem;}
+.tcard{
+  display:grid;grid-template-columns:minmax(0,4.3fr) minmax(0,7.7fr);gap:2.2rem;align-items:center;
+  background:#fff;border:1.5px solid var(--red);border-radius:18px;padding:1.5rem;
+  position:relative;cursor:pointer;transition:box-shadow .3s,transform .3s;
 }
-.srole2.r-leader{background:var(--dark);color:#fff;}
-.srole2.r-pro{background:linear-gradient(135deg,var(--red),var(--mid));color:#fff;}
-.srole2.r-daily{background:var(--pale);color:var(--red);border:1px solid var(--bdr);}
-.srole2.r-staff{background:#e8f0fe;color:#1a56b0;border:1px solid #c7d7f9;}
-.srole2.r-ops{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;}
-.srole2.r-advisor{background:#fdf3e0;color:#a86b00;border:1px solid #f0dcb4;}
+.tcard.reveal.on:hover{box-shadow:var(--sh2);transform:translateY(-3px);}
+.tcard.flip{grid-template-columns:minmax(0,7.7fr) minmax(0,4.3fr);}
+.tcard.flip .tcard-photo{order:2;}
+.tcard.flip .tcard-body{order:1;}
+.tcard-photo{
+  aspect-ratio:4/5;width:100%;border-radius:14px;overflow:hidden;
+  background:var(--pale);box-shadow:0 6px 18px rgba(111,45,67,.12);
+}
+.tcard-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;}
+.tcard-body{position:relative;min-width:0;display:grid;gap:.7rem;justify-items:start;text-align:left;padding-block:.3rem;}
+.tcard-deco{position:absolute;right:0;top:-2px;width:112px;height:64px;color:var(--red);opacity:.5;pointer-events:none;}
+.tcard-deco svg{width:100%;height:100%;display:block;}
+.tcard-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.tbadge{
+  font-size:.76rem;font-weight:700;letter-spacing:.08em;color:var(--red);
+  border:1.5px solid var(--red);border-radius:50px;padding:3px 14px;background:var(--cream);
+}
+.tchip{font-size:.72rem;font-weight:500;color:var(--txt2);background:var(--pale);border-radius:50px;padding:4px 12px;}
+.tname{
+  font-family:"Kaisei Opti",serif;font-weight:700;
+  font-size:clamp(1.7rem,3.6vw,2.3rem);line-height:1.15;letter-spacing:.08em;color:var(--dark);
+  display:grid;gap:.35rem;justify-items:start;
+}
+.tname .nm{background:linear-gradient(transparent 66%,#ffd84d 66%,#ffd84d 92%,transparent 92%);padding:0 .3em 0 .05em;}
+.tromaji{font-family:"Kaisei Opti",serif;font-weight:400;font-size:.72rem;letter-spacing:.28em;color:var(--red);line-height:1;margin-left:.15em;}
+.tcopy{
+  position:relative;padding-left:1.6rem;
+  font-family:"Yusei Magic","Noto Sans JP",sans-serif;font-weight:400;
+  font-size:clamp(1.15rem,2.5vw,1.55rem);line-height:1.55;letter-spacing:.02em;color:var(--txt);
+}
+.tcopy mark{background:linear-gradient(transparent 62%,#ffd84d 62%,#ffd84d 94%,transparent 94%);color:inherit;padding:0 .1em;}
+.tspark{
+  position:absolute;left:0;top:.5em;width:18px;height:18px;transform:rotate(-20deg);
+  background:
+    linear-gradient(#f2a338,#f2a338) 0 50%/8px 2px no-repeat,
+    linear-gradient(#f2a338,#f2a338) 10% 10%/7px 2px no-repeat,
+    linear-gradient(#f2a338,#f2a338) 10% 90%/7px 2px no-repeat;
+}
+.tsub{font-size:.85rem;color:var(--txt2);letter-spacing:.02em;line-height:1.8;}
+.tcard .sprofile-btn{margin-top:.2rem;}
 
-.staff-note{
-  text-align:center;
-  font-size:.78rem;color:var(--txt3);
-  margin-top:1.2rem;line-height:1.7;
+/* 在籍講師のお知らせ */
+.tnote{
+  margin-top:1.8rem;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;
+  background:#eaf3ea;border:1.5px solid #2e6b49;border-radius:12px;padding:1rem 1.4rem;
+  color:#2e6b49;font-weight:700;font-size:clamp(.85rem,1.7vw,.98rem);letter-spacing:.04em;text-align:center;
 }
-.scard2 .staff-note{margin-top:.9rem;font-size:.72rem;text-align:left;}
+.tnote svg{width:52px;height:40px;color:#2e6b49;display:block;}
+.tnote p{min-width:0;}
 
-.sname2{
-  font-family:"Kaisei Opti",serif;
-  font-size:1.05rem;font-weight:700;
-  color:var(--txt);margin-bottom:.3rem;line-height:1.3;
+/* 相談CTA */
+.tcta{margin-top:2.4rem;text-align:center;display:grid;justify-items:center;gap:1.1rem;}
+.tcta-lead{
+  display:inline-grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  font-family:"Kaisei Opti",serif;font-weight:700;letter-spacing:.08em;
+  font-size:clamp(1rem,2.4vw,1.35rem);color:var(--txt);
 }
-.sdomain2{
-  font-size:.72rem;color:var(--txt3);
-  margin-bottom:.8rem;line-height:1.6;
+.tcta-lead::before,.tcta-lead::after{content:"";width:2px;height:1.6em;background:var(--txt);border-radius:2px;}
+.tcta-lead::before{transform:rotate(-30deg);}
+.tcta-lead::after{transform:rotate(30deg);}
+.tcta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--red);color:#fff;border-radius:50px;padding:.9rem 2.6rem;
+  font-size:1rem;font-weight:700;letter-spacing:.06em;
+  box-shadow:0 6px 16px rgba(111,45,67,.25);transition:opacity .2s,transform .2s;
 }
-.sdesc2{
-  font-size:.78rem;color:var(--txt2);
-  line-height:1.85;text-align:left;
-}
+.tcta-btn:hover{opacity:.9;transform:translateY(-1px);}
+.tcta-btn .arr{font-size:1.15rem;line-height:1;transform:translateY(-1px);}
 
-/* Photo placeholder swap note */
-.photo-hint{
-  font-size:.63rem;color:var(--txt3);
-  margin-top:.5rem;opacity:.7;
-  font-style:italic;
+@media(max-width:700px){
+  .tboard{padding:2.1rem 1.1rem 1.9rem;border-radius:12px 12px 0 0;}
+  .tboard-frame{margin-bottom:2rem;}
+  .tchalk{display:none;}
+  .tboard-lead br{display:none;}
+  .tbr{display:inline;}
+  .tcard,.tcard.flip{grid-template-columns:1fr;gap:1.1rem;padding:1rem;}
+  .tcard.flip .tcard-photo{order:1;}
+  .tcard.flip .tcard-body{order:2;}
+  .tcard-photo{max-width:300px;margin-inline:auto;}
+  .tcard-deco{width:86px;height:50px;top:-6px;}
+  .tcopy{padding-left:1.4rem;}
+  .tnote{grid-template-columns:1fr;gap:10px;padding:.9rem 1rem;}
+  .tnote svg{width:44px;height:34px;margin:0 auto;}
 }
-
-/* count banner */
-.s-count{
-  max-width:760px;margin:2.5rem auto 0;
-  background:linear-gradient(135deg,var(--dark),var(--red));
-  border-radius:16px;padding:1.8rem 2rem;text-align:center;color:#fff;
-}
-.s-count-n{
-  font-family:"Kaisei Opti",serif;font-size:1.35rem;font-weight:700;
-  background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);
-  padding:5px 18px;border-radius:7px;display:inline-block;margin:0 4px;
-}
-.s-count-desc{font-size:.83rem;opacity:.82;margin-top:.8rem;line-height:1.8;}
 
 /* ===== VOICES ===== */
 #voices{background:#fff;overflow:hidden;}
@@ -1059,7 +1085,7 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
 }
 
 /* 代表プロフィール（詳細） */
-.scard2.has-profile{cursor:pointer;}
+.has-profile{cursor:pointer;}
 .sprofile-btn{
   margin-top:1rem;display:inline-flex;align-items:center;gap:.35rem;
   background:var(--red);color:#fff;border:none;border-radius:50px;
@@ -2421,235 +2447,102 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 
 <!-- ===== STAFF ===== -->
 <section id="staff">
-  <div class="sec-head reveal" style="text-align:center;">
-    <span class="eyebrow">Our Teachers</span>
-    <h2 class="sec-ttl">講師<span class="ac">紹介</span></h2>
-    <p class="sec-sub">プラトンには個性豊かな専門スタッフが揃っています。</p>
-  </div>
+  <div class="tstaff">
+    <div class="tstaff-eyebrow reveal"><span class="eyebrow">PEOPLE OF PLATO</span></div>
 
-  <!-- Tab buttons -->
-  <div class="staff-tabs reveal">
-    <button class="stab active" onclick="switchTab('all',this)"><i data-lucide="users"></i> 全員</button>
-    <button class="stab" onclick="switchTab('leader',this)"><i data-lucide="landmark"></i> 代表・塾長</button>
-    <button class="stab" onclick="switchTab('pro',this)"><i data-lucide="graduation-cap"></i> プロ講師</button>
-    <button class="stab" onclick="switchTab('daily',this)"><i data-lucide="clipboard-list"></i> 毎日課題</button>
-  </div>
-
-  <!-- ALL -->
-  <div class="staff-panel active" id="tab-all">
-    <div class="staff-grid wide">
-
-      <!-- 代表・塾長 -->
-      <div class="scard2 leader-card has-profile reveal d1" data-profile="sano">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/staff-sano-photo.webp"><img src="img/staff-sano-photo.jpg" alt="佐野" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-leader">代表・塾長</span>
-        <div class="sname2">佐野 翼（さの つばさ）</div>
-        <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
-        <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度はオンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人の合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
-        <button type="button" class="sprofile-btn" data-profile="sano">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
-      </div>
-
-      <div class="scard2 reveal d2">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/plato-logochibi.webp"><img src="img/plato-logochibi.png" alt="担当塾長" loading="lazy" decoding="async" style="object-fit:contain;padding:12px;"></picture>
-        </div>
-        <span class="srole2 r-leader">塾長</span>
-        <div class="sname2">担当塾長制</div>
-        <div class="sdomain2">① 合格ロードマップ設計　② 受験戦略面談・三者面談　③ 毎日課題の統括</div>
-        <p class="sdesc2">プラトンには代表のほかに複数の塾長が在籍し、生徒一人ひとりに担当塾長がつきます。志望校から逆算した学習計画の設計、毎日課題の進捗確認、保護者様との面談まで、担当塾長が責任を持って合格まで伴走します。</p>
-        <p class="staff-note">※担当塾長は、お子様の志望校・学年・学習状況に合わせて無料相談時にご案内します。</p>
-      </div>
-
-      <!-- 専任アドバイザー -->
-      <div class="scard2 reveal d3">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-yoshioka.webp"><img src="img/img:staff-yoshioka.png" alt="吉岡" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-advisor">広報 兼 専任アドバイザー</span>
-        <div class="sname2">吉岡 彩（よしおか あや）</div>
-        <div class="sdomain2">① 受験・学習相談　② 保護者サポート　③ 広報</div>
-        <p class="sdesc2">広報 兼 プラトン専任アドバイザーとして、プラトンの情報発信と、生徒・保護者の皆さまの相談窓口を担当。日々の学習の悩みから受験に関するご相談まで、一人ひとりに寄り添って丁寧にサポートします。</p>
-      </div>
-
-      <!-- プロ講師 -->
-      <div class="scard2 reveal d4">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-miura.webp"><img src="img/img:staff-miura.png" alt="三浦" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">三浦（みうら）</div>
-        <div class="sdomain2">数学IA・IIB / 生物・英語 / 化学・物理・地学基礎 / 古典・現代文</div>
-        <p class="sdesc2">思考力と「なぜそうなるのか」を大切にし、次に繋がる指導をします。</p>
-      </div>
-
-      <div class="scard2 reveal d4">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-tachikawa.webp"><img src="img/img:staff-tachikawa.png" alt="立川" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">立川（たちかわ）</div>
-        <div class="sdomain2">数学IAIIB・IIIC / 英語 / 物理・化学・生物</div>
-        <p class="sdesc2">指導経験4年目、指導生徒数110名ほど。生徒さんの「なぜ？」を大切にし、根本的な理解のため、粘り強く指導します！</p>
-      </div>
-
-      <div class="scard2 reveal d5">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-kato.webp"><img src="img/img:staff-kato.png" alt="加藤" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">加藤（かとう）</div>
-        <div class="sdomain2">英語全般</div>
-        <p class="sdesc2">指導経験10年目、指導生徒数100名以上。英語の本質を丁寧に伝え、確かな読解力・表現力を育てます。</p>
-      </div>
-
-      <div class="scard2 reveal d1">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-nakatani.webp"><img src="img/img:staff-nakatani.png" alt="中谷" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">中谷（なかたに）</div>
-        <div class="sdomain2">現代文・古文・漢文</div>
-        <p class="sdesc2">【一意専心】一人ひとりに寄り添い、思考のクセまで見抜き、読解力を本気で鍛えます。</p>
-      </div>
-
-      <div class="scard2 reveal d1">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-sakamoto.webp"><img src="img/img:staff-sakamoto.png" alt="坂本" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">坂本（さかもと）</div>
-        <div class="sdomain2">英語全般</div>
-        <p class="sdesc2">語彙力・言い換える力・内容把握力。この3つの力をバランスよく身に付けられるよう指導します。</p>
-      </div>
-
-      <div class="scard2 reveal d2">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-higuchi.webp"><img src="img/img:staff-higuchi.png" alt="樋口" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">樋口（ひぐち）</div>
-        <div class="sdomain2">数学IAIIBIIIC / 英語 / 物理・化学・生物</div>
-        <p class="sdesc2">それぞれの生徒に寄り添い、普遍的で重要な「本質」を理解できる指導をします！</p>
-      </div>
-
-      <div class="scard2 reveal d3">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-nishiyama.webp"><img src="img/img:staff-nishiyama.png" alt="西山" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">西山（にしやま）</div>
-        <div class="sdomain2">数学IAIIBIIIC / 化学</div>
-        <p class="sdesc2">楽しく長く勉強を続けていけるようサポートして行きます。よろしくお願いします。</p>
-      </div>
-
-      <div class="scard2 reveal d4">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-tsuruta.webp"><img src="img/img:staff-tsuruta.png" alt="鶴田" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-pro">プロ講師</span>
-        <div class="sname2">鶴田（つるた）</div>
-        <div class="sdomain2">現代文・古典・漢文 / 英語・日本史・数学1A</div>
-        <p class="sdesc2">自身の受験経験を活かして、生徒一人一人に合わせた指導を心がけていきたいと思います。</p>
-      </div>
-
-      <!-- 毎日課題 -->
-      <div class="scard2 reveal d5">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-nagata.webp"><img src="img/img:staff-nagata.png" alt="永田" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-daily">毎日課題 Dir.</span>
-        <div class="sname2">永田（ながた）</div>
-        <div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div>
-        <p class="sdesc2">一緒に悩んで考えて、できることを増やしていけるように頑張ります！</p>
-      </div>
-
-      <div class="scard2 reveal d1">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-takizawa.webp"><img src="img/img:staff-takizawa.png" alt="瀧澤" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-daily">毎日課題 Dir.</span>
-        <div class="sname2">瀧澤（たきざわ）</div>
-        <div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div>
-        <p class="sdesc2">ひとり一人にあった勉強の仕方を重視し、自ら進められる学習サポートを心掛けます。</p>
-      </div>
-
-      <div class="scard2 reveal d2">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/img:staff-hayano.webp"><img src="img/img:staff-hayano.jpg" alt="早野" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-daily">毎日課題 Staff</span>
-        <div class="sname2">早野（はやの）</div>
-        <div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div>
-        <p class="sdesc2">一人一人の理解に寄り添い、成長につながる学習支援を行います！</p>
-      </div>
-
-
-      <div class="scard2 has-profile reveal d4" data-profile="yonaha">
-        <div class="savatar2">
-          <picture><source type="image/webp" srcset="img/staff-yonaha-photo.webp"><img src="img/staff-yonaha-photo.jpg" alt="與那覇" loading="lazy" decoding="async"></picture>
-        </div>
-        <span class="srole2 r-daily">毎日課題 Staff</span>
-        <div class="sname2">與那覇（よなは）</div>
-        <div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div>
-        <p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p>
-        <button type="button" class="sprofile-btn" data-profile="yonaha">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
-      </div>
-
+    <!-- 黒板バナー -->
+    <div class="tboard reveal" aria-labelledby="staff-ttl">
+      <div class="tchalk c-col"><svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18h52M16 24h48M28 30v34M40 30v34M52 30v34M12 68h56M18 64h44"/><path d="M14 18c4-6 10-8 14-4 4-5 10-6 12-2 2-4 8-3 12 2 4-4 10-2 14 4"/></svg></div>
+      <div class="tchalk c-stack"><svg viewBox="0 0 110 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 46h70l6 8H20l-6-8ZM18 34h66l4 8H22l-4-8ZM24 22h60l2 8H26l-2-8Z"/><path d="M30 28h40M26 40h50M22 52h56"/></svg></div>
+      <div class="tchalk c-open"><svg viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 48c14-8 28-8 42 0V14C36 6 22 6 8 14ZM50 48c14-8 28-8 42 0V14C78 6 64 6 50 14Z"/><path d="M16 22c8-3 18-3 28 0M16 32c8-3 18-3 28 0M58 22c8-3 18-3 28 0M58 32c8-3 18-3 28 0"/></svg></div>
+      <div class="tchalk c-spark"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 4v9M18 23v9M4 18h9M23 18h9"/></svg></div>
+      <div class="tchalk c-spark2"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6v8M18 22v8M6 18h8M22 18h8"/></svg></div>
+      <div class="tchalk c-pencil"><svg viewBox="0 0 90 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 30 60 8l10 6-50 22-14 2Z"/><path d="M60 8l10 6M20 32l4-8"/></svg></div>
+      <h2 class="tboard-ttl" id="staff-ttl"><span class="u u-v">こんな先生が、</span><br class="tbr"><span class="hi u u-y">プラトン</span>にいます。</h2>
+      <p class="tboard-lead">先生たちは、どんな経験をして、何を大切に指導しているのか。<br>プラトンで日々の学びを支える先生たちの中から、一部をご紹介します。</p>
     </div>
-  </div><!-- /tab-all -->
+    <div class="tboard-frame" aria-hidden="true"></div>
 
-  <!-- LEADER -->
-  <div class="staff-panel" id="tab-leader">
-    <div class="staff-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));max-width:640px;">
-      <div class="scard2 leader-card has-profile reveal d1" data-profile="sano">
-        <div class="savatar2"><picture><source type="image/webp" srcset="img/staff-sano-photo.webp"><img src="img/staff-sano-photo.jpg" alt="佐野" loading="lazy" decoding="async"></picture></div>
-        <span class="srole2 r-leader">代表・塾長</span>
-        <div class="sname2">佐野 翼（さの つばさ）</div>
-        <div class="sdomain2">得意科目：数学・世界史・日本史・現代文・古典</div>
-        <p class="sdesc2">指導経験7年目、指導生徒数200名以上。2023年度オンライン受講生5人全員を第1志望（一橋・北大・早稲田・上智）に合格させた実績あり。生徒一人一人に合わせた合格ロードマップを設計し、毎日の家庭学習からメンタルまで全力でサポートします。</p>
-        <button type="button" class="sprofile-btn" data-profile="sano">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
-      </div>
-      <div class="scard2 reveal d2">
-        <div class="savatar2"><picture><source type="image/webp" srcset="img/plato-logochibi.webp"><img src="img/plato-logochibi.png" alt="担当塾長" loading="lazy" decoding="async" style="object-fit:contain;padding:12px;"></picture></div>
-        <span class="srole2 r-leader">塾長</span>
-        <div class="sname2">担当塾長制</div>
-        <div class="sdomain2">① 合格ロードマップ設計　② 受験戦略面談・三者面談　③ 毎日課題の統括</div>
-        <p class="sdesc2">プラトンには代表のほかに複数の塾長が在籍し、生徒一人ひとりに担当塾長がつきます。志望校から逆算した学習計画の設計、毎日課題の進捗確認、保護者様との面談まで、担当塾長が責任を持って合格まで伴走します。</p>
-        <p class="staff-note">※担当塾長は、お子様の志望校・学年・学習状況に合わせて無料相談時にご案内します。</p>
-      </div>
+    <h3 class="tstory-ttl reveal">先生たちのストーリー</h3>
+
+    <div class="tcards">
+      <article class="tcard has-profile reveal d1" data-profile="sano">
+        <div class="tcard-photo">
+          <picture><source type="image/webp" srcset="img/teacher-sano.webp"><img src="img/teacher-sano.jpg" alt="佐野翼" width="400" height="500" loading="lazy" decoding="async" style="object-position:50% 20%;"></picture>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 48c18-10 36-10 52 0M8 48v-30c18-10 36-10 52 0v30M60 18c16-10 34-10 52 0v30M60 48c16-10 34-10 52 0"/><path d="M60 18v30"/><path d="M18 26c10-4 20-5 30-3M18 34c10-4 20-5 30-3M72 23c10-2 20-2 30 2M72 31c10-2 20-2 30 2"/></g></svg></div>
+          <div class="tcard-meta"><span class="tbadge">創業者・代表</span><span class="tchip">文系科目全般</span></div>
+          <h3 class="tname"><span class="nm">佐野 翼</span><span class="tromaji">SANO TSUBASA</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>知識の向こうにある、<br><mark>時代と人間を学ぶ。</mark></p>
+          <p class="tsub">文系科目を通して、思考する力を育てる。</p>
+          <button type="button" class="sprofile-btn" data-profile="sano">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
+        </div>
+      </article>
+      <article class="tcard has-profile reveal d2 flip" data-profile="kanno">
+        <div class="tcard-photo">
+          <picture><source type="image/webp" srcset="img/teacher-kanno.webp"><img src="img/teacher-kanno.jpg" alt="菅野温" width="400" height="500" loading="lazy" decoding="async" style="object-position:50% 15%;"></picture>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 58h90M20 58v-8M35 58v-12M50 58v-8M65 58v-12M80 58v-8M95 58v-12"/><path d="M14 40 L30 10 L46 40Z"/><path d="M58 18c0-6 10-8 14-2M58 30h20M86 12l14 20M100 12 86 32"/></g></svg></div>
+          <div class="tcard-meta"><span class="tbadge">講師</span><span class="tchip">数学・英語・物理・化学</span></div>
+          <h3 class="tname"><span class="nm">菅野 温</span><span class="tromaji">KANNO ATSUSHI</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>本気の努力を、<br><mark>合格という未来につなげる。</mark></p>
+          <p class="tsub">数学の「なぜ？」から理解を深め、一人ひとりの可能性を引き出す。</p>
+          <button type="button" class="sprofile-btn" data-profile="kanno">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
+        </div>
+      </article>
+      <article class="tcard has-profile reveal d3" data-profile="nakatani">
+        <div class="tcard-photo">
+          <picture><source type="image/webp" srcset="img/teacher-nakatani.webp"><img src="img/teacher-nakatani.jpg" alt="中谷先生" width="400" height="500" loading="lazy" decoding="async" style="object-position:50% 20%;"></picture>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 54c14-8 30-8 44 0V24c-14-8-30-8-44 0Z"/><path d="M34 29v24"/><path d="M72 52 102 22l8 8-30 30-12 4Z"/><path d="M92 30l8 8"/><path d="M20 34c6-2 12-2 18 0M20 42c6-2 12-2 18 0"/></g></svg></div>
+          <div class="tcard-meta"><span class="tbadge">講師</span><span class="tchip">現代文・古文・漢文</span></div>
+          <h3 class="tname"><span class="nm">中谷 先生</span><span class="tromaji">NAKATANI</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>「答え」ではなく、<br><mark>答えにたどり着く道筋を。</mark></p>
+          <p class="tsub">読む・考える・整理する・伝える力を、一つずつ育てる。</p>
+          <button type="button" class="sprofile-btn" data-profile="nakatani">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
+        </div>
+      </article>
+      <article class="tcard has-profile reveal d4 flip" data-profile="yonaha">
+        <div class="tcard-photo">
+          <picture><source type="image/webp" srcset="img/teacher-yonaha.webp"><img src="img/teacher-yonaha.jpg" alt="與那覇あかり" width="400" height="500" loading="lazy" decoding="async" style="object-position:50% 20%;"></picture>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 34c-8 0-10-10-2-12 2-8 14-10 18-2 8-4 18 2 14 10 6 2 4 8-4 8"/><path d="M8 50c6-5 12-5 18 0s12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0"/><path d="M8 60c6-5 12-5 18 0s12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0"/><path d="M74 20c4-4 8-4 10 0M90 14c4-4 8-4 10 0"/></g></svg></div>
+          <div class="tcard-meta"><span class="tbadge">講師</span><span class="tchip">国語・英語</span></div>
+          <h3 class="tname"><span class="nm">與那覇 あかり</span><span class="tromaji">YONAHA AKARI</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>一人ひとりの小さな成長を、<br><mark>一緒に喜べる先生でありたい。</mark></p>
+          <p class="tsub">生徒の気持ちに寄り添う指導。</p>
+          <button type="button" class="sprofile-btn" data-profile="yonaha">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
+        </div>
+      </article>
+      <article class="tcard has-profile reveal d5" data-profile="yoshioka">
+        <div class="tcard-photo">
+          <picture><source type="image/webp" srcset="img/teacher-yoshioka.webp"><img src="img/teacher-yoshioka.jpg" alt="吉岡彩" width="400" height="500" loading="lazy" decoding="async" style="object-position:50% 10%;"></picture>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14h60a6 6 0 0 1 6 6v22a6 6 0 0 1-6 6H36l-14 12V48H10a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6Z"/><path d="M22 28h36M22 36h24"/><path d="M98 30c-8-6-16 2-10 9l10 9 10-9c6-7-2-15-10-9Z"/></g></svg></div>
+          <div class="tcard-meta"><span class="tbadge">専任アドバイザー</span><span class="tchip">広報・受験サポート・保護者サポート</span></div>
+          <h3 class="tname"><span class="nm">吉岡 彩</span><span class="tromaji">YOSHIOKA AYA</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>小さな努力と成長を、<br><mark>受験生・保護者と一緒に支える。</mark></p>
+          <p class="tsub">受験生にも、保護者の方にも寄り添うサポートと発信。</p>
+          <button type="button" class="sprofile-btn" data-profile="yoshioka">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
+        </div>
+      </article>
     </div>
-  </div>
 
-  <!-- PRO -->
-  <div class="staff-panel" id="tab-pro">
-    <div class="staff-grid wide">
-      <div class="scard2 reveal d1"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-miura.webp"><img src="img/img:staff-miura.png" alt="三浦" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">三浦（みうら）</div><div class="sdomain2">数学IA・IIB / 生物・英語 / 化学・物理・地学基礎 / 古典・現代文</div><p class="sdesc2">思考力と「なぜそうなるのか」を大切にし、次に繋がる指導をします。</p></div>
-      <div class="scard2 reveal d2"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-tachikawa.webp"><img src="img/img:staff-tachikawa.png" alt="立川" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">立川（たちかわ）</div><div class="sdomain2">数学IAIIB・IIIC / 英語 / 物理・化学・生物</div><p class="sdesc2">指導経験4年目、指導生徒数110名ほど。生徒さんの「なぜ？」を大切にし、根本的な理解のため粘り強く指導します！</p></div>
-      <div class="scard2 reveal d3"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-kato.webp"><img src="img/img:staff-kato.png" alt="加藤" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">加藤（かとう）</div><div class="sdomain2">英語全般</div><p class="sdesc2">指導経験10年目、指導生徒数100名以上。英語の本質を丁寧に伝え、確かな読解力・表現力を育てます。</p></div>
-      <div class="scard2 reveal d4"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-nakatani.webp"><img src="img/img:staff-nakatani.png" alt="中谷" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">中谷（なかたに）</div><div class="sdomain2">現代文・古文・漢文</div><p class="sdesc2">【一意専心】一人ひとりに寄り添い、思考のクセまで見抜き、読解力を本気で鍛えます。</p></div>
-      <div class="scard2 reveal d4"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-sakamoto.webp"><img src="img/img:staff-sakamoto.png" alt="坂本" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">坂本（さかもと）</div><div class="sdomain2">英語全般</div><p class="sdesc2">語彙力・言い換える力・内容把握力の3つをバランスよく身に付けられるよう指導します。</p></div>
-      <div class="scard2 reveal d5"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-higuchi.webp"><img src="img/img:staff-higuchi.png" alt="樋口" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">樋口（ひぐち）</div><div class="sdomain2">数学IAIIBIIIC / 英語 / 物理・化学・生物</div><p class="sdesc2">それぞれの生徒に寄り添い、普遍的で重要な「本質」を理解できる指導をします！</p></div>
-      <div class="scard2 reveal d1"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-nishiyama.webp"><img src="img/img:staff-nishiyama.png" alt="西山" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">西山（にしやま）</div><div class="sdomain2">数学IAIIBIIIC / 化学</div><p class="sdesc2">楽しく長く勉強を続けていけるようサポートします。よろしくお願いします。</p></div>
-      <div class="scard2 reveal d2"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-tsuruta.webp"><img src="img/img:staff-tsuruta.png" alt="鶴田" loading="lazy" decoding="async"></picture></div><span class="srole2 r-pro">プロ講師</span><div class="sname2">鶴田（つるた）</div><div class="sdomain2">現代文・古典・漢文 / 英語・日本史・数学1A</div><p class="sdesc2">自身の受験経験を活かして、生徒一人一人に合わせた指導を心がけます。</p></div>
+    <div class="tnote reveal">
+      <svg viewBox="0 0 52 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 32c7-4 14-4 22 0V8C18 4 11 4 4 8ZM26 32c8-4 15-4 22 0V8c-7-4-14-4-22 0Z"/><path d="M9 14c4-1 9-1 13 0M9 21c4-1 9-1 13 0M30 14c4-1 9-1 13 0M30 21c4-1 9-1 13 0"/></svg>
+      <p>ご紹介した先生のほかにも、文系専門講師が20名以上在籍しています。</p>
+      <svg viewBox="0 0 52 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 32 36 6l8 8-28 26-10 2Z"/><path d="M32 10l8 8M14 26l4 4"/></svg>
     </div>
-  </div>
 
-  <!-- DAILY -->
-  <div class="staff-panel" id="tab-daily">
-    <div class="staff-grid wide">
-      <div class="scard2 reveal d1"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-nagata.webp"><img src="img/img:staff-nagata.png" alt="永田" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">永田（ながた）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">一緒に悩んで考えて、できることを増やしていけるように頑張ります！</p></div>
-      <div class="scard2 reveal d2"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-takizawa.webp"><img src="img/img:staff-takizawa.png" alt="瀧澤" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Dir.</span><div class="sname2">瀧澤（たきざわ）</div><div class="sdomain2">① 毎日課題チェック　② 確認テスト管理</div><p class="sdesc2">ひとり一人にあった勉強の仕方を重視し、自ら進められる学習サポートを心掛けます。</p></div>
-      <div class="scard2 reveal d3"><div class="savatar2"><picture><source type="image/webp" srcset="img/img:staff-hayano.webp"><img src="img/img:staff-hayano.jpg" alt="早野" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">早野（はやの）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">一人一人の理解に寄り添い、成長につながる学習支援を行います！</p></div>
-      <div class="scard2 has-profile reveal d5" data-profile="yonaha"><div class="savatar2"><picture><source type="image/webp" srcset="img/staff-yonaha-photo.webp"><img src="img/staff-yonaha-photo.jpg" alt="與那覇" loading="lazy" decoding="async"></picture></div><span class="srole2 r-daily">毎日課題 Staff</span><div class="sname2">與那覇（よなは）</div><div class="sdomain2">① 毎日課題出し　② 学習のフィードバック</div><p class="sdesc2">継続できる学習習慣を丁寧に支え、努力が続く環境をつくります。</p><button type="button" class="sprofile-btn" data-profile="yonaha">詳しいプロフィールを見る <span aria-hidden="true">›</span></button></div>
+    <div class="tcta reveal">
+      <p class="tcta-lead">学習について、まずはご相談ください。</p>
+      <a href="#contact" class="tcta-btn">学習相談会はこちら <span class="arr" aria-hidden="true">›</span></a>
     </div>
-  </div>
-
-
-  <div class="s-count reveal">
-    <span class="s-count-n">文系各科目のプロ講師のみ在籍</span>
-    <p class="s-count-desc">大学入試改革や最新の出題傾向を常に分析し、各大学・学部に合わせた専門的な指導を提供しています。<br>科目指導はもちろん、志望理由書や小論文対策まで幅広く対応可能です。</p>
   </div>
 </section>
 
@@ -3311,21 +3204,6 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   update();
 })();
 
-// Staff tab switching
-function switchTab(tabId, btn) {
-  // Update buttons
-  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  // Update panels
-  document.querySelectorAll('.staff-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tabId).classList.add('active');
-  // Re-trigger reveal animations for newly shown cards
-  document.querySelectorAll('#tab-' + tabId + ' .reveal').forEach(el => {
-    el.classList.remove('on');
-    obs.observe(el);
-  });
-}
-
 // Hamburger menu
 (function(){
   const btn  = document.getElementById('hamBtn');
@@ -3408,7 +3286,10 @@ function switchTab(tabId, btn) {
   const box = modal.querySelector('.profile-modal-content');
   const PROFILES = {
     sano: { src: 'img/sano-profile', label: '代表 佐野翼 プロフィール', alt: 'プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ' },
-    yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' }
+    yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' },
+    kanno: { src: 'img/kanno-profile', label: '菅野温先生 プロフィール', alt: 'プラトン講師 菅野温先生のプロフィール：担当科目は数学・英語・物理・化学（数学が最も得意）。早稲田大学先進理工学部卒、指導歴14年・累計100名以上の指導、主な指導実績（東京大学理科三類、横浜市立大学・京都府立医科大学・愛媛大学の医学部医学科、早稲田大学・明治大学・法政大学など）、指導で大切にしていること、インタビュー' },
+    nakatani: { src: 'img/nakatani-profile', label: '中谷先生 プロフィール', alt: 'プラトン講師 中谷先生のプロフィール：担当科目は現代文・古文・漢文。甲南大学文学部日本語日本文学科卒、私立高校・公立中学校での国語科教員の経験、国語指導の強み（「答え」ではなく答えにたどり着く道筋を教える・根拠を自分の言葉で説明できるように・インプットとアウトプット）、これまでの歩み、講師インタビュー、受験生・保護者の皆さまへのメッセージ' },
+    yoshioka: { src: 'img/yoshioka-profile', label: '専任アドバイザー 吉岡彩 プロフィール', alt: 'プラトン専任アドバイザー 吉岡彩のプロフィール：役割は広報・受験サポート・保護者サポート。大切にしていること（一人ひとりの状況や気持ちを理解し、前向きに努力を続けられる環境づくり）、発信テーマ（大学受験情報・保護者向けのヒント・学習習慣・小さな成長の見つけ方）、強み（受験経験をふまえた共感・わかりやすい発信・寄り添う姿勢）' }
   };
   const cache = {};
   // WebP対応判定（未対応ブラウザはJPGを使う）
@@ -3436,12 +3317,12 @@ function switchTab(tabId, btn) {
     modal.setAttribute('aria-label', p.label);
     lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
   const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
-  const cards = document.querySelectorAll('.scard2.has-profile');
+  const cards = document.querySelectorAll('.has-profile');
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     entries.forEach(en => { if(en.isIntersecting){ preload(en.target.dataset.profile); io.unobserve(en.target); } });
   }, { rootMargin: '600px 0px' }) : null;
   document.querySelectorAll('.sprofile-btn[data-profile]').forEach(btn => {
-    if(btn.closest('.scard2.has-profile')) return;
+    if(btn.closest('.has-profile')) return;
     btn.addEventListener('click', () => open(btn.dataset.profile));
     ['pointerenter','touchstart','focusin'].forEach(ev => btn.addEventListener(ev, () => preload(btn.dataset.profile), { passive: true, once: true }));
   });
