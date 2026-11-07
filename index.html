@@ -830,6 +830,7 @@ i[data-lucide]{display:inline-flex;align-items:center;vertical-align:middle;}
   background:var(--pale);box-shadow:0 6px 18px rgba(111,45,67,.12);
 }
 .tcard-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;}
+.tcopy .nw{display:inline-block;}
 .tcard-body{position:relative;min-width:0;display:grid;gap:.7rem;justify-items:start;text-align:left;padding-block:.3rem;}
 .tcard-deco{position:absolute;right:0;top:-2px;width:112px;height:64px;color:var(--red);opacity:.5;pointer-events:none;}
 .tcard-deco svg{width:100%;height:100%;display:block;}
@@ -2486,8 +2487,8 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
         <div class="tcard-body">
           <div class="tcard-deco"><svg viewBox="0 0 120 70" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 58h90M20 58v-8M35 58v-12M50 58v-8M65 58v-12M80 58v-8M95 58v-12"/><path d="M14 40 L30 10 L46 40Z"/><path d="M58 18c0-6 10-8 14-2M58 30h20M86 12l14 20M100 12 86 32"/></g></svg></div>
           <div class="tcard-meta"><span class="tbadge">講師</span><span class="tchip">数学・英語・物理・化学</span></div>
-          <h3 class="tname"><span class="nm">菅野 温</span><span class="tromaji">KANNO ATSUSHI</span></h3>
-          <p class="tcopy"><span class="tspark" aria-hidden="true"></span>本気の努力を、<br><mark>合格という未来につなげる。</mark></p>
+          <h3 class="tname"><span class="nm">菅野 温</span><span class="tromaji">SUGANO ATSUSHI</span></h3>
+          <p class="tcopy"><span class="tspark" aria-hidden="true"></span><span class="nw">医学・健康・スポーツの</span><span class="nw">知見を活かし、</span><br><mark>まなびと成長をサポートします。</mark></p>
           <p class="tsub">数学の「なぜ？」から理解を深め、一人ひとりの可能性を引き出す。</p>
           <button type="button" class="sprofile-btn" data-profile="kanno">詳しいプロフィールを見る <span aria-hidden="true">›</span></button>
         </div>
@@ -3287,7 +3288,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   const PROFILES = {
     sano: { src: 'img/sano-profile', label: '代表 佐野翼 プロフィール', alt: 'プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ' },
     yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' },
-    kanno: { src: 'img/kanno-profile', label: '菅野温先生 プロフィール', alt: 'プラトン講師 菅野温先生のプロフィール：担当科目は数学・英語・物理・化学（数学が最も得意）。早稲田大学先進理工学部卒、指導歴14年・累計100名以上の指導、主な指導実績（東京大学理科三類、横浜市立大学・京都府立医科大学・愛媛大学の医学部医学科、早稲田大学・明治大学・法政大学など）、指導で大切にしていること、インタビュー' },
+    kanno: { src: 'img/kanno-profile', label: '菅野温先生 プロフィール', alt: '文系の大学受験専門塾プラトン講師・理系の大学受験専門塾ガリレオ塾長 菅野温先生のプロフィール：「本気の努力を、合格という未来につなげる。」担当科目は数学・英語・物理・化学。早稲田大学先進理工学部卒、指導歴14年（東京大学理科二類や医学部医学科などの難関大志望から基礎学力に不安のある生徒まで指導）。主な合格実績は東京大学・横浜市立大学・京都府立医科大学ほか。講師インタビュー（Q1〜Q7）、受験生・保護者へのメッセージ' },
     nakatani: { src: 'img/nakatani-profile', label: '中谷先生 プロフィール', alt: 'プラトン講師 中谷先生のプロフィール：担当科目は現代文・古文・漢文。甲南大学文学部日本語日本文学科卒、私立高校・公立中学校での国語科教員の経験、国語指導の強み（「答え」ではなく答えにたどり着く道筋を教える・根拠を自分の言葉で説明できるように・インプットとアウトプット）、これまでの歩み、講師インタビュー、受験生・保護者の皆さまへのメッセージ' },
     yoshioka: { src: 'img/yoshioka-profile', label: '専任アドバイザー 吉岡彩 プロフィール', alt: 'プラトン専任アドバイザー 吉岡彩のプロフィール：役割は広報・受験サポート・保護者サポート。大切にしていること（一人ひとりの状況や気持ちを理解し、前向きに努力を続けられる環境づくり）、発信テーマ（大学受験情報・保護者向けのヒント・学習習慣・小さな成長の見つけ方）、強み（受験経験をふまえた共感・わかりやすい発信・寄り添う姿勢）' }
   };
