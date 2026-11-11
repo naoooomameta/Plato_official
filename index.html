@@ -353,10 +353,14 @@ section{padding:64px 4vw;}
 }
 .note-feature-ttl .ac{color:var(--red);}
 .note-feature-txt{font-size:.88rem;color:var(--txt2);line-height:1.9;margin-bottom:1rem;}
-.note-feature-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.3rem;}
+.note-feature-tags{display:flex;flex-wrap:wrap;gap:.35rem 1rem;margin-bottom:1.3rem;}
+/* 押せないラベルなので、ボタンに見える枠・背景は付けない */
 .note-feature-tags span{
-  font-size:.72rem;font-weight:700;color:var(--txt2);
-  background:var(--cream);border:1px solid var(--bdr);padding:4px 12px;border-radius:50px;
+  display:inline-flex;align-items:center;gap:.4em;cursor:default;
+  font-size:.74rem;font-weight:700;color:var(--txt2);
+}
+.note-feature-tags span::before,.ctag::before,.course-common-tags span::before{
+  content:"";flex:0 0 auto;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.55;
 }
 @media(max-width:640px){
   .note-feature{flex-direction:column;text-align:center;gap:1.2rem;padding:1.8rem 1.4rem;}
@@ -459,11 +463,10 @@ section{padding:64px 4vw;}
   padding:4px 12px;border-radius:50px;flex-shrink:0;
 }
 .course-common-txt{font-size:.82rem;font-weight:700;color:#fff;}
-.course-common-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;}
+.course-common-tags{display:flex;flex-wrap:wrap;gap:.3rem 1rem;justify-content:center;}
 .course-common-tags span{
-  border:1px solid rgba(255,255,255,.55);color:#fff;
-  font-size:.72rem;font-weight:700;
-  padding:3px 10px;border-radius:50px;
+  display:inline-flex;align-items:center;gap:.4em;cursor:default;color:#fff;
+  font-size:.74rem;font-weight:700;
 }
 .course-lineup .ccard.recommended::before{content:"メインプログラム";}
 .cl-divider{
@@ -522,8 +525,8 @@ section{padding:64px 4vw;}
 .cn{font-family:"Kaisei Opti",serif;font-size:1.2rem;font-weight:700;color:#fff;line-height:1.3;}
 .cbd{padding:1.4rem;}
 .cdesc{font-size:.83rem;color:var(--txt2);line-height:1.85;margin-bottom:.8rem;}
-.ctags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.2rem;}
-.ctag{background:var(--cream);border:1px solid var(--bdr);color:var(--txt2);font-size:.7rem;padding:3px 9px;border-radius:20px;}
+.ctags{display:flex;flex-wrap:wrap;gap:.3rem .9rem;margin-bottom:1.2rem;}
+.ctag{display:inline-flex;align-items:center;gap:.4em;cursor:default;color:var(--txt2);font-size:.74rem;font-weight:700;}
 /* pricing inside course cards */
 .c-price-divider{
   border:none;border-top:1.5px dashed var(--bdr);
@@ -3178,10 +3181,19 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
 </a>
 
 <script>
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
-}, {threshold: .1});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+// スクロール表示。IntersectionObserver が使えない／失敗した場合は全要素をそのまま表示し、後続の処理は止めない
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  try {
+    if (!('IntersectionObserver' in window)) throw new Error('no IntersectionObserver');
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+    }, {threshold: .1});
+    els.forEach(function(el){ obs.observe(el); });
+  } catch (err) {
+    els.forEach(function(el){ el.classList.add('on'); });
+  }
+})();
 
 // Floating CTA: show after scrolling past hero, hide near contact form
 (function(){
@@ -3259,8 +3271,9 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }).catch(function(){});
 })();
 </script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
+<!-- アイコン（lucide）：バージョン固定。async で読み込み、取得が遅い／失敗しても後続スクリプト（モーダル等）を止めない -->
+<script>window.__renderIcons=function(){try{if(window.lucide&&lucide.createIcons)lucide.createIcons();}catch(e){}};</script>
+<script src="https://unpkg.com/lucide@1.70.0/dist/umd/lucide.min.js" async onload="__renderIcons()"></script>
 
 <script>
 (function(){
@@ -3285,6 +3298,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   let lastFocus = null;
   const img = document.getElementById('profileModalImg');
   const box = modal.querySelector('.profile-modal-content');
+  if(!closeBtn || !img || !box) return;
   const PROFILES = {
     sano: { src: 'img/sano-profile', label: '代表 佐野翼 プロフィール', alt: 'プラトン創業者・代表 佐野翼のプロフィール：専門性・世界観を重視した文系指導、創業者インタビュー、創業初年度の合格実績（2023年度合格者5名：一橋大学 経済学部・社会学部、北海道大学 文学部、早稲田大学 政治経済学部、上智大学 外国語学部）、書籍『大学受験は「毎日」で決まる』紹介、生徒・保護者の皆さまへのメッセージ' },
     yonaha: { src: 'img/yonaha-profile', label: '與那覇あかり先生 プロフィール', alt: 'プラトン講師 與那覇あかり先生のプロフィール：担当科目は国語・英語。海上保安庁での約5年間の経験、指導で大切にしていること（一人ひとりに寄り添う指導・小さな目標の積み重ね・学んだ経験を生かしたサポート・安心して話せる環境づくり）、これまでの歩み、インタビュー' },
@@ -3317,7 +3331,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     img.alt = p.alt;
     modal.setAttribute('aria-label', p.label);
     lastFocus = document.activeElement; modal.hidden = false; modal.scrollTop = 0; document.body.style.overflow = 'hidden'; closeBtn.focus(); };
-  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus && lastFocus.focus) lastFocus.focus(); };
   const cards = document.querySelectorAll('.has-profile');
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     entries.forEach(en => { if(en.isIntersecting){ preload(en.target.dataset.profile); io.unobserve(en.target); } });
@@ -3346,15 +3360,39 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   const prev = wrap.querySelector('.survey-rail-nav.prev');
   const next = wrap.querySelector('.survey-rail-nav.next');
   const step = () => { const c = rail.querySelector('.survey-card'); return c ? (c.getBoundingClientRect().width + 16) * 2 : 400; };
-  prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
-  next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+  const move = (dx) => { if(rail.scrollBy) rail.scrollBy({ left: dx, behavior: 'smooth' }); else rail.scrollLeft += dx; };
+  if(prev) prev.addEventListener('click', () => move(-step()));
+  if(next) next.addEventListener('click', () => move(step()));
   const sync = () => {
-    prev.hidden = rail.scrollLeft < 8;
-    next.hidden = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
+    if(prev) prev.hidden = rail.scrollLeft < 8;
+    if(next) next.hidden = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
   };
-  rail.addEventListener('scroll', sync, { passive: true });
+  let lastScrollAt = 0;
+  rail.addEventListener('scroll', () => { lastScrollAt = Date.now(); sync(); }, { passive: true });
   window.addEventListener('resize', sync);
   sync();
+
+  // スワイプ／ドラッグ直後の誤タップ防止：
+  // 指やマウスが動いた・押してからレールが動いた・スクロール直後のクリックは、カードを開かずに捨てる
+  let downX = 0, downY = 0, downLeft = 0, downAt = 0, moved = false;
+  const pt = (e) => (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+  const onDown = (e) => { const p = pt(e); downX = p.clientX; downY = p.clientY; downLeft = rail.scrollLeft; downAt = Date.now(); moved = false; };
+  const onMove = (e) => { if(!downAt) return; const p = pt(e); if(Math.abs(p.clientX - downX) > 10 || Math.abs(p.clientY - downY) > 10) moved = true; };
+  if(window.PointerEvent){
+    rail.addEventListener('pointerdown', onDown, { passive: true });
+    rail.addEventListener('pointermove', onMove, { passive: true });
+  } else {
+    rail.addEventListener('touchstart', onDown, { passive: true });
+    rail.addEventListener('touchmove', onMove, { passive: true });
+    rail.addEventListener('mousedown', onDown);
+    rail.addEventListener('mousemove', onMove);
+  }
+  rail.addEventListener('click', (e) => {
+    if(e.detail === 0 || !downAt) return; // キーボード操作（Enter／Space）によるクリックはそのまま通す
+    const scrolled = Math.abs(rail.scrollLeft - downLeft) > 6 || (lastScrollAt >= downAt && Date.now() - lastScrollAt < 250);
+    downAt = 0;
+    if(moved || scrolled){ e.preventDefault(); e.stopPropagation(); }
+  }, true);
 
   // 一覧モーダル（区分で絞り込み）
   const modal = document.getElementById('surveyAllModal');
@@ -3362,6 +3400,8 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   if(!modal || !btn) return;
   const grid = modal.querySelector('.survey-all-grid');
   const filter = modal.querySelector('.survey-filter');
+  const allClose = modal.querySelector('.survey-all-close');
+  if(!grid || !filter || !allClose) return;
   const viewer = document.getElementById('surveyModal');
   let built = false, lastFocus = null;
   const build = () => {
@@ -3395,11 +3435,11 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     if(!built) build();
     lastFocus = document.activeElement;
     modal.hidden = false; document.body.style.overflow = 'hidden';
-    modal.querySelector('.survey-all-close').focus();
+    allClose.focus();
   };
-  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus) lastFocus.focus(); };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; if(lastFocus && lastFocus.focus) lastFocus.focus(); };
   btn.addEventListener('click', open);
-  modal.querySelector('.survey-all-close').addEventListener('click', close);
+  allClose.addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && !modal.hidden && (!viewer || viewer.hidden)) close(); });
 })();
@@ -3411,18 +3451,20 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   const img = document.getElementById('surveyModalImg');
   const caption = document.getElementById('surveyModalCaption');
   const closeBtn = modal.querySelector('.survey-modal-close');
+  if(!img || !closeBtn) return;
   const openImage = (src, captionText, altText) => {
+    if(!src) return;
     img.src = src;
     img.alt = altText || '';
-    caption.textContent = captionText || '';
+    if(caption) caption.textContent = captionText || '';
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
   };
   const open = (src, univ, name) => openImage(src, univ + '　' + name, name + 'アンケート（' + univ + ' 合格）');
-  const close = () => { modal.hidden = true; img.src = ''; const list = document.getElementById('surveyAllModal'); document.body.style.overflow = (list && !list.hidden) ? 'hidden' : ''; };
+  const close = () => { modal.hidden = true; img.removeAttribute('src'); const list = document.getElementById('surveyAllModal'); document.body.style.overflow = (list && !list.hidden) ? 'hidden' : ''; };
   // 保護者アンケート画像
   document.addEventListener('click', e => {
-    const card = e.target.closest('.survey-card');
+    const card = e.target && e.target.closest ? e.target.closest('.survey-card') : null;
     if(card) open(card.dataset.src, card.dataset.univ, card.dataset.name);
   });
   // ギャラリー画像（タップ／クリックで拡大表示）
@@ -3549,7 +3591,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     window.__contactEmail = savedEmail;
     btn.disabled = false;
     btn.innerHTML = '<i data-lucide="send"></i> 無料相談を申し込む →';
-    lucide.createIcons();
+    window.__renderIcons();
     openTyModal();
   });
 
