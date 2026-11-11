@@ -2118,32 +2118,6 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </a>
 </section>
 
-<!-- ===== NOTE ARTICLES ===== -->
-<section id="note-articles">
-  <div class="sec-head reveal" style="text-align:center;">
-    <span class="eyebrow">Articles</span>
-    <h2 class="sec-ttl">noteで読む <span class="ac">受験お役立ち記事</span></h2>
-    <p class="sec-sub">プラトン公式 note では、受験勉強のコツ・学習法・合格事例を発信中。<br>気になるテーマから、ぜひ読んでみてください。</p>
-  </div>
-
-  <!-- 公式noteへの導線パネル（自前デザイン／埋め込み非依存） -->
-  <div class="note-feature reveal">
-    <div class="note-feature-mark" aria-hidden="true">
-      <i data-lucide="book-open"></i>
-      <span>note</span>
-    </div>
-    <div class="note-feature-body">
-      <span class="eyebrow">プラトン公式note</span>
-      <h3 class="note-feature-ttl">受験のヒントを、<span class="ac">note</span>で発信しています。</h3>
-      <p class="note-feature-txt">毎日課題の活用法から科目別の勉強法、合格事例まで。受験に役立つ記事を随時更新しています。気になるテーマから、ぜひ読んでみてください。</p>
-      <div class="note-feature-tags">
-        <span>勉強法のコツ</span><span>毎日課題</span><span>合格事例</span><span>科目別対策</span>
-      </div>
-      <a href="https://note.com/platon_online" target="_blank" rel="noopener" class="note-more-btn">noteで記事を読む →</a>
-    </div>
-  </div>
-</section>
-
 <!-- ===== FEATURES ===== -->
 <section id="features">
   <div class="sec-head reveal" style="text-align:center;">
@@ -2891,6 +2865,32 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   </div>
 </section>
 
+<!-- ===== NOTE ARTICLES ===== -->
+<section id="note-articles">
+  <div class="sec-head reveal" style="text-align:center;">
+    <span class="eyebrow">Articles</span>
+    <h2 class="sec-ttl">noteで読む <span class="ac">受験お役立ち記事</span></h2>
+    <p class="sec-sub">プラトン公式 note では、受験勉強のコツ・学習法・合格事例を発信中。<br>気になるテーマから、ぜひ読んでみてください。</p>
+  </div>
+
+  <!-- 公式noteへの導線パネル（自前デザイン／埋め込み非依存） -->
+  <div class="note-feature reveal">
+    <div class="note-feature-mark" aria-hidden="true">
+      <i data-lucide="book-open"></i>
+      <span>note</span>
+    </div>
+    <div class="note-feature-body">
+      <span class="eyebrow">プラトン公式note</span>
+      <h3 class="note-feature-ttl">受験のヒントを、<span class="ac">note</span>で発信しています。</h3>
+      <p class="note-feature-txt">毎日課題の活用法から科目別の勉強法、合格事例まで。受験に役立つ記事を随時更新しています。気になるテーマから、ぜひ読んでみてください。</p>
+      <div class="note-feature-tags">
+        <span>勉強法のコツ</span><span>毎日課題</span><span>合格事例</span><span>科目別対策</span>
+      </div>
+      <a href="https://note.com/platon_online" target="_blank" rel="noopener" class="note-more-btn">noteで記事を読む →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== INSTAGRAM ===== -->
 <section id="instagram">
   <div class="sec-head reveal" style="text-align:center;">
@@ -3202,12 +3202,26 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
   const contact  = document.getElementById('contact');
   if (!floatCta && !lineFab) return;
   const showAfter = 400;
+  const avoid = document.querySelectorAll('.note-more-btn, #bookBuyBtn');
   function update(){
     const y = window.scrollY || window.pageYOffset;
     let show = y > showAfter;
     if (contact){
       const rect = contact.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.85) show = false;
+    }
+    // ページ内の主要ボタン（noteへのリンク・書籍購入）と重なる位置では、追従ボタンを一時的に隠す
+    if (show){
+      let top = window.innerHeight, left = window.innerWidth;
+      [floatCta, lineFab].forEach(function(el){
+        if (!el) return;
+        // offsetTop/offsetLeft は表示・非表示のアニメーション（transform）の影響を受けない
+        if (el.offsetWidth){ top = Math.min(top, el.offsetTop); left = Math.min(left, el.offsetLeft); }
+      });
+      for (let i = 0; i < avoid.length; i++){
+        const r = avoid[i].getBoundingClientRect();
+        if (r.width && r.bottom > top - 12 && r.top < window.innerHeight && r.right > left - 8){ show = false; break; }
+      }
     }
     if (floatCta) floatCta.classList.toggle('show', show);
     if (lineFab)  lineFab.classList.toggle('show', show);
