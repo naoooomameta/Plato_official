@@ -2017,6 +2017,7 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <li><a href="#about">塾概要</a></li>
     <li><a href="news.html">お知らせ</a></li>
     <li><a href="muryo-shindan/">無料合格診断</a></li>
+    <li><a href="contact.html">お問い合わせ</a></li>
     <li><a href="#contact" class="hl">▶ 無料相談</a></li>
   </ul></nav>
 </header>
@@ -2253,6 +2254,10 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
     <p class="course-lineup-annotation">※毎日課題の学習状況等によって、受験戦略面談・三者面談（保護者・生徒・講師）の実施頻度は変わります。</p>
 
     <p class="course-lineup-note">どのコースが合うか迷う場合も、無料相談で学習状況をお伺いしたうえでご提案します。<br><a href="#contact" style="color:var(--red);font-weight:700;text-decoration:underline;">無料相談はこちら →</a></p>
+    <div class="course-inquiry-links" style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:1rem;">
+      <a href="contact.html?kind=fee" class="btn-w" style="font-size:.84rem;padding:11px 20px;">受講料を問い合わせる</a>
+      <a href="contact.html?kind=doc" class="btn-w" style="font-size:.84rem;padding:11px 20px;">資料を請求する（メールでお送りします）</a>
+    </div>
   </div>
 </section>
 
@@ -3159,7 +3164,8 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       <li><a href="muryo-shindan/">無料合格診断</a></li>
       <li><a href="#instagram">Instagram</a></li>
       <li><a href="#about">塾概要</a></li>
-      <li><a href="#contact">お問い合わせ</a></li>
+      <li><a href="#contact">無料相談</a></li>
+      <li><a href="contact.html">お問い合わせ</a></li>
       <li><a href="legal.html">特定商取引法・個人情報の取り扱い</a></li>
     </ul>
   </div>
@@ -3559,6 +3565,23 @@ footer{background:var(--dark);padding:2.5rem 4vw 1.2rem;}
       if (choice) choice.classList.remove('invalid');
     });
   });
+
+  /* お問い合わせページ（contact.html）から「予約フォームへ進む」で来た場合、入力済みの内容を引き継ぐ */
+  (function(){
+    try {
+      var raw = sessionStorage.getItem('platoHandoff');
+      if (!raw) return;
+      sessionStorage.removeItem('platoHandoff');
+      var d = JSON.parse(raw);
+      if (!d || !d.at || Date.now() - d.at > 30 * 60 * 1000) return; // 30分以内のみ有効
+      function fill(id, v){ var el = document.getElementById(id); if (el && v && !el.value) el.value = v; }
+      fill('name', d.name); fill('email', d.email); fill('tel', d.tel); fill('grade', d.grade); fill('university', d.univ); fill('message', d.message);
+      if (d.contactType) {
+        var r = form.querySelector('input[name="contactType"][value="' + d.contactType + '"]');
+        if (r) r.checked = true;
+      }
+    } catch (e) {}
+  })();
 
   var GAS_URL = 'https://script.google.com/macros/s/AKfycbwrX64y_igArlYnE7JUS42uCswPldC9FlR8teSMAKqOzKRdUexdfexE_uX8ftNj8_tj/exec';
 
