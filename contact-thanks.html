@@ -275,8 +275,8 @@ fieldset.error .inq-kinds label{border-color:#e7b4ae;}
       <div class="thx-book">
         <span class="thx-book-tag">つづけて予約できます</span>
         <h2>面談の日時も、いま決めませんか</h2>
-        <p>無料学習相談（オンライン・約30分）は、予約フォームから空いている日時をその場で選べます。<br>お名前・ご連絡先は引き継がれるので、入力し直す必要はありません。</p>
-        <a class="btn-r thx-book-btn" data-handoff href="index.html#contact">面談の日時を予約する →</a>
+        <p>無料学習相談（オンライン・約30分）は、予約ページのカレンダーから空いている日時をその場で選べます。<br>所要1分ほどで、その場で日程が確定します。</p>
+        <a class="btn-r thx-book-btn" href="https://timerex.net/s/plato.humanities_2e30/4ace96aa" target="_blank" rel="noopener">面談の日時を予約する →</a>
         <p class="thx-book-note">予約しない場合も、担当者よりお電話またはメールにてご連絡いたします。</p>
       </div>
 
@@ -302,12 +302,6 @@ fieldset.error .inq-kinds label{border-color:#e7b4ae;}
   // 計測用：GTM側で inquiry_submit をトリガーにCVを設定できる
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: 'inquiry_submit', inquiry_doc: /(^|[?&])doc=1/.test(location.search) ? 1 : 0 });
-  // 予約フォームへ進むとき、入力内容を引き継ぐためのフラグを延長（contact.html で保存済み）
-  Array.prototype.forEach.call(document.querySelectorAll('[data-handoff]'), function(a){
-    a.addEventListener('click', function(){
-      try { var d = sessionStorage.getItem('platoHandoff'); if (d) sessionStorage.setItem('platoHandoff', d); } catch (e) {}
-    });
-  });
 })();
 </script>
 
