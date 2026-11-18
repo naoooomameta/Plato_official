@@ -1,7 +1,7 @@
 /**
  * プラトン 問い合わせページ（contact.html）用 自動返信
  * ─────────────────────────────────────────────
- * Apps Script「Plato公式_予約カレンダー」の InquiryReply.gs に設置済み（2026/11/19・バージョン18）。
+ * Apps Script「Plato公式_予約カレンダー」の InquiryReply.gs に設置済み（2026/11/19・バージョン19）。
  * handleContact() 内のサンクスメール分岐は次のとおり：
  *   if (email && p.source === 'platon-inquiry') { sendInquiryReply(p); } else if (email) { ...従来のサンクスメール... }
  *
@@ -12,7 +12,7 @@
  * - このファイルは1行1関数の「貼り付け用」形式（Apps Scriptエディタの自動補完で崩れないため）。
  */
 var INQUIRY_DOC_URL = 'https://drive.google.com/file/d/19NRZcJv4TWuo74XHbuKTHfIqC8LJGCXu/view?usp=sharing';
-var INQUIRY_BOOKING_URL = 'https://plato-humanities.com/#contact';
+var INQUIRY_BOOKING_URL = 'https://timerex.net/s/plato.humanities_2e30/4ace96aa';
 var INQUIRY_LINE_URL = 'https://line.me/ti/p/%40905eguri';
 var INQUIRY_SITE_URL = 'https://plato-humanities.com/';
 var INQUIRY_FROM_NAME = '文系の大学受験専門塾 プラトン';
