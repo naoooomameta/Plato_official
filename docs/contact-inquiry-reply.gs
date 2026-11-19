@@ -11,7 +11,7 @@
  * - 文字色は指定しない（Gmailダークモードで反転してピンクに見えるため）。
  * - このファイルは1行1関数の「貼り付け用」形式（Apps Scriptエディタの自動補完で崩れないため）。
  */
-var INQUIRY_DOC_URL = 'https://drive.google.com/file/d/1OfqwbZUkz0X6ZusAftSWLKtA7O_xCXKr/view?usp=sharing';
+var INQUIRY_DOC_URL = 'https://drive.google.com/file/d/1Io_vRHNcR4tzkdV2RlHFcqoyvsEzAnqC/view?usp=sharing';
 var INQUIRY_BOOKING_URL = 'https://plato-humanities.com/#contact';
 var INQUIRY_LINE_URL = 'https://line.me/ti/p/%40905eguri';
 var INQUIRY_SITE_URL = 'https://plato-humanities.com/';
